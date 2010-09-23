@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Map mapHigh="5" mapHeight="5" mapWidth="5" mapVisibility="5">
+	<MapTexture >
+		<layer id="0">25*1,100*0</layer>		
+		<layer id="1">125*0</layer>
+	</MapTexture>
+	<MapProperties>
+		<walkable>125*1</walkable>
+		<slopes>125*0</slopes>
+		<ladder>125*0</ladder>
+		<slide>125*0</slide>
+		<bounce>125*0</bounce>
+		<teleportation>125*0</teleportation>
+		<elevation>125*0</elevation>
+	</MapProperties>
+</Map>

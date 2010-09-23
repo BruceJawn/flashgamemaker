@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ServerConfig>
+	<hostName>localhost</hostName>
+	<port>4444</port>
+	<online>true</online>
+</ServerConfig>

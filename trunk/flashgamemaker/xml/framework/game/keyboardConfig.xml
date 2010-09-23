@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KeyboardConfig>
+	<RIGHT>D</RIGHT>
+	<LEFT>Q</LEFT>
+	<UP>Z</UP>
+	<DOWN>S</DOWN> 
+	<ATTACK>K</ATTACK>
+	<JUMP>L</JUMP>
+	<DEFENSE>M</DEFENSE>
+	<SIT>J</SIT>
+</KeyboardConfig>

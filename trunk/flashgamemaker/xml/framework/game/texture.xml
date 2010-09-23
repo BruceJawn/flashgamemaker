@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Texture>
+
+	<TileSet width="60" height="40" high="10" X="10" Y="6">
+		<path>texture/framework/game/tileSet/tileSet.png</path>
+	</TileSet>
+	<AddTileSet width="60" height="40" high="10" X="10" Y="6">
+		<path>texture/framework/game/tileSet/addTileSet.png</path>
+	</AddTileSet>
+
+	<Knight tileWidth="64" tileHeight="64" tileX="8" tileY="4">
+		<path>texture/framework/game/charSet/templeKnightSet.png</path>
+	</Knight>
+	<BebeClip tileWidth="80" tileHeight="100">
+		<path>texture/framework/game/charSet/bebeClip.swf</path>
+	</BebeClip >
+	<BebeVisage tileWidth="80" tileHeight="100">
+		<path>texture/framework/game/charSet/bebeVisages.swf</path>
+	</BebeVisage>
+
+</Texture >
