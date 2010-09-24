@@ -1,5 +1,5 @@
 #labels Tortoise,SVN,TortoiseSVN,CJ,FlashGameMaker
-#Learn how to grab the latest release of FlashGameMaker from an SVN repository using TortoiseSVN
+Learn how to grab the latest release of FlashGameMaker from an SVN repository using TortoiseSVN
 
 = Introduction =
 This tutorial is a copy made from [http://cjcat.blogspot.com/2009/06/using-tortoisesvn-to-check-out-files.html CJ's blog]. Thanks to visit his blog for more details.
