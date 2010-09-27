@@ -30,6 +30,7 @@ package utils.loader {
 	*/
 	public class LoaderDispatcher {
 		protected var _dispatcher:EventDispatcher = null;
+		protected var _listeners:Array;
 		
 		public function LoaderDispatcher(){			
 			initVar();
@@ -37,6 +38,7 @@ package utils.loader {
 		//------ Get Instance ------------------------------------
 		private function initVar():void{
 			_dispatcher = new EventDispatcher();
+			_listeners = new Array();
 		}
 		//------ Get Dispatcher ------------------------------------
 		public function getDispatcher():EventDispatcher{
@@ -45,6 +47,20 @@ package utils.loader {
 		//------ Dispatch Event ------------------------------------
 		public function dispatchEvent(evt:Event):void{
 			_dispatcher.dispatchEvent(evt);;
+		}
+		//------ Register ------------------------------------
+		public function register(obj:Object):void {
+			_listeners.push(obj);
+		}
+		//------ Unregister ------------------------------------
+		public function unregister(obj:Object):void {
+			for (var i:Number=0; i<_listeners.length; i++){
+				if(_listeners[i]== obj){
+					_listeners[i].removeListener();
+					_listeners.splice(i,1);
+					return;
+				}
+			}
 		}
 	}
 }

@@ -41,6 +41,8 @@ package framework.core.system{
 		private var _graphicsToLoad:Array = null;
 		private var _graphicsLoaded:Array = new Array();
 		private var _graphicsOnScene:Dictionary = null;
+		private var _componentsOnScene:Dictionary = null;
+		private var _layers:Array = null;
 		
 		public function GraphicManager() {
 			if (! _allowInstanciation) {
@@ -59,8 +61,10 @@ package framework.core.system{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_graphicsOnScene= new Dictionary();
+			_graphicsOnScene = new Dictionary();
 			_graphicsToLoad = new Array();
+			_componentsOnScene = new Dictionary();
+			_layers= new Array();
 		}
 		//------ Load Graphics From Path ------------------------------------
 		public function loadGraphicsFromPath(path:String, xmlName:String):void {
@@ -137,7 +141,7 @@ package framework.core.system{
 			_graphicsLoaded.push({name:graphicName,graphic:graphic});
 		}
 		//------ Get Graphic  ------------------------------------
-		public function getGraphic(graphicName:String):* {
+		public function getGraphic(graphicName:String):Sprite {
 			for each( var obj:Object in _graphicsLoaded){
 				if(graphicName == obj.name){
 					return obj.graphic;
@@ -151,29 +155,61 @@ package framework.core.system{
 		}
 		//------ Get Num Graphics To Load  ------------------------------------
 		public function getNumGraphicsToLoad():Number {
-			if(_graphicsLoaded==null){
+			if(_graphicsToLoad==null){
 				return 0;
 			}
-			return _graphicsLoaded.length;
+			return _graphicsToLoad.length;
 		}
 		//------ Display Graphic ------------------------------------
-		public function displayGraphic(name:String, graphic:*):void {
-			registerGraphicOnScene(name,graphic);
-			FlashGameMaker.STAGE.addChild(graphic);
+		public function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void {
+			registerGraphicOnScene(graphicName,graphic);
+			if(layerId>=_layers.length){
+				layerId = createNewLayer();
+			}
+			var layer:Sprite = _layers[layerId];
+			layer.addChild(graphic);
+		}
+		//------ Contains Graphic ------------------------------------
+		public function containsGraphic(graphicName:String):Boolean {
+			if(_graphicsOnScene[graphicName]!=null){
+				return true;
+			}
+			return false
 		}
 		//------ Remove Graphic ------------------------------------
-		public function removeGraphic(name:String):void {
-			var graphic:Sprite = _graphicsOnScene[name];
-			FlashGameMaker.STAGE.removeChild(graphic);
-			unregisterGraphicOnScene(name);
+		public function removeGraphic(graphicName:String):void {
+			var graphic:Sprite = _graphicsOnScene[graphicName];
+			for each(var layer:Sprite in _layers){
+				if(layer.contains(graphic)){
+					layer.removeChild(graphic);
+					unregisterGraphicOnScene(graphicName);
+					return;
+				}
+			}
+		}
+		//------ Create New Layer ------------------------------------
+		public function createNewLayer():int {
+			var layer:Sprite = new Sprite();
+			FlashGameMaker.STAGE.addChild(layer);
+			_layers.push(layer);
+			return _layers.length-1;
+		}
+		//------ Remove Layer ------------------------------------
+		public function removeLayer(layerId:int):void {
+			if(layerId>=_layers.length){
+				throw new Error("There is no layer with the id "+layerId +" !!");
+			}
+			var layer:Sprite = _layers[layerId];
+			FlashGameMaker.STAGE.removeChild(layer);
+			_layers.splice(layerId,1);
 		}
 		//------ Register Graphic On Scene ------------------------------------
-		private function registerGraphicOnScene(name:String, graphic:*):void {
-			_graphicsOnScene[name] = graphic;
+		private function registerGraphicOnScene(graphicName:String, graphic:Sprite):void {
+			_graphicsOnScene[graphicName] = graphic;
 		}
 		//------ Unregister Graphic On Scene ------------------------------------
-		private function unregisterGraphicOnScene(name:String):void {
-			delete _graphicsOnScene[name];
+		private function unregisterGraphicOnScene(graphicName:String):void {
+			delete _graphicsOnScene[graphicName];
 		}
 	}
 }

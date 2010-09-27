@@ -32,14 +32,9 @@ package utils.time{
 	
 		}
 		//------ Get Time ------------------------------------
-		public static function getTime():Number {
+		public static function GetTime():Number {
 			 var date:Date = new Date();
 		  	 return date.getTime();
-		}
-		//------ moveClip ------------------------------------
-		public static function moveClip(_clip:Sprite, x:Number, y:Number ):void {
-			_clip.x = x;
-			_clip.y = y;
 		}
 	}
 }

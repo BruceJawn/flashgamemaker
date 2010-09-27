@@ -27,44 +27,61 @@
 */
 
 package framework.core.architecture.entity{
+	import framework.core.architecture.component.*;
+	
 	import flash.utils.Dictionary;
 	
 	public interface IEntity{
 		
 		/**
 		 * Add a compoment to the entity
-		 * 
 		 * @param name of component to be added
-		 * 
 		 */		
 		function addComponent(componentName:String):void;
 		
 		/**
 		 * R a component from the entity
-		 * 
 		 * @param  name of component to be removed
-		 * 
 		 */	
 		function removeComponent(componentName:String):void;
 		/**
 		 * Return the name of the entity
-		 * 
 		 */	
 		function getName():String;
 		/**
+		 * Get Component
+		 */	
+		function getComponent(entityName:String,componentName:String):*;
+		/**
 		 * Return the List of Components
-		 * 
 		 */	
 		function getComponents():Dictionary;
-		
+		/**
+		 * Get Components'Property with PropertyName
+		 */	
+		function getComponentsPropertyWithPropertyName(propertyName:String):Array;
 		/**
 		 * Invoked when instance is to be destroyed
-		 * 
 		 */	
 		function destroy():void;
 		/**
+		 * Register property
+		 */	
+		function registerProperty(propertyName:String, parentName:String):void;
+		/**
+		 * Unregister property
+		 */	
+		function unregisterProperty(propertyName:String, parentName:String):void;
+		/**
+		 * Set property Reference
+		 */	
+		function setPropertyReference(propertyReferenceName:String, componentName:String):void;
+		/**
+		 * Remove property Reference
+		 */	
+		function removePropertyReference(propertyReferenceName:String, componentName:String):void;
+		/**
 		 * Trace the Name of the Entity
-		 * 
 		 */	
 		function ToString():void;
 		

@@ -120,15 +120,17 @@ package framework.core.system {
 			interfaceScreen.addEventListener(InterfaceEvent.NAVIGATION_CHANGE, onNavigationChange);
 			interfaceScreen.checkEffStatut();
 			interfaceScreen.isAnimated();
-			_ressourceManager.displayGraphic(screenName, interfaceScreen);
+			_ressourceManager.displayGraphic(screenName, interfaceScreen, 0);
 			_currentScreen = screenName;
 		}
 		//------ On Navigation Change ------------------------------------
 		public function onNavigationChange(evt:InterfaceEvent):void{
 			var interfaceScreen:InterfaceScreen = _interfaceScreens[_currentScreen];
 			var destination:String = interfaceScreen.getDestination();
-			goToScreen(destination);
-			dispatchEvent(evt);
+			if(destination!=null){
+				goToScreen(destination);
+				dispatchEvent(evt);
+			}
 		}
 		//------ Get Current Screen ------------------------------------
 		public  function getCurrentScreen():String {

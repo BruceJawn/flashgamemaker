@@ -74,7 +74,7 @@ package framework.core.system {
 		//------ On Xml Loading Successful ------------------------------------
 		protected override function onXmlLoadingSuccessful(evt:Event):void {
 			removeXmlListener();
-			initConfig();
+			//initConfig();
 			preloadTexture();
 		}
 		//------ Init Config ------------------------------------
@@ -86,6 +86,7 @@ package framework.core.system {
 			var serverXml:XML = _ressourceManager.getXml("ServerConfig");
 			if(serverXml!=null){
 				_serverManager.setConnection(serverXml);
+				_serverManager.startConnection();
 			}
 		}
 		//------ Preload Texture ------------------------------------
@@ -97,8 +98,19 @@ package framework.core.system {
 		protected override function onGraphicLoadingSuccessful(evt:Event):void {
 			removeGraphicListener();
 			removeLoadingProgress();
+			startGame();
+		}
+		//------ Start Game ------------------------------------
+		protected  function startGame():void {
 			var entity:IEntity = _entityManager.createEntity("Entity");
-			_entityManager.addComponent("Entity", "KeyboardInputComponent");
+			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
+			//-- please insert your component classes in the Entity Manager inside the initClassRef() function --
+			//_entityManager.addComponent("Entity", "KeyboardInputComponent");
+			//_entityManager.addComponent("Entity", "MouseInputComponent");
+			//_entityManager.addComponent("Entity", "ServerInputComponent");
+			_entityManager.addComponent("Entity", "RenderComponent");
+			_entityManager.addComponent("Entity", "SpatialComponent");
+			_entityManager.addComponent("Entity", "SystemInfoComponent");
 		}
 	}
 }

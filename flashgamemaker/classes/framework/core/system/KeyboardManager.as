@@ -24,9 +24,9 @@
 
 package framework.core.system{
 	import utils.loader.*;
+	import utils.time.*;
 	
 	import flash.utils.Dictionary;
-	import flash.utils.Timer;
 	import flash.events.*;
 	import flash.ui.Keyboard;
 	/**
@@ -38,7 +38,6 @@ package framework.core.system{
 		private static var _instance:IKeyboardManager=null;
 		private static var _allowInstanciation:Boolean=false;
 		private var _keys:Dictionary;
-		private var _listeners:Array;
 		private var _keyCode:Number = 0;
 		private var _keyStatut:String="UP"; //Key is UP or DOWN
 		private var _charCode:String;
@@ -71,7 +70,6 @@ package framework.core.system{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_keys = new Dictionary();
-			_listeners = new Array();
 		}
 		//------ Init Listener ------------------------------------
 		public function initListener():void {
@@ -90,8 +88,6 @@ package framework.core.system{
 				initTimer();
 				updateKey(evt);
 				checkDoubleClick();
-				checkShift(evt);
-				checkCtrl(evt);
 				dispatchEvent(evt);
 			}
 		}
@@ -106,6 +102,8 @@ package framework.core.system{
 		private function updateKey(evt:KeyboardEvent):void {
 			_prevKeyCode = _keyCode;
 			_keyCode = evt.keyCode;
+			_shiftKey = evt.shiftKey;
+			_ctrlKey = evt.ctrlKey;
 			_charCode = String.fromCharCode(evt.charCode).toUpperCase();
 		}
 		//------ Init Timer ------------------------------------
@@ -139,27 +137,6 @@ package framework.core.system{
 				_longClick = false;
 			}
 		}
-		//------ Check Shift ------------------------------------
-		private function checkShift(evt:KeyboardEvent):void {
-			_shiftKey = evt.shiftKey;
-		}
-		//------ Check Ctrl ------------------------------------
-		private function checkCtrl(evt:KeyboardEvent):void {
-			_ctrlKey = evt.ctrlKey;
-		}
-		//------ Register ------------------------------------
-		public function register(obj:Object):void {
-			_listeners.push(obj);
-		}
-		//------ Unregister ------------------------------------
-		public function unregister(obj:Object):void {
-			for (var i:Number=0; i<_listeners.length; i++){
-				if(_listeners[i]== obj){
-					_listeners.splie(i,1);
-					return;
-				}
-			}
-		}
 		//------ Set Keys ------------------------------------
 		public function setKeys(xml:XML):void {
 			var xmlList:XMLList = xml.children();
@@ -176,8 +153,7 @@ package framework.core.system{
 		}
 		//---- Get Time ------------------------------------------------
 	    private function getTime():Number{
-		   var date:Date = new Date();
-		   return date.getTime();
+		  return Time.GetTime();
 	    }	
 		//------ Get Key ------------------------------------
 		public function getKey():Object {

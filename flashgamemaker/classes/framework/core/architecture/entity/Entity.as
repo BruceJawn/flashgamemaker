@@ -27,6 +27,8 @@
 */
 
 package framework.core.architecture.entity{
+	import framework.core.architecture.component.*;
+	
 	import flash.utils.Dictionary;
 	
 	/**
@@ -52,9 +54,33 @@ package framework.core.architecture.entity{
 		public function addComponent(componentName:String):void {
 			return _entityManager.addComponent(_entityName,componentName);
 		}
+		//------ Get Component ------------------------------------
+		public function getComponent(entityName:String,componentName:String):*{	
+			return _entityManager.getComponent(entityName,componentName);
+		}
+		//------ Get Components'Property With PropertyName ------------------------------------
+		public function getComponentsPropertyWithPropertyName(propertyName:String):Array{	
+			return _entityManager.getComponentsPropertyWithPropertyName(propertyName);
+		}
 		//------ Remove Component ------------------------------------
 		public function removeComponent(componentName:String):void {
 			_entityManager.removeComponent(_entityName,componentName);
+		}
+		//------ Register Property ------------------------------------
+		public function registerProperty(propertyName:String, parentName:String):void {
+			_entityManager.registerProperty(propertyName,parentName,_entityName);
+		}
+		//------ Unregister Property ------------------------------------
+		public function unregisterProperty(propertyName:String, parentName:String):void {
+			_entityManager.unregisterProperty(propertyName,parentName);
+		}
+		//------ Set Property Reference ------------------------------------
+		public function setPropertyReference(propertyReferenceName:String, componentName:String):void {
+			_entityManager.setPropertyReference(propertyReferenceName,componentName,_entityName);
+		}
+		//------ Remove Property Reference ------------------------------------
+		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {
+			_entityManager.removePropertyReference(propertyReferenceName,componentName);
 		}
 		//------ Destroy ------------------------------------
 		public function destroy():void{

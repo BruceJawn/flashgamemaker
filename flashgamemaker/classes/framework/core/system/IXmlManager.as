@@ -29,38 +29,26 @@ package framework.core.system{
 		
 		/**
 		 * Get the Loader Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Load all the XML contained in the source XML 
-		 * 
-		 * 
 		 */		
 		function loadXmlsFromPath(path:String, name:String):void
 		/**
 		 * Load all the XML contained in the source XML 
-		 * 
-		 * 
 		 */		
 		function loadXmlsFromXml(xml:XML, name:String):void
 		/**
 		 * Load XML 
-		 * 
-		 * 
 		 */		
 		function loadXml(path:String, name:String):void;
 		/**
 		 * Select and return XML by name
-		 * 
-		 * 
 		 */		
 		function getXml(xmlName:String):XML;
 		/**
 		 * Trace XML 
-		 * 
-		 * 
 		 */		
 		function printXml(xmlName:String):void;
 		

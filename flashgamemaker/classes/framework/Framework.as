@@ -35,8 +35,8 @@ package framework{
 		private var _gameManager:IGameManager;
 		
 		public function Framework() {
-			initInterface("xml/framework/interface.xml");
-			//initGame("xml/framework/game.xml");
+			//initInterface("xml/framework/interface.xml");
+			initGame("xml/framework/game.xml");
 		}
 		//------ Init Interface ------------------------------------
 		public function initInterface(path:String):void {
