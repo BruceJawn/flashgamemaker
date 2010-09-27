@@ -29,32 +29,22 @@ package framework.core.system{
 		
 		/**
 		 * Get Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Define wich keys will be used in the game
-		 * 
-		 * 
 		 */		
 		function setKeys(xml:XML):void ;
 		/**
 		 * Register
-		 * 
-		 * 
 		 */		
 		function register(obj:Object):void;
 		/**
 		 * Unregister
-		 * 
-		 * 
 		 */		
 		function unregister(obj:Object):void;
 		/**
 		 * Retourn Key
-		 * 
-		 * 
 		 */		
 		function getKey():Object ;
 	}

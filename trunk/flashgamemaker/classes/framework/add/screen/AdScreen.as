@@ -73,6 +73,11 @@ package framework.add.screen{
 				dispatchEvent(new InterfaceEvent(InterfaceEvent.NAVIGATION_CHANGE));
 			}
 		}
+		//------ Remove Listener ------------------------------------
+		protected override function removeListener():void {
+			removeListener();
+			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
 		//------ On Skip Click ------------------------------------
 		private function onSkipClick(event:MouseEvent):void {
 			_screenDestination="GameScreen";

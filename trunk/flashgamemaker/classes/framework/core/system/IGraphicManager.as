@@ -30,57 +30,43 @@ package framework.core.system{
 		
 		/**
 		 * Get the Loader Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Load Graphics From the loaded XML targeted By the Path 
-		 * 
-		 * 
 		 */		
 		function loadGraphicsFromPath(path:String, name:String):void;
 		/**
 		 * Load Graphics From the XML targeted
-		 * 
-		 * 
 		 */		
 		function loadGraphicsFromXml(xml:XML, name:String):void;
 		/**
 		 * Load Graphic in the path
-		 * 
-		 * 
 		 */		
 		function loadGraphic(path:String, name:String):void;
 		/**
 		 * Get Graphics Loaded
-		 * 
-		 * 
 		 */		
 		 function getGraphics():Array;
 		 /**
 		 * Get Graphic By Name
-		 * 
-		 * 
 		 */		
-		 function getGraphic(graphicName:String):*;
+		 function getGraphic(graphicName:String):Sprite;
 		 /**
 		 * Get The Number Of Graphics To Load
-		 * 
-		 * 
 		 */		
 		 function getNumGraphicsToLoad():Number;
 		 /**
 		 * Register and Display Graphic
-		 * 
-		 * 
 		 */		
-		 function displayGraphic(graphicName:String, graphic:*):void;
-		  /**
+		 function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void;
+		 /**
 		 * Unregister and remove Graphic
-		 * 
-		 * 
 		 */		
 		 function removeGraphic(graphicName:String):void;
+		 /**
+		 * Contains Graphic
+		 */		
+		 function containsGraphic(graphicName:String):Boolean
 	}
 }

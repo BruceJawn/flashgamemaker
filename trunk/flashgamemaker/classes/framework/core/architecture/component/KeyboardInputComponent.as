@@ -52,18 +52,26 @@ package framework.core.architecture.component{
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
 			var dispatcher:EventDispatcher = _keyboardManager.getDispatcher();
-			dispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			dispatcher.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			dispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyFire);
+			dispatcher.addEventListener(KeyboardEvent.KEY_UP, onKeyFire);
 		}
-		//------ On Key Down ------------------------------------
-		private function onKeyDown(evt:KeyboardEvent):void {
-			var key:Object = _keyboardManager.getKey();
-			trace("Key Down:", "Game Action:"+key.keyTouch, "KeyCode:"+key.keyCode,"CharCode:"+key.charCode,"DoubleClick:"+key.doubleClick,"LongClick:"+key.longClick,"Shift:"+key.shiftKey, "Ctrl:"+key.ctrlKey);
+		//------ Remove Listener ------------------------------------
+		public function removeListener():void {
+			var dispatcher:EventDispatcher = _keyboardManager.getDispatcher();
+			dispatcher.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyFire);
+			dispatcher.removeEventListener(KeyboardEvent.KEY_UP, onKeyFire);
 		}
-		//------ On Key Up ------------------------------------
-		private function onKeyUp(evt:KeyboardEvent):void {
+		//------ On Key Fire ------------------------------------
+		private function onKeyFire(evt:KeyboardEvent):void {
+			getKey();
+		}
+		//------ Get Key ------------------------------------
+		private function getKey():void {
 			var key:Object = _keyboardManager.getKey();
-			trace("Key Up:", "Game Action:"+key.keyTouch, "KeyCode:"+key.keyCode,"CharCode:"+key.charCode,"DoubleClick:"+key.doubleClick,"LongClick:"+key.longClick,"Shift:"+key.shiftKey, "Ctrl:"+key.ctrlKey);
+			var keyObject:String="KeyInput KeyStatut:"+key.keyStatut+" ,KeyTouch:"+key.keyTouch;
+			keyObject+=" ,KeyCode:"+key.keyCode+" ,CharCode:"+key.charCode+" ,DoubleClick:"+key.doubleClick;
+			keyObject+=" ,LongClick:"+key.longClick+" ,Shift:"+key.shiftKey+" ,Ctrl:"+key.ctrlKey;
+			trace(keyObject);
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

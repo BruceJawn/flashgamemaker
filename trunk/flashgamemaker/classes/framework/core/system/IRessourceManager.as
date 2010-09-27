@@ -30,98 +30,66 @@ package framework.core.system{
 	public interface IRessourceManager	{
 		/**
 		 * Get the Loader Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Load Xmls From Xml using XmlManager
-		 * 
-		 * 
 		 */		
 		function loadXmlsFromPath(path:String, name:String):void
 		/**
 		 * Load Xmls From Xml using XmlManager
-		 * 
-		 * 
 		 */		
 		function loadXmlsFromXml(xml:XML, name:String):void
 		/**
 		 * Load xml using XmlManager
-		 * 
-		 * 
 		 */		
 		function loadXml(path:String, name:String):void;
 		/**
 		 * On  xml loading Sucessfull
-		 * 
-		 * 
 		 */		
 		function onXmlLoadingSuccessful(evt:Event):void;
 		/**
 		 * Get Xml
-		 * 
-		 * 
 		 */		
 		function getXml(xmlName:String):XML
 		/**
 		 * Load Graphics From an Existing XML
-		 * 
-		 * 
 		 */		
 		function loadGraphicsFromXml(xml:XML, name:String):void;
 		/**
 		 * Load an XML and load All The Graphics Targeted
-		 * 
-		 * 
 		 */		
 		function loadGraphicsFromPath(path:String, name:String):void;
 		/**
 		 * Load Graphic
-		 * 
-		 * 
 		 */		
 		function loadGraphic(path:String,name:String):void;
 		/**
 		 * On Graphic Loading Successful
-		 * 
-		 * 
 		 */		
 		function onGraphicLoadingSuccessful(evt:Event):void;
 		/**
 		 * On Graphic Loading Progress
-		 * 
-		 * 
 		 */		
 		function onGraphicLoadingProgress(evt:ProgressEvent):void;
 		/**
 		 * Get Graphics
-		 * 
-		 * 
 		 */		
 		function getGraphics():Array;
 		/**
 		 * Get Graphic By Name
-		 * 
-		 * 
 		 */		
-		function getGraphic(graphicName:String):*;
+		function getGraphic(graphicName:String):Sprite;
 		/**
 		 * Get number of graphics to load
-		 * 
-		 * 
 		 */		
 		function getNumGraphicsToLoad():Number ;
 		 /**
 		 * Display Graphic
-		 * 
-		 * 
 		 */		
-		function displayGraphic(graphicName:String, graphic:*):void;
+		function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void;
 		/**
 		 * Remove Graphic
-		 * 
-		 * 
 		 */		
 		function removeGraphic(graphicName:String):void;
 	}

@@ -27,50 +27,59 @@
 */
 
 package framework.core.architecture.entity{
+	import framework.core.architecture.component.*;
 	
 	public interface IEntityManager{
 		
 		/**
 		 * creates a new entity
-		 * 
 		 * @return the new entity
-		 * 
 		 */		
 		function createEntity(entityName:String):IEntity;	
-		
 		/**
 		 * unregisters an entity
-		 * 
 		 * @param entity
-		 * 
 		 */	
 		function removeEntity(entityName:String):void;
 		
 		/**
 		 * registers a component with an entity
-		 * 
 		 * @param entity the component is to be registered with
 		 * @param component to be registered
 		 */	
 		function addComponent(entityName:String,componentName:String):void;
-		
 		/**
-		 *retrieves a component
-		 *  
+		 * Retrieves a component
 		 * @param entity the component is registered with
 		 * @param Component to be retrieves
 		 * @return component 
-		 * 
 		 */		
-		function getComponent(entityName:String,componentName:String):Object;
+		function getComponent(entityName:String,componentName:String):*;
 		/**
-		 *unregisters a component from an entity
-		 *  
+		 * Get Components with Property
+		 */	
+		function getComponentsPropertyWithPropertyName(propertyName:String):Array;
+		/**
+		 * Remove a component from an entity
 		 * @param entity the component is registered with
 		 * @param Component to be unregisters
-		 * 
 		 */	
 		function removeComponent(entityName:String,componentName:String):void;
-
+		/**
+		 * Register a property 
+		 */	
+		function registerProperty(propertyName:String, parentName:String, entityName:String):void;
+		/**
+		 * Iregister a property
+		 */	
+		function unregisterProperty(propertyName:String, parentName:String):void;
+		/**
+		 * Set property Reference
+		 */	
+		function setPropertyReference(propertyReferenceName:String, componentName:String, entityName:String):void;
+		/**
+		 * Remove property Reference
+		 */	
+		function removePropertyReference(propertyReferenceName:String, componentName:String):void;
 	}
 }

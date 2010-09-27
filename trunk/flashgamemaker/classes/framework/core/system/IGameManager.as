@@ -28,15 +28,11 @@ package framework.core.system{
 	public interface IGameManager	{
 		
 		/**
-		 * Get Dispatcher
-		 * 
-		 * 
+		 * Get Dispatcher 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Load Game
-		 * 
-		 * 
 		 */		
 		function loadGame(path:String):void;
 	}

@@ -29,15 +29,35 @@ package framework.core.system{
 		
 		/**
 		 * Get Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Define the port and host 
-		 * 
-		 * 
 		 */		
 		function setConnection(xml:XML):void 
+		/**
+		 * Connect to the XmlSocket 
+		 */		
+		function startConnection():void 
+		/**
+		 * Register
+		 */		
+		function register(obj:Object):void;
+		/**
+		 * Unregister
+		 */		
+		function unregister(obj:Object):void;
+		/**
+		 * Send text to the server
+		 */		
+		function sendText(textToSend:String):void;
+		/**
+		 * Send xml to the server
+		 */		
+		function sendXml(xmlToSend:XML):void;
+		/**
+		 * Get Server
+		 */		
+		function getServer():Object;
 	}
 }

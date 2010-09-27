@@ -59,7 +59,7 @@ package framework.add.screen{
 			_muteBt.addEventListener(MouseEvent.CLICK,onClickMute);
 		}
 		//------ Remove Listener ------------------------------------
-		private function removeListener():void {
+		protected function removeListener():void {
 			_angelstreetBt.removeEventListener(MouseEvent.CLICK,onClickAngelStreet);
 			_muteBt.removeEventListener(MouseEvent.CLICK,onClickMute);
 		}

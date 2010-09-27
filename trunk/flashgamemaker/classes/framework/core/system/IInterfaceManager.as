@@ -29,32 +29,22 @@ package framework.core.system{
 		
 		/**
 		 * Preload the interface screens
-		 * 
-		 * 
 		 */		
 		function preloadInterface(path:String):void;
 		/**
 		 * Load the interface
-		 * 
-		 * 
 		 */		
 		function loadInterface(path:String, name:String):void;
 		/**
 		 * Get Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Go To Interface Screen
-		 * 
-		 * 
 		 */		
 		 function goToScreen(screenName:String):void;
 		 /**
 		 * Get Current Screen
-		 * 
-		 * 
 		 */		
 		 function getCurrentScreen():String
 	}

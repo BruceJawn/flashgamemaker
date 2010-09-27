@@ -133,7 +133,7 @@ package framework.core.system {
 			return _graphicManager.getGraphics();
 		}
 		//------Get Graphic ------------------------------------
-		public function getGraphic(graphicName:String):* {
+		public function getGraphic(graphicName:String):Sprite {
 			return _graphicManager.getGraphic(graphicName);
 		}
 		//------Get Num Graphics To Load ------------------------------------
@@ -142,8 +142,8 @@ package framework.core.system {
 		}
 		//
 		//------Display Graphic ------------------------------------
-		public function displayGraphic(graphicName:String, graphic:*):void {
-			_graphicManager.displayGraphic(graphicName, graphic);
+		public function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void {
+			_graphicManager.displayGraphic(graphicName, graphic, layerId);
 		}
 		//------Remove Graphic ------------------------------------
 		public function removeGraphic(graphicName:String):void {

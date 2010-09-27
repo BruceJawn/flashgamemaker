@@ -47,7 +47,7 @@ package utils.loader {
 		//------ Init Loading Progress ------------------------------------
 		protected function initLoadingProgress():void {
 			_loadingProgress = new LoadingProgress();
-			_ressourceManager.displayGraphic("LoadingProgress", _loadingProgress);
+			_ressourceManager.displayGraphic("LoadingProgress", _loadingProgress, 0);
 		}
 		//------ Remove Loading Progress ------------------------------------
 		protected function removeLoadingProgress():void {

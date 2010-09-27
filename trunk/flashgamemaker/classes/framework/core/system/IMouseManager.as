@@ -29,9 +29,19 @@ package framework.core.system{
 		
 		/**
 		 * Get Dispatcher
-		 * 
-		 * 
 		 */		
 		function getDispatcher():EventDispatcher;
+		/**
+		 * Register
+		 */		
+		function register(obj:Object):void;
+		/**
+		 * Unregister
+		 */		
+		function unregister(obj:Object):void;
+		/**
+		 * Retourn Mouse
+		 */		
+		function getMouse():Object ;
 	}
 }
