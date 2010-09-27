@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MapTexture>
+	<TileSet>
+		<path>texture/framework/game/tileSet/tileSet.png</path>
+	</TileSet>
+	<AddTileSet>
+		<path>texture/framework/game/tileSet/addTileSet.png</path>
+	</AddTileSet>
+</MapTexture>

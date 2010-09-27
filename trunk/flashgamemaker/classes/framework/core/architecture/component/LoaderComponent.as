@@ -23,49 +23,23 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.PhysicManager;
-	import framework.core.system.IPhysicManager;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	import flash.geom.Point;
-	
 	/**
-	* Spatial Component 
+	* Loader Class
 	* @ purpose: 
-	* 
 	*/
-	public class SpatialComponent extends Component{
-
-		private var _physicManager:IPhysicManager = null;
-		//Spatial properties
-		public var _spatial_position:Point = null
-		
-		public function SpatialComponent(componentName:String, componentOwner:IEntity){
+	public class LoaderComponent extends Component{
+        
+		public function LoaderComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
 			initVar();
-			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_physicManager = PhysicManager.getInstance();
-			_spatial_position = new Point(0,0);
-		}
-		//------ Init Property Info ------------------------------------
-		public override function initProperty():void {
-			registerProperty("spatial", _componentName);
-			setPropertyReference("spatial",_componentName);
-		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
 			
-		}
-		//------ Actualize Components  ------------------------------------
-		protected override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			var spatial_position:Point = component._spatial_position;
-			component.x = spatial_position.x + _spatial_position.x; //Position of the entity + position of the component
-			component.y = spatial_position.y + _spatial_position.y; //Position of the entity + position of the component
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

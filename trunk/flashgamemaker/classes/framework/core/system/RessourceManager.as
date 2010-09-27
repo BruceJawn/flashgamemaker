@@ -74,17 +74,17 @@ package framework.core.system {
 			_xmlManager.loadXml(path, name);			
 		}
 		//------ Init Listener ------------------------------------
-		public function initXmlListener():void {
+		private function initXmlListener():void {
 			var xmlDispatcher:EventDispatcher = _xmlManager.getDispatcher();
 			xmlDispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 		}
 		//------ Remove Listener ------------------------------------
-		public function removeXmlListener():void {
+		private function removeXmlListener():void {
 			var xmlDispatcher:EventDispatcher = _xmlManager.getDispatcher();
 			xmlDispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 		}
 		//------ On Xml Loading Successfull ------------------------------------
-		public function onXmlLoadingSuccessful(evt:Event):void{
+		private function onXmlLoadingSuccessful(evt:Event):void{
 			removeXmlListener();
 			dispatchEvent(evt);
 		}
@@ -125,7 +125,7 @@ package framework.core.system {
 			dispatchEvent(evt);
 		}
 		//------ On Graphics Loading Progress ------------------------------------
-		public function onGraphicLoadingProgress(evt:ProgressEvent):void {
+		private function onGraphicLoadingProgress(evt:ProgressEvent):void {
 			dispatchEvent(evt);		
 		}
 		//------Get Graphics ------------------------------------

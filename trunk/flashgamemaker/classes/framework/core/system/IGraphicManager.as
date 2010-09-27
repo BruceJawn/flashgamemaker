@@ -51,7 +51,7 @@ package framework.core.system{
 		 /**
 		 * Get Graphic By Name
 		 */		
-		 function getGraphic(graphicName:String):Sprite;
+		 function getGraphic(graphicName:String):*;
 		 /**
 		 * Get The Number Of Graphics To Load
 		 */		
@@ -59,7 +59,7 @@ package framework.core.system{
 		 /**
 		 * Register and Display Graphic
 		 */		
-		 function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void;
+		 function displayGraphic(graphicName:String, graphic:*, layerId:int):void;
 		 /**
 		 * Unregister and remove Graphic
 		 */		

@@ -47,7 +47,7 @@ package framework.core.architecture.entity{
 		 * @param entity the component is to be registered with
 		 * @param component to be registered
 		 */	
-		function addComponent(entityName:String,componentName:String):void;
+		function addComponent(entityName:String,componentName:String):*;
 		/**
 		 * Retrieves a component
 		 * @param entity the component is registered with
