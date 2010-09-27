@@ -36,5 +36,46 @@ package utils.time{
 			 var date:Date = new Date();
 		  	 return date.getTime();
 		}
+		//------ Get Month ------------------------------------
+		public static function GetMonth(time:Number):Number {
+			var date:Date = getDate(time);
+			return date.getMonth();
+		}
+		//------ Get Day ------------------------------------
+		public static function GetDay(time:Number):String {
+			var date:Date = getDate(time);
+			return date.getDate().toString();
+		}
+		//------ Get Hour ------------------------------------
+		public static function GetHour(time:Number):String {
+			var date:Date = getDate(time);
+			var hour:String = doubleDigitFormat(date.getHours());
+			return hour;
+		}
+		//------ Get Minute ------------------------------------
+		public static function GetMin(time:Number):String {
+			var date:Date = getDate(time);
+			var min:String = doubleDigitFormat(date.getMinutes());
+			return min;
+		}
+		//------ Get Seconde ------------------------------------
+		public static function GetSec(time:Number):String {
+			var date:Date = getDate(time);
+			var sec:String = doubleDigitFormat(date.getSeconds());
+			return sec;
+		}
+		//------ getDate ------------------------------------
+		private static function getDate(time:Number):Date {
+			var date:Date = new Date();
+			date.setTime(time);
+			return date;
+		}
+		//------ Double Digit Format ------------------------------------
+		private static function doubleDigitFormat(value:Number):String {
+    		if(value < 10) {
+        		return ("0" + value);
+   		 }
+   		 return value.toString();
+		}
 	}
 }

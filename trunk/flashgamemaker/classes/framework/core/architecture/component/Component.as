@@ -82,8 +82,8 @@ package framework.core.architecture.component{
           // _propertyReference = null;
 		 }
 		 //------ Update  ------------------------------------
-		public function update():void {
-			var componentsProperty:Array = _componentOwner.getComponentsPropertyWithPropertyName("render");
+		public function update(propertyName:String):void {
+			var componentsProperty:Array = _componentOwner.getComponentsPropertyWithPropertyName(propertyName);
 			if(componentsProperty!=null){
 				for each(var propertyReference:Object in componentsProperty){
 					var componentName:String = propertyReference.componentName;
@@ -94,8 +94,12 @@ package framework.core.architecture.component{
 			}
 		}
 		//------ Actualize Components  ------------------------------------
-		protected function actualizeComponent(componentName:String,componentOwne:String,component:*):void {
+		protected function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			
+		}
+		//------ If Component Is Registered With Property  ------------------------------------
+		public function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean {
+			return _componentOwner.componentIsRegisteredWithProperty(componentName,propertyName);
 		}
 		//------- ToString -------------------------------
 		 public function ToString():void{

@@ -58,7 +58,6 @@ package framework.core.architecture.component{
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
-			update();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
@@ -73,7 +72,7 @@ package framework.core.architecture.component{
 
 		}
 		//------ Actualize Components  ------------------------------------
-		protected override function actualizeComponent(componentName:String,componentOwne:String,component:*):void {
+		protected override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (! _graphicManager.containsGraphic(componentName)) {
 				var _render_layerId:int=component._render_layerId;
 				var _render_alpha:Number=component._render_alpha;

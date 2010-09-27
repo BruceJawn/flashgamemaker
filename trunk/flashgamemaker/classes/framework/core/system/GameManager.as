@@ -39,10 +39,12 @@ package framework.core.system {
 		
 		private static var _instance:IGameManager=null;
 		private static var _allowInstanciation:Boolean = false;
+		private var _entityManager:IEntityManager = null;
 		private var _keyboardManager:IKeyboardManager = null;
 		private var _mouseManager:IMouseManager = null;
 		private var _serverManager:IServerManager = null;
-		private var _entityManager:IEntityManager = null;
+		private var _timeManager:ITimeManager = null;
+		
 		
 		public function GameManager(){
 			if(!_allowInstanciation){
@@ -61,10 +63,12 @@ package framework.core.system {
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
+			_entityManager = EntityManager.getInstance();
 			_keyboardManager = KeyboardManager.getInstance();
 			_mouseManager = MouseManager.getInstance();
 			_serverManager = ServerManager.getInstance();
-			_entityManager = EntityManager.getInstance();
+			_timeManager = TimeManager.getInstance();
+			
 		}
 		//------ Load Game ------------------------------------
 		public function loadGame(path:String):void{
@@ -74,7 +78,7 @@ package framework.core.system {
 		//------ On Xml Loading Successful ------------------------------------
 		protected override function onXmlLoadingSuccessful(evt:Event):void {
 			removeXmlListener();
-			//initConfig();
+			initConfig();
 			preloadTexture();
 		}
 		//------ Init Config ------------------------------------
@@ -105,12 +109,14 @@ package framework.core.system {
 			var entity:IEntity = _entityManager.createEntity("Entity");
 			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
 			//-- please insert your component classes in the Entity Manager inside the initClassRef() function --
-			//_entityManager.addComponent("Entity", "KeyboardInputComponent");
-			//_entityManager.addComponent("Entity", "MouseInputComponent");
-			//_entityManager.addComponent("Entity", "ServerInputComponent");
+			_entityManager.addComponent("Entity", "KeyboardInputComponent");
+			_entityManager.addComponent("Entity", "MouseInputComponent");
+			_entityManager.addComponent("Entity", "ServerInputComponent");
 			_entityManager.addComponent("Entity", "RenderComponent");
 			_entityManager.addComponent("Entity", "SpatialComponent");
 			_entityManager.addComponent("Entity", "SystemInfoComponent");
+			_entityManager.addComponent("Entity", "TimeComponent");
+			_entityManager.addComponent("Entity", "TimerComponent");
 		}
 	}
 }

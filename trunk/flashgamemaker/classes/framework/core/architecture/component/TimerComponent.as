@@ -23,54 +23,66 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.PhysicManager;
-	import framework.core.system.IPhysicManager;
+	import utils.time.Time;
+	import framework.core.system.TimeManager;
+	import framework.core.system.ITimeManager;
 	
-	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
-	import flash.events.*;
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
+	import flash.utils.getTimer;
+	import flash.text.TextField;
 	import flash.geom.Point;
+	import flash.events.EventDispatcher;
+	/**
 	
 	/**
-	* Spatial Component 
-	* @ purpose: 
-	* 
+	* Entity Class
+	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
+	* In FGM an entity is an empty container manager by the EntityManager.
 	*/
-	public class SpatialComponent extends Component{
-
-		private var _physicManager:IPhysicManager = null;
-		//Spatial properties
-		public var _spatial_position:Point = null
+	public class TimerComponent extends Component {
 		
-		public function SpatialComponent(componentName:String, componentOwner:IEntity){
+		private var _timer:Timer = null;
+		private var _delay:Number = 100;
+		private var _count:Number = 10;
+		
+		public function TimerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_physicManager = PhysicManager.getInstance();
-			_spatial_position = new Point(20,0);
+			_delay = 1000;
+			_count = 5;
 		}
-		//------ Init Property Info ------------------------------------
+		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			registerProperty("spatial", _componentName);
-			setPropertyReference("spatial",_componentName);
+			registerProperty("timer", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
-			
+			_timer = new Timer(_delay, _count);
+			_timer.addEventListener(TimerEvent.TIMER, onTimer);
+			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+			_timer.start()
+		}
+		//------ Remove Listener ------------------------------------
+		private function removeListener():void {
+			_timer.removeEventListener(TimerEvent.TIMER, onTimer);
+			_timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+		}
+		//------ On Tick ------------------------------------
+		private function onTimer(evt:TimerEvent):void {
+			update("spatial");
+		}
+		//------ On Timer Complete ------------------------------------
+		private function onTimerComplete(evt:TimerEvent):void {
+			trace("Timer Complete");
 		}
 		//------ Actualize Components  ------------------------------------
 		protected override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			var spatial_position:Point = component._spatial_position;
-			component.x = spatial_position.x + _spatial_position.x; //Position of the entity + position of the component
-			component.y = spatial_position.y + _spatial_position.y; //Position of the entity + position of the component
+			trace(componentName ,component._spatial_position);
 		}
-		//------- ToString -------------------------------
-		 public override function ToString():void{
-           
-        }
-		
 	}
 }

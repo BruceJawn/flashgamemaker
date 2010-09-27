@@ -23,8 +23,8 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.ServerManager;
-	import framework.core.system.IServerManager;
+	import framework.core.system.GraphicManager;
+	import framework.core.system.IGraphicManager;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;

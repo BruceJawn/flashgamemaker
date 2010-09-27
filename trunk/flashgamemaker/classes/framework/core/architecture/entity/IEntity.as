@@ -61,6 +61,10 @@ package framework.core.architecture.entity{
 		 */	
 		function getComponentsPropertyWithPropertyName(propertyName:String):Array;
 		/**
+		 * Component Is Registered With Property
+		 */	
+		 function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean;
+		/**
 		 * Invoked when instance is to be destroyed
 		 */	
 		function destroy():void;
