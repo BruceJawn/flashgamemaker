@@ -79,6 +79,8 @@ package framework.core.architecture.entity {
 			var systemInfoComponent:SystemInfoComponent;
 			var renderComponent:RenderComponent;
 			var spatialComponent:SpatialComponent;
+			var timeComponent:TimeComponent;
+			var timerComponent:TimerComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
@@ -108,7 +110,13 @@ package framework.core.architecture.entity {
 		//------ Get Component ------------------------------------
 		public function getComponent(entityName:String,componentName:String):*{	
 			var entity:IEntity = _entities[entityName];
+			if(_entities[entityName] == null){
+				throw new Error("Error:The entity with the name"+entityName+" doesn't exist!!");
+			}
 		    var components:Dictionary = entity.getComponents();
+			if(components[componentName] == null){
+				throw new Error("Error:The component with the name"+componentName+" doesn't belong to the entity "+entityName+" !!");
+			}
 			return components[componentName];
 		}
 		//------ Get Components' Property With PropertyName ------------------------------------
@@ -117,6 +125,17 @@ package framework.core.architecture.entity {
 				//trace("Error: The Property "+propertyName+" is not registered !!");
 			}
 			return _propertyReferences[propertyName];
+		}
+		//------ Component Is Registered With Property ------------------------------------
+		public function componentIsRegisteredWithProperty(ownerName:String,componentName:String, propertyName:String):Boolean{
+			var propertyReference:Array = _propertyReferences[propertyName] as Array;
+			trace(componentName,propertyName);
+			for each (var obj:Object in propertyReference){
+				if(obj.componentName == componentName && obj.ownerName == ownerName ){
+					return true
+				}
+			}
+			return false;
 		}
 		//------ Remove Component ------------------------------------
 		public function removeComponent(entityName:String,componentName:String):void{
@@ -149,7 +168,11 @@ package framework.core.architecture.entity {
 				throw new Error("Error: A Property already exist with the name"+propertyName+" !!");
 			}
 			_propertyInfos[propertyName] = {componentName:componentName,ownerName:ownerName} ;
-			_propertyReferences[propertyName] = new Array();
+			if(_propertyReferences[propertyName] == null){
+				_propertyReferences[propertyName] = new Array();
+			}
+			var component:Object = getComponent(ownerName,componentName);
+			component.update(propertyName);
 		}
 		//------ Unregister Property ------------------------------------
 		public function unregisterProperty(propertyName:String, componentName:String):void {
@@ -164,22 +187,21 @@ package framework.core.architecture.entity {
 		}
 		//------ Set Property Reference ------------------------------------
 		public function setPropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
-			if(_propertyInfos[propertyReferenceName]==null){
+			var propertyReference:Array = _propertyReferences[propertyReferenceName] as Array;
+			if(propertyReference == null){
 				_propertyReferences[propertyReferenceName] = new Array();
 				//trace("The Property "+propertyReferenceName+" is not registered !!");
+			}else if(propertyReference.lastIndexOf(componentName)!=-1){
+					throw new Error("Error: You already have a PropertyReference with the name "+propertyReferenceName+" !!");
 			}
-			var propertyReference:Array = _propertyReferences[propertyReferenceName] as Array;
-			if(propertyReference.lastIndexOf(componentName)!=-1){
-				throw new Error("Error: You already have a PropertyReference with the name "+propertyReferenceName+" !!");
+			_propertyReferences[propertyReferenceName].push({componentName:componentName,ownerName:ownerName});
+			if(_propertyInfos[propertyReferenceName]!=null){
+				var propertyInfo:Object = _propertyInfos[propertyReferenceName];
+				var parentEntityName:String = propertyInfo.ownerName;
+				var parentComponentName:String = propertyInfo.componentName;
+				var component:* = getComponent(parentEntityName,parentComponentName);
+				component.update(propertyReferenceName);
 			}
-			propertyReference.push({componentName:componentName,ownerName:ownerName});
-			var propertyInfo:Object = _propertyInfos[propertyReferenceName];
-			var parentEntityName:String = propertyInfo.ownerName;
-			var parentComponentName:String = propertyInfo.componentName;
-			var entity:IEntity = _entities[parentEntityName];
-			var components:Dictionary = entity.getComponents();
-			var component:Object = components[parentComponentName];
-			component.update();
 		}
 		//------ Remove Property Reference ------------------------------------
 		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {

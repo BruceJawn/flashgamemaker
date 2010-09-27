@@ -60,10 +60,15 @@ package framework.core.architecture.entity{
 		 */	
 		function getComponentsPropertyWithPropertyName(propertyName:String):Array;
 		/**
+		 * Component Is Registered With Property
+		 */	
+		function componentIsRegisteredWithProperty(ownerName:String,componentName:String, propertyName:String):Boolean;
+		/**
 		 * Remove a component from an entity
 		 * @param entity the component is registered with
 		 * @param Component to be unregisters
 		 */	
+		 
 		function removeComponent(entityName:String,componentName:String):void;
 		/**
 		 * Register a property 

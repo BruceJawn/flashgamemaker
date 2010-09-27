@@ -56,11 +56,15 @@ package framework.core.architecture.entity{
 		}
 		//------ Get Component ------------------------------------
 		public function getComponent(entityName:String,componentName:String):*{	
-			return _entityManager.getComponent(entityName,componentName);
+			return _entityManager.getComponent(_entityName,componentName);
 		}
 		//------ Get Components'Property With PropertyName ------------------------------------
 		public function getComponentsPropertyWithPropertyName(propertyName:String):Array{	
 			return _entityManager.getComponentsPropertyWithPropertyName(propertyName);
+		}
+		//------ Component Is Registered With Property ------------------------------------
+		public function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean{
+			return _entityManager.componentIsRegisteredWithProperty(_entityName, componentName,propertyName);
 		}
 		//------ Remove Component ------------------------------------
 		public function removeComponent(componentName:String):void {
