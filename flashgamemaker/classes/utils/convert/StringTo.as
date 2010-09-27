@@ -27,11 +27,8 @@ package utils.convert{
 	*/
 	public class StringTo {
 
-		public function StringTo() {
-
-		}
 		//------ String To Bool ------------------------------------
-		public static function stringToBool(data:String):Boolean {
+		public static function Bool(data:String):Boolean {
 			if (data=="true") {
 				return true;
 			} else if (data=="false") {
@@ -40,44 +37,45 @@ package utils.convert{
 			return false;
 		}
 		//------ Sting To Tab Xml ------------------------------------
-		public static function stringToTabXml(_tab:Array,_mapHigh:Number,_mapHeight:Number,_mapWidth:Number ):Array {
-			var tab:Array=new Array(_mapHigh);
-			tab[0]=new Array(_mapHeight);
-			tab[0][0]=new Array(_mapWidth);
+		public static function Tab(string:String,mapHigh:Number,mapHeight:Number,mapWidth:Number ):Array {
+			var stringToTab:Array = string.split(",");
+			var tab:Array=new Array(mapHigh);
+			tab[0]=new Array(mapHeight);
+			tab[0][0]=new Array(mapWidth);
 			var tmp:Number=0;
 			var i:Number=0;
 			var j:Number=0;
 			var k:Number=0;
-			while (tmp<_tab.length) {
-				var string:Array=_tab[tmp].split("*");
-				if (string.length==1) {
-					tab[k][j][i]=string[0];
+			while (tmp<stringToTab.length) {
+				var list:Array=stringToTab[tmp].split("*");
+				if (list.length==1) {
+					tab[k][j][i]=list[0];
 					i++;
-					if (i>=_mapWidth) {
+					if (i>=mapWidth) {
 						i=0;
 						j++;
-						tab[k][j]=new Array(_mapWidth);
-						if (j>=_mapHeight) {
+						tab[k][j]=new Array(mapWidth);
+						if (j>=mapHeight) {
 							j=0;
 							k++;
-							tab[k]=new Array(_mapHeight);
-							tab[k][0]=new Array(_mapWidth);
+							tab[k]=new Array(mapHeight);
+							tab[k][0]=new Array(mapWidth);
 						}
 					}
 				} else {
 					//This function does not work properly creation of bigger tab than needed !!!!
-					for (var l:Number=0; l<Number(string[0]); l++) {
-						tab[k][j][i]=string[1];
+					for (var l:Number=0; l<Number(list[0]); l++) {
+						tab[k][j][i]=list[1];
 						i++;
-						if (i>=_mapWidth) {
+						if (i>=mapWidth) {
 							i=0;
 							j++;
-							tab[k][j]=new Array(_mapWidth);
-							if (j>=_mapHeight) {
+							tab[k][j]=new Array(mapWidth);
+							if (j>=mapHeight) {
 								j=0;
 								k++;
-								tab[k]=new Array(_mapHeight);
-								tab[k][0]=new Array(_mapWidth);
+								tab[k]=new Array(mapHeight);
+								tab[k][0]=new Array(mapWidth);
 							}
 						}
 					}

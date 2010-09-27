@@ -101,6 +101,14 @@ package framework.core.architecture.component{
 		public function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean {
 			return _componentOwner.componentIsRegisteredWithProperty(componentName,propertyName);
 		}
+		//------ Create Entity  ------------------------------------
+		protected  function createEntity(entityName:String):void {
+			_componentOwner.createEntity(entityName);
+		}
+		//------ Add Component  ------------------------------------
+		public function addComponent(entityName:String,componentName:String):*{
+			return _componentOwner.addComponent(entityName,componentName);
+		}
 		//------- ToString -------------------------------
 		 public function ToString():void{
             trace(_componentName, _componentOwner);

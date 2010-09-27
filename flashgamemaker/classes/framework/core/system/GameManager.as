@@ -25,6 +25,7 @@
 package framework.core.system {
 	import utils.loader.*;
 	import framework.core.architecture.entity.*;
+	import framework.core.architecture.component.*;
 	
 	import flash.display.*;
 	import flash.events.*;
@@ -78,8 +79,9 @@ package framework.core.system {
 		//------ On Xml Loading Successful ------------------------------------
 		protected override function onXmlLoadingSuccessful(evt:Event):void {
 			removeXmlListener();
-			initConfig();
-			preloadTexture();
+			//initConfig();
+			//preloadTexture() or startGame()
+			startGame();
 		}
 		//------ Init Config ------------------------------------
 		private function initConfig():void{
@@ -100,23 +102,26 @@ package framework.core.system {
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingSuccessful(evt:Event):void {
-			removeGraphicListener();
-			removeLoadingProgress();
 			startGame();
 		}
 		//------ Start Game ------------------------------------
 		protected  function startGame():void {
+			removeGraphicListener();
+			removeLoadingProgress();
 			var entity:IEntity = _entityManager.createEntity("Entity");
 			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
 			//-- please insert your component classes in the Entity Manager inside the initClassRef() function --
-			_entityManager.addComponent("Entity", "KeyboardInputComponent");
-			_entityManager.addComponent("Entity", "MouseInputComponent");
-			_entityManager.addComponent("Entity", "ServerInputComponent");
-			_entityManager.addComponent("Entity", "RenderComponent");
-			_entityManager.addComponent("Entity", "SpatialComponent");
-			_entityManager.addComponent("Entity", "SystemInfoComponent");
-			_entityManager.addComponent("Entity", "TimeComponent");
-			_entityManager.addComponent("Entity", "TimerComponent");
+			//-- or instanciate your component as follow --
+			/*var keyboardInputComponent: KeyboardInputComponent = _entityManager.addComponent("Entity", "KeyboardInputComponent");
+			var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent");
+			var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent");
+			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("Entity", "SystemInfoComponent");
+			var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent");
+			var timerComponent:TimerComponent =_entityManager.addComponent("Entity", "TimerComponent");*/
+			var spatialComponent: SpatialComponent = _entityManager.addComponent("Entity", "SpatialComponent");
+			var renderComponent:RenderComponent=_entityManager.addComponent("Entity", "RenderComponent");
+			var tileMapComponent:TileMapComponent = _entityManager.addComponent("Entity", "TileMapComponent");
+			tileMapComponent.loadMap("xml/framework/game/map.xml", "Map");
 		}
 	}
 }

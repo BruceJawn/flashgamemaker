@@ -51,12 +51,12 @@ package framework.core.architecture.entity{
 			_entityManager= entityManager;
 		}
 		//------ Add Component ------------------------------------
-		public function addComponent(componentName:String):void {
-			return _entityManager.addComponent(_entityName,componentName);
+		public function addComponent(entityName:String, componentName:String):* {
+			return _entityManager.addComponent(entityName,componentName);
 		}
 		//------ Get Component ------------------------------------
 		public function getComponent(entityName:String,componentName:String):*{	
-			return _entityManager.getComponent(_entityName,componentName);
+			return _entityManager.getComponent(entityName,componentName);
 		}
 		//------ Get Components'Property With PropertyName ------------------------------------
 		public function getComponentsPropertyWithPropertyName(propertyName:String):Array{	
@@ -98,6 +98,10 @@ package framework.core.architecture.entity{
 		public function getComponents():Dictionary{
             return _components;
         }
+		//------ Create Entity  ------------------------------------
+		public  function createEntity(entityName:String):void {
+			_entityManager.createEntity(entityName);
+		}
 		//------- ToString -------------------------------
 		public function ToString():void{
             trace(_entityName);

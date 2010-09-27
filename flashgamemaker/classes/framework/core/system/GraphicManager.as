@@ -80,13 +80,13 @@ package framework.core.system{
 			loadGraphic(graphicPath, graphicName);
 		}
 		//------ Load Xml ------------------------------------
-		public function loadXml(path:String, name:String):void {
+		private function loadXml(path:String, name:String):void {
 			_xmlLoader=new XmlLoader();
 			_xmlLoader.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
 			_xmlLoader.loadXml(path,name);
 		}
 		//------ Xml Loading Successful ------------------------------------
-		public function onXmlLoadingSuccessful(evt:Event):void {
+		private function onXmlLoadingSuccessful(evt:Event):void {
 			_xmlLoader.removeEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
 			var xml:XML =_xmlLoader.getXml();
 			_graphicsToLoad  = parseXml(xml);
@@ -106,10 +106,10 @@ package framework.core.system{
 			return graphicsToLoad;
 		}
 		//------ Load Graphic ------------------------------------
-		public function loadGraphic(path:String, name:String):void {
+		public function loadGraphic(path:String, graphicName:String):void {
 			_graphicLoader=new GraphicLoader();
 			initGraphicListener();
-			_graphicLoader.loadGraphic(path,name);
+			_graphicLoader.loadGraphic(path,graphicName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initGraphicListener():void {
@@ -141,12 +141,13 @@ package framework.core.system{
 			_graphicsLoaded.push({name:graphicName,graphic:graphic});
 		}
 		//------ Get Graphic  ------------------------------------
-		public function getGraphic(graphicName:String):Sprite {
+		public function getGraphic(graphicName:String):* {
 			for each( var obj:Object in _graphicsLoaded){
 				if(graphicName == obj.name){
 					return obj.graphic;
 					}
 			}
+			throw new Error("The graphic "+ graphicName+" doesn't exist!!");
 			return null;
 		}
 		//------ Get Graphics  ------------------------------------
@@ -161,7 +162,7 @@ package framework.core.system{
 			return _graphicsToLoad.length;
 		}
 		//------ Display Graphic ------------------------------------
-		public function displayGraphic(graphicName:String, graphic:Sprite, layerId:int):void {
+		public function displayGraphic(graphicName:String, graphic:*, layerId:int):void {
 			registerGraphicOnScene(graphicName,graphic);
 			if(layerId>=_layers.length){
 				layerId = createNewLayer();
@@ -204,7 +205,7 @@ package framework.core.system{
 			_layers.splice(layerId,1);
 		}
 		//------ Register Graphic On Scene ------------------------------------
-		private function registerGraphicOnScene(graphicName:String, graphic:Sprite):void {
+		private function registerGraphicOnScene(graphicName:String, graphic:*):void {
 			_graphicsOnScene[graphicName] = graphic;
 		}
 		//------ Unregister Graphic On Scene ------------------------------------

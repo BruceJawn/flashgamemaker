@@ -1,13 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Texture>
-
-	<TileSet>
-		<path>texture/framework/game/tileSet/tileSet.png</path>
-	</TileSet>
-	<AddTileSet>
-		<path>texture/framework/game/tileSet/addTileSet.png</path>
-	</AddTileSet>
-
+<CharTexture>
 	<Knight tileWidth="64" tileHeight="64" tileX="8" tileY="4">
 		<path>texture/framework/game/charSet/templeKnightSet.png</path>
 	</Knight>
@@ -18,4 +10,4 @@
 		<path>texture/framework/game/charSet/bebeVisages.swf</path>
 	</BebeVisage>
 
-</Texture >
+</CharTexture>

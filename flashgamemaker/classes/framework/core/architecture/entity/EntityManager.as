@@ -81,11 +81,14 @@ package framework.core.architecture.entity {
 			var spatialComponent:SpatialComponent;
 			var timeComponent:TimeComponent;
 			var timerComponent:TimerComponent;
+			var graphicComponent:GraphicComponent;
+			var tileMapComponent:TileMapComponent;
+			var loaderComponent:LoaderComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
 			if(_entities[entityName] != null){
-				throw new Error("Error: An Entity already exist with the name"+entityName+" !!");
+				throw new Error("Error: An Entity already exist with the name "+entityName+" !!");
 			}
 			var entity:IEntity = new Entity(entityName, _instance) as IEntity;
 			_entities[entityName] = entity;
@@ -96,16 +99,17 @@ package framework.core.architecture.entity {
 			delete _entities[entityName];
 		}
 		//------ Add Component ------------------------------------
-		public function addComponent(entityName:String,componentName:String):void{
+		public function addComponent(entityName:String,componentName:String):*{
 			var classRef:Class = getClass(componentName);
 			var entity:IEntity = _entities[entityName];
 			var component:Component = new classRef(componentName,entity);
 			var components:Dictionary = entity.getComponents();
 			if(components[componentName] != null){
-				throw new Error("Error: A Component already exist with the name"+componentName+" !!");
+				throw new Error("Error: A Component already exist with the name "+componentName+" !!");
 			}
 			components[componentName] = component;
 			component.initProperty();
+			return component;
 		}
 		//------ Get Component ------------------------------------
 		public function getComponent(entityName:String,componentName:String):*{	
@@ -165,7 +169,7 @@ package framework.core.architecture.entity {
 		//------ Register Property ------------------------------------
 		public function registerProperty(propertyName:String, componentName:String, ownerName:String):void {
 			if(_propertyInfos[propertyName]!=null){
-				throw new Error("Error: A Property already exist with the name"+propertyName+" !!");
+				throw new Error("Error: A Property already exist with the name "+propertyName+" !!");
 			}
 			_propertyInfos[propertyName] = {componentName:componentName,ownerName:ownerName} ;
 			if(_propertyReferences[propertyName] == null){

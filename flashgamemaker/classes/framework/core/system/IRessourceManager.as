@@ -45,10 +45,6 @@ package framework.core.system{
 		 */		
 		function loadXml(path:String, name:String):void;
 		/**
-		 * On  xml loading Sucessfull
-		 */		
-		function onXmlLoadingSuccessful(evt:Event):void;
-		/**
 		 * Get Xml
 		 */		
 		function getXml(xmlName:String):XML
@@ -64,14 +60,6 @@ package framework.core.system{
 		 * Load Graphic
 		 */		
 		function loadGraphic(path:String,name:String):void;
-		/**
-		 * On Graphic Loading Successful
-		 */		
-		function onGraphicLoadingSuccessful(evt:Event):void;
-		/**
-		 * On Graphic Loading Progress
-		 */		
-		function onGraphicLoadingProgress(evt:ProgressEvent):void;
 		/**
 		 * Get Graphics
 		 */		
