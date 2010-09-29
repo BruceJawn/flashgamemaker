@@ -57,6 +57,7 @@ package framework.core.system{
 		private function initVar():void {
 			 _xmls= new Dictionary();
 			_xmlsToLoad = new Array();
+			_xmlLoader=new XmlLoader();
 		}
 		//------ Load Xmls From Path ------------------------------------
 		public function loadXmlsFromPath(path:String, xmlName:String):void {
@@ -81,10 +82,13 @@ package framework.core.system{
 			loadXml(xmlPath, xmlName);
 		}
 		//------ Load Xml ------------------------------------
-		public function loadXml(path:String, name:String):void {
-			_xmlLoader=new XmlLoader();
-			_xmlLoader.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
-			_xmlLoader.loadXml(path,name);
+		public function loadXml(path:String, xmlName:String):void {
+			_xmlsToLoad.push({name:xmlName,path:path});
+			if(!(_xmlsToLoad.length>1 && _xmlLoader.isLoading())){
+				_xmlLoader=new XmlLoader();
+				_xmlLoader.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+				_xmlLoader.loadXml(path,xmlName);
+			}
 		}
 		//------ Xml Loading Successful ------------------------------------
 		private function onXmlLoadingSuccessful( evt:Event ):void {

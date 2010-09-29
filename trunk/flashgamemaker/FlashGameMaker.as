@@ -35,8 +35,8 @@ package {
 	public class FlashGameMaker extends Sprite {
 
 		public static var STAGE:Stage=null;
-		public static var WIDTH:Number=800;
-		public static var HEIGHT:Number=600;
+		public static var WIDTH:Number=400;
+		public static var HEIGHT:Number=345;
 		
 		public function FlashGameMaker() {
 			if (stage) init();

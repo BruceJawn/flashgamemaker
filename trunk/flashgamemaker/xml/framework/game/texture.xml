@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Texture>
-
 	<TileSet>
 		<path>texture/framework/game/tileSet/tileSet.png</path>
 	</TileSet>
@@ -17,5 +16,4 @@
 	<BebeVisage tileWidth="80" tileHeight="100">
 		<path>texture/framework/game/charSet/bebeVisages.swf</path>
 	</BebeVisage>
-
 </Texture >

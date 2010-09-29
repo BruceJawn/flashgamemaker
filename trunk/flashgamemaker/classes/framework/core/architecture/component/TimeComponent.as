@@ -40,16 +40,11 @@ package framework.core.architecture.component{
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
 	* In FGM an entity is an empty container manager by the EntityManager.
 	*/
-	public class TimeComponent extends Component {
+	public class TimeComponent extends GraphicComponent {
 		private var _timeManager:ITimeManager = null;
 		private var _virtualTime:TextField=null;
 		private var _realTime:TextField=null;
 		
-		//Render properties
-		public var _render_layerId:int=0;
-		public var _render_alpha:Number;
-		//Spatial properties
-		public var _spatial_position:Point = null;
 		//Time properties
 		public var _time_virtualTime:Object = null;
 		public var _time_realTime:Object = null;
@@ -61,8 +56,6 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_spatial_position = new Point(0,20);
-			_render_alpha = 1;
 			_time_virtualTime = new Object();
 			_time_realTime = new Object();
 			
@@ -72,14 +65,9 @@ package framework.core.architecture.component{
 			_realTime.width=_virtualTime.width;
 			addChild(_virtualTime);			
 			addChild(_realTime);			
-			_realTime.y+=20;
+			_realTime.y+=15;
 			
 			_timeManager = TimeManager.getInstance();
-		}
-		//------ Init Property  ------------------------------------
-		public override function initProperty():void {
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {

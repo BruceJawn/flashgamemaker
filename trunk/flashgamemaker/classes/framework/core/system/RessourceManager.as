@@ -90,7 +90,8 @@ package framework.core.system {
 		}
 		//------Get Xml ------------------------------------
 		public function getXml(xmlName:String):XML {
-			return _xmlManager.getXml(xmlName);
+			var xml:XML =  _xmlManager.getXml(xmlName)
+			return xml;
 		}
 		//------ Load Graphics From Path ------------------------------------
 		public function loadGraphicsFromPath(path:String, name:String):void{
@@ -118,9 +119,11 @@ package framework.core.system {
 			var graphicDispatcher:EventDispatcher = _graphicManager.getDispatcher();
 			graphicDispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
 			graphicDispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+			
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		public function onGraphicLoadingSuccessful(evt:Event):void {
+			
 			removeGraphicListener();
 			dispatchEvent(evt);
 		}

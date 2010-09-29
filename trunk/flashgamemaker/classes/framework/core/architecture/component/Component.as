@@ -23,96 +23,126 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	
+
 	import flash.utils.Dictionary;
 	import flash.display.Sprite;
-	
+
 	/**
 	* Entity Class
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
 	* In FGM an entity is an empty container manager by the EntityManager.
 	*/
-	public class Component extends Sprite{
+	public class Component extends Sprite {
 
 		public var _componentName:String;
-		protected var _componentOwner:IEntity = null;
-		
-		public function Component(componentName:String, componentOwner:IEntity){
+		protected var _componentOwner:IEntity=null;
+		private var _propertyReference:Array = null;
+
+		public function Component(componentName:String, componentOwner:IEntity) {
 			initVar(componentName,componentOwner);
 		}
 		//------ Init Var ------------------------------------
 		private function initVar(componentName:String, componentOwner:IEntity):void {
-			_componentName= componentName;
-			_componentOwner= componentOwner;
+			_componentName=componentName;
+			_componentOwner=componentOwner;
+			_propertyReference = new Array();
 		}
 		//------ Init Property  ------------------------------------
-		public  function initProperty():void {
-			
+		public function initProperty():void {
+
 		}
 		//------ Set Entity Owner ------------------------------------
 		public function setComponentOwner(componentOwner:IEntity):void {
-			_componentOwner = componentOwner;
+			_componentOwner=componentOwner;
 		}
 		//------ Destroy ------------------------------------
-		public function destroy():void{
+		public function destroy():void {
 			_componentOwner.removeComponent(_componentName);
 		}
 		//------- Get Name -------------------------------
-		 public function getName():String{
-            return _componentName;
-        }
+		public function getName():String {
+			return _componentName;
+		}
 		//------ Register Property  ------------------------------------
 		public function registerProperty(propertyName:String, componentName:String):void {
 			_componentOwner.registerProperty(propertyName,componentName);
 		}
 		//------- Remove Property -------------------------------
-		 public function unregisterProperty(propertyName:String, componentName:String):void {
-          _componentOwner.unregisterProperty(propertyName,componentName);
-		 }
+		public function unregisterProperty(propertyName:String, componentName:String):void {
+			_componentOwner.unregisterProperty(propertyName,componentName);
+		}
 		//------ Set Property Reference ------------------------------------
 		public function setPropertyReference(propertyReferenceName:String, componentName:String):void {
 			_componentOwner.setPropertyReference(propertyReferenceName,componentName);
 		}
-		//------ Remove Property Reference ------------------------------------
-		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {
-			_componentOwner.removePropertyReference(propertyReferenceName,componentName);
+		//------- Reset Property -------------------------------
+		public function resetProperty():void {
+			// _propertyReference = null;
 		}
-		 //------- Reset Property -------------------------------
-		 public function resetProperty():void{
-          // _propertyReference = null;
-		 }
-		 //------ Update  ------------------------------------
+		//------ Refresh  ------------------------------------
+		protected function refresh(propertyName:String):void {
+			_componentOwner.refresh(propertyName);
+		}
+		//------ Update  ------------------------------------
 		public function update(propertyName:String):void {
-			var componentsProperty:Array = _componentOwner.getComponentsPropertyWithPropertyName(propertyName);
-			if(componentsProperty!=null){
-				for each(var propertyReference:Object in componentsProperty){
-					var componentName:String = propertyReference.componentName;
-					var ownerName:String = propertyReference.ownerName;
-					var component:* = _componentOwner.getComponent(ownerName,componentName);
+			var componentsProperty:Array=_componentOwner.getComponentsPropertyWithPropertyName(propertyName);
+			if (componentsProperty!=null) {
+				for each (var propertyReference:Object in componentsProperty) {
+					var componentName:String=propertyReference.componentName;
+					var ownerName:String=propertyReference.ownerName;
+					var component:* =_componentOwner.getComponent(ownerName,componentName);
 					actualizeComponent(componentName,ownerName,component);
 				}
 			}
 		}
+		//------ Reset  ------------------------------------
+		public function reset(ownerName:String, componentName:String):void {
+			
+		}
 		//------ Actualize Components  ------------------------------------
 		protected function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			
+
 		}
 		//------ If Component Is Registered With Property  ------------------------------------
 		public function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean {
 			return _componentOwner.componentIsRegisteredWithProperty(componentName,propertyName);
 		}
 		//------ Create Entity  ------------------------------------
-		protected  function createEntity(entityName:String):void {
+		protected function createEntity(entityName:String):void {
 			_componentOwner.createEntity(entityName);
 		}
 		//------ Add Component  ------------------------------------
-		public function addComponent(entityName:String,componentName:String):*{
-			return _componentOwner.addComponent(entityName,componentName);
+		public function addComponent(entityName:String,componentName:String, newName:String):* {
+			return _componentOwner.addComponent(entityName,componentName,newName);
+		}
+		//------ Remove Component  ------------------------------------
+		public function removeComponent(componentName:String):void {
+			_componentOwner.removeComponent(componentName);
+		}
+		//------ Get Component  ------------------------------------
+		public function getComponent(entityName:String,componentName:String):* {
+			return _componentOwner.getComponent(entityName,componentName);
+		}
+		//------ Add Property Reference  ------------------------------------
+		public function addPropertyReference(propertyName:String):void {
+			_propertyReference.push(propertyName);
+		}
+		//------ Get Property Reference  ------------------------------------
+		public function getPropertyReference():Array {
+			return _propertyReference;
+		}
+		//------ Remove Property Reference  ------------------------------------
+		public function removePropertyReference(propertyName:String):void {
+			for(var i:int = 0; i<_propertyReference.length;i++){
+				if(_propertyReference[i] == propertyName){
+				_propertyReference.splice(i,1);
+				}
+			}
 		}
 		//------- ToString -------------------------------
-		 public function ToString():void{
-            trace(_componentName, _componentOwner);
-        }
-		
+		public function ToString():void {
+			trace(_componentName, _componentOwner);
+		}
+
 	}
 }

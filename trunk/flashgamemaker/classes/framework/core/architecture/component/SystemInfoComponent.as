@@ -34,16 +34,11 @@ package framework.core.architecture.component{
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
 	* In FGM an entity is an empty container manager by the EntityManager.
 	*/
-	public class SystemInfoComponent extends Component {
+	public class SystemInfoComponent extends GraphicComponent {
 		private var _currentTime:Number = 0;
 		private var _Memory:TextField=null;
 		private var _FPS:TextField=null;
-		//Render properties
-		public var _render_layerId:int=0;
-		public var _render_alpha:Number;
-		//Spatial properties
-		public var _spatial_position:Point = null;
-
+	
 		public function SystemInfoComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -51,20 +46,12 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_spatial_position = new Point(0,0);
-			_render_alpha = 1;
-			
 			_Memory = new TextField();
 			_FPS = new TextField();
 			_Memory.x+=80;
 			addChild(_Memory);
 			addChild(_FPS);
 			
-		}
-		//------ Init Property  ------------------------------------
-		public override function initProperty():void {
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {

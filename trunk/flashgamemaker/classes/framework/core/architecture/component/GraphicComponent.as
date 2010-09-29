@@ -46,7 +46,7 @@ package framework.core.architecture.component{
         
 		//Render properties
 		public var _render_layerId:int=0;
-		public var _render_alpha:Number;
+		public var _render_alpha:Number =1;
 		/*public var _width:Number;
 		public var _height:Number;
 		public var _scaleX:Number = 1;
@@ -110,16 +110,28 @@ package framework.core.architecture.component{
 			_graphicName = graphicName;
 			_graphic = graphic;
 			addChild(_graphic);
-			displayGraphic();
 		}
 		//------ Get Graphic  ------------------------------------
 		public function getGraphic(graphicName:String):* {
 			var graphic = _graphicManager.getGraphic(graphicName);
 			return graphic;
 		}
+		//------ Get Graphic Name  ------------------------------------
+		public function getGraphicName():String {
+			return _graphicName;
+		}
 		//------ Display Graphic  ------------------------------------
 		private function displayGraphic():void {
 			_graphicManager.displayGraphic(_graphicName,this,0);
+		}
+		//------ Remove Graphic  ------------------------------------
+		private function removeGraphic(graphicName:String):void {
+			_graphicManager.removeGraphic(_graphicName);
+		}
+		//------ Move Graphic  ------------------------------------
+		public function moveTo(x:Number,y:Number):void {
+			_spatial_position.x=x;
+			_spatial_position.y=y;
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

@@ -77,8 +77,12 @@ package framework.core.architecture.component{
 				var _render_layerId:int=component._render_layerId;
 				var _render_alpha:Number=component._render_alpha;
 				component.alpha = _render_alpha;
-				_graphicManager.displayGraphic(componentName,component as Sprite,0);
+				_graphicManager.displayGraphic(componentName,component,0);
 			}
+		}
+		//------ Reset  ------------------------------------
+		public override function reset(ownerName:String, componentName:String):void {
+			_graphicManager.removeGraphic(componentName);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -73,15 +73,16 @@ package framework.core.system {
 		}
 		//------ Load Game ------------------------------------
 		public function loadGame(path:String):void{
-			initLoadingProgress();
-			loadXmlsFromPath(path, "Game");
+			//initLoadingProgress();
+			//loadXmlsFromPath(path, "Game"); or startGame();
+			startGame(); 
 		}
 		//------ On Xml Loading Successful ------------------------------------
 		protected override function onXmlLoadingSuccessful(evt:Event):void {
-			removeXmlListener();
+			//removeXmlListener();
 			//initConfig();
 			//preloadTexture() or startGame()
-			startGame();
+			preloadTexture();
 		}
 		//------ Init Config ------------------------------------
 		private function initConfig():void{
@@ -112,16 +113,22 @@ package framework.core.system {
 			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
 			//-- please insert your component classes in the Entity Manager inside the initClassRef() function --
 			//-- or instanciate your component as follow --
-			/*var keyboardInputComponent: KeyboardInputComponent = _entityManager.addComponent("Entity", "KeyboardInputComponent");
-			var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent");
-			var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent");
-			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("Entity", "SystemInfoComponent");
-			var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent");
-			var timerComponent:TimerComponent =_entityManager.addComponent("Entity", "TimerComponent");*/
-			var spatialComponent: SpatialComponent = _entityManager.addComponent("Entity", "SpatialComponent");
-			var renderComponent:RenderComponent=_entityManager.addComponent("Entity", "RenderComponent");
-			var tileMapComponent:TileMapComponent = _entityManager.addComponent("Entity", "TileMapComponent");
-			tileMapComponent.loadMap("xml/framework/game/map.xml", "Map");
+			var spatialComponent: SpatialComponent = _entityManager.addComponent("Entity", "SpatialComponent", "mySpatialComponent");
+			var renderComponent:RenderComponent=_entityManager.addComponent("Entity", "RenderComponent", "myRenderComponent");
+			//var keyboardInputComponent: KeyboardInputComponent = _entityManager.addComponent("Entity", "KeyboardInputComponent", "myKeyInputComponent");
+			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
+			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "mySrverInputComponent");
+			//var timerComponent:TimerComponent =_entityManager.addComponent("Entity", "TimerComponent", "myTimerComponent");
+			//var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("Entity", "SystemInfoComponent", "mySystInfoComponent");
+			//var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent", "myTimeComponent");
+			//var tileMapComponent:TileMapComponent = _entityManager.addComponent("Entity", "TileMapComponent", "myTileMapComponent");
+			//tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
+			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
+			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
+			var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
+			textComponent.setText("FlashGameMaker");
+			textComponent.setFormat("Times New Roman",30, 0xFF0000);
+			var factoryComponent:FactoryComponent = _entityManager.addComponent("Entity", "FactoryComponent", "myFactoryComponent");
 		}
 	}
 }

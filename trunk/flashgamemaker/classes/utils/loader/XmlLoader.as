@@ -65,6 +65,13 @@ package utils.loader{
 		public  function getXml():XML {
 			return _xml;
 		}
+		//------ Is Loading ------------------------------------
+		public  function isLoading():Boolean {
+			if(_loader!=null && _loader.hasEventListener(Event.COMPLETE)){
+				return true;
+			}
+			return false;
+		}
 		//------ Get Xml Num Children------------------------------------
 		public function getXmlNumChildren():Number {
 			var xmlNumChildren:Number = _xml.firstChild.length();
