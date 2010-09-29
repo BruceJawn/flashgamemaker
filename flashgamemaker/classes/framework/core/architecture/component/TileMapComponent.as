@@ -33,7 +33,7 @@ package framework.core.architecture.component{
 	import flash.events.*;
 	import flash.display.*;
 	import flash.geom.*;
-
+	
 	/**
 	* TileMap Component
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
@@ -45,7 +45,7 @@ package framework.core.architecture.component{
 		private var _mapXml:XML=null;
 		private var _mapName:String=null;
 		private var _mapTexture:String=null;
-		public var _mapLayer:Array=null;
+		private var _mapLayer:Array=null;
 		//Render properties
 		public var _tileMap_width:int=0;
 		public var _tileMap_height:int=0;
@@ -70,11 +70,14 @@ package framework.core.architecture.component{
 		}
 		//------ On Xml Loading Successfull ------------------------------------
 		private function onXmlLoadingSuccessful(evt:Event):void {
-			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
-			dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 			_mapXml=_ressourceManager.getXml(_mapName);
-			serializeXml();
-			loadGraphicsFromPath(_mapTexture, "TileMap");
+			if(_mapXml!=null){
+				var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
+				dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
+				_mapXml=_ressourceManager.getXml(_mapName);
+				serializeXml();
+				loadGraphicsFromPath(_mapTexture, "TileMap");
+			}
 		}
 		//------ Serialize Xml ------------------------------------
 		private function serializeXml():void {
@@ -109,45 +112,23 @@ package framework.core.architecture.component{
 					}
 				}
 			}
+			refresh("spatial");
 		}
 		//------ Create Tile ------------------------------------
 		private function createTile(k:int, j:int, i:int):void {
-			var tileName:String="tile_"+k+"_"+j+"_"+i;
-			createEntity(tileName);
-			var textureName:String=_mapLayer[0].texture;
-			var tileHigh:int=_mapLayer[0].tileHigh;
-			var tileHeight:int=_mapLayer[0].tileHeight;
-			var tileWidth:int=_mapLayer[0].tileWidth;
 			var tileFrame:int=_mapLayer[0].tileTable[k][j][i];
 			if (tileFrame!=0) {
+				var tileName:String="tile_"+k+"_"+j+"_"+i;
+				var textureName:String=_mapLayer[0].texture;
+				var tileHigh:int=_mapLayer[0].tileHigh;
+				var tileHeight:int=_mapLayer[0].tileHeight;
+				var tileWidth:int=_mapLayer[0].tileWidth;
 				var X:int=_mapLayer[0].X;
 				var Y:int=_mapLayer[0].Y;
-				var x:int=(tileFrame-1)% X;
-				var y:int=Math.floor((tileFrame-1)/(X));
-				var bitmap:Bitmap=getGraphic(textureName) as Bitmap;
-				var myBitmapData:BitmapData=new BitmapData(tileWidth,tileHeight+tileHigh,true,0);
-				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tileWidth, y * tileHeight,tileWidth,tileHeight + tileHigh), new Point(0, 0),null,null,true);
-				var graphic:Bitmap=new Bitmap(myBitmapData);
-				var tileGraphic:GraphicComponent=addComponent(tileName,"GraphicComponent");
-				tileGraphic.setGraphic("tileName",graphic);
-				var isoPosition:Point = screenToIso(tileToScreen(k,j,i,tileHigh,tileHeight,tileWidth));
-				isoPosition.x+=_tileMap_width*(tileWidth/2-1); //Offset
-				tileGraphic._spatial_position=isoPosition;
+				var tileComponent:TileComponent=addComponent(_componentOwner.getName(),"TileComponent", tileName);
+				tileComponent.createTile(k,j,i,tileHigh,tileHeight,tileWidth,tileFrame,textureName,X,Y);
+				tileComponent._spatial_position.x+=_tileMap_width*(tileWidth/2-1);
 			}
-		}
-		//----- Tile To Screen -----------------------------------
-		private function tileToScreen(k:int, j:int, i:int,tileHigh:int,tileHeight:int,tileWidth:int):Point {
-			var point:Point = new Point();
-			point.x=i*tileWidth/2;
-			point.y=j*tileWidth/2;
-			return point;
-		}
-		//----- Screen To Iso -----------------------------------
-		private function screenToIso(point:Point):Point {
-			var isoPoint:Point = new Point();
-			isoPoint.x = (point.x-point.y);
-			isoPoint.y = (point.x+point.y)/2; //-point.z
-			return isoPoint;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

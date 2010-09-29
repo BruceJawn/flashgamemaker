@@ -83,7 +83,12 @@ package framework.core.architecture.entity {
 			var timerComponent:TimerComponent;
 			var graphicComponent:GraphicComponent;
 			var tileMapComponent:TileMapComponent;
+			var tileComponent:TileComponent;
+			var playerComponent:PlayerComponent;
+			var bitmapPayerComponent:BitmapPlayerComponent;
 			var loaderComponent:LoaderComponent;
+			var textComponent:TextComponent;
+			var fectoryComponent:FactoryComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
@@ -99,15 +104,15 @@ package framework.core.architecture.entity {
 			delete _entities[entityName];
 		}
 		//------ Add Component ------------------------------------
-		public function addComponent(entityName:String,componentName:String):*{
+		public function addComponent(entityName:String,componentName:String,newName:String):*{
 			var classRef:Class = getClass(componentName);
 			var entity:IEntity = _entities[entityName];
-			var component:Component = new classRef(componentName,entity);
+			var component:Component = new classRef(newName,entity);
 			var components:Dictionary = entity.getComponents();
-			if(components[componentName] != null){
-				throw new Error("Error: A Component already exist with the name "+componentName+" !!");
+			if(components[newName] != null){
+				throw new Error("Error: A Component already exist with the name "+newName+" !!");
 			}
-			components[componentName] = component;
+			components[newName] = component;
 			component.initProperty();
 			return component;
 		}
@@ -115,11 +120,11 @@ package framework.core.architecture.entity {
 		public function getComponent(entityName:String,componentName:String):*{	
 			var entity:IEntity = _entities[entityName];
 			if(_entities[entityName] == null){
-				throw new Error("Error:The entity with the name"+entityName+" doesn't exist!!");
+				throw new Error("Error:The entity with the name "+entityName+" doesn't exist!!");
 			}
 		    var components:Dictionary = entity.getComponents();
 			if(components[componentName] == null){
-				throw new Error("Error:The component with the name"+componentName+" doesn't belong to the entity "+entityName+" !!");
+				throw new Error("Error:The component with the name "+componentName+" doesn't belong to the entity "+entityName+" !!");
 			}
 			return components[componentName];
 		}
@@ -145,7 +150,20 @@ package framework.core.architecture.entity {
 		public function removeComponent(entityName:String,componentName:String):void{
 			var entity:IEntity = _entities[entityName];
 			var components:Dictionary = entity.getComponents();
+			unregisterComponent(entityName,componentName);
 			delete components[componentName];
+		}
+		//------ Unregister Component ------------------------------------
+		public function unregisterComponent(entityName:String,componentName:String):void{
+			var component:Component = getComponent(entityName,componentName);
+			var propertyReference:Array = component.getPropertyReference();
+			for each(var propertyName:String in propertyReference){
+				try{
+					removePropertyReference(propertyName, componentName,entityName);
+				}catch(e){
+					//trace(e);
+				}
+			}
 		}
 		//------ Destroy ------------------------------------
 		public function destroy():void {
@@ -175,8 +193,9 @@ package framework.core.architecture.entity {
 			if(_propertyReferences[propertyName] == null){
 				_propertyReferences[propertyName] = new Array();
 			}
-			var component:Object = getComponent(ownerName,componentName);
+			var component:Component = getComponent(ownerName,componentName);
 			component.update(propertyName);
+			component.addPropertyReference(propertyName);
 		}
 		//------ Unregister Property ------------------------------------
 		public function unregisterProperty(propertyName:String, componentName:String):void {
@@ -203,21 +222,41 @@ package framework.core.architecture.entity {
 				var propertyInfo:Object = _propertyInfos[propertyReferenceName];
 				var parentEntityName:String = propertyInfo.ownerName;
 				var parentComponentName:String = propertyInfo.componentName;
-				var component:* = getComponent(parentEntityName,parentComponentName);
+				var component:Component = getComponent(parentEntityName,parentComponentName);
 				component.update(propertyReferenceName);
 			}
+			component = getComponent(ownerName,componentName);
+			component.addPropertyReference(propertyReferenceName);
 		}
 		//------ Remove Property Reference ------------------------------------
-		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {
+		public function removePropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
 			if(_propertyReferences[propertyReferenceName]==null){
 				throw new Error("Error: There is no Property Reference with the name "+propertyReferenceName+" !!");
 			}
 			var propertyReferences:Array = _propertyReferences[propertyReferenceName] as Array;
-			var index:int = propertyReferences.lastIndexOf(componentName);
-			if(index==-1){
-				throw new Error("Error: You don't have a PropertyReference with the name "+propertyReferenceName+" !!");
+			for(var i:int =0; i<propertyReferences.length; i++){
+				if( propertyReferences[i].componentName == componentName){
+					var propertyInfo:Object = _propertyInfos[propertyReferenceName];
+					var parentEntityName:String = propertyInfo.ownerName;
+					var parentComponentName:String = propertyInfo.componentName;
+					var component:Component = getComponent(parentEntityName,parentComponentName);
+					component.reset(ownerName,componentName);
+					propertyReferences.splice(i,1);
+					return;
+				}
 			}
-			propertyReferences.splice(index,1);
+			throw new Error("Error: The component "+componentName+" doesn't have property reference with the name "+propertyReferenceName+" !!");
+		}
+		//------ Refresh  ------------------------------------
+		public function refresh(propertyName:String):void {
+			if(_propertyReferences[propertyName] == null){
+				throw new Error("Error: The property "+propertyName+" doesn't exist!!");
+			}
+			var propertyInfo:Object = _propertyInfos[propertyName];
+			var ownerName:String = propertyInfo.ownerName;
+			var componentName:String = propertyInfo.componentName;
+			var component:Component = getComponent(ownerName,componentName);
+			component.update(propertyName);
 		}
 	}
 }

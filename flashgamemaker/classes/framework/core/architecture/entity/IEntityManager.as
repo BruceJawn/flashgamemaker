@@ -47,7 +47,7 @@ package framework.core.architecture.entity{
 		 * @param entity the component is to be registered with
 		 * @param component to be registered
 		 */	
-		function addComponent(entityName:String,componentName:String):*;
+		function addComponent(entityName:String,componentName:String,newName:String):*;
 		/**
 		 * Retrieves a component
 		 * @param entity the component is registered with
@@ -85,6 +85,10 @@ package framework.core.architecture.entity{
 		/**
 		 * Remove property Reference
 		 */	
-		function removePropertyReference(propertyReferenceName:String, componentName:String):void;
+		function removePropertyReference(propertyReferenceName:String, componentName:String, entityName:String):void;
+		/**
+		 * Refresh
+		 */	
+		function refresh(propertyName:String):void 
 	}
 }

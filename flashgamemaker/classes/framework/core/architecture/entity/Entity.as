@@ -51,8 +51,8 @@ package framework.core.architecture.entity{
 			_entityManager= entityManager;
 		}
 		//------ Add Component ------------------------------------
-		public function addComponent(entityName:String, componentName:String):* {
-			return _entityManager.addComponent(entityName,componentName);
+		public function addComponent(entityName:String, componentName:String,newName:String):* {
+			return _entityManager.addComponent(entityName,componentName,newName);
 		}
 		//------ Get Component ------------------------------------
 		public function getComponent(entityName:String,componentName:String):*{	
@@ -84,7 +84,7 @@ package framework.core.architecture.entity{
 		}
 		//------ Remove Property Reference ------------------------------------
 		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {
-			_entityManager.removePropertyReference(propertyReferenceName,componentName);
+			_entityManager.removePropertyReference(propertyReferenceName,componentName,_entityName);
 		}
 		//------ Destroy ------------------------------------
 		public function destroy():void{
@@ -101,6 +101,10 @@ package framework.core.architecture.entity{
 		//------ Create Entity  ------------------------------------
 		public  function createEntity(entityName:String):void {
 			_entityManager.createEntity(entityName);
+		}
+		//------ Refresh  ------------------------------------
+		public function refresh(propertyName:String):void {
+			_entityManager.refresh(propertyName);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void{

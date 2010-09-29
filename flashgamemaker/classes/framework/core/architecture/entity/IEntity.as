@@ -37,7 +37,7 @@ package framework.core.architecture.entity{
 		 * Add a compoment to the entity
 		 * @param name of component to be added
 		 */		
-		function addComponent(entityName:String, componentName:String):*;
+		function addComponent(entityName:String, componentName:String,newName:String):*;
 		
 		/**
 		 * R a component from the entity
@@ -88,6 +88,10 @@ package framework.core.architecture.entity{
 		 * Create Entity
 		 */	
 		function createEntity(entityName:String):void;
+		/**
+		 * Refresh
+		 */	
+		function refresh(propertyName:String):void ;
 		/**
 		 * Trace the Name of the Entity
 		 */	

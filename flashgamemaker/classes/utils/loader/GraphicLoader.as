@@ -83,6 +83,13 @@ package utils.loader{
 		public  function getGraphic():* {
 			return _graphic;
 		}
+		//------ Is Loading ------------------------------------
+		public  function isLoading():Boolean {
+			if(_loader!=null && _loader.hasEventListener(Event.COMPLETE)){
+				return true;
+			}
+			return false;
+		}
 		//------ Destroy Swf ------------------------------------
 		public function destroy():void {
 			_graphic = null;
