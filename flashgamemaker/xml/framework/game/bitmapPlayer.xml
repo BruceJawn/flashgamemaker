@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BitmapPlayerTexture>
+	<Knight playerWidth="64" playerHeight="64">
+		<path>texture/framework/game/charSet/templeKnightSet.png</path>
+	</Knight>
+</BitmapPlayerTexture>
