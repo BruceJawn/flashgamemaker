@@ -38,6 +38,7 @@ package framework.core.architecture.component{
 	public class KeyboardInputComponent extends Component{
 
 		private var _keyboardManager:IKeyboardManager = null;
+		private var _key:Object = null;
 		
 		public function KeyboardInputComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
@@ -48,6 +49,10 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_keyboardManager = KeyboardManager.getInstance();
 			_keyboardManager.register(this);
+		}
+		//------ Init Property Info ------------------------------------
+		public override function initProperty():void {
+			registerProperty("keyboardInput", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
@@ -64,14 +69,19 @@ package framework.core.architecture.component{
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire(evt:KeyboardEvent):void {
 			getKey();
+			update("keyboardInput");
 		}
 		//------ Get Key ------------------------------------
 		private function getKey():void {
-			var key:Object = _keyboardManager.getKey();
-			var keyObject:String="KeyInput KeyStatut:"+key.keyStatut+" ,KeyTouch:"+key.keyTouch;
-			keyObject+=" ,KeyCode:"+key.keyCode+" ,CharCode:"+key.charCode+" ,DoubleClick:"+key.doubleClick;
-			keyObject+=" ,LongClick:"+key.longClick+" ,Shift:"+key.shiftKey+" ,Ctrl:"+key.ctrlKey;
-			trace(keyObject);
+			_key = _keyboardManager.getKey();
+			var keyObject:String="KeyInput KeyStatut:"+_key.keyStatut+" ,KeyTouch:"+_key.keyTouch;
+			keyObject+=" ,KeyCode:"+_key.keyCode+" ,CharCode:"+_key.charCode+" ,DoubleClick:"+_key.doubleClick;
+			keyObject+=" ,LongClick:"+_key.longClick+" ,Shift:"+_key.shiftKey+" ,Ctrl:"+_key.ctrlKey;
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			component._key = _key;
+			component.refresh();
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

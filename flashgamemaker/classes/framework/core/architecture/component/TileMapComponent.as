@@ -112,7 +112,7 @@ package framework.core.architecture.component{
 					}
 				}
 			}
-			refresh("spatial");
+			//refresh("spatial");
 		}
 		//------ Create Tile ------------------------------------
 		private function createTile(k:int, j:int, i:int):void {

@@ -29,7 +29,6 @@ package framework.core.architecture.component{
 	import flash.events.EventDispatcher;
 	import flash.events.*;
 	import flash.display.*;
-	import flash.geom.*;
 	
 	/**
 	* Player Component

@@ -37,6 +37,7 @@ package framework.core.architecture.component{
 		public var _componentName:String;
 		protected var _componentOwner:IEntity=null;
 		private var _propertyReference:Array = null;
+		private var _propertyRegister:Array = null;
 
 		public function Component(componentName:String, componentOwner:IEntity) {
 			initVar(componentName,componentOwner);
@@ -46,6 +47,7 @@ package framework.core.architecture.component{
 			_componentName=componentName;
 			_componentOwner=componentOwner;
 			_propertyReference = new Array();
+			_propertyRegister = new Array();
 		}
 		//------ Init Property  ------------------------------------
 		public function initProperty():void {
@@ -75,16 +77,14 @@ package framework.core.architecture.component{
 		public function setPropertyReference(propertyReferenceName:String, componentName:String):void {
 			_componentOwner.setPropertyReference(propertyReferenceName,componentName);
 		}
-		//------- Reset Property -------------------------------
-		public function resetProperty():void {
-			// _propertyReference = null;
+		//------ Refresh   ------------------------------------
+		public function refresh():void {
+			for each (var propertyName:String in  _propertyRegister){
+				_componentOwner.refresh(propertyName);
+			}
 		}
-		//------ Refresh  ------------------------------------
-		protected function refresh(propertyName:String):void {
-			_componentOwner.refresh(propertyName);
-		}
-		//------ Update  ------------------------------------
-		public function update(propertyName:String):void {
+		//------ Update ------------------------------------
+		public function update(propertyName:String):void {//I update my son referents
 			var componentsProperty:Array=_componentOwner.getComponentsPropertyWithPropertyName(propertyName);
 			if (componentsProperty!=null) {
 				for each (var propertyReference:Object in componentsProperty) {
@@ -100,7 +100,7 @@ package framework.core.architecture.component{
 			
 		}
 		//------ Actualize Components  ------------------------------------
-		protected function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+		public function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 
 		}
 		//------ If Component Is Registered With Property  ------------------------------------
@@ -136,6 +136,22 @@ package framework.core.architecture.component{
 			for(var i:int = 0; i<_propertyReference.length;i++){
 				if(_propertyReference[i] == propertyName){
 				_propertyReference.splice(i,1);
+				}
+			}
+		}
+		//------ Add Property Register  ------------------------------------
+		public function addPropertyRegister(propertyName:String):void {
+			_propertyRegister.push(propertyName);
+		}
+		//------ Get Property Register  ------------------------------------
+		public function getPropertyRegister():Array {
+			return _propertyRegister;
+		}
+		//------ Remove Property Reference  ------------------------------------
+		public function removePropertyRegister(propertyName:String):void {
+			for(var i:int = 0; i<_propertyRegister.length;i++){
+				if(_propertyRegister[i] == propertyName){
+				_propertyRegister.splice(i,1);
 				}
 			}
 		}

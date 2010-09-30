@@ -44,7 +44,7 @@ package framework.core.architecture.component{
 		
 		private var _timer:Timer = null;
 		private var _delay:Number = 100;
-		private var _count:Number = 10;
+		private var _count:Number = 0;
 		
 		public function TimerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -53,8 +53,8 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_delay = 1000;
-			_count = 5;
+			_delay = 50;
+			_count = 0;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -74,15 +74,15 @@ package framework.core.architecture.component{
 		}
 		//------ On Tick ------------------------------------
 		private function onTimer(evt:TimerEvent):void {
-			update("spatial");
+			update("timer");
 		}
 		//------ On Timer Complete ------------------------------------
 		private function onTimerComplete(evt:TimerEvent):void {
 			trace("Timer Complete");
 		}
 		//------ Actualize Components  ------------------------------------
-		protected override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			trace(componentName ,component._spatial_position);
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			component.refresh();
 		}
 	}
 }

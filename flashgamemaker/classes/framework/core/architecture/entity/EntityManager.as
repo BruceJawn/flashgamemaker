@@ -74,6 +74,7 @@ package framework.core.architecture.entity {
 			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
 			//-- please insert your component classes here as follow --
 			var keyboardInputComponent:KeyboardInputComponent;
+			var keyboardInputMoveComponent:KeyboardInputMoveComponent;
 			var mouseInputComponent:MouseInputComponent;
 			var serverInputComponent:ServerInputComponent;
 			var systemInfoComponent:SystemInfoComponent;
@@ -195,16 +196,18 @@ package framework.core.architecture.entity {
 			}
 			var component:Component = getComponent(ownerName,componentName);
 			component.update(propertyName);
-			component.addPropertyReference(propertyName);
+			component.addPropertyRegister(propertyName);
 		}
 		//------ Unregister Property ------------------------------------
-		public function unregisterProperty(propertyName:String, componentName:String):void {
+		public function unregisterProperty(propertyName:String, componentName:String, ownerName:String):void {
 			if(_propertyInfos[propertyName]==null){
 				throw new Error("Error: The Property "+propertyName+" is not registered !!");
 			}
 			if(_propertyInfos[propertyName]!=componentName){
 				throw new Error("Error: You can only unregister a Property if you are the parent !!");
 			}
+			var component:Component = getComponent(ownerName,componentName);
+			component.removePropertyRegister(propertyName);
 			delete _propertyInfos[propertyName];
 			_propertyReferences[propertyName] = null;
 		}
@@ -241,6 +244,7 @@ package framework.core.architecture.entity {
 					var parentComponentName:String = propertyInfo.componentName;
 					var component:Component = getComponent(parentEntityName,parentComponentName);
 					component.reset(ownerName,componentName);
+					component.removePropertyReference(propertyReferenceName);
 					propertyReferences.splice(i,1);
 					return;
 				}

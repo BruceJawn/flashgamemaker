@@ -26,58 +26,75 @@ package framework.core.architecture.component{
 	import framework.core.system.PhysicManager;
 	import framework.core.system.IPhysicManager;
 	import utils.iso.IsoPoint;
-	
+
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	
+
 	/**
 	* Spatial Component 
 	* @ purpose: 
 	* 
 	*/
-	public class SpatialComponent extends Component{
-
-		private var _physicManager:IPhysicManager = null;
-		private var _spatial_speed:IsoPoint = null;
-		//Spatial properties
-		public var _spatial_position:IsoPoint = null
-		public var _spatial_force:IsoPoint = null
+	public class KeyboardInputMoveComponent extends Component {
 		
-		public function SpatialComponent(componentName:String, componentOwner:IEntity){
+		//KeyboardInput properties
+		public var _key:Object=null;
+
+		public function KeyboardInputMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_physicManager = PhysicManager.getInstance();
-			_spatial_position = new IsoPoint(0,0,0);
-			_spatial_force = new IsoPoint(0,0,0);
-			_spatial_speed= new IsoPoint(4,4,2);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
-			registerProperty("spatial", _componentName);
-			setPropertyReference("spatial",_componentName);
-			setPropertyReference("keyboardMoveInput",_componentName);
-			setPropertyReference("timer",_componentName);
+			setPropertyReference("keyboardInput",_componentName);
+			registerProperty("keyboardMoveInput", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
-			
+
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._spatial_position.x+=_spatial_force.x * _spatial_speed.x;
-			component._spatial_position.y+=_spatial_force.y * _spatial_speed.y;
-			component.x = _spatial_position.x + component._spatial_position.x; //Position of the entity + position of the component
-			component.y = _spatial_position.y + component._spatial_position.y; //Position of the entity + position of the component
+			var spatial_force:IsoPoint=parseKey(_key);
+			component._spatial_force.x=spatial_force.x;
+			component._spatial_force.y=spatial_force.y;
+			component._spatial_force.z=spatial_force.z;
+		}
+		//------ Parse Key  ------------------------------------
+		private function parseKey(key:Object):IsoPoint {
+			var spatial_force:IsoPoint=new IsoPoint(0,0);
+			if (key!=null) {
+				var keyTouch:String=key.keyTouch;
+				var keyStatut:String=key.keyStatut;
+				if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
+					spatial_force.x=1;
+				} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
+					spatial_force.x=0;
+				} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
+					spatial_force.x=-1;
+				} else if (keyTouch == "LEFT" && keyStatut == "UP") {
+					spatial_force.x=0;
+				} else if (keyTouch == "UP" && keyStatut == "DOWN") {
+					spatial_force.y=-1;
+				} else if (keyTouch == "UP" && keyStatut == "UP") {
+					spatial_force.y=0;
+				} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
+					spatial_force.y=1;
+				} else if (keyTouch == "DOWN" && keyStatut == "UP") {
+					spatial_force.y=0;
+				}
+			}
+			return spatial_force;
 		}
 		//------- ToString -------------------------------
-		 public override function ToString():void{
-           
-        }
-		
+		public override function ToString():void {
+
+		}
+
 	}
 }
