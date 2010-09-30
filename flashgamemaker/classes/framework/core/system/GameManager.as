@@ -116,8 +116,8 @@ package framework.core.system {
 			var spatialComponent: SpatialComponent = _entityManager.addComponent("Entity", "SpatialComponent", "mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("Entity", "RenderComponent", "myRenderComponent");
 			var keyboardInputComponent: KeyboardInputComponent = _entityManager.addComponent("Entity", "KeyboardInputComponent", "myKeyInputComponent");
-			var keyboardInputMoveComponent: KeyboardInputMoveComponent = _entityManager.addComponent("Entity", "KeyboardInputMoveComponent", "myKeyInputMoveComponent");
-			var keyboardInputIsoMoveComponent: KeyboardInputIsoMoveComponent = _entityManager.addComponent("Entity", "KeyboardInputIsoMoveComponent", "myKeyInputIsoMoveComponent");
+			var keyboardMoveComponent: KeyboardMoveComponent = _entityManager.addComponent("Entity", "KeyboardMoveComponent", "myKeyMoveComponent");
+			var keyboardIsoMoveComponent: KeyboardIsoMoveComponent = _entityManager.addComponent("Entity", "KeyboardIsoMoveComponent", "myKeyIsoMoveComponent");
 			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
 			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "mySrverInputComponent");
 			var timerComponent:TimerComponent =_entityManager.addComponent("Entity", "TimerComponent", "myTimerComponent");
@@ -127,10 +127,10 @@ package framework.core.system {
 			//tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			bitmapPlayerComponent.setPropertyReference("keyboardMoveInput","myBitmapPlayerComponent");
+			bitmapPlayerComponent.setPropertyReference("keyboardMove","myBitmapPlayerComponent");
 			var bitmapIsoPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapIsoPlayerComponent");
 			bitmapIsoPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			bitmapIsoPlayerComponent.setPropertyReference("keyboardIsoMoveInput","myBitmapIsoPlayerComponent");
+			bitmapIsoPlayerComponent.setPropertyReference("keyboardIsoMove","myBitmapIsoPlayerComponent");
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
