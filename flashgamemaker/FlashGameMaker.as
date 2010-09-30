@@ -23,9 +23,11 @@ GNU General Public License v3
 */
 
 package {
+	import framework.Framework;
+	
 	import flash.display.*;
 	import flash.events.*;
-	import framework.Framework;
+	import flash.system.Security;
 	
 	/**
 	* Main Class of the document.
@@ -51,6 +53,7 @@ package {
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
+			Security.allowDomain("*");
 			STAGE=this.stage;
 			var framework:Framework = new Framework();
 		}

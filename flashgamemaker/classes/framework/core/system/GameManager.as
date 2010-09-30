@@ -81,8 +81,8 @@ package framework.core.system {
 		protected override function onXmlLoadingSuccessful(evt:Event):void {
 			removeXmlListener();
 			initConfig();
-			//preloadTexture() or startGame()
-			preloadTexture();
+			//preloadTexture() or startGame();
+			startGame();
 		}
 		//------ Init Config ------------------------------------
 		private function initConfig():void{
@@ -128,9 +128,9 @@ package framework.core.system {
 			var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			bitmapPlayerComponent.setPropertyReference("keyboardMoveInput","myBitmapPlayerComponent");
-			bitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapIsoPlayerComponent");
-			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			bitmapPlayerComponent.setPropertyReference("keyboardIsoMoveInput","myBitmapIsoPlayerComponent");
+			var bitmapIsoPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapIsoPlayerComponent");
+			bitmapIsoPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
+			bitmapIsoPlayerComponent.setPropertyReference("keyboardIsoMoveInput","myBitmapIsoPlayerComponent");
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);

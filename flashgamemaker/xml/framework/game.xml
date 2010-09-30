@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Game>
-	<Map>
-		<path>xml/framework/game/map.xml</path>
-	</Map>
-	<Texture>
-		<path>xml/framework/game/texture.xml</path>
-	</Texture>
 	<ServerConfig>
 		<path>xml/framework/game/serverConfig.xml</path>	</ServerConfig>
 	<KeyboardConfig>
