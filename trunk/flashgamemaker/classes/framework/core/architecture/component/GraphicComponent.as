@@ -25,11 +25,11 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	import framework.core.system.GraphicManager;
 	import framework.core.system.IGraphicManager;
+	import utils.iso.IsoPoint;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.*;
 	import flash.display.*;
-	import flash.geom.Point;
     import flash.geom.Matrix;
 	
 	/**
@@ -56,7 +56,7 @@ package framework.core.architecture.component{
 		public var _transformMatrix:Matrix = new Matrix();*/
 		
 		//Spatial properties
-		public var _spatial_position:Point = null;
+		public var _spatial_position:IsoPoint = null;
 		        
 		public function GraphicComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
@@ -66,7 +66,7 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_graphicManager = GraphicManager.getInstance();
 			_graphic = addChild(new Sprite());
-			_spatial_position = new Point(0,0);
+			_spatial_position = new IsoPoint(0,0,0);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {

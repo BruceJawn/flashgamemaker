@@ -23,10 +23,11 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
+	import utils.iso.IsoPoint;
 	
 	import flash.display.*;
-	import flash.geom.*;
-	
+	import flash.geom.Rectangle;	
+	import flash.geom.Point;	
 	/**
 	* Tile Component
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
@@ -52,22 +53,22 @@ package framework.core.architecture.component{
 				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tileWidth, y * tileHeight,tileWidth,tileHeight + tileHigh), new Point(0, 0),null,null,true);
 				var graphic:Bitmap=new Bitmap(myBitmapData);
 				setGraphic(tileName,graphic);
-				var isoPosition:Point=screenToIso(tileToScreen(k,j,i,tileHigh,tileHeight,tileWidth));
+				var isoPosition:IsoPoint=screenToIso(tileToScreen(k,j,i,tileHigh,tileHeight,tileWidth));
 				_spatial_position=isoPosition;
 			}
 		}
 		//----- Tile To Screen -----------------------------------
-		private function tileToScreen(k:int, j:int, i:int,tileHigh:int,tileHeight:int,tileWidth:int):Point {
-			var point:Point = new Point();
+		private function tileToScreen(k:int, j:int, i:int,tileHigh:int,tileHeight:int,tileWidth:int):IsoPoint {
+			var point:IsoPoint = new IsoPoint();
 			point.x=i*tileWidth/2;
 			point.y=j*tileWidth/2;
 			return point;
 		}
 		//----- Screen To Iso -----------------------------------
-		private function screenToIso(point:Point):Point {
-			var isoPoint:Point = new Point();
+		private function screenToIso(point:IsoPoint):IsoPoint {
+			var isoPoint:IsoPoint = new IsoPoint();
 			isoPoint.x = (point.x-point.y);
-			isoPoint.y = (point.x+point.y)/2;//-point.z
+			isoPoint.y = (point.x+point.y)/2 - point.z;
 			return isoPoint;
 		}
 		//------- ToString -------------------------------

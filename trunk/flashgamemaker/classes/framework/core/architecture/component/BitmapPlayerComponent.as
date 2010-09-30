@@ -25,7 +25,8 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	
 	import flash.display.*;
-	import flash.geom.*;
+	import flash.geom.Rectangle;
+	import flash.geom.Point;
 	
 	/**
 	* Player Component

@@ -178,7 +178,7 @@ package framework.core.architecture.component{
 				_bitmapPlayer = null;
 				_button.label = "Create";
 			}
-			refresh("spatial");
+			refresh();
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
