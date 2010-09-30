@@ -36,15 +36,15 @@ package framework.core.architecture.component{
 	* @ purpose: 
 	* 
 	*/
-	public class KeyboardInputIsoMoveComponent extends KeyboardInputMoveComponent {
+	public class KeyboardIsoMoveComponent extends KeyboardMoveComponent {
 		
-		public function KeyboardInputIsoMoveComponent(componentName:String, componentOwner:IEntity) {
+		public function KeyboardIsoMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("keyboardInput",_componentName);
-			registerProperty("keyboardIsoMoveInput", _componentName);
+			registerProperty("keyboardIsoMove", _componentName);
 		}
 		//------ Parse Key  ------------------------------------
 		protected override function parseKey(key:Object):IsoPoint {

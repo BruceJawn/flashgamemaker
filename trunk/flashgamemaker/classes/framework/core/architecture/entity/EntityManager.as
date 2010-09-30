@@ -74,7 +74,8 @@ package framework.core.architecture.entity {
 			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
 			//-- please insert your component classes here as follow --
 			var keyboardInputComponent:KeyboardInputComponent;
-			var keyboardInputMoveComponent:KeyboardInputMoveComponent;
+			var keyboardMoveComponent:KeyboardMoveComponent;
+			var keyboardIsoMoveComponent:KeyboardIsoMoveComponent;
 			var mouseInputComponent:MouseInputComponent;
 			var serverInputComponent:ServerInputComponent;
 			var systemInfoComponent:SystemInfoComponent;

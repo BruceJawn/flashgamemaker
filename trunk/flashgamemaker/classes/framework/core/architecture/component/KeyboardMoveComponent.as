@@ -36,12 +36,12 @@ package framework.core.architecture.component{
 	* @ purpose: 
 	* 
 	*/
-	public class KeyboardInputMoveComponent extends Component {
+	public class KeyboardMoveComponent extends Component {
 		
 		//KeyboardInput properties
 		public var _key:Object=null;
 
-		public function KeyboardInputMoveComponent(componentName:String, componentOwner:IEntity) {
+		public function KeyboardMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
@@ -52,7 +52,7 @@ package framework.core.architecture.component{
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("keyboardInput",_componentName);
-			registerProperty("keyboardMoveInput", _componentName);
+			registerProperty("keyboardMove", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
