@@ -60,6 +60,14 @@ package framework.core.architecture.component{
 			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 			_ressourceManager.loadXml(path,playerName);
 		}
+		//------ Set Player ------------------------------------
+		public function setPlayer(playerName:String):void {
+			var graphic:* = getGraphic(playerName);
+			if(graphic==null){
+				throw new Error("The graphic "+playerName+" doesn't exist !!");
+			}
+			setGraphic(playerName,graphic);
+		}
 		//------ On Xml Loading Successfull ------------------------------------
 		protected function onXmlLoadingSuccessful(evt:Event):void {
 			_playerXml=_ressourceManager.getXml(_playerName);

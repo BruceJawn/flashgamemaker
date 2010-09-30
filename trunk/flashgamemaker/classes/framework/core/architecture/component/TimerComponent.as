@@ -53,7 +53,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_delay = 50;
+			_delay = 30;
 			_count = 0;
 		}
 		//------ Init Property  ------------------------------------

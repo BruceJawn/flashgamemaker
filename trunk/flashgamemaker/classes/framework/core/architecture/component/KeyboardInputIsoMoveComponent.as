@@ -36,56 +36,45 @@ package framework.core.architecture.component{
 	* @ purpose: 
 	* 
 	*/
-	public class KeyboardInputMoveComponent extends Component {
+	public class KeyboardInputIsoMoveComponent extends KeyboardInputMoveComponent {
 		
-		//KeyboardInput properties
-		public var _key:Object=null;
-
-		public function KeyboardInputMoveComponent(componentName:String, componentOwner:IEntity) {
+		public function KeyboardInputIsoMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
-			initVar();
-			initListener();
-		}
-		//------ Init Var ------------------------------------
-		private function initVar():void {
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("keyboardInput",_componentName);
-			registerProperty("keyboardMoveInput", _componentName);
-		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-
-		}
-		//------ Actualize Components  ------------------------------------
-		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			var spatial_force:IsoPoint=parseKey(_key);
-			component._spatial_force.x=spatial_force.x;
-			component._spatial_force.y=spatial_force.y;
-			component._spatial_force.z=spatial_force.z;
+			registerProperty("keyboardIsoMoveInput", _componentName);
 		}
 		//------ Parse Key  ------------------------------------
-		protected function parseKey(key:Object):IsoPoint {
+		protected override function parseKey(key:Object):IsoPoint {
 			var spatial_force:IsoPoint=new IsoPoint(0,0);
 			if (key!=null) {
 				var keyTouch:String=key.keyTouch;
 				var keyStatut:String=key.keyStatut;
 				if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
 					spatial_force.x=1;
+					spatial_force.y=1;
 				} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
 					spatial_force.x=0;
+					spatial_force.y=0;
 				} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
 					spatial_force.x=-1;
+					spatial_force.y=-1;
 				} else if (keyTouch == "LEFT" && keyStatut == "UP") {
 					spatial_force.x=0;
+					spatial_force.y=0;
 				} else if (keyTouch == "UP" && keyStatut == "DOWN") {
+					spatial_force.x=1;
 					spatial_force.y=-1;
 				} else if (keyTouch == "UP" && keyStatut == "UP") {
+					spatial_force.x=0;
 					spatial_force.y=0;
 				} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
+					spatial_force.x=-1;
 					spatial_force.y=1;
 				} else if (keyTouch == "DOWN" && keyStatut == "UP") {
+					spatial_force.x=0;
 					spatial_force.y=0;
 				}
 			}

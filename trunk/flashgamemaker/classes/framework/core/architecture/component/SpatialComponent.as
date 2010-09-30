@@ -39,8 +39,8 @@ package framework.core.architecture.component{
 	public class SpatialComponent extends Component{
 
 		private var _physicManager:IPhysicManager = null;
-		private var _spatial_speed:IsoPoint = null;
 		//Spatial properties
+		public var _spatial_speed:IsoPoint = null;
 		public var _spatial_position:IsoPoint = null
 		public var _spatial_force:IsoPoint = null
 		
@@ -59,8 +59,6 @@ package framework.core.architecture.component{
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			registerProperty("spatial", _componentName);
-			setPropertyReference("spatial",_componentName);
-			setPropertyReference("keyboardMoveInput",_componentName);
 			setPropertyReference("timer",_componentName);
 		}
 		//------ Init Listener ------------------------------------
@@ -69,8 +67,8 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._spatial_position.x+=_spatial_force.x * _spatial_speed.x;
-			component._spatial_position.y+=_spatial_force.y * _spatial_speed.y;
+			component._spatial_position.x+=component._spatial_force.x * component._spatial_speed.x;
+			component._spatial_position.y+=component._spatial_force.y * component._spatial_speed.y;
 			component.x = _spatial_position.x + component._spatial_position.x; //Position of the entity + position of the component
 			component.y = _spatial_position.y + component._spatial_position.y; //Position of the entity + position of the component
 		}
