@@ -51,6 +51,10 @@ package framework.core.system{
 		 * Trace XML 
 		 */		
 		function printXml(xmlName:String):void;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 		
 	}
 }

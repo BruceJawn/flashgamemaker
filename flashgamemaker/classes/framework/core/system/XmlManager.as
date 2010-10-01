@@ -133,5 +133,9 @@ package framework.core.system{
 			var xml:XML=getXml(xmlName);
 			trace( xml.toString());
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

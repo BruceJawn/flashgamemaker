@@ -43,6 +43,11 @@ package framework.core.architecture.component{
 		protected var _playerTexture:String=null;
 		protected var _playerHeight:Number;
 		protected var _playerWidth:Number;
+		//Graphic properties
+		public var _graphic_frame:int = 1;
+		public var _graphic_oldFrame:int = 0;
+		//keyboard properties
+		public var _keyboard_key:Object = null;
 		
 		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -52,6 +57,11 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_ressourceManager=RessourceManager.getInstance();
 			_render_layerId = 1;
+		}
+		//------ Init Property  ------------------------------------
+		public override function initProperty():void {
+			setPropertyReference("render",_componentName);
+			setPropertyReference("spatial",_componentName);
 		}
 		//------ Load Player ------------------------------------
 		public function loadPlayer(path:String, playerName:String):void {

@@ -30,12 +30,12 @@ package utils.clip{
 		public function Clip() {
 	
 		}
-		//------ centerClip ------------------------------------
+		//------ Center Clip ------------------------------------
 		public static function Center(_clip:Sprite ):void {
 			_clip.x = (FlashGameMaker.WIDTH - _clip.width)/2;
 			_clip.y = (FlashGameMaker.HEIGHT - _clip.height)/2;
 		}
-		//------ moveClip ------------------------------------
+		//------ Move Clip ------------------------------------
 		public static function MoveClip(_clip:Sprite, x:Number, y:Number ):void {
 			_clip.x = x;
 			_clip.y = y;

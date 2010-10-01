@@ -57,5 +57,9 @@ package framework.core.system{
 		private function initVar():void {
 			
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

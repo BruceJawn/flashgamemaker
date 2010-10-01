@@ -35,5 +35,9 @@ package framework.core.system{
 		 * Load Game
 		 */		
 		function loadGame(path:String):void;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

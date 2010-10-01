@@ -47,7 +47,9 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_Memory = new TextField();
+			_Memory.selectable = false;
 			_FPS = new TextField();
+			_FPS.selectable = false;
 			_Memory.x+=80;
 			addChild(_Memory);
 			addChild(_FPS);

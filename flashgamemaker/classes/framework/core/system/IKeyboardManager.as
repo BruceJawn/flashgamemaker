@@ -47,5 +47,13 @@ package framework.core.system{
 		 * Retourn Key
 		 */		
 		function getKey():Object ;
+		/**
+		 * Retourn Xml Config
+		 */		
+		function getXmlConfig():XMLList;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

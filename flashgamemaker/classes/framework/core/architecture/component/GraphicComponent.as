@@ -58,7 +58,8 @@ package framework.core.architecture.component{
 		//Spatial properties
 		public var _spatial_speed:IsoPoint = null;
 		public var _spatial_position:IsoPoint = null
-		public var _spatial_force:IsoPoint = null
+		public var _spatial_dir:IsoPoint = null
+		public var _spatial_isMoving:Boolean = false;
 		        
 		public function GraphicComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
@@ -69,7 +70,7 @@ package framework.core.architecture.component{
 			_graphicManager = GraphicManager.getInstance();
 			_graphic = addChild(new Sprite());
 			_spatial_position = new IsoPoint(0,0,0);
-			_spatial_force = new IsoPoint(0,0,0);
+			_spatial_dir = new IsoPoint(0,0,0);
 			_spatial_speed= new IsoPoint(4,4,2);
 		}
 		//------ Init Property  ------------------------------------

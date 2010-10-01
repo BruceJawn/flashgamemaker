@@ -80,5 +80,9 @@ package framework.core.system{
 		 * Remove Graphic
 		 */		
 		function removeGraphic(graphicName:String):void;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

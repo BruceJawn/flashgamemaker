@@ -136,5 +136,9 @@ package framework.core.system {
 		public  function getCurrentScreen():String {
 			return _currentScreen;
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

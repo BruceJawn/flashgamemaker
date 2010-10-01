@@ -152,5 +152,9 @@ package framework.core.system {
 		public function removeGraphic(graphicName:String):void {
 			_graphicManager.removeGraphic(graphicName);
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }
