@@ -33,7 +33,7 @@ package framework.core.architecture.component{
 	import flash.utils.Dictionary;
 	import flash.events.*;
 	import flash.text.TextField;
-
+	
 	/**
 	* Spatial Component 
 	* @ purpose: 
@@ -55,10 +55,13 @@ package framework.core.architecture.component{
 			_keyboardManager = KeyboardManager.getInstance();
 			_xmlConfig = new TextField();
 			_xmlConfig.autoSize ="left";
-			_xmlConfig.text = _keyboardManager.getXmlConfig().toString();
-			addChild(_xmlConfig);
-			_spatial_position.x=250;
-			_spatial_position.y=200;
+			var xmlConfig:XMLList = _keyboardManager.getXmlConfig();
+			if(xmlConfig!=null){
+				_xmlConfig.text = xmlConfig.toString();
+				addChild(_xmlConfig);
+				_spatial_position.x=250;
+				_spatial_position.y=200;
+			}
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
