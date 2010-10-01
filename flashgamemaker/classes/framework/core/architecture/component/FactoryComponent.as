@@ -132,7 +132,8 @@ package framework.core.architecture.component{
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {
 			_bitmapPlayer.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			_bitmapPlayer.moveTo(140,200);
+			_bitmapPlayer.setPropertyReference("keyboardIsoMove","myFactoryBitmapPlayer");
+			_bitmapPlayer.moveTo(120,160);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {
