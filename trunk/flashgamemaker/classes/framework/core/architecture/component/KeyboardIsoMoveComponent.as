@@ -46,39 +46,39 @@ package framework.core.architecture.component{
 			setPropertyReference("keyboardInput",_componentName);
 			registerProperty("keyboardIsoMove", _componentName);
 		}
-		//------ Parse Key  ------------------------------------
-		protected override function parseKey(key:Object):IsoPoint {
-			var spatial_force:IsoPoint=new IsoPoint(0,0);
+		//------ Get Spatial Force ------------------------------------
+		protected override function getKey(key:Object):IsoPoint {
+			var spatial_dir:IsoPoint=new IsoPoint(0,0);
 			if (key!=null) {
 				var keyTouch:String=key.keyTouch;
 				var keyStatut:String=key.keyStatut;
 				if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
-					spatial_force.x=1;
-					spatial_force.y=1;
+					spatial_dir.x=1;
+					spatial_dir.y=1;
 				} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
-					spatial_force.x=0;
-					spatial_force.y=0;
+					spatial_dir.x=0;
+					spatial_dir.y=0;
 				} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
-					spatial_force.x=-1;
-					spatial_force.y=-1;
+					spatial_dir.x=-1;
+					spatial_dir.y=-1;
 				} else if (keyTouch == "LEFT" && keyStatut == "UP") {
-					spatial_force.x=0;
-					spatial_force.y=0;
+					spatial_dir.x=0;
+					spatial_dir.y=0;
 				} else if (keyTouch == "UP" && keyStatut == "DOWN") {
-					spatial_force.x=1;
-					spatial_force.y=-1;
+					spatial_dir.x=1;
+					spatial_dir.y=-1;
 				} else if (keyTouch == "UP" && keyStatut == "UP") {
-					spatial_force.x=0;
-					spatial_force.y=0;
+					spatial_dir.x=0;
+					spatial_dir.y=0;
 				} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
-					spatial_force.x=-1;
-					spatial_force.y=1;
+					spatial_dir.x=-1;
+					spatial_dir.y=1;
 				} else if (keyTouch == "DOWN" && keyStatut == "UP") {
-					spatial_force.x=0;
-					spatial_force.y=0;
+					spatial_dir.x=0;
+					spatial_dir.y=0;
 				}
 			}
-			return spatial_force;
+			return spatial_dir;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -43,5 +43,9 @@ package framework.core.system{
 		 * Retourn Mouse
 		 */		
 		function getMouse():Object ;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

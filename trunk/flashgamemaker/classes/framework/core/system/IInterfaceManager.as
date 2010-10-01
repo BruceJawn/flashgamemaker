@@ -46,6 +46,10 @@ package framework.core.system{
 		 /**
 		 * Get Current Screen
 		 */		
-		 function getCurrentScreen():String
+		 function getCurrentScreen():String;
+		 /**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

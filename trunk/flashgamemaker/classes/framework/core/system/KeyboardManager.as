@@ -37,6 +37,7 @@ package framework.core.system{
 
 		private static var _instance:IKeyboardManager=null;
 		private static var _allowInstanciation:Boolean=false;
+		private var _xmlConfig:XMLList = null;
 		private var _keys:Dictionary;
 		private var _keyCode:Number = 0;
 		private var _keyStatut:String="UP"; //Key is UP or DOWN
@@ -139,8 +140,8 @@ package framework.core.system{
 		}
 		//------ Set Keys ------------------------------------
 		public function setKeys(xml:XML):void {
-			var xmlList:XMLList = xml.children();
-			for each (var xmlChild:XML in xmlList) {
+			_xmlConfig = xml.children();
+			for each (var xmlChild:XML in _xmlConfig) {
 				var keyName:String = xmlChild.name();
 				var keyCode:Number = getKeyCode(xmlChild);
 				_keys[keyCode] = keyName;
@@ -168,9 +169,13 @@ package framework.core.system{
 			key.keyTouch = _keys[_keyCode];
 			return key;
 		}
+		//------ Get Xml Config ------------------------------------
+		public function getXmlConfig():XMLList {
+			return _xmlConfig;
+		}
 		//------- To String  -------------------------------
 		public function ToString():void{
-            trace(_keyCode,_charCode, _doubleClick , _longClick);
+            trace(_xmlConfig);
         }
 	}
 }

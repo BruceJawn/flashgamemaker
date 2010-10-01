@@ -59,5 +59,9 @@ package framework.core.system{
 		 * Get Server
 		 */		
 		function getServer():Object;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

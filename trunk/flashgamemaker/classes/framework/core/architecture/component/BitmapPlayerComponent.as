@@ -35,6 +35,11 @@ package framework.core.architecture.component{
 	*/
 	public class BitmapPlayerComponent extends PlayerComponent {
 
+		private var _source:Bitmap = null;
+		private var _bitmap:Bitmap = null;
+		//Graphic properties
+		public var _graphic_numFrame:int = 4;
+		
 		public function BitmapPlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -42,13 +47,32 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 		}
+		//------ Init Property  ------------------------------------
+		public override function initProperty():void {
+			setPropertyReference("render",_componentName);
+			setPropertyReference("spatial",_componentName);
+			setPropertyReference("bitmapAnimation",_componentName);
+		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
-				var bitmap:Bitmap=getGraphic(_playerName) as Bitmap;
+				_source=getGraphic(_playerName) as Bitmap;
 				var myBitmapData:BitmapData=new BitmapData(_playerWidth,_playerHeight,true,0);
-				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(0, 0,_playerWidth,_playerHeight), new Point(0, 0),null,null,true);
-				var graphic:Bitmap=new Bitmap(myBitmapData);
-				setGraphic(_playerName,graphic);
+				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(0, 0,_playerWidth,_playerHeight), new Point(0, 0),null,null,true);
+				_bitmap=new Bitmap(myBitmapData);
+				setGraphic(_playerName,_bitmap);
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+				swapFrame();
+		}
+		//----- Swap Frame -----------------------------------
+		public function swapFrame():void {
+			if(_bitmap!=null && _graphic_oldFrame!= _graphic_frame){
+				_bitmap.bitmapData.fillRect(_bitmap.bitmapData.rect, 0);
+				var x:int=(_graphic_frame-1)% (_graphic_numFrame*_graphic_numFrame);
+				var y:int=Math.floor((_graphic_frame-1)/(_graphic_numFrame*_graphic_numFrame));
+				_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(x*_playerWidth,y*_playerHeight,_playerWidth,_playerHeight), new Point(0,0),null,null,true);
+			}
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

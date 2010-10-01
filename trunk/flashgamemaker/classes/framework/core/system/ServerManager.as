@@ -146,5 +146,9 @@ package framework.core.system{
 			server.online = _online;
 			return server;
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

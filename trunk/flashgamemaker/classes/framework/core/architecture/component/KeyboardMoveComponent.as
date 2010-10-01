@@ -25,71 +25,90 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	import framework.core.system.PhysicManager;
 	import framework.core.system.IPhysicManager;
+	import framework.core.system.KeyboardManager;
+	import framework.core.system.IKeyboardManager;
 	import utils.iso.IsoPoint;
 
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
+	import flash.text.TextField;
 
 	/**
 	* Spatial Component 
 	* @ purpose: 
 	* 
 	*/
-	public class KeyboardMoveComponent extends Component {
+	public class KeyboardMoveComponent extends GraphicComponent {
 		
+		private var _keyboardManager:IKeyboardManager = null;
 		//KeyboardInput properties
-		public var _key:Object=null;
+		public var _keyboard_key:Object=null;
+		private var _xmlConfig:TextField = null
 
 		public function KeyboardMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
-			initListener();
 		}
 		//------ Init Var ------------------------------------
-		private function initVar():void {
+		protected function initVar():void {
+			_keyboardManager = KeyboardManager.getInstance();
+			_xmlConfig = new TextField();
+			_xmlConfig.autoSize ="left";
+			_xmlConfig.text = _keyboardManager.getXmlConfig().toString();
+			addChild(_xmlConfig);
+			_spatial_position.x=250;
+			_spatial_position.y=200;
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("keyboardInput",_componentName);
 			registerProperty("keyboardMove", _componentName);
-		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-
+			setPropertyReference("render",_componentName);
+			setPropertyReference("spatial",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			var spatial_force:IsoPoint=parseKey(_key);
-			component._spatial_force.x=spatial_force.x;
-			component._spatial_force.y=spatial_force.y;
-			component._spatial_force.z=spatial_force.z;
+			var spatial_dir:IsoPoint=getKey(_keyboard_key);
+			component._spatial_dir.x=spatial_dir.x;
+			component._spatial_dir.y=spatial_dir.y;
+			component._spatial_dir.z=spatial_dir.z;
+			component._spatial_isMoving=isMoving(spatial_dir);
+			component._keyboard_key=_keyboard_key;
+			
 		}
-		//------ Parse Key  ------------------------------------
-		protected function parseKey(key:Object):IsoPoint {
-			var spatial_force:IsoPoint=new IsoPoint(0,0);
-			if (key!=null) {
-				var keyTouch:String=key.keyTouch;
-				var keyStatut:String=key.keyStatut;
+		//------ Get Key  ------------------------------------
+		protected function getKey(keyboard_key:Object):IsoPoint {
+			var spatial_dir:IsoPoint=new IsoPoint(0,0);
+			if (keyboard_key!=null) {
+				var keyTouch:String=keyboard_key.keyTouch;
+				var keyStatut:String=keyboard_key.keyStatut;
 				if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
-					spatial_force.x=1;
+					spatial_dir.x=1;
 				} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
-					spatial_force.x=0;
+					spatial_dir.x=0;
 				} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
-					spatial_force.x=-1;
+					spatial_dir.x=-1;
 				} else if (keyTouch == "LEFT" && keyStatut == "UP") {
-					spatial_force.x=0;
+					spatial_dir.x=0;
 				} else if (keyTouch == "UP" && keyStatut == "DOWN") {
-					spatial_force.y=-1;
+					spatial_dir.y=-1;
 				} else if (keyTouch == "UP" && keyStatut == "UP") {
-					spatial_force.y=0;
+					spatial_dir.y=0;
 				} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
-					spatial_force.y=1;
+					spatial_dir.y=1;
 				} else if (keyTouch == "DOWN" && keyStatut == "UP") {
-					spatial_force.y=0;
+					spatial_dir.y=0;
 				}
 			}
-			return spatial_force;
+			return spatial_dir;
+		}
+		//------ Is Moving  ------------------------------------
+		private function isMoving(spatial_dir:IsoPoint):Boolean {
+			if(spatial_dir.x!=0 ||spatial_dir.y!=0 || spatial_dir.z!=0){
+				return true;
+			}
+			return false;			
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

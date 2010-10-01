@@ -37,6 +37,10 @@ package framework.core.system{
 		/**
 		 * Get Real Time
 		 */		
-		function getRealTime():Object 
+		function getRealTime():Object ;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

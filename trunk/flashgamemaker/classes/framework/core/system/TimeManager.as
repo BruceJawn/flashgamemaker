@@ -98,5 +98,9 @@ package framework.core.system{
 			var time:Object = {day:Time.GetDay(currentTime) ,hour:Time.GetHour(currentTime) ,min:Time.GetMin(currentTime) ,sec:Time.GetSec(currentTime)};
 			return time;
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

@@ -68,5 +68,9 @@ package framework.core.system{
 		 * Contains Graphic
 		 */		
 		 function containsGraphic(graphicName:String):Boolean
+		 /**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

@@ -125,9 +125,10 @@ package framework.core.system {
 			//var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent", "myTimeComponent");
 			//var tileMapComponent:TileMapComponent = _entityManager.addComponent("Entity", "TileMapComponent", "myTileMapComponent");
 			//tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
-			var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
-			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			bitmapPlayerComponent.setPropertyReference("keyboardMove","myBitmapPlayerComponent");
+			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
+			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
+			//bitmapPlayerComponent.setPropertyReference("keyboardMove","myBitmapPlayerComponent");
+			var bitmapAnimationComponent:BitmapAnimationComponent = _entityManager.addComponent("Entity", "BitmapAnimationComponent", "myBitmapAnimationComponent");
 			var bitmapIsoPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapIsoPlayerComponent");
 			bitmapIsoPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			bitmapIsoPlayerComponent.setPropertyReference("keyboardIsoMove","myBitmapIsoPlayerComponent");
@@ -136,5 +137,9 @@ package framework.core.system {
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var factoryComponent:FactoryComponent = _entityManager.addComponent("Entity", "FactoryComponent", "myFactoryComponent");
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

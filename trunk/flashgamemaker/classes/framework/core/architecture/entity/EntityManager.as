@@ -88,9 +88,10 @@ package framework.core.architecture.entity {
 			var tileComponent:TileComponent;
 			var playerComponent:PlayerComponent;
 			var bitmapPayerComponent:BitmapPlayerComponent;
+			var bitmapAnimationComponent:BitmapAnimationComponent;
 			var loaderComponent:LoaderComponent;
 			var textComponent:TextComponent;
-			var fectoryComponent:FactoryComponent;
+			var factoryComponent:FactoryComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{

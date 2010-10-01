@@ -31,5 +31,9 @@ package framework.core.system{
 		 * Get Dispatcher
 		 */		
 		function getDispatcher():EventDispatcher;
+		/**
+		 * To String
+		 */		
+		function ToString():void ;
 	}
 }

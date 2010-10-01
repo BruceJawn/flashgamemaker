@@ -212,5 +212,9 @@ package framework.core.system{
 		private function unregisterGraphicOnScene(graphicName:String):void {
 			delete _graphicsOnScene[graphicName];
 		}
+		//------- ToString -------------------------------
+		 public  function ToString():void{
+           
+        }
 	}
 }

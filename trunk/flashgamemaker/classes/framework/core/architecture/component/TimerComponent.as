@@ -43,8 +43,8 @@ package framework.core.architecture.component{
 	public class TimerComponent extends Component {
 		
 		private var _timer:Timer = null;
-		private var _delay:Number = 100;
-		private var _count:Number = 0;
+		private var _timer_delay:Number = 100;
+		private var _timer_count:Number = 0;
 		
 		public function TimerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -53,8 +53,8 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_delay = 30;
-			_count = 0;
+			_timer_delay = 30;
+			_timer_count = 0;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -62,7 +62,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
-			_timer = new Timer(_delay, _count);
+			_timer = new Timer(_timer_delay, _timer_count);
 			_timer.addEventListener(TimerEvent.TIMER, onTimer);
 			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
 			_timer.start()
@@ -82,7 +82,12 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			component._timer_count+= _timer_delay;
 			component.refresh();
+			component.actualizeComponent(componentName,componentOwner,component);
+			if(component._timer_count>=component._timer_delay){
+				component._timer_count=0;
+			}
 		}
 	}
 }

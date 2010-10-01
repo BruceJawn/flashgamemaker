@@ -38,7 +38,7 @@ package framework.core.architecture.component{
 	public class KeyboardInputComponent extends Component{
 
 		private var _keyboardManager:IKeyboardManager = null;
-		private var _key:Object = null;
+		private var _keyboard_key:Object = null;
 		
 		public function KeyboardInputComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
@@ -73,14 +73,14 @@ package framework.core.architecture.component{
 		}
 		//------ Get Key ------------------------------------
 		private function getKey():void {
-			_key = _keyboardManager.getKey();
-			var keyObject:String="KeyInput KeyStatut:"+_key.keyStatut+" ,KeyTouch:"+_key.keyTouch;
-			keyObject+=" ,KeyCode:"+_key.keyCode+" ,CharCode:"+_key.charCode+" ,DoubleClick:"+_key.doubleClick;
-			keyObject+=" ,LongClick:"+_key.longClick+" ,Shift:"+_key.shiftKey+" ,Ctrl:"+_key.ctrlKey;
+			_keyboard_key = _keyboardManager.getKey();
+			var keyObject:String="KeyInput KeyStatut:"+_keyboard_key.keyStatut+" ,KeyTouch:"+_keyboard_key.keyTouch;
+			keyObject+=" ,KeyCode:"+_keyboard_key.keyCode+" ,CharCode:"+_keyboard_key.charCode+" ,DoubleClick:"+_keyboard_key.doubleClick;
+			keyObject+=" ,LongClick:"+_keyboard_key.longClick+" ,Shift:"+_keyboard_key.shiftKey+" ,Ctrl:"+_keyboard_key.ctrlKey;
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._key = _key;
+			component._keyboard_key = _keyboard_key;
 			component.refresh();
 		}
 		//------- ToString -------------------------------

@@ -26,35 +26,39 @@ package framework.core.architecture.component{
 	import framework.core.system.PhysicManager;
 	import framework.core.system.IPhysicManager;
 	import utils.iso.IsoPoint;
-	
+
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	
+
 	/**
 	* Spatial Component 
 	* @ purpose: 
 	* 
 	*/
-	public class SpatialComponent extends Component{
+	public class SpatialComponent extends Component {
 
-		private var _physicManager:IPhysicManager = null;
+		private var _physicManager:IPhysicManager=null;
 		//Spatial properties
-		public var _spatial_speed:IsoPoint = null;
-		public var _spatial_position:IsoPoint = null
-		public var _spatial_force:IsoPoint = null
-		
-		public function SpatialComponent(componentName:String, componentOwner:IEntity){
+		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
+		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
+		public var _spatial_position:IsoPoint=null;// x, y and z
+		public var _spatial_isMoving:Boolean = false;
+		//Timer properties
+		public var _timer_delay:Number = 30;
+		public var _timer_count:Number = 0;
+
+		public function SpatialComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_physicManager = PhysicManager.getInstance();
-			_spatial_position = new IsoPoint(0,0,0);
-			_spatial_force = new IsoPoint(0,0,0);
-			_spatial_speed= new IsoPoint(4,4,2);
+			_physicManager=PhysicManager.getInstance();
+			_spatial_position=new IsoPoint(0,0,0);
+			_spatial_dir=new IsoPoint(0,0,0);
+			_spatial_speed=new IsoPoint(0.5,0.5,1);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -63,19 +67,21 @@ package framework.core.architecture.component{
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
-			
+
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._spatial_position.x+=component._spatial_force.x * component._spatial_speed.x;
-			component._spatial_position.y+=component._spatial_force.y * component._spatial_speed.y;
-			component.x = _spatial_position.x + component._spatial_position.x; //Position of the entity + position of the component
-			component.y = _spatial_position.y + component._spatial_position.y; //Position of the entity + position of the component
+			if(_timer_count>=_timer_delay){
+				component._spatial_position.x+=component._spatial_dir.x*component._spatial_speed.x;
+				component._spatial_position.y+=component._spatial_dir.y*component._spatial_speed.y;
+				component.x=_spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
+				component.y=_spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
+			}
 		}
 		//------- ToString -------------------------------
-		 public override function ToString():void{
-           
-        }
-		
+		public override function ToString():void {
+
+		}
+
 	}
 }
