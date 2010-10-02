@@ -92,6 +92,7 @@ package framework.core.architecture.entity {
 			var loaderComponent:LoaderComponent;
 			var textComponent:TextComponent;
 			var factoryComponent:FactoryComponent;
+			var soundComponent:SoundComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
@@ -167,26 +168,15 @@ package framework.core.architecture.entity {
 					//trace(e);
 				}
 			}
-		}
-		//------ Destroy ------------------------------------
-		public function destroy():void {
-			_entities = null;
-			_families = null;
-		}
-		//------ Checks if a entity has a set of Components ------------------------------------
-		private function hasAllComponents(entityName:String,componentNames:Array):Boolean{
-			/*for each(var componentName:String in componentNames){
-				if(!_entities[entityName][componentName]){
-					return false;
-				}	
-			}*/
-			return true;
-		}
-		//------ Gets class name from instance ------------------------------------
-		private function getClass(componentName:String):Class{
-			var classRef:Class=getDefinitionByName("framework.core.architecture.component."+componentName) as Class;
-			return (classRef);
-		}
+			var propertyInfo:Array = component.getPropertyInfo();
+			for each(propertyName in propertyInfo){
+				try{
+					unregisterProperty(propertyName, componentName,entityName);
+				}catch(e){
+					//trace(e);
+				}
+			}
+		}		
 		//------ Register Property ------------------------------------
 		public function registerProperty(propertyName:String, componentName:String, ownerName:String):void {
 			if(_propertyInfos[propertyName]!=null){
@@ -198,7 +188,7 @@ package framework.core.architecture.entity {
 			}
 			var component:Component = getComponent(ownerName,componentName);
 			component.update(propertyName);
-			component.addPropertyRegister(propertyName);
+			component.addPropertyInfo(propertyName);
 		}
 		//------ Unregister Property ------------------------------------
 		public function unregisterProperty(propertyName:String, componentName:String, ownerName:String):void {
@@ -209,9 +199,10 @@ package framework.core.architecture.entity {
 				throw new Error("Error: You can only unregister a Property if you are the parent !!");
 			}
 			var component:Component = getComponent(ownerName,componentName);
-			component.removePropertyRegister(propertyName);
+			component.removePropertyInfo(propertyName);
 			delete _propertyInfos[propertyName];
 			_propertyReferences[propertyName] = null;
+			component.reset(ownerName,componentName);
 		}
 		//------ Set Property Reference ------------------------------------
 		public function setPropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
@@ -263,6 +254,25 @@ package framework.core.architecture.entity {
 			var componentName:String = propertyInfo.componentName;
 			var component:Component = getComponent(ownerName,componentName);
 			component.update(propertyName);
+		}
+		//------ Destroy ------------------------------------
+		public function destroy():void {
+			_entities = null;
+			_families = null;
+		}
+		//------ Checks if a entity has a set of Components ------------------------------------
+		private function hasAllComponents(entityName:String,componentNames:Array):Boolean{
+			/*for each(var componentName:String in componentNames){
+				if(!_entities[entityName][componentName]){
+					return false;
+				}	
+			}*/
+			return true;
+		}
+		//------ Gets class name from instance ------------------------------------
+		private function getClass(componentName:String):Class{
+			var classRef:Class=getDefinitionByName("framework.core.architecture.component."+componentName) as Class;
+			return (classRef);
 		}
 	}
 }

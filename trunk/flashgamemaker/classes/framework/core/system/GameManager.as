@@ -137,6 +137,7 @@ package framework.core.system {
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			var factoryComponent:FactoryComponent = _entityManager.addComponent("Entity", "FactoryComponent", "myFactoryComponent");
+			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
 		}
 		//------- ToString -------------------------------
 		 public  function ToString():void{
