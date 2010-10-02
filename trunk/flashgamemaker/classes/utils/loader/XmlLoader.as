@@ -26,6 +26,7 @@ package utils.loader{
 	import flash.net.*;
 	import flash.display.*;
 	import flash.events.*;
+	import flash.system.LoaderContext;
 
 	/**
 	* Xml Loader Class
@@ -35,7 +36,7 @@ package utils.loader{
 		private var _xml:XML=null;
 		private var _name:String;
 		private var _loader:URLLoader = null; 
-
+		
 		public function XmlLoader() {
 		}
 		//------ Load Data ------------------------------------

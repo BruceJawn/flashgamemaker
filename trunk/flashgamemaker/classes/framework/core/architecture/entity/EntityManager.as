@@ -165,7 +165,7 @@ package framework.core.architecture.entity {
 				try{
 					removePropertyReference(propertyName, componentName,entityName);
 				}catch(e){
-					//trace(e);
+					trace(e);
 				}
 			}
 			var propertyInfo:Array = component.getPropertyInfo();
@@ -173,7 +173,7 @@ package framework.core.architecture.entity {
 				try{
 					unregisterProperty(propertyName, componentName,entityName);
 				}catch(e){
-					//trace(e);
+					trace(e);
 				}
 			}
 		}		
@@ -195,7 +195,7 @@ package framework.core.architecture.entity {
 			if(_propertyInfos[propertyName]==null){
 				throw new Error("Error: The Property "+propertyName+" is not registered !!");
 			}
-			if(_propertyInfos[propertyName]!=componentName){
+			if(_propertyInfos[propertyName].componentName!=componentName){
 				throw new Error("Error: You can only unregister a Property if you are the parent !!");
 			}
 			var component:Component = getComponent(ownerName,componentName);

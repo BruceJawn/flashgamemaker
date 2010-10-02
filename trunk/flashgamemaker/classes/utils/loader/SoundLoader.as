@@ -28,76 +28,65 @@ package utils.loader{
 	import flash.net.*;
 	import flash.events.*;
 	import flash.system.LoaderContext;
-	
+	import flash.media.*;
+
 	/**
-	* Graphic Loader Class
+	* Sound Loader Class
 	* 
 	*/
-	public class GraphicLoader extends EventDispatcher {
-		
-		private var _graphic:* = null;
-		private var _name:String;
-		private var _type:String;
-		private var _loader:Loader = null;
-		private var _loaderContext:LoaderContext = null; 
+	public class SoundLoader extends EventDispatcher {
 
-		public function GraphicLoader() {
+		private var _sound:Sound=null;
+		private var _name:String;
+		private var _loader:Loader=null;
+		private var _loaderContext:LoaderContext=null;
+
+		public function SoundLoader() {
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_loaderContext = new LoaderContext ();
-			_loaderContext.checkPolicyFile = true;
+			_loaderContext.checkPolicyFile=true;
 		}
-		//------ Load Graphic ------------------------------------
-		public function loadGraphic(path:String,name:String):void {
-			_name = name;
-			_type = path.substr(path.length-3,3);
+		//------ Load Sound ------------------------------------
+		public function loadSound(path:String,name:String):void {
+			_name=name;
 			_loader = new Loader ();
-			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadingSuccessfull);
-			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgressMade);
+			_loader.contentLoaderInfo.addEventListener(Event.OPEN, onLoadingSuccessfull);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
 			_loader.load( new URLRequest(path),_loaderContext);
-			
+
 		}
 		//------ On Loading Successfull ------------------------------------
 		private function onLoadingSuccessfull( evt:Event ):void {
-			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadingSuccessfull);
-			_loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onProgressMade);
-			_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
-			_graphic = evt.target.content;
+			_loader.contentLoaderInfo.removeEventListener(Event.OPEN, onLoadingSuccessfull);
+			__loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
+			_graphic=evt.target.content;
 			dispatchEvent( evt);
-		}
-		//------ On Progress Made ------------------------------------
-		private function onProgressMade( evt:ProgressEvent ):void {
-			dispatchEvent(evt);
 		}
 		//------ Io Error ------------------------------------
 		private function onIoError( evt:IOErrorEvent ):void {
-			throw new Error("Error: Loading Fail \n" + evt);
+			throw new Error("Error: Loading Fail \n"+evt);
 		}
 		//------ Get Name ------------------------------------
-		public  function getName():String {
+		public function getName():String {
 			return _name;
 		}
-		//------ Get Type ------------------------------------
-		public  function getType():String {
-			return _type;
-		}
 		//------ Get Graphic ------------------------------------
-		public  function getGraphic():* {
-			return _graphic;
+		public function getSound():Sound {
+			return _sound;
 		}
 		//------ Is Loading ------------------------------------
-		public  function isLoading():Boolean {
-			if(_loader!=null && _loader.hasEventListener(Event.COMPLETE)){
+		public function isLoading():Boolean {
+			if (_loader!=null&&_loader.hasEventListener(Event.COMPLETE)) {
 				return true;
 			}
 			return false;
 		}
 		//------ Destroy Swf ------------------------------------
 		public function destroy():void {
-			_graphic = null;
+			_sond=null;
 		}
 	}
 }

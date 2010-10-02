@@ -53,7 +53,8 @@ package {
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			Security.allowDomain("*");
+			Security.allowDomain("http://angelstreetv2.free.fr");
+			Security.allowDomain("http://www.kawai-island.com/");
 			STAGE=this.stage;
 			var framework:Framework = new Framework();
 		}
