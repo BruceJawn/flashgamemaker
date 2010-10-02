@@ -45,6 +45,7 @@ package framework.core.architecture.component{
 		private var _systemInfo:SystemInfoComponent=null;
 		private var _tileMap:TileMapComponent=null;
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
+		private var _sound:SoundComponent=null;
 		private var _comboBox:ComboBox=null;
 		private var _button:Button=null;
 
@@ -73,8 +74,9 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"Text"});
 			_comboBox.addItem({label:"Time"});
 			_comboBox.addItem({label:"SystemInfo"});
+			_comboBox.addItem({label:"Sound"});
 			//_comboBox.addItem({label:"TileMap"});
-			_comboBox.addItem({label:"BitmapPlayer"});
+			//_comboBox.addItem({label:"BitmapPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
 			addChild(_comboBox);
 			_button = new Button();
@@ -100,6 +102,10 @@ package framework.core.architecture.component{
 				_button.label = "Remove";
 			}else if (selectedComponent=="SystemInfo") {
 				_button.label = "Create";
+			}else if (selectedComponent=="Sound" && _sound!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Sound") {
+				_button.label = "Create";
 			}else if (selectedComponent=="TileMap" && _tileMap!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="TileMap") {
@@ -123,6 +129,10 @@ package framework.core.architecture.component{
 		//------- Init Text Component -------------------------------
 		private function initSystemInfoComponent():void {
 			_systemInfo.moveTo(100,300);
+		}
+		//------- Init Sound Component -------------------------------
+		private function initSoundComponent():void {
+			
 		}
 		//------- Init TileMap Component -------------------------------
 		private function initTileMapComponent():void {
@@ -161,6 +171,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="SystemInfo") {
 				removeComponent("myFactorySystemInfo");
 				_systemInfo = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="Sound" && _sound==null) {
+				_sound = addComponent(_componentOwner.getName(), "SoundComponent", "myFactorySound");
+				initSoundComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Sound") {
+				removeComponent("myFactorySound");
+				_sound = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="TileMap" && _tileMap==null) {
 				_tileMap = addComponent(_componentOwner.getName(), "TileMapComponent", "myFactoryTileMap");

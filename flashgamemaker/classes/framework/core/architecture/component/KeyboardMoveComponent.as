@@ -33,18 +33,18 @@ package framework.core.architecture.component{
 	import flash.utils.Dictionary;
 	import flash.events.*;
 	import flash.text.TextField;
-	
+
 	/**
 	* Spatial Component 
 	* @ purpose: 
 	* 
 	*/
 	public class KeyboardMoveComponent extends GraphicComponent {
-		
-		private var _keyboardManager:IKeyboardManager = null;
+
+		private var _keyboardManager:IKeyboardManager=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
-		private var _xmlConfig:TextField = null
+		private var _xmlConfig:TextField=null;
 
 		public function KeyboardMoveComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -52,13 +52,13 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		protected function initVar():void {
-			_keyboardManager = KeyboardManager.getInstance();
+			_keyboardManager=KeyboardManager.getInstance();
 			_xmlConfig = new TextField();
-			_xmlConfig.autoSize ="left";
-			var xmlConfig:XMLList = _keyboardManager.getXmlConfig();
-			if(xmlConfig!=null){
-				_xmlConfig.text = xmlConfig.toString();
-				addChild(_xmlConfig);
+			_xmlConfig.autoSize="left";
+			var xmlConfig:XMLList=_keyboardManager.getXmlConfig();
+			if (xmlConfig!=null) {
+				_xmlConfig.text=xmlConfig.toString();
+				//addChild(_xmlConfig);
 				_spatial_position.x=250;
 				_spatial_position.y=200;
 			}
@@ -78,7 +78,7 @@ package framework.core.architecture.component{
 			component._spatial_dir.z=spatial_dir.z;
 			component._spatial_isMoving=isMoving(spatial_dir);
 			component._keyboard_key=_keyboard_key;
-			
+
 		}
 		//------ Get Key  ------------------------------------
 		protected function getKey(keyboard_key:Object):IsoPoint {
@@ -108,10 +108,10 @@ package framework.core.architecture.component{
 		}
 		//------ Is Moving  ------------------------------------
 		private function isMoving(spatial_dir:IsoPoint):Boolean {
-			if(spatial_dir.x!=0 ||spatial_dir.y!=0 || spatial_dir.z!=0){
+			if (spatial_dir.x!=0||spatial_dir.y!=0||spatial_dir.z!=0) {
 				return true;
 			}
-			return false;			
+			return false;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -37,7 +37,7 @@ package framework.core.architecture.component{
 		public var _componentName:String;
 		protected var _componentOwner:IEntity=null;
 		private var _propertyReference:Array = null;
-		private var _propertyRegister:Array = null;
+		private var _propertyInfo:Array = null;
 
 		public function Component(componentName:String, componentOwner:IEntity) {
 			initVar(componentName,componentOwner);
@@ -47,7 +47,7 @@ package framework.core.architecture.component{
 			_componentName=componentName;
 			_componentOwner=componentOwner;
 			_propertyReference = new Array();
-			_propertyRegister = new Array();
+			_propertyInfo = new Array();
 		}
 		//------ Init Property  ------------------------------------
 		public function initProperty():void {
@@ -79,7 +79,7 @@ package framework.core.architecture.component{
 		}
 		//------ Refresh   ------------------------------------
 		public function refresh():void {
-			for each (var propertyName:String in  _propertyRegister){
+			for each (var propertyName:String in  _propertyInfo){
 				_componentOwner.refresh(propertyName);
 			}
 		}
@@ -140,18 +140,18 @@ package framework.core.architecture.component{
 			}
 		}
 		//------ Add Property Register  ------------------------------------
-		public function addPropertyRegister(propertyName:String):void {
-			_propertyRegister.push(propertyName);
+		public function addPropertyInfo(propertyName:String):void {
+			_propertyInfo.push(propertyName);
 		}
 		//------ Get Property Register  ------------------------------------
-		public function getPropertyRegister():Array {
-			return _propertyRegister;
+		public function getPropertyInfo():Array {
+			return _propertyInfo;
 		}
 		//------ Remove Property Reference  ------------------------------------
-		public function removePropertyRegister(propertyName:String):void {
-			for(var i:int = 0; i<_propertyRegister.length;i++){
-				if(_propertyRegister[i] == propertyName){
-				_propertyRegister.splice(i,1);
+		public function removePropertyInfo(propertyName:String):void {
+			for(var i:int = 0; i<_propertyInfo.length;i++){
+				if(_propertyInfo[i] == propertyName){
+				_propertyInfo.splice(i,1);
 				}
 			}
 		}
