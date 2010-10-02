@@ -76,7 +76,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"SystemInfo"});
 			_comboBox.addItem({label:"Sound"});
 			//_comboBox.addItem({label:"TileMap"});
-			//_comboBox.addItem({label:"BitmapPlayer"});
+			_comboBox.addItem({label:"BitmapPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
 			addChild(_comboBox);
 			_button = new Button();
@@ -137,7 +137,7 @@ package framework.core.architecture.component{
 		//------- Init TileMap Component -------------------------------
 		private function initTileMapComponent():void {
 		 	_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
-			_tileMap.moveTo(140,180);
+			_tileMap.moveTo(140,250);
 		}
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {
