@@ -45,6 +45,7 @@ package framework.core.architecture.component{
 		private var _systemInfo:SystemInfoComponent=null;
 		private var _tileMap:TileMapComponent=null;
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
+		private var _swfPlayer:SwfPlayerComponent=null;
 		private var _sound:SoundComponent=null;
 		private var _comboBox:ComboBox=null;
 		private var _button:Button=null;
@@ -77,6 +78,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"Sound"});
 			//_comboBox.addItem({label:"TileMap"});
 			_comboBox.addItem({label:"BitmapPlayer"});
+			_comboBox.addItem({label:"SwfPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
 			addChild(_comboBox);
 			_button = new Button();
@@ -145,6 +147,12 @@ package framework.core.architecture.component{
 			_bitmapPlayer.setPropertyReference("keyboardIsoMove","myFactoryBitmapPlayer");
 			_bitmapPlayer.moveTo(120,160);
 		}
+		//------- Init Swf Player Component -------------------------------
+		private function initSwfPlayerComponent():void {
+			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			_swfPlayer.setPropertyReference("keyboardIsoMove","myFactorySwfPlayer");
+			_swfPlayer.moveTo(120,160);
+		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {
 			var selectedComponent:String=_comboBox.selectedItem.label;
@@ -195,6 +203,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="BitmapPlayer") {
 				removeComponent("myFactoryBitmapPlayer");
 				_bitmapPlayer = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="SwfPlayer" && _swfPlayer==null) {
+				_swfPlayer = addComponent(_componentOwner.getName(), "SwfPlayerComponent", "myFactorySwfPlayer");
+				initSwfPlayerComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="SwfPlayer") {
+				removeComponent("myFactorySwfPlayer");
+				_swfPlayer = null;
 				_button.label = "Create";
 			}
 			refresh();

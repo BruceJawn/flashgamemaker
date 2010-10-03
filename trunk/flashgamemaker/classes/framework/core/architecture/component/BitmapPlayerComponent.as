@@ -37,8 +37,6 @@ package framework.core.architecture.component{
 
 		private var _source:Bitmap = null;
 		private var _bitmap:Bitmap = null;
-		//Graphic properties
-		public var _graphic_numFrame:int = 4;
 		
 		public function BitmapPlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -46,12 +44,13 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
+		
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("render",_componentName);
 			setPropertyReference("spatial",_componentName);
-			setPropertyReference("bitmapAnimation",_componentName);
+			setPropertyReference("animation",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {

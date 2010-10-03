@@ -29,6 +29,7 @@ package framework.core.architecture.component{
 	import flash.events.EventDispatcher;
 	import flash.events.*;
 	import flash.display.*;
+	import flash.utils.Dictionary;
 	
 	/**
 	* Player Component
@@ -46,6 +47,9 @@ package framework.core.architecture.component{
 		//Graphic properties
 		public var _graphic_frame:int = 1;
 		public var _graphic_oldFrame:int = 0;
+		public var _graphic_numFrame:int = 4;
+		//Animation properties
+		public var _animation:Dictionary = null;
 		//keyboard properties
 		public var _keyboard_key:Object = null;
 		
@@ -57,6 +61,9 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_ressourceManager=RessourceManager.getInstance();
 			_render_layerId = 1;
+			_animation = new Dictionary();
+			_animation["STATIC"] = 0;
+			_animation["WALK"] = 1;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -106,6 +113,10 @@ package framework.core.architecture.component{
 				dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 				createPlayer();
 			}
+		}
+		//------ Set Animation ------------------------------------
+		public function setAnimation(animation:Dictionary):void {
+			_animation = animation
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

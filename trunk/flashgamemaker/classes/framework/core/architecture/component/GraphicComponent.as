@@ -71,7 +71,7 @@ package framework.core.architecture.component{
 			_graphic = addChild(new Sprite());
 			_spatial_position = new IsoPoint(0,0,0);
 			_spatial_dir = new IsoPoint(0,0,0);
-			_spatial_speed= new IsoPoint(4,4,2);
+			_spatial_speed= new IsoPoint(2,2,1);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
