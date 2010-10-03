@@ -116,6 +116,10 @@ package framework.core.architecture.component{
 				_button.label = "Remove";
 			}else if (selectedComponent=="BitmapPlayer") {
 				_button.label = "Create";
+			}else if (selectedComponent=="SwfPlayer" && _swfPlayer!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="SwfPlayer") {
+				_button.label = "Create";
 			}
 		}
 		//------- Init Text Component -------------------------------
@@ -151,7 +155,7 @@ package framework.core.architecture.component{
 		private function initSwfPlayerComponent():void {
 			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
 			_swfPlayer.setPropertyReference("keyboardIsoMove","myFactorySwfPlayer");
-			_swfPlayer.moveTo(120,160);
+			_swfPlayer.moveTo(200,240);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {

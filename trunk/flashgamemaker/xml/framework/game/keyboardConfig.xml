@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <KeyboardConfig>
 	<RIGHT>D</RIGHT>
-	<LEFT>Q</LEFT>
-	<UP>Z</UP>
+	<LEFT>A</LEFT>
+	<UP>W</UP>
 	<DOWN>S</DOWN> 
 	<ATTACK>K</ATTACK>
 	<JUMP>L</JUMP>

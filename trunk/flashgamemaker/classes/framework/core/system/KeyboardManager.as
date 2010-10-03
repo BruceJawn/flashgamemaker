@@ -71,6 +71,10 @@ package framework.core.system{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_keys = new Dictionary();
+			_keys[39] = "RIGHT";
+			_keys[37] = "LEFT";
+			_keys[38] = "UP";
+			_keys[40] = "DOWN";
 		}
 		//------ Init Listener ------------------------------------
 		public function initListener():void {
