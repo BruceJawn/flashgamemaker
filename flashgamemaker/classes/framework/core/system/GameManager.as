@@ -118,7 +118,7 @@ package framework.core.system {
 			var keyboardInputComponent: KeyboardInputComponent = _entityManager.addComponent("Entity", "KeyboardInputComponent", "myKeyInputComponent");
 			var keyboardMoveComponent: KeyboardMoveComponent = _entityManager.addComponent("Entity", "KeyboardMoveComponent", "myKeyMoveComponent");
 			var keyboardIsoMoveComponent: KeyboardIsoMoveComponent = _entityManager.addComponent("Entity", "KeyboardIsoMoveComponent", "myKeyIsoMoveComponent");
-			var bitmapAnimationComponent:BitmapAnimationComponent = _entityManager.addComponent("Entity", "BitmapAnimationComponent", "myBitmapAnimationComponent");
+			var animationComponent:AnimationComponent = _entityManager.addComponent("Entity", "AnimationComponent", "myAnimationComponent");
 			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
 			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "mySrverInputComponent");
 			var timerComponent:TimerComponent =_entityManager.addComponent("Entity", "TimerComponent", "myTimerComponent");

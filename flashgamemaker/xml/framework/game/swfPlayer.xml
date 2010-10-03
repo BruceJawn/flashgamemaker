@@ -3,7 +3,5 @@
 	<BebeClip playerWidth="80" playerHeight="100">
 		<path>texture/framework/game/charSet/bebeClip.swf</path>
 	</BebeClip >
-	<BebeVisage playerWidth="80" playerHeight="100">
-		<path>texture/framework/game/charSet/bebeVisages.swf</path>
-	</BebeVisage>
+	
 </SwfPlayerTexture>

@@ -54,11 +54,11 @@ package framework.core.architecture.component{
 			initListener();
 		}
 		//------ Init Var ------------------------------------
-		private function initVar():void {
+		public function initVar():void {
 			_physicManager=PhysicManager.getInstance();
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(0.5,0.5,1);
+			_spatial_speed=new IsoPoint(2,2,1);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {

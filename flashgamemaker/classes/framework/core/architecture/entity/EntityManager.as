@@ -88,10 +88,11 @@ package framework.core.architecture.entity {
 			var tileComponent:TileComponent;
 			var playerComponent:PlayerComponent;
 			var bitmapPayerComponent:BitmapPlayerComponent;
-			var bitmapAnimationComponent:BitmapAnimationComponent;
+			var animationComponent:AnimationComponent;
 			var loaderComponent:LoaderComponent;
 			var textComponent:TextComponent;
 			var factoryComponent:FactoryComponent;
+			var swfPlayerComponent:SwfPlayerComponent;
 			var soundComponent:SoundComponent;
 		}
 		//------ Create Entity ------------------------------------
