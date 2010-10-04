@@ -43,10 +43,10 @@ package framework.core.architecture.component{
 		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
 		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
 		public var _spatial_position:IsoPoint=null;// x, y and z
-		public var _spatial_isMoving:Boolean = false;
+		public var _spatial_isMoving:Boolean=false;
 		//Timer properties
-		public var _timer_delay:Number = 30;
-		public var _timer_count:Number = 0;
+		public var _timer_delay:Number=30;
+		public var _timer_count:Number=0;
 
 		public function SpatialComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -71,7 +71,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if(_timer_count>=_timer_delay){
+			if (_timer_count>=_timer_delay) {
 				component._spatial_position.x+=component._spatial_dir.x*component._spatial_speed.x;
 				component._spatial_position.y+=component._spatial_dir.y*component._spatial_speed.y;
 				component.x=_spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
