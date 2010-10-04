@@ -93,6 +93,7 @@ package framework.core.architecture.entity {
 			var textComponent:TextComponent;
 			var factoryComponent:FactoryComponent;
 			var swfPlayerComponent:SwfPlayerComponent;
+			var loadingBarComponent:LoadingBarComponent;
 			var soundComponent:SoundComponent;
 		}
 		//------ Create Entity ------------------------------------

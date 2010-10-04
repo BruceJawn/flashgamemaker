@@ -51,6 +51,7 @@ package framework.core.architecture.component{
 			setPropertyReference("render",_componentName);
 			setPropertyReference("spatial",_componentName);
 			setPropertyReference("animation",_componentName);
+			setPropertyReference("loadingBar",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
