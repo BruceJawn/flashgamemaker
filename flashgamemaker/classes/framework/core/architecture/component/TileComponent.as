@@ -23,7 +23,6 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import utils.iso.IsoPoint;
 	
 	import flash.display.*;
 	import flash.geom.Rectangle;	
@@ -35,6 +34,26 @@ package framework.core.architecture.component{
 	*/
 	public class TileComponent extends GraphicComponent {
 
+		//Tile properties
+		public var _tileName:String =null;
+		public var _ztile:int =0;
+		public var _ytile:int =0;
+		public var _xtile:int =0;
+		public var _tileHigh:int = 0;
+		public var _tileHeight:int = 0;
+		public var _tileWidth:int = 0;
+		public var _tileFrame:int = 0;
+		public var _textureName:String = null;
+		public var _X:int = 0;
+		public var _Y:int = 0;
+		public var _walkable:int = 0;
+		public var _slopes:int = 0;
+		public var _ladder:int = 0;
+		public var _slide:int = 0;
+		public var _bounce:int = 0;
+		public var _teleportation:int = 0;
+		public var _elevation:int = 0;
+		
 		public function TileComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -42,39 +61,28 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+				createTile();
+		}
 		//------ Create Tile ------------------------------------
-		public function createTile(k:int, j:int, i:int,tileHigh:int, tileHeight:int,tileWidth:int,tileFrame:int, textureName:String, X:int, Y:int ):void {
-			if (tileFrame!=0) {
-				var tileName:String="tile_"+k+"_"+j+"_"+i;
-				var x:int=(tileFrame-1)% X;
-				var y:int=Math.floor((tileFrame-1)/(X));
-				var bitmap:Bitmap=getGraphic(textureName) as Bitmap;
-				var myBitmapData:BitmapData=new BitmapData(tileWidth,tileHeight+tileHigh,true,0);
-				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tileWidth, y * tileHeight,tileWidth,tileHeight + tileHigh), new Point(0, 0),null,null,true);
-				var graphic:Bitmap=new Bitmap(myBitmapData);
-				setGraphic(tileName,graphic);
-				var isoPosition:IsoPoint=screenToIso(tileToScreen(k,j,i,tileHigh,tileHeight,tileWidth));
-				_spatial_position=isoPosition;
+		public function createTile():void {
+			if(_tileName==null){
+				 _tileName="tile_"+_ztile+"_"+_ytile+"_"+_xtile;
+				if (_tileFrame!=0) {
+					var x:int=(_tileFrame-1)% _X;
+					var y:int=Math.floor((_tileFrame-1)/(_X));
+					var bitmap:Bitmap=getGraphic(_textureName) as Bitmap;
+					var myBitmapData:BitmapData=new BitmapData(_tileWidth,_tileHeight+_tileHigh,true,0);
+					myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * _tileWidth, y * _tileHeight,_tileWidth,_tileHeight + _tileHigh), new Point(0, 0),null,null,true);
+					var graphic:Bitmap=new Bitmap(myBitmapData);
+					setGraphic(_tileName,graphic);
+				}
 			}
-		}
-		//----- Tile To Screen -----------------------------------
-		private function tileToScreen(k:int, j:int, i:int,tileHigh:int,tileHeight:int,tileWidth:int):IsoPoint {
-			var point:IsoPoint = new IsoPoint();
-			point.x=i*tileWidth/2;
-			point.y=j*tileWidth/2;
-			return point;
-		}
-		//----- Screen To Iso -----------------------------------
-		private function screenToIso(point:IsoPoint):IsoPoint {
-			var isoPoint:IsoPoint = new IsoPoint();
-			isoPoint.x = (point.x-point.y);
-			isoPoint.y = (point.x+point.y)/2 - point.z;
-			return isoPoint;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
 
 		}
-
 	}
 }

@@ -32,6 +32,14 @@ package framework.core.system{
 		 */		
 		function getDispatcher():EventDispatcher;
 		/**
+		 * Check Position
+		 */		
+		function checkPosition(component:*):void;
+		/**
+		 * Set Map
+		 */		
+		function setMap(map:Object):void
+		/**
 		 * To String
 		 */		
 		function ToString():void ;

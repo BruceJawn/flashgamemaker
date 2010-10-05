@@ -50,7 +50,7 @@ package framework.core.architecture.component{
 		public var _height:Number;
 		public var _scaleX:Number = 1;
 		public var _scaleY:Number = 1;
-		        public var _rotation:Number = 0;
+		public var _rotation:Number = 0;
 		public var _blendMode:String = BlendMode.NORMAL;
 		public var _transformMatrix:Matrix = new Matrix();*/
 
@@ -70,7 +70,7 @@ package framework.core.architecture.component{
 			_graphic = addChild(new Sprite());
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(2,2,1);
+			_spatial_speed=new IsoPoint(2,1,1);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {

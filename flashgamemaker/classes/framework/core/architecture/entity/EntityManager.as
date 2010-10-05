@@ -75,7 +75,6 @@ package framework.core.architecture.entity {
 			//-- please insert your component classes here as follow --
 			var keyboardInputComponent:KeyboardInputComponent;
 			var keyboardMoveComponent:KeyboardMoveComponent;
-			var keyboardIsoMoveComponent:KeyboardIsoMoveComponent;
 			var mouseInputComponent:MouseInputComponent;
 			var serverInputComponent:ServerInputComponent;
 			var systemInfoComponent:SystemInfoComponent;
@@ -144,7 +143,6 @@ package framework.core.architecture.entity {
 		//------ Component Is Registered With Property ------------------------------------
 		public function componentIsRegisteredWithProperty(ownerName:String,componentName:String, propertyName:String):Boolean{
 			var propertyReference:Array = _propertyReferences[propertyName] as Array;
-			trace(componentName,propertyName);
 			for each (var obj:Object in propertyReference){
 				if(obj.componentName == componentName && obj.ownerName == ownerName ){
 					return true
@@ -156,6 +154,8 @@ package framework.core.architecture.entity {
 		public function removeComponent(entityName:String,componentName:String):void{
 			var entity:IEntity = _entities[entityName];
 			var components:Dictionary = entity.getComponents();
+			var component:Component = getComponent(entityName,componentName);
+			component.reset(entityName,componentName);
 			unregisterComponent(entityName,componentName);
 			delete components[componentName];
 		}

@@ -23,8 +23,6 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.PhysicManager;
-	import framework.core.system.IPhysicManager;
 	import framework.core.system.KeyboardManager;
 	import framework.core.system.IKeyboardManager;
 	import utils.iso.IsoPoint;
@@ -72,37 +70,66 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			var spatial_dir:IsoPoint=getKey(_keyboard_key);
+			var keyboardMove_iso:Boolean = component._keyboardMove_iso;
+			var spatial_dir:IsoPoint=getKey(_keyboard_key,keyboardMove_iso);
 			component._spatial_dir.x=spatial_dir.x;
 			component._spatial_dir.y=spatial_dir.y;
 			component._spatial_dir.z=spatial_dir.z;
 			component._spatial_isMoving=isMoving(spatial_dir);
 			component._keyboard_key=_keyboard_key;
-
 		}
 		//------ Get Key  ------------------------------------
-		protected function getKey(keyboard_key:Object):IsoPoint {
+		protected function getKey(keyboard_key:Object,keyboardMove_iso:Boolean):IsoPoint {
 			var spatial_dir:IsoPoint=new IsoPoint(0,0);
 			if (keyboard_key!=null) {
 				var keyTouch:String=keyboard_key.keyTouch;
 				var keyStatut:String=keyboard_key.keyStatut;
-				if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
+				if(keyboardMove_iso){
+					if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
 					spatial_dir.x=1;
-				} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
-					spatial_dir.x=0;
-				} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
-					spatial_dir.x=-1;
-				} else if (keyTouch == "LEFT" && keyStatut == "UP") {
-					spatial_dir.x=0;
-				} else if (keyTouch == "UP" && keyStatut == "DOWN") {
-					spatial_dir.y=-1;
-				} else if (keyTouch == "UP" && keyStatut == "UP") {
-					spatial_dir.y=0;
-				} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
 					spatial_dir.y=1;
-				} else if (keyTouch == "DOWN" && keyStatut == "UP") {
-					spatial_dir.y=0;
+					} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
+						spatial_dir.x=0;
+						spatial_dir.y=0;
+					} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
+						spatial_dir.x=-1;
+						spatial_dir.y=-1;
+					} else if (keyTouch == "LEFT" && keyStatut == "UP") {
+						spatial_dir.x=0;
+						spatial_dir.y=0;
+					} else if (keyTouch == "UP" && keyStatut == "DOWN") {
+						spatial_dir.x=1;
+						spatial_dir.y=-1;
+					} else if (keyTouch == "UP" && keyStatut == "UP") {
+						spatial_dir.x=0;
+						spatial_dir.y=0;
+					} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
+						spatial_dir.x=-1;
+						spatial_dir.y=1;
+					} else if (keyTouch == "DOWN" && keyStatut == "UP") {
+						spatial_dir.x=0;
+						spatial_dir.y=0;
+					}
+				}else{
+					if (keyTouch=="RIGHT"&&keyStatut=="DOWN") {
+						spatial_dir.x=1;
+					} else if (keyTouch == "RIGHT" && keyStatut == "UP") {
+						spatial_dir.x=0;
+					} else if (keyTouch == "LEFT" && keyStatut == "DOWN") {
+						spatial_dir.x=-1;
+					} else if (keyTouch == "LEFT" && keyStatut == "UP") {
+						spatial_dir.x=0;
+					} else if (keyTouch == "UP" && keyStatut == "DOWN") {
+						spatial_dir.y=-1;
+					} else if (keyTouch == "UP" && keyStatut == "UP") {
+						spatial_dir.y=0;
+					} else if (keyTouch == "DOWN" && keyStatut == "DOWN") {
+						spatial_dir.y=1;
+					} else if (keyTouch == "DOWN" && keyStatut == "UP") {
+						spatial_dir.y=0;
+					}
 				}
+				
 			}
 			return spatial_dir;
 		}
