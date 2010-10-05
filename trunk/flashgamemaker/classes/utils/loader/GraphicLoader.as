@@ -90,7 +90,7 @@ package utils.loader{
 		}
 		//------ Is Loading ------------------------------------
 		public  function isLoading():Boolean {
-			if(_loader!=null && _loader.hasEventListener(Event.COMPLETE)){
+			if(_loader!=null && _loader.contentLoaderInfo.hasEventListener(Event.COMPLETE)){
 				return true;
 			}
 			return false;

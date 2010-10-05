@@ -92,6 +92,13 @@ package framework.core.architecture.component{
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 			_graphicManager.loadGraphicsFromPath(path, graphicName);
 		}
+		//------ Load Graphic  ------------------------------------
+		public function loadGraphicsFromXml(xml:XML,graphicName:String, loadingProgress:Boolean = false):void {
+			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
+			dispatcher.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
+			dispatcher.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+			_graphicManager.loadGraphicsFromXml(xml, graphicName);
+		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected function onGraphicLoadingSuccessful( evt:Event ):void {
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();

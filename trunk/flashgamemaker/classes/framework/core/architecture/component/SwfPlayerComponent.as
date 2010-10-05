@@ -55,14 +55,15 @@ package framework.core.architecture.component{
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
-				var graphic: MovieClip =getGraphic(_playerName) as MovieClip;
-				var SourceClass:Class = graphic.constructor;
-				 _source = new SourceClass();
-				 initSource();
-				 _swf = new MovieClip(); 
-				_swf.addChild(_source[_name+"1"]);
+			var graphic: MovieClip =getGraphic("Body") as MovieClip;
+			var SourceClass:Class = graphic.constructor;
+			_source = new SourceClass();
+			initSource();
+			customizeSource();
+			_swf = new MovieClip(); 
+			_swf.addChild(_source[_name+"1"]);
+			setGraphic(_playerName,_swf);
 				
-				setGraphic(_playerName,_swf);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
@@ -86,12 +87,39 @@ package framework.core.architecture.component{
 				clip.y=0;
 			}
 		}
+		//----- Customize Source -----------------------------------
+		private function customizeSource():void {
+			var xmlList:XMLList=_playerXml.children();
+			for each (var xmlChild:XML in xmlList) {
+				var clipName:String = xmlChild.name();
+				if(clipName!="Body"){
+					var graphic: MovieClip =getGraphic(clipName) as MovieClip;
+					var SourceClass:Class = graphic.constructor;
+					var i:int=1;
+					while(i<_source.numChildren){
+						var source:MovieClip = new SourceClass() as MovieClip;
+						for(var j:int=0;j<4;j++){
+							var clip:MovieClip = _source[_name+Number(i+j)] as MovieClip;
+							if(clip!= null && clip[clipName]!=null){
+								if(source[_name+Number(j+1)]!=null){
+									//trace(i+j,j+1);
+									clip[clipName].addChild(source["clip"+Number(j+1)]);
+								}
+							}
+						}
+						i+=4;
+					}
+				}
+			}
+		}
 		//------ Change Color ------------------------------------
 		public override function changeColor(hexColor:String):void {
 			var i:int=1;
 			while(i<_source.numChildren){
-				var clip:MovieClip = _source[_name+i];
-				colorSourceSkin(clip,hexColor);
+				var source:MovieClip = _source[_name+i];
+				if(source!=null){
+					colorSourceSkin(source,hexColor);
+				}
 				i++;
 			}
 		}

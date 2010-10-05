@@ -109,8 +109,9 @@ package framework.core.system{
 		}
 		//------ Load Graphic ------------------------------------
 		public function loadGraphic(path:String, graphicName:String):void {
-			_graphicsToLoad.push({name:graphicName,path:path});
-			if(!(_graphicsToLoad.length>1 && _graphicLoader.isLoading())){
+			if(_graphicsToLoad.length>1 && _graphicLoader.isLoading() || _graphicsToLoad.length==0){
+				_graphicsToLoad.push({name:graphicName,path:path});
+			}if(!(_graphicsToLoad.length>1 && _graphicLoader.isLoading())){
 				_graphicLoader=new GraphicLoader();
 				_graphicLoader.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 				_graphicLoader.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);

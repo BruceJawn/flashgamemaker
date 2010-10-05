@@ -56,11 +56,13 @@ package framework.core.architecture.component{
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
+			if(getGraphic(_playerName)!=null){
 				_source=getGraphic(_playerName) as Bitmap;
 				var myBitmapData:BitmapData=new BitmapData(_playerWidth,_playerHeight,true,0);
 				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(0, 0,_playerWidth,_playerHeight), new Point(0, 0),null,null,true);
 				_bitmap=new Bitmap(myBitmapData);
 				setGraphic(_playerName,_bitmap);
+			}
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
