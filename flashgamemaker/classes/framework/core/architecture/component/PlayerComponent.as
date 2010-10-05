@@ -104,14 +104,19 @@ package framework.core.architecture.component{
 				var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 				dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 				serializeXml();
-				loadGraphic(_playerTexture, _playerName);
+				if(_playerXml.children().length()>1){
+					loadGraphicsFromXml(_playerXml, _playerName);
+				}else{
+					loadGraphic(_playerTexture, _playerName);
+				}
+				
 			}
 		}
 		//------ Serialize Xml ------------------------------------
 		private function serializeXml():void {
-			_playerTexture=_playerXml.children().path;
-			_playerWidth=_playerXml.children().@playerWidth;
-			_playerHeight=_playerXml.children().@playerHeight;
+			_playerTexture = _playerXml.children().path;
+			_playerWidth=_playerXml.@playerWidth;
+			_playerHeight=_playerXml.@playerHeight;
 		}
 		//------ Create Player ------------------------------------
 		protected function createPlayer():void {
@@ -119,12 +124,7 @@ package framework.core.architecture.component{
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
-			if(getGraphic(_playerName)!=null){
-				var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
-				dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
-				dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
-				createPlayer();
-			}
+			createPlayer();
 		}
 		//------ Set Animation ------------------------------------
 		public function setAnimation(animation:Dictionary):void {

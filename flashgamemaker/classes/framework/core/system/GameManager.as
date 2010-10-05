@@ -128,17 +128,16 @@ package framework.core.system{
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			//bitmapPlayerComponent.setIso(true);
-			//var bitmapAnimationComponent:BitmapAnimationComponent = _entityManager.addComponent("Entity", "BitmapAnimationComponent", "myBitmapAnimationComponent");
 			//var swfPlayerComponent = _entityManager.addComponent("Entity", "SwfPlayerComponent", "mySwfPlayerComponent");
 			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
 			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
+			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
 			var loadingBarComponent:LoadingBarComponent=_entityManager.addComponent("Entity","LoadingBarComponent","myLoadingBarComponent");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
-			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
-		}
+			}
 		//------- ToString -------------------------------
 		public function ToString():void {
 

@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SwfPlayerTexture>
-	<BebeClip playerWidth="80" playerHeight="100">
+<SwfPlayerTexture playerWidth="80" playerHeight="100">
+	<Body >
 		<path>texture/framework/game/charSet/bebeClip.swf</path>
-	</BebeClip >
-	
+	</Body >
+	<Head>
+		<path>texture/framework/game/charSet/visageClip.swf</path>
+	</Head >
 </SwfPlayerTexture>
