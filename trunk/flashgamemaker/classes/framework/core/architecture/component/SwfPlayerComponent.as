@@ -25,7 +25,7 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	
 	import flash.display.*;
-	
+	import flash.geom.ColorTransform;
 	/**
 	* Player Component
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
@@ -43,7 +43,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-		
+
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -51,6 +51,7 @@ package framework.core.architecture.component{
 			setPropertyReference("spatial",_componentName);
 			setPropertyReference("animation",_componentName);
 			setPropertyReference("loadingBar",_componentName);
+			setPropertyReference("keyboardMove",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
@@ -77,12 +78,39 @@ package framework.core.architecture.component{
 				}
 			}
 		}
-		//----- InitSource -----------------------------------
+		//----- Init Source -----------------------------------
 		private function initSource():void {
 			for (var i:int=0; i<_source.numChildren;i++){
 				var clip:MovieClip = _source.getChildAt(i) as MovieClip;
 				clip.x=0;
 				clip.y=0;
+			}
+		}
+		//------ Change Color ------------------------------------
+		public override function changeColor(hexColor:String):void {
+			var i:int=1;
+			while(i<_source.numChildren){
+				var clip:MovieClip = _source[_name+i];
+				colorSourceSkin(clip,hexColor);
+				i++;
+			}
+		}
+		//----- Color Source Skin -----------------------------------
+		private function colorSourceSkin(source:MovieClip, hexColor:String):void {
+			var i:int=0;
+			while(i<source.numChildren){
+				if(source.getChildAt(i) is MovieClip){
+					var clip:MovieClip = source.getChildAt(i) as MovieClip;
+					if(clip.name.indexOf("skin")!=-1){
+						var colorTransform:ColorTransform =new ColorTransform();
+						colorTransform.color = uint("0x"+hexColor);
+						clip.transform.colorTransform=colorTransform;
+					}
+					if(clip.numChildren>1){
+						colorSourceSkin(clip,hexColor);
+					}
+				}
+				i++;
 			}
 		}
 		//------- ToString -------------------------------

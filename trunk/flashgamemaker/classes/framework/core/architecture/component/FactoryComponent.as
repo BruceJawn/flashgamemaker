@@ -76,7 +76,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"Time"});
 			_comboBox.addItem({label:"SystemInfo"});
 			_comboBox.addItem({label:"Sound"});
-			//_comboBox.addItem({label:"TileMap"});
+			_comboBox.addItem({label:"TileMap"});
 			_comboBox.addItem({label:"BitmapPlayer"});
 			_comboBox.addItem({label:"SwfPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
@@ -143,19 +143,19 @@ package framework.core.architecture.component{
 		//------- Init TileMap Component -------------------------------
 		private function initTileMapComponent():void {
 		 	_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
-			_tileMap.moveTo(140,250);
+			_tileMap.moveTo(60,150);
 		}
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {
 			_bitmapPlayer.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			_bitmapPlayer.setPropertyReference("keyboardIsoMove","myFactoryBitmapPlayer");
+			_bitmapPlayer.setIso(true);
 			_bitmapPlayer.moveTo(120,160);
 		}
 		//------- Init Swf Player Component -------------------------------
 		private function initSwfPlayerComponent():void {
 			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
-			_swfPlayer.setPropertyReference("keyboardIsoMove","myFactorySwfPlayer");
-			_swfPlayer.moveTo(200,240);
+			_swfPlayer.setIso(true);
+			_swfPlayer.moveTo(235,175);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {

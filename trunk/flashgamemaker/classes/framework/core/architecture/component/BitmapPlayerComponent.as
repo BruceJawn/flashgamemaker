@@ -52,6 +52,7 @@ package framework.core.architecture.component{
 			setPropertyReference("spatial",_componentName);
 			setPropertyReference("animation",_componentName);
 			setPropertyReference("loadingBar",_componentName);
+			setPropertyReference("keyboardMove",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {

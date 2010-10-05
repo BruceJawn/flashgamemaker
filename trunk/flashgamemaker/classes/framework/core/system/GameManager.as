@@ -117,7 +117,6 @@ package framework.core.system{
 			var renderComponent:RenderComponent=_entityManager.addComponent("Entity","RenderComponent","myRenderComponent");
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
-			var keyboardIsoMoveComponent:KeyboardIsoMoveComponent=_entityManager.addComponent("Entity","KeyboardIsoMoveComponent","myKeyIsoMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
 			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
 			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "mySrverInputComponent");
@@ -128,11 +127,11 @@ package framework.core.system{
 			//tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			//bitmapPlayerComponent.setPropertyReference("keyboardMove","myBitmapPlayerComponent");
+			//bitmapPlayerComponent.setIso(true);
 			//var bitmapAnimationComponent:BitmapAnimationComponent = _entityManager.addComponent("Entity", "BitmapAnimationComponent", "myBitmapAnimationComponent");
-			//var bitmapIsoPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapIsoPlayerComponent");
-			//bitmapIsoPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
-			//bitmapIsoPlayerComponent.setPropertyReference("keyboardIsoMove","myBitmapIsoPlayerComponent");
+			//var swfPlayerComponent = _entityManager.addComponent("Entity", "SwfPlayerComponent", "mySwfPlayerComponent");
+			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);

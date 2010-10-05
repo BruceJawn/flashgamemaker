@@ -30,6 +30,7 @@ package framework.core.architecture.component{
 	import flash.events.*;
 	import flash.display.*;
 	import flash.utils.Dictionary;
+	import fl.controls.ColorPicker;
 	
 	/**
 	* Player Component
@@ -44,6 +45,7 @@ package framework.core.architecture.component{
 		protected var _playerTexture:String=null;
 		protected var _playerHeight:Number;
 		protected var _playerWidth:Number;
+		protected var _colorPicker:ColorPicker = null;
 		//Graphic properties
 		public var _graphic_frame:int = 1;
 		public var _graphic_oldFrame:int = 0;
@@ -52,10 +54,13 @@ package framework.core.architecture.component{
 		public var _animation:Dictionary = null;
 		//keyboard properties
 		public var _keyboard_key:Object = null;
+		//KeyboardMove properties
+		public var _keyboardMove_iso:Boolean = false;
 		
 		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
+			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
@@ -64,11 +69,18 @@ package framework.core.architecture.component{
 			_animation = new Dictionary();
 			_animation["STATIC"] = 0;
 			_animation["WALK"] = 1;
+			_colorPicker = new ColorPicker();
+			addChild(_colorPicker);
+		}
+		//------ Init Listener ------------------------------------
+		private function initListener():void {
+			_colorPicker.addEventListener(Event.CHANGE, onColorPickerChange);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			setPropertyReference("render",_componentName);
 			setPropertyReference("spatial",_componentName);
+			setPropertyReference("keyboardMove",_componentName);
 		}
 		//------ Load Player ------------------------------------
 		public function loadPlayer(path:String, playerName:String):void {
@@ -116,7 +128,22 @@ package framework.core.architecture.component{
 		}
 		//------ Set Animation ------------------------------------
 		public function setAnimation(animation:Dictionary):void {
-			_animation = animation
+			_animation = animation;
+		}
+		//------ Set Iso ------------------------------------
+		public function setIso(keyboardMove_iso:Boolean):void {
+			_keyboardMove_iso = keyboardMove_iso;
+			
+		}
+		//------ On Color Picker Change ------------------------------------
+		private function onColorPickerChange(evt:Event):void {
+			var hexColor:String=evt.target.hexValue;
+			changeColor(hexColor);
+			evt.target.stage.focus = null;
+		}
+		//------ Change Color ------------------------------------
+		public function changeColor(hexColor:String):void {
+			
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

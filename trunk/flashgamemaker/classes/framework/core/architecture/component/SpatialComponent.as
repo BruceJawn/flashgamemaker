@@ -58,7 +58,7 @@ package framework.core.architecture.component{
 			_physicManager=PhysicManager.getInstance();
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(2,2,1);
+			_spatial_speed=new IsoPoint(2,1,1);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -72,6 +72,9 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay) {
+				if(component._spatial_isMoving){
+					_physicManager.checkPosition(component);
+				}
 				component._spatial_position.x+=component._spatial_dir.x*component._spatial_speed.x;
 				component._spatial_position.y+=component._spatial_dir.y*component._spatial_speed.y;
 				component.x=_spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
