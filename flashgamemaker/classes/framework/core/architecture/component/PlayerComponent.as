@@ -78,8 +78,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
+			super.initProperty();
 			setPropertyReference("keyboardMove",_componentName);
 		}
 		//------ Load Player ------------------------------------

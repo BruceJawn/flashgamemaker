@@ -94,6 +94,7 @@ package framework.core.architecture.entity {
 			var swfPlayerComponent:SwfPlayerComponent;
 			var loadingBarComponent:LoadingBarComponent;
 			var soundComponent:SoundComponent;
+			var messageComponent:MessageComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
@@ -166,7 +167,7 @@ package framework.core.architecture.entity {
 			for each(var propertyName:String in propertyReference){
 				try{
 					removePropertyReference(propertyName, componentName,entityName);
-				}catch(e){
+				}catch(e:Error){
 					trace(e);
 				}
 			}
@@ -174,7 +175,7 @@ package framework.core.architecture.entity {
 			for each(propertyName in propertyInfo){
 				try{
 					unregisterProperty(propertyName, componentName,entityName);
-				}catch(e){
+				}catch(e:Error){
 					trace(e);
 				}
 			}

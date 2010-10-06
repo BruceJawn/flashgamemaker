@@ -83,6 +83,14 @@ package framework.core.architecture.component{
 			component._keyboard_key = _keyboard_key;
 			component.refresh();
 		}
+		//------ Set Keys From Path ------------------------------------
+		public function setKeysFromPath(path:String, name:String):void {
+			_keyboardManager.setKeysFromPath(path, name);
+		}
+		//------ Set Keys From Xml ------------------------------------
+		public function setKeysFromXml(xml:XML):void {
+			_keyboardManager.setKeysFromXml(xml);
+		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{
            

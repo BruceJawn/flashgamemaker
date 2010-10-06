@@ -22,6 +22,7 @@ package utils.bitmap{
 	import flash.events.*;
 	import flash.geom.ColorTransform;
 	import flash.geom.Transform;
+	import flash.geom.Rectangle;
 
 	/**
 	* Bitmap Data Class
@@ -33,20 +34,9 @@ package utils.bitmap{
 
 		}
 		//------ Color Bitmap Data ------------------------------------
-		public static function ColorBitmapData(bitmapData:BitmapData , R:Number,G:Number,B:Number,A:Number):BitmapData {
+		public static function ColorBitmapData(bitmapData:flash.display.BitmapData , R:Number,G:Number,B:Number,A:Number):flash.display.BitmapData {
 			var resultColorTransform:ColorTransform=new ColorTransform(R,G,B,A,0,0,0,0);
 			bitmapData.colorTransform(bitmapData.rect, resultColorTransform);
-			return bitmapData;
-		}
-		//------ moveClip ------------------------------------
-		public static function FlipBitmapData(bitmapData:BitmapData):BitmapData {
-			var flipHorizontalMatrix:Matrix = new Matrix();
-			flipHorizontalMatrix.scale(-1,1);
-			flipHorizontalMatrix.translate(bitmapData.width,0);
-			var flippedBitmapData:BitmapData=new BitmapData(bitmapData.width,bitmapData.height,true,0);
-			flippedBitmapData.draw(bitmapData,flipHorizontalMatrix);
-			bitmapData.fillRect(myBitmapData.rect,0);
-			bitmapData.draw(flippedBitmapData);
 			return bitmapData;
 		}
 	}

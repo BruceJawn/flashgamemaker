@@ -63,10 +63,9 @@ package framework.core.architecture.component{
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
+			super.initProperty();
 			setPropertyReference("keyboardInput",_componentName);
 			registerProperty("keyboardMove", _componentName);
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {

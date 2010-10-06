@@ -81,8 +81,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
+			super.initProperty();
 			registerProperty("tileMap",_componentName);
 		}
 		//------ Load Map ------------------------------------
