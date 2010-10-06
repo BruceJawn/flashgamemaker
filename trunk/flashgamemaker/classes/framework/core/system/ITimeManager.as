@@ -25,7 +25,7 @@
 package framework.core.system{
 	import flash.events.EventDispatcher;
 	
-	public interface ITimeManager	{
+	public interface ITimeManager{
 		/**
 		 * Get Dispatcher
 		 */		

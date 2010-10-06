@@ -61,8 +61,8 @@ package utils.loader{
 		//------ On Loading Successfull ------------------------------------
 		private function onLoadingSuccessfull( evt:Event ):void {
 			_loader.contentLoaderInfo.removeEventListener(Event.OPEN, onLoadingSuccessfull);
-			__loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
-			_graphic=evt.target.content;
+			_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
+			_sound=evt.target.content;
 			dispatchEvent( evt);
 		}
 		//------ Io Error ------------------------------------
@@ -86,7 +86,7 @@ package utils.loader{
 		}
 		//------ Destroy Swf ------------------------------------
 		public function destroy():void {
-			_sond=null;
+			_sound=null;
 		}
 	}
 }

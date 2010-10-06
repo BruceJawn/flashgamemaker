@@ -126,7 +126,7 @@ package framework.core.architecture.component{
 		}
 		//------ Get Graphic  ------------------------------------
 		public function getGraphic(graphicName:String):* {
-			var graphic=_graphicManager.getGraphic(graphicName);
+			var graphic:*=_graphicManager.getGraphic(graphicName);
 			return graphic;
 		}
 		//------ Get Graphic Name  ------------------------------------

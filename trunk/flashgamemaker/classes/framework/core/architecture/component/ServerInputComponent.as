@@ -38,19 +38,25 @@ package framework.core.architecture.component{
 	public class ServerInputComponent extends Component{
 
 		private var _serverManager:IServerManager = null;
-		private var _data:String;
+		private var _server_data:String;
+		private var _hostName:String="localhost";
+		private var _port:Number=4444;
+		private var _connected:Boolean=false;
+		private var _online:Boolean=false;
 		
 		public function ServerInputComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
-			sendMessage("HelloWorld");
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_serverManager = ServerManager.getInstance();
 			_serverManager.register(this);
-			_serverManager.getServer();
+		}
+		//------ Init Property Info ------------------------------------
+		public override function initProperty():void {
+			registerProperty("serverInput", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
@@ -78,16 +84,16 @@ package framework.core.architecture.component{
 		}
 		//-- Connect Handler ---------------------------------------------
 		private function onConnectionSuccessful(evt:Event):void {
-			trace("Connection to server Successfull ");
+			trace("Connection to server:" + _hostName + ", port:"+ _port +" Successfull ");
 		}
 		//-- On Receive Data ---------------------------------------------
 		private function onReceiveData(evt:DataEvent):void {
-			var data:String=evt.data.split('\n').join('');
-			trace(data);
+			_server_data=evt.data.split('\n').join('');
+			update("serverInput");
 		}
 		//-- IO Error Handler ---------------------------------------------
 		private function onIoError(evt:IOErrorEvent):void {
-			trace("Connection to server Failed ");
+			trace("Connection to server:" + _hostName + ", port:"+ _port +" Failed ");
 		}
 		//-- Progress Handler ---------------------------------------------
 		private function onProgress(evt:ProgressEvent):void {
@@ -96,15 +102,44 @@ package framework.core.architecture.component{
 		//-- Security Error Handler ---------------------------------------------
 		private function onSecurityError(evt:SecurityErrorEvent):void {
 		}
-		//-- Send Message ---------------------------------------------
-		public function sendMessage(msgToSend:String):void {
-			_serverManager.sendText(msgToSend);
-		}
 		//------ Get Server ------------------------------------
 		private function getServer():void {
-			var server:Object = _serverManager.getServer;
-			var serverObject:String="ServerConfig HostName:"+server.hostName+" ,Port:"+server.port+" ,Online:"+server.online;
-			trace(serverObject);
+			var server:Object = _serverManager.getServer();
+			_hostName = server.hostName;
+			_port = server.port;
+			_online = server.online;
+			_connected = server.connected;
+		}
+		//------ Set Connection From Path ------------------------------------
+		public function setConnectionFromPath(path:String, name:String):void {
+			var dispatcher:EventDispatcher=_serverManager.getDispatcher();
+			dispatcher.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			_serverManager.setConnectionFromPath(path, name);
+		}
+		//------ On Xml Loading Successful ------------------------------------
+		private function onXmlLoadingSuccessful( evt:Event ):void {
+			var dispatcher:EventDispatcher=_serverManager.getDispatcher();
+			dispatcher.removeEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			startConnection();
+		}
+		//------ Set Connection From Xml ------------------------------------
+		public function setConnectionFromXml(xml:XML):void {
+			_serverManager.setConnectionFromXml(xml);
+		}
+		//------ Set Connection ------------------------------------
+		public function setConnection(hostName:String, port:Number):void {
+			_serverManager.setConnection(hostName,port);
+			startConnection();
+		}
+		//------ Start Connection ------------------------------------
+		public function startConnection():void {
+			getServer();
+			_serverManager.startConnection();
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			component._server_data = _server_data;
+			component.actualizeComponent(componentName,componentOwner,component);
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

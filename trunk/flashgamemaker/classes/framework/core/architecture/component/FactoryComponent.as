@@ -47,6 +47,7 @@ package framework.core.architecture.component{
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
 		private var _swfPlayer:SwfPlayerComponent=null;
 		private var _sound:SoundComponent=null;
+		private var _message:MessageComponent=null;
 		private var _comboBox:ComboBox=null;
 		private var _button:Button=null;
 
@@ -73,6 +74,7 @@ package framework.core.architecture.component{
 			_comboBox.width=130;
 			_comboBox.addItem({label:""});
 			_comboBox.addItem({label:"Text"});
+			_comboBox.addItem({label:"Message"});
 			_comboBox.addItem({label:"Time"});
 			_comboBox.addItem({label:"SystemInfo"});
 			_comboBox.addItem({label:"Sound"});
@@ -95,6 +97,10 @@ package framework.core.architecture.component{
 			if (selectedComponent=="Text" && _text!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="Text") {
+				_button.label = "Create";
+			}if (selectedComponent=="Message" && _message!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Message") {
 				_button.label = "Create";
 			}else if (selectedComponent=="Time"&& _time!=null) {
 				_button.label = "Remove";
@@ -127,6 +133,11 @@ package framework.core.architecture.component{
 			_text.moveTo(140,150);
 			_text.setText("HelloWorld");
 			_text.setFormat("Times New Roman",20, 0x000000);
+		}
+		//------- Init Message Component -------------------------------
+		private function initMessageComponent():void {
+		 	_message.loadGraphic("texture/framework/interface/messageClip.swf", "MessageClip");
+			_message.moveTo(150,250);
 		}
 		//------- Init Time Component -------------------------------
 		private function initTimeComponent():void {
@@ -167,6 +178,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="Text") {
 				removeComponent("myFactoryText");
 				_text = null;
+				_button.label = "Create";
+			}if (selectedComponent=="Message" && _message==null) {
+				_message = addComponent(_componentOwner.getName(), "MessageComponent", "myFactoryMessage");
+				initMessageComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Message") {
+				removeComponent("myFactoryMessage");
+				_message = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="Time" && _time==null) {
 				_time = addComponent(_componentOwner.getName(), "TimeComponent", "myFactoryTime");

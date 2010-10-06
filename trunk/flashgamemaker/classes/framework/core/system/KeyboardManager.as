@@ -25,6 +25,8 @@
 package framework.core.system{
 	import utils.loader.*;
 	import utils.time.*;
+	import framework.core.system.RessourceManager;
+	import framework.core.system.IRessourceManager;
 	
 	import flash.utils.Dictionary;
 	import flash.events.*;
@@ -37,6 +39,8 @@ package framework.core.system{
 
 		private static var _instance:IKeyboardManager=null;
 		private static var _allowInstanciation:Boolean=false;
+		private var _ressourceManager:IRessourceManager=null
+		private var _xmlName:String = null;
 		private var _xmlConfig:XMLList = null;
 		private var _keys:Dictionary;
 		private var _keyCode:Number = 0;
@@ -70,6 +74,7 @@ package framework.core.system{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
+			_ressourceManager=RessourceManager.getInstance();
 			_keys = new Dictionary();
 			_keys[39] = "RIGHT";
 			_keys[37] = "LEFT";
@@ -142,8 +147,24 @@ package framework.core.system{
 				_longClick = false;
 			}
 		}
-		//------ Set Keys ------------------------------------
-		public function setKeys(xml:XML):void {
+		//------ Set Keys From Path ------------------------------------
+		public function setKeysFromPath(path:String, name:String):void {
+			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
+			dispatcher.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			_xmlName = name;
+			_ressourceManager.loadXml(path, name);
+		}
+		//------ On Xml Loading Successful ------------------------------------
+		private function onXmlLoadingSuccessful( evt:Event ):void {
+			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
+			dispatcher.removeEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			if(_xmlName!=null){
+				var xml:XML = _ressourceManager.getXml(_xmlName);
+				setKeysFromXml(xml);
+			}
+		}
+		//------ Set Keys From Xml ------------------------------------
+		public function setKeysFromXml(xml:XML):void {
 			_xmlConfig = xml.children();
 			for each (var xmlChild:XML in _xmlConfig) {
 				var keyName:String = xmlChild.name();

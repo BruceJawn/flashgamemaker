@@ -46,7 +46,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\fl_controls.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

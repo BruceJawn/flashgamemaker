@@ -69,40 +69,9 @@ package framework.core.system{
 			_mouseManager=MouseManager.getInstance();
 			_serverManager=ServerManager.getInstance();
 			_timeManager=TimeManager.getInstance();
-
 		}
 		//------ Load Game ------------------------------------
 		public function loadGame(path:String):void {
-			initLoadingProgress();
-			//loadXmlsFromPath(path, "Game"); or startGame();
-			loadXmlsFromPath(path, "Game");
-		}
-		//------ On Xml Loading Successful ------------------------------------
-		protected override function onXmlLoadingSuccessful(evt:Event):void {
-			removeXmlListener();
-			initConfig();
-			//preloadTexture() or startGame();
-			startGame();
-		}
-		//------ Init Config ------------------------------------
-		private function initConfig():void {
-			var keyboardXml:XML=_ressourceManager.getXml("KeyboardConfig");
-			if (keyboardXml!=null) {
-				_keyboardManager.setKeys(keyboardXml);
-			}
-			var serverXml:XML=_ressourceManager.getXml("ServerConfig");
-			if (serverXml!=null) {
-				_serverManager.setConnection(serverXml);
-				_serverManager.startConnection();
-			}
-		}
-		//------ Preload Texture ------------------------------------
-		private function preloadTexture():void {
-			var textureXml:XML=_ressourceManager.getXml("Texture");
-			loadGraphicsFromXml(textureXml, "Texture");
-		}
-		//------ On Graphic Loading Successful ------------------------------------
-		protected override function onGraphicLoadingSuccessful(evt:Event):void {
 			startGame();
 		}
 		//------ Start Game ------------------------------------
@@ -116,10 +85,14 @@ package framework.core.system{
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("Entity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("Entity","RenderComponent","myRenderComponent");
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
+			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml", "KeyboardConfig");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
 			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
-			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "mySrverInputComponent");
+			var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "myServerInputComponent");
+			serverInputComponent.setConnectionFromPath("xml/framework/game/serverConfig.xml", "ServerConfig");
+			//var messageComponent:MessageComponent=_entityManager.addComponent("Entity", "MessageComponent", "myMessageComponent");
+			//messageComponent.loadGraphic("texture/framework/interface/messageClip.swf", "MessageClip");
 			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
 			//var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("Entity", "SystemInfoComponent", "mySystInfoComponent");
 			//var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent", "myTimeComponent");

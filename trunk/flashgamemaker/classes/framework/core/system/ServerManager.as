@@ -24,6 +24,8 @@
 
 package framework.core.system{
 	import utils.loader.*;
+	import framework.core.system.RessourceManager;
+	import framework.core.system.IRessourceManager;
 	
 	import flash.utils.Dictionary;
 	import flash.events.*;
@@ -36,7 +38,9 @@ package framework.core.system{
 
 		private static var _instance:IServerManager=null;
 		private static var _allowInstanciation:Boolean=false;
+		private var _ressourceManager:IRessourceManager=null
 		private var _socket:XMLSocket;
+		private var _xmlName:String = null;
 		private var _hostName:String="localhost";
 		private var _port:Number=4444;
 		private var _online:Boolean=false;
@@ -59,13 +63,35 @@ package framework.core.system{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			
+			_ressourceManager=RessourceManager.getInstance();
 		}
-		//------ Set Keys ------------------------------------
-		public function setConnection(xml:XML):void {
+		//------ Set Connection From Path ------------------------------------
+		public function setConnectionFromPath(path:String, name:String):void {
+			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
+			dispatcher.addEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			_xmlName = name;
+			_ressourceManager.loadXml(path, name);
+		}
+		//------ On Xml Loading Successful ------------------------------------
+		private function onXmlLoadingSuccessful( evt:Event ):void {
+			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
+			dispatcher.removeEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
+			if(_xmlName!=null){
+				var xml:XML = _ressourceManager.getXml(_xmlName);
+				setConnectionFromXml(xml);
+				dispatchEvent(evt);
+			}
+		}
+		//------ Set Connection From Xml ------------------------------------
+		public function setConnectionFromXml(xml:XML):void {
 			_hostName = xml.hostName;
 			_port = xml.port;
 			_online = new Boolean(xml.online);
+		}
+		//------ Set Connection ------------------------------------
+		public function setConnection(hostName:String, port:Number):void {
+			_hostName = hostName;
+			_port = port;
 		}
 		//------ Start Connection ------------------------------------
 		public function startConnection():void {
@@ -84,15 +110,16 @@ package framework.core.system{
 		}
 		//-- Close Handler ---------------------------------------------
 		private function closeHandler(evt:Event):void {
-			trace("Clonnection to server closed");
+			//trace("Clonnection to server closed");
 			_socket.close();
 			dispatchEvent(evt);
 		}
 		//-- Connect Handler ---------------------------------------------
 		private function connectHandler(evt:Event):void {
-			trace("Connection to server:" + _hostName + ", port:"+ _port +" Successfull ");
+			//trace("Connection to server:" + _hostName + ", port:"+ _port +" Successfull ");
 			_connected=true;
 			dispatchEvent( evt);
+			sendText("-- Welcome --");
 		}
 		//-- Data Handler ---------------------------------------------
 		private function dataHandler(evt:DataEvent):void {
@@ -105,15 +132,18 @@ package framework.core.system{
 			//trace("Connection to server:" + _hostName + ", port:"+ _port +" Failed ");
 			_connected=false;
 			_socket.close();
+			dispatchEvent(evt);
 		}
 		//-- Progress Handler ---------------------------------------------
 		private function progressHandler(evt:ProgressEvent):void {
-			trace("progressHandler loaded:" + evt.bytesLoaded + " total: " + evt.bytesTotal);
+			//trace("progressHandler loaded:" + evt.bytesLoaded + " total: " + evt.bytesTotal);
+			dispatchEvent(evt);
 		}
 		//-- Security Error Handler ---------------------------------------------
 		private function securityErrorHandler(evt:SecurityErrorEvent):void {
 			_connected=false;
 			_socket.close();
+			dispatchEvent(evt);
 			throw new Error("Error: Security Error in Server Manager:\n" + evt);
 		}
 		//-- Send XML ---------------------------------------------
@@ -143,6 +173,7 @@ package framework.core.system{
 			var server:Object=new Object();
 			server.hostName = _hostName;
 			server.port = _port;
+			server.connected = _connected;
 			server.online = _online;
 			return server;
 		}

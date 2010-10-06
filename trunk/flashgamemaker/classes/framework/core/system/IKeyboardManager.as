@@ -34,7 +34,11 @@ package framework.core.system{
 		/**
 		 * Define wich keys will be used in the game
 		 */		
-		function setKeys(xml:XML):void ;
+		function setKeysFromPath(path:String, name:String):void;
+		/**
+		 * Define wich keys will be used in the game
+		 */		
+		function setKeysFromXml(xml:XML):void ;
 		/**
 		 * Register
 		 */		

@@ -34,7 +34,15 @@ package framework.core.system{
 		/**
 		 * Define the port and host 
 		 */		
-		function setConnection(xml:XML):void 
+		function setConnection(hostName:String, port:Number):void
+		/**
+		 * Define the port and host 
+		 */		
+		function setConnectionFromXml(xml:XML):void 
+		/**
+		 * Define the port and host 
+		 */		
+		function setConnectionFromPath(path:String,name:String):void 
 		/**
 		 * Connect to the XmlSocket 
 		 */		

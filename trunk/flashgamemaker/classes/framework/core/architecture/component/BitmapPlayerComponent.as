@@ -48,11 +48,9 @@ package framework.core.architecture.component{
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			setPropertyReference("render",_componentName);
-			setPropertyReference("spatial",_componentName);
+			super.initProperty();
 			setPropertyReference("animation",_componentName);
 			setPropertyReference("loadingBar",_componentName);
-			setPropertyReference("keyboardMove",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
