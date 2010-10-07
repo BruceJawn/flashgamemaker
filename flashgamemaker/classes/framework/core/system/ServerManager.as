@@ -99,6 +99,10 @@ package framework.core.system{
 			initListener(_socket);
 			_socket.connect(_hostName,_port);
 		}
+		//------ Close Connection ------------------------------------
+		public function closeConnection():void {
+			_socket.close();
+		}
 		//-- Init Listener ---------------------------------------------
 		private function initListener(dispatcher:IEventDispatcher):void {
 			dispatcher.addEventListener(Event.CLOSE, closeHandler);
