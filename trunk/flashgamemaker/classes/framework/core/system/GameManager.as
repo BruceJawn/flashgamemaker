@@ -89,8 +89,9 @@ package framework.core.system{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
 			//var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
-			var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "myServerInputComponent");
-			serverInputComponent.setConnectionFromPath("xml/framework/game/serverConfig.xml", "ServerConfig");
+			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "myServerInputComponent");
+			//serverInputComponent.setConnectionFromPath("xml/framework/game/serverConfig.xml", "ServerConfig");
+			//serverInputComponent.setConnection("180.216.91.147",4444);
 			//var messageComponent:MessageComponent=_entityManager.addComponent("Entity", "MessageComponent", "myMessageComponent");
 			//messageComponent.loadGraphic("texture/framework/interface/messageClip.swf", "MessageClip");
 			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
