@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<isoplayer>
+ <char login="a" password="a" charName="Angel" charType="ally" x="30" y="30" z="50" width="16" height="16" high="24"  depth="1000" dirx="0" diry="0" dirz="0" frame="1" R="1" G="1" B="1" life="100" energy="20" stamina="10" attack="6" defense="0" damage="1" range="1" charSetName="bebeClip" charSeType="swf" container="8" teamName="team 1">
+	<skill action="longRangeAttack" attack="10" energy="5" timeout="10" restriction="none" fxSetName="fxSet1" fxSetX="0" fxSetY="'" width="5" height="5" high="5" speed="8" xSpeed="8" ySpeed="8">Arrow</skill>
+
+
+	<skill action="longRangeAttack" attack="10" energy="5" timeout="10" restriction="none" fxSetName="fxSet1" fxSetX="0" fxSetY="2" width="5" height="5" high="5" speed="8" xSpeed="8" ySpeed="8">Beam</skill>
+
+	<skill action="longRangeAttack" attack="10" energy="5" timeout="30" restriction="none" fxSetName="fxSet1" fxSetX="0" fxSetY="1" width="5" height="5" high="5" speed="8" xSpeed="6" ySpeed="6">FireBall</skill>
+
+	<skill action="longRangeAttack" attack="10" energy="5" timeout="30" restriction="none" fxSetName="fxset1" fxSetX="0" fxSetY="0" width="5" height="5" high="5" speed="8" xSpeed="6" ySpeed="6">Tornado</skill>
+		
+	<item action="cure" value="10" quantity="1" restriction="none" itemSetName="itemSet1" itemSetX="0" itemSetY="0" >Potion</item>
+	</char>
+
+</isoplayer>
