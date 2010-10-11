@@ -49,7 +49,8 @@ package framework.core.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			
+			setPropertyReference("keyboardMove",_componentName);
+			//setPropertyReference("serverMove",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {

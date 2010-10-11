@@ -23,12 +23,13 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	
+
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
 	import fl.controls.ProgressBar;
 	import fl.controls.ProgressBarMode;
+	import flash.text.TextField;
 
 	/**
 	* Jauge Class
@@ -36,37 +37,50 @@ package framework.core.architecture.component{
 	*/
 	public class JaugeComponent extends GraphicComponent {
 
+		private var _text:TextField=null;
 		private var _jauge:ProgressBar=null;
 		private var _jauge_count:Number=0;
 		private var _jauge_max:Number=100;
-		private var _jauge_stepUp:Number=4;
-		private var _jauge_stepDown:Number=2;
+		private var _jauge_stepUp:Number=2;
+		private var _jauge_stepDown:Number=5;
+		private var _jauge_combinaison:String="";
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 		//Timer properties
 		public var _timer_delay:Number=30;
 		public var _timer_count:Number=0;
 
-		public function JaugeComponent(componentName:String, componentOwner:IEntity) {
+		public function JaugeComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_jauge =  createProgressBar(100,20,0,0,-90);
-			_jauge.maximum = 100;
+			_jauge=createProgressBar(50,20,0,0,-90);
+			_jauge.maximum=100;
 			addChild(_jauge);
+			_text=new TextField  ;
+			_text.autoSize="left";
+			_text.text= "Press 1 + 2 to run";
+			_text.x-=40;
+			addChild(_text);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
+			registerProperty("jauge",_componentName);
 			setPropertyReference("keyboardInput",_componentName);
 			setPropertyReference("timer",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay) {
+			if (_timer_count>=_timer_delay && componentName==_componentName) {
 				updateJauge();
+			}else if(_timer_count>=_timer_delay){
+				component._jauge_count = _jauge_count;
+				component._jauge_max = _jauge_max;
+				component._jauge = _jauge;
+				component.refresh();
 			}
 		}
 		//------ Update Jauge ------------------------------------
@@ -75,20 +89,23 @@ package framework.core.architecture.component{
 				var keyTouch:String=_keyboard_key.keyTouch;
 				var prevTouch:String=_keyboard_key.prevTouch;
 				var keyStatut:String=_keyboard_key.keyStatut;
-				if((keyTouch=="A" && prevTouch=="B" || keyTouch=="B" && prevTouch=="A") && keyStatut=="DOWN" && _jauge_count<_jauge_max ){
+				if ((keyTouch=="A"&&prevTouch=="B"||keyTouch=="B"&&prevTouch=="A")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
 					_jauge_count+=_jauge_stepUp;
-				}else if(_jauge_count-_jauge_stepDown>=0) {
+					_jauge_combinaison=keyTouch+prevTouch;
+				} else if (_jauge_count-_jauge_stepDown>0) {
 					_jauge_count-=_jauge_stepDown;
+				}else {
+					_jauge_count=0;
 				}
 				_jauge.setProgress(_jauge_count,_jauge_max);
 			}
 		}
 		//------ Create Progress Bar ------------------------------------
-		public function createProgressBar(width:Number,height:Number,x:Number,y:Number, rotation:Number):ProgressBar {
-			var progressBar:ProgressBar = new ProgressBar();
+		public function createProgressBar(width:Number,height:Number,x:Number,y:Number,rotation:Number):ProgressBar {
+			var progressBar:ProgressBar=new ProgressBar  ;
 			progressBar.mode=ProgressBarMode.MANUAL;
-			progressBar.setSize(width, height);
-			progressBar.move(x, y);
+			progressBar.setSize(width,height);
+			progressBar.move(x,y);
 			progressBar.rotation=rotation;
 			return progressBar;
 		}

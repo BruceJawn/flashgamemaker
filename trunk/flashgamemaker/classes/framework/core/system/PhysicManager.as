@@ -121,7 +121,7 @@ package framework.core.system{
 		public function checkPosition(component:*):void {
 			if (component!=null) {
 				var corners:Object=getCorner(component);
-				checkBoundaries(corners,component);
+				//checkBoundaries(corners,component);
 			}
 		}
 		//------ Get Corner ------------------------------------

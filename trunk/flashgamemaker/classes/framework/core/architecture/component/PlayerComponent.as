@@ -83,8 +83,6 @@ package framework.core.architecture.component{
 			super.initProperty();
 			setPropertyReference("animation",_componentName);
 			setPropertyReference("progressBar",_componentName);
-			setPropertyReference("keyboardMove",_componentName);
-			//setPropertyReference("serverMove",_componentName);
 		}
 		//------ Load Player ------------------------------------
 		public function loadPlayer(path:String, playerName:String):void {

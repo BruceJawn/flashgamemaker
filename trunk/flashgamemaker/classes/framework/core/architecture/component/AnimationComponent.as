@@ -58,7 +58,7 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay) {
-				if (componentName!=_componentName&&component._keyboard_key!=null) {
+				if (componentName!=_componentName) {
 					var frame:int=getFrame(component);
 					frame=setAnimation(component,frame);
 					frame=setFrame(component,frame);
