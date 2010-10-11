@@ -27,7 +27,6 @@ package framework.core.architecture.component{
 	import framework.core.system.IGraphicManager;
 	import utils.iso.IsoPoint;
 
-	import flash.events.EventDispatcher;
 	import flash.events.*;
 	import flash.display.*;
 	import flash.geom.Matrix;
@@ -56,9 +55,10 @@ package framework.core.architecture.component{
 
 		//Spatial properties
 		public var _spatial_speed:IsoPoint=null;
+		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_position:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
-		public var _spatial_isMoving:Boolean=false;
+		public var _spatial_properties:Object = null;
 
 		public function GraphicComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -70,7 +70,9 @@ package framework.core.architecture.component{
 			_graphic = addChild(new Sprite());
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(2,1,1);
+			_spatial_speed=new IsoPoint(2,2,1);
+			_spatial_jump=new IsoPoint(0,0,-6);
+			_spatial_properties = {iso:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -105,8 +107,8 @@ package framework.core.architecture.component{
 			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 			if (_graphicName!=null) {
-				setGraphic(_graphicName,_graphicName);
-				dispatchEvent(evt);
+				_graphic=_graphicManager.getGraphic(_graphicName);
+				addChild(_graphic);
 			}
 		}
 		//------ On Graphic Loading Progress ------------------------------------

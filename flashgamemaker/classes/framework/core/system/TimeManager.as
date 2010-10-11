@@ -43,7 +43,7 @@ package framework.core.system{
 		private var _currentTime:Number = 0;
 		
 		public function TimeManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use TimeManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -51,7 +51,7 @@ package framework.core.system{
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():ITimeManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new TimeManager();
 				return _instance;

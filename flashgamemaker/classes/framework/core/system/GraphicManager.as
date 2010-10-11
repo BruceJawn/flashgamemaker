@@ -45,14 +45,14 @@ package framework.core.system{
 		private var _layers:Array=null;
 
 		public function GraphicManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use XmlManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IGraphicManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new GraphicManager();
 				return _instance;

@@ -74,7 +74,7 @@ package framework.core.architecture.component{
 					var y:int=Math.floor((_tileFrame-1)/(_X));
 					var bitmap:Bitmap=getGraphic(_textureName) as Bitmap;
 					var myBitmapData:BitmapData=new BitmapData(_tileWidth,_tileHeight+_tileHigh,true,0);
-					myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * _tileWidth, y * _tileHeight,_tileWidth,_tileHeight + _tileHigh), new Point(0, 0),null,null,true);
+					myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * _tileWidth, y * _tileHeight,_tileWidth,_tileHeight), new Point(0, 0),null,null,true);
 					var graphic:Bitmap=new Bitmap(myBitmapData);
 					setGraphic(_tileName,graphic);
 				}

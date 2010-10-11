@@ -2,8 +2,8 @@
 <Map mapHigh="5" mapHeight="5" mapWidth="5" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" mapVisibility="5">
 	<MapTexture >
 		<path>xml/framework/game/mapTexture.xml</path>
-		<layer texture="TileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">25*1,100*0</layer>		
-		<layer texture="AddTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">125*0</layer>
+		<layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">25*1,100*0</layer>		
+		<layer texture="TileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">125*0</layer>
 	</MapTexture>
 	<MapProperties>
 		<walkable>125*1</walkable>

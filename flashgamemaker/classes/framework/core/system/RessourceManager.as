@@ -37,16 +37,17 @@ package framework.core.system {
 		private static var _allowInstanciation:Boolean = false;
 		private var _xmlManager:IXmlManager = null;
 		private var _graphicManager:IGraphicManager = null;
+		private var _serverManager:IServerManager = null;
 		
 		public function RessourceManager(){
-			if(!_allowInstanciation){
+			if(!_allowInstanciation || _instance!=null){
 				 throw new Error("Error: Instantiation failed: Use RessourceManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IRessourceManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance = new RessourceManager();
 				return _instance;

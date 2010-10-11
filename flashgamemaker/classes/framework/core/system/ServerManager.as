@@ -47,14 +47,14 @@ package framework.core.system{
 		private var _connected:Boolean=false;
 		
 		public function ServerManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use ServerManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IServerManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new ServerManager();
 				return _instance;
@@ -180,6 +180,18 @@ package framework.core.system{
 			server.connected = _connected;
 			server.online = _online;
 			return server;
+		}
+		//------ Send Player ------------------------------------
+		public function sendPlayer(playerXml:XML,playerName:String):void {
+			if(_connected){
+				var textToSend:String = parsePlayer(playerXml,playerName);
+				_socket.send(textToSend+"\r");
+			}
+		}
+		//-- Parse Player ---------------------------------------------
+		private function parsePlayer(playerXml:XML,playerName:String):String {
+			var textToSend:String = "<player action='create' name='playerName'>"+playerXml.toString()+"</player>";
+			return textToSend;
 		}
 		//------- ToString -------------------------------
 		 public  function ToString():void{

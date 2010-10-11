@@ -57,7 +57,7 @@ package framework.core.system{
 		private var _interval:Number = 0;
 		
 		public function KeyboardManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use KeyboardManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -65,7 +65,7 @@ package framework.core.system{
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IKeyboardManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new KeyboardManager();
 				return _instance;
@@ -93,7 +93,7 @@ package framework.core.system{
 		}
 		//------ On Key Down ------------------------------------
 		private function onKeyDown(evt:KeyboardEvent):void {
-			if(_keyStatut=="UP"){
+			if(_keyStatut=="UP" || _keyCode!=evt.keyCode){
 				_keyStatut= "DOWN"; 
 				initTimer();
 				updateKey(evt);
@@ -192,6 +192,7 @@ package framework.core.system{
 			key.shiftKey = _shiftKey;
 			key.ctrlKey = _ctrlKey;
 			key.keyTouch = _keys[_keyCode];
+			key.prevTouch = _keys[_prevKeyCode];
 			return key;
 		}
 		//------ Get Xml Config ------------------------------------

@@ -3,9 +3,9 @@
 	<TileSet>
 		<path>texture/framework/game/tileSet/tileSet.png</path>
 	</TileSet>
-	<AddTileSet>
-		<path>texture/framework/game/tileSet/addTileSet.png</path>
-	</AddTileSet>
+	<KawaiiTileSet>
+		<path>texture/framework/game/tileSet/kawaiiTileSet.png</path>
+	</KawaiiTileSet>
 
 	<Knight tileWidth="64" tileHeight="64" tileX="8" tileY="4">
 		<path>texture/framework/game/charSet/templeKnightSet.png</path>

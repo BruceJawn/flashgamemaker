@@ -47,7 +47,7 @@ package framework.core.architecture.entity {
 		private var _propertyReferences:Dictionary = null ;
 		
 		public function EntityManager(){
-			if(!_allowInstanciation){
+			if(!_allowInstanciation || _instance!=null){
 				 throw new Error("Error: Instantiation failed: Use EntityManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -55,7 +55,7 @@ package framework.core.architecture.entity {
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IEntityManager {
-			if (! _instance) {
+			if (_instance ==null) {
 				_allowInstanciation=true;
 				_instance = new EntityManager();
 				return _instance;
@@ -92,9 +92,11 @@ package framework.core.architecture.entity {
 			var textComponent:TextComponent;
 			var factoryComponent:FactoryComponent;
 			var swfPlayerComponent:SwfPlayerComponent;
-			var loadingBarComponent:LoadingBarComponent;
+			var progressBarComponent:ProgressBarComponent;
 			var soundComponent:SoundComponent;
 			var messageComponent:MessageComponent;
+			var multiPlayerComponent:MultiPlayerComponent;
+			var cursorComponent:CursorComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
