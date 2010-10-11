@@ -67,6 +67,7 @@ package framework.core.architecture.component{
 				component._spatial_properties.isMoving=true;
 				component._spatial_properties.isRunning=true;
 			}else{
+				component._spatial_position.x=50;
 				component._spatial_properties.isMoving=false;
 				component._spatial_properties.isRunning=false;
 			}
