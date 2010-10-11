@@ -187,7 +187,7 @@ package framework.core.architecture.component{
 		private function initSwfPlayerComponent():void {
 			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
 			_swfPlayer.setIso(true);
-			_swfPlayer.moveTo(235,175);
+			_swfPlayer.moveTo(150,150);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {

@@ -50,6 +50,9 @@ package framework.core.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
+			setPropertyReference("jaugeMove",_componentName);
+			//setPropertyReference("keyboardMove",_componentName);
+			//setPropertyReference("serverMove",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
@@ -100,7 +103,6 @@ package framework.core.architecture.component{
 							var clip:MovieClip = _source[_name+Number(i+j)] as MovieClip;
 							if(clip!= null && clip[clipName]!=null){
 								if(source[_name+Number(j+1)]!=null){
-									//trace(i+j,j+1);
 									clip[clipName].addChild(source["clip"+Number(j+1)]);
 								}
 							}

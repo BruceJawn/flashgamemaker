@@ -48,7 +48,7 @@ package framework.core.system{
 
 
 		public function GameManager() {
-			if (! _allowInstanciation || _instance!=null) {
+			if (! _allowInstanciation||_instance!=null) {
 				throw new Error("Error: Instantiation failed: Use GameManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -57,7 +57,7 @@ package framework.core.system{
 		public static function getInstance():IGameManager {
 			if (_instance==null) {
 				_allowInstanciation=true;
-				_instance = new GameManager();
+				_instance=new GameManager  ;
 				return _instance;
 			}
 			return _instance;
@@ -85,10 +85,10 @@ package framework.core.system{
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("Entity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("Entity","RenderComponent","myRenderComponent");
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml", "KeyboardConfig");
+			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
+			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Entity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
 			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "myServerInputComponent");
 			//serverInputComponent.setConnectionFromPath("xml/framework/game/serverConfig.xml", "ServerConfig");
@@ -104,16 +104,19 @@ package framework.core.system{
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			//bitmapPlayerComponent.setIso(true);
-			//var swfPlayerComponent = _entityManager.addComponent("Entity", "SwfPlayerComponent", "mySwfPlayerComponent");
-			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml","SwfPlayer");
+			swfPlayerComponent.moveTo(20,230);
 			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
-			//var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
+			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
+			jaugeComponent.moveTo(200,320);
+			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
-			}
+		}
 		//------- ToString -------------------------------
 		public function ToString():void {
 
