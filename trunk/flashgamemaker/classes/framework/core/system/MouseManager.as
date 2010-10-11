@@ -28,6 +28,8 @@ package framework.core.system{
 	
 	import flash.events.*;
 	import flash.events.MouseEvent;
+	import flash.ui.Mouse;
+
 	/**
 	* Mouse Manager
 	* @ purpose: Handle the mouse event
@@ -51,7 +53,7 @@ package framework.core.system{
 		private var _interval:Number = 0;
 		
 		public function MouseManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use MouseManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -59,7 +61,7 @@ package framework.core.system{
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IMouseManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new MouseManager();
 				return _instance;
@@ -169,6 +171,14 @@ package framework.core.system{
 			mouse.ctrlKey = _ctrlKey;
 			mouse.delta = _delta;
 			return mouse;
+		}
+		//------ Hide Cursor ------------------------------------
+		public function hideCursor():void {
+			Mouse.hide();
+		}
+		//------ Show Cursor ------------------------------------
+		public function showCursor():void {
+			Mouse.show();
 		}
 		//------- To String  -------------------------------
 		public function ToString():void{

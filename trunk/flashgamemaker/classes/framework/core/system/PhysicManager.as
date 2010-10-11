@@ -25,10 +25,11 @@
 package framework.core.system{
 	import utils.loader.*;
 	import utils.iso.IsoPoint;
-	
+
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	
+	import flash.geom.Rectangle;
+
 	/**
 	* Physic Manager
 	* @ purpose: Handle the physic
@@ -37,68 +38,124 @@ package framework.core.system{
 
 		private static var _instance:IPhysicManager=null;
 		private static var _allowInstanciation:Boolean=false;
-		private var _spatial_gravity:int =1;
-		private var _spatial_friction:int =1;
-		private var _map:Object = null
-		
+		private var _boundaries:Rectangle=null;
+		private var _spatial_gravity:int=1;
+		private var _spatial_friction:int=1;
+		private var _map:Object=null;
 		public function PhysicManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation||_instance!=null) {
 				throw new Error("Error: Instantiation failed: Use PhysicManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IPhysicManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
-				_instance= new PhysicManager();
+				_instance=new PhysicManager  ;
 				return _instance;
 			}
 			return _instance;
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			
+			_boundaries=new Rectangle(0,0,FlashGameMaker.WIDTH,FlashGameMaker.HEIGHT);
+		}
+		//------- Move -------------------------------
+		public function move(component:*,spatial_position:IsoPoint):void {
+			if (component._spatial_properties.isMoving||hasMoved(component)) {
+				var speedX:Number=component._spatial_speed.x;
+				var speedY:Number=component._spatial_speed.y;
+				if (component._spatial_properties.isRunning) {
+					speedX*=2;
+					speedY*=2;
+				}
+				component._spatial_position.x+=component._spatial_dir.x*speedX;
+				component._spatial_position.y+=component._spatial_dir.y*speedY;
+				component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
+				component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
+				if (component._spatial_properties.iso) {
+					isoMove(component);
+				}
+				if (component._spatial_properties.isJumping) {
+					jumpMove(component);
+				} else if (component._spatial_properties.isFalling) {
+					fallMove(component);
+				}
+			}
+		}
+		//------- Iso Move -------------------------------
+		private function isoMove(component:*):void {
+			var x:Number=component.x-component.y;
+			var y:Number=component.x+component.y/2;
+			component.x=x;
+			component.y=y;
+		}
+		//------ Has Moved  ------------------------------------
+		private function hasMoved(component:*):Boolean {
+			if (component._spatial_position.x!=component.x||component._spatial_position.y!=component.y) {
+				return true;
+			}
+			return false;
+		}
+		//------- Jump Move -------------------------------
+		private function jumpMove(component:*):void {
+			component._spatial_jump.y+=_spatial_gravity;
+			component.y+=component._spatial_jump.y;
+			if (component._spatial_jump.y>=0) {
+				component._spatial_jump.y=0;
+				component._spatial_properties.isJumping=false;
+				component._spatial_properties.isFalling=true;
+			}
+		}
+		//------- Fall Move -------------------------------
+		private function fallMove(component:*):void {
+			component._spatial_jump.y+=_spatial_gravity;
+			component.y+=component._spatial_jump.y;
+			if (component._spatial_jump.y>=Math.abs(component._spatial_jump.z)) {
+				component._spatial_jump.y=0;
+				component._spatial_properties.isFalling=false;
+			}
 		}
 		//------ Check Position ------------------------------------
 		public function checkPosition(component:*):void {
-			if(_map!=null){
-				var corners:Object = getCorner(component._spatial_position);
-				checkBoundaries(corners);
+			if (component!=null) {
+				var corners:Object=getCorner(component);
+				checkBoundaries(corners,component);
 			}
 		}
 		//------ Get Corner ------------------------------------
-		private function getCorner(spatial_position:IsoPoint):Object {
-			var cornerUR:IsoPoint = new IsoPoint(spatial_position.x + _map.tileWidth/4,spatial_position.y - _map.tileHeight/4, spatial_position.z);
-			var cornerUL:IsoPoint = new IsoPoint(spatial_position.x - _map.tileWidth/4,spatial_position.y - _map.tileHeight/4, spatial_position.z);
-			var cornerDR:IsoPoint = new IsoPoint(spatial_position.x + _map.tileWidth/4,spatial_position.y + _map.tileHeight/4, spatial_position.z);
-			var cornerDL:IsoPoint = new IsoPoint(spatial_position.x - _map.tileWidth/4,spatial_position.y + _map.tileHeight/4, spatial_position.z);
-			var cornerTop:IsoPoint = new IsoPoint(spatial_position.x,spatial_position.y, spatial_position.z + _map.tileHigh);
-			//trace(cornerUR,cornerUL,cornerDR,cornerDL);
-			return {cornerUR:cornerUR,cornerUL:cornerUL,cornerDR:cornerDR, cornerDL:cornerDL};
+		private function getCorner(component:*):Object {
+			var position:IsoPoint=component._spatial_position;
+			var cornerUR:IsoPoint=new IsoPoint(component.x+component.width/2,component.y-component.height/2,position.z);
+			var cornerUL:IsoPoint=new IsoPoint(component.x-component.width/2,component.y-component.height/2,position.z);
+			var cornerDR:IsoPoint=new IsoPoint(component.x+component.width/2,component.y+component.height/2,position.z);
+			var cornerDL:IsoPoint=new IsoPoint(component.x-component.width/2,component.y+component.height/2,position.z);
+			return {cornerUR:cornerUR,cornerUL:cornerUL,cornerDR:cornerDR,cornerDL:cornerDL};
 		}
 		//------ checkBoundaries  ------------------------------------
-		private function checkBoundaries(corners:Object):void {
-			trace(corners.cornerUR.x-_map.position.x,corners.cornerUL.x-_map.position.x);
-			if(corners.cornerUR.x-_map.position.x>_map.mapWidth*_map.tileWidth){
+		private function checkBoundaries(corners:Object,component:*):void {
+			if (component._spatial_dir.x==1&&corners.cornerUR.x>_boundaries.x+_boundaries.width) {
 				trace("collision Right");
-			}else if(corners.cornerUL.x-_map.position.x<0){
+				component.x=_boundaries.x+_boundaries.width-component.width/2;
+			} else if (component._spatial_dir.x==-1&&corners.cornerUL.x<_boundaries.x) {
 				trace("collision Left");
-			}else if(corners.cornerUL.y-_map.position.y<0){
-				trace("collision Left");
-			}else if(corners.cornerDL.y-_map.position.y>_map.mapHeight*_map.tileHeight){
-				trace("collision Left");
-			}/*else if(corners.cornerTop.z>_map.mapHigh*_map.tileHigh){
-				trace("collision Top");
-			}*/
+				component.x=_boundaries.x+component.width/2;
+			} else if (component._spatial_dir.y==-1&&corners.cornerUL.y<_boundaries.y) {
+				trace("collision Up");
+				component.y=_boundaries.y+component.height;
+			} else if (component._spatial_dir.y==1&&corners.cornerDL.y>_boundaries.y+_boundaries.height) {
+				trace("collision Down");
+				component.y=_boundaries.y+_boundaries.height;
+			}
 		}
 		//------ Set Map ------------------------------------
 		public function setMap(map:Object):void {
 			_map=map;
 		}
 		//------- ToString -------------------------------
-		 public  function ToString():void{
-           
-        }
+		public function ToString():void {
+
+		}
 	}
 }

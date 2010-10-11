@@ -40,6 +40,7 @@ package framework.core.architecture.component{
 		private var _title:TextComponent=null;
 		private var _description:TextComponent=null;
 		private var _name:TextComponent=null;
+		private var _cursor:CursorComponent=null;
 		private var _text:TextComponent=null;
 		private var _time:TimeComponent=null;
 		private var _systemInfo:SystemInfoComponent=null;
@@ -73,6 +74,7 @@ package framework.core.architecture.component{
 			_comboBox.move(260,60);
 			_comboBox.width=130;
 			_comboBox.addItem({label:""});
+			_comboBox.addItem({label:"Cursor"});
 			_comboBox.addItem({label:"Text"});
 			_comboBox.addItem({label:"Message"});
 			_comboBox.addItem({label:"Time"});
@@ -94,7 +96,11 @@ package framework.core.architecture.component{
 		//------- On ComboBox Change -------------------------------
 		private function onComboBoxChange(evt:Event):void {
 			var selectedComponent:String=_comboBox.selectedItem.label;
-			if (selectedComponent=="Text" && _text!=null) {
+			if (selectedComponent=="Cursor" && _cursor!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Cursor") {
+				_button.label = "Create";
+			}else if (selectedComponent=="Text" && _text!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="Text") {
 				_button.label = "Create";
@@ -127,6 +133,11 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="SwfPlayer") {
 				_button.label = "Create";
 			}
+		}
+		//------- Init Text Component -------------------------------
+		private function initCursorComponent():void {
+			_cursor.loadGraphic("texture/framework/interface/kawaiiCursor.swf", "KawaiiCursor");
+			_cursor.moveTo(150,250);
 		}
 		//------- Init Text Component -------------------------------
 		private function initTextComponent():void {
@@ -171,7 +182,15 @@ package framework.core.architecture.component{
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {
 			var selectedComponent:String=_comboBox.selectedItem.label;
-			if (selectedComponent=="Text" && _text==null) {
+			if (selectedComponent=="Cursor" && _cursor==null) {
+				_cursor = addComponent(_componentOwner.getName(), "CursorComponent", "myFactoryCursor");
+				initCursorComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Cursor") {
+				removeComponent("myFactoryCursor");
+				_cursor = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="Text" && _text==null) {
 				_text = addComponent(_componentOwner.getName(), "TextComponent", "myFactoryText");
 				initTextComponent();
 				_button.label = "Remove";

@@ -41,9 +41,10 @@ package framework.core.architecture.component{
 		private var _physicManager:IPhysicManager=null;
 		//Spatial properties
 		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
+		public var _spatial_jump:IsoPoint=null;//JumpHorizontal, jumpVertical, jumpStart
 		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
 		public var _spatial_position:IsoPoint=null;// x, y and z
-		public var _spatial_isMoving:Boolean=false;
+		public var _spatial_properties:Object = null;
 		//Timer properties
 		public var _timer_delay:Number=30;
 		public var _timer_count:Number=0;
@@ -58,7 +59,9 @@ package framework.core.architecture.component{
 			_physicManager=PhysicManager.getInstance();
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(2,1,1);
+			_spatial_speed=new IsoPoint(2,2,1);
+			_spatial_jump=new IsoPoint(0,0,-12);
+			_spatial_properties = {iso:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -72,13 +75,7 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay) {
-				if(component._spatial_isMoving){
-					_physicManager.checkPosition(component);
-				}
-				component._spatial_position.x+=component._spatial_dir.x*component._spatial_speed.x;
-				component._spatial_position.y+=component._spatial_dir.y*component._spatial_speed.y;
-				component.x=_spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
-				component.y=_spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
+				_physicManager.move(component,_spatial_position);
 			}
 		}
 		//------- ToString -------------------------------

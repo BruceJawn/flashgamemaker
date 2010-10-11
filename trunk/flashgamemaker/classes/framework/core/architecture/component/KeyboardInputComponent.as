@@ -74,7 +74,7 @@ package framework.core.architecture.component{
 		//------ Get Key ------------------------------------
 		private function getKey():void {
 			_keyboard_key = _keyboardManager.getKey();
-			var keyObject:String="KeyInput KeyStatut:"+_keyboard_key.keyStatut+" ,KeyTouch:"+_keyboard_key.keyTouch;
+			var keyObject:String="KeyInput KeyStatut:"+_keyboard_key.keyStatut+" ,KeyTouch:"+_keyboard_key.keyTouch+" ,PrevTouch:"+_keyboard_key.prevTouch;
 			keyObject+=" ,KeyCode:"+_keyboard_key.keyCode+" ,CharCode:"+_keyboard_key.charCode+" ,DoubleClick:"+_keyboard_key.doubleClick;
 			keyObject+=" ,LongClick:"+_keyboard_key.longClick+" ,Shift:"+_keyboard_key.shiftKey+" ,Ctrl:"+_keyboard_key.ctrlKey;
 		}

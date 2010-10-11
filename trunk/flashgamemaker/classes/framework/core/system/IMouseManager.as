@@ -44,6 +44,14 @@ package framework.core.system{
 		 */		
 		function getMouse():Object ;
 		/**
+		 * Hide Cursor
+		 */		
+		function hideCursor():void;
+		/**
+		 * Show Cursor
+		 */		
+		function showCursor():void;
+		/**
 		 * To String
 		 */		
 		function ToString():void ;

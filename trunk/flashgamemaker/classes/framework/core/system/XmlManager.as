@@ -40,14 +40,14 @@ package framework.core.system{
 		private var _xmls:Dictionary = null;
 		
 		public function XmlManager() {
-			if (! _allowInstanciation) {
+			if (! _allowInstanciation || _instance!=null) {
 				throw new Error("Error: Instantiation failed: Use XmlManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IXmlManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance= new XmlManager();
 				return _instance;

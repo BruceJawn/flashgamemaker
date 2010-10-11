@@ -36,6 +36,7 @@ package framework.core.architecture.component{
 	public class MouseInputComponent extends Component {
 
 		private var _mouseManager:IMouseManager=null;
+		private var _mouse_object:Object = null;
 
 		public function MouseInputComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -47,13 +48,17 @@ package framework.core.architecture.component{
 			_mouseManager=MouseManager.getInstance();
 			_mouseManager.register(this);
 		}
+		//------ Init Property Info ------------------------------------
+		public override function initProperty():void {
+			registerProperty("mouseInput", _componentName);
+		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
 			var dispatcher:EventDispatcher=_mouseManager.getDispatcher();
 			dispatcher.addEventListener(MouseEvent.CLICK, onMouseFire);
 			//dispatcher.addEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
 			//dispatcher.addEventListener(MouseEvent.MOUSE_UP, onMouseFire);
-			//dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
+			dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
 			dispatcher.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
 		}
 		//------ Remove Listener ------------------------------------
@@ -68,15 +73,20 @@ package framework.core.architecture.component{
 		//------ On Mouse Change ------------------------------------
 		private function onMouseFire(evt:MouseEvent):void {
 			getMouse();
+			update("mouseInput");
 		}
 		//------ Get Mouse ------------------------------------
 		private function getMouse():void {
-			var mouse:Object=_mouseManager.getMouse();
-			var mouseObject:String="MouseInput Type:"+mouse.type+" ,TargetName:"+mouse.targetName;
-			mouseObject+=" ,Target:"+mouse.target+" ,StageX:"+mouse.stageX+" ,StageY:"+mouse.stageY;
-			mouseObject+=" ,Shift:"+mouse.shiftKey+" ,Ctrl:"+mouse.ctrlKey+" ,ButtonDown:"+mouse.buttonDown;
-			mouseObject+=" ,Delta:"+mouse.delta+" ,LongClick:"+mouse.longClick;
-			trace(mouseObject);
+			_mouse_object=_mouseManager.getMouse();
+			var mouseObject:String="MouseInput Type:"+_mouse_object.type+" ,TargetName:"+_mouse_object.targetName;
+			mouseObject+=" ,Target:"+_mouse_object.target+" ,StageX:"+_mouse_object.stageX+" ,StageY:"+_mouse_object.stageY;
+			mouseObject+=" ,Shift:"+_mouse_object.shiftKey+" ,Ctrl:"+_mouse_object.ctrlKey+" ,ButtonDown:"+_mouse_object.buttonDown;
+			mouseObject+=" ,Delta:"+_mouse_object.delta+" ,LongClick:"+_mouse_object.longClick;
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			component._mouse_object = _mouse_object;
+			component.actualizeComponent(componentName,componentOwner,component);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -43,13 +43,13 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-
+			_animation["RUN"]=2;
+			_animation["JUMP"]=3;
+			_animation["DOUBLE_JUMP"]=4;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			setPropertyReference("animation",_componentName);
-			setPropertyReference("loadingBar",_componentName);
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {

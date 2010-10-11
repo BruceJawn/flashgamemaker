@@ -44,14 +44,14 @@ package framework.core.system {
 		private var _currentScreen:String = "NAN";
 		
 		public function InterfaceManager(){
-			if(!_allowInstanciation){
+			if(!_allowInstanciation || _instance!=null){
 				 throw new Error("Error: Instantiation failed: Use InterfaceManager.getInstance() instead of new.");
 			}
 			initVar();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IInterfaceManager {
-			if (! _instance) {
+			if (_instance==null) {
 				_allowInstanciation=true;
 				_instance = new InterfaceManager();
 				return _instance;

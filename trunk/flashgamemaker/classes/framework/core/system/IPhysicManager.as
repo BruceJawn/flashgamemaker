@@ -23,6 +23,8 @@
 */
 
 package framework.core.system{
+	import utils.iso.IsoPoint;
+	
 	import flash.events.EventDispatcher;
 	
 	public interface IPhysicManager	{
@@ -38,7 +40,11 @@ package framework.core.system{
 		/**
 		 * Set Map
 		 */		
-		function setMap(map:Object):void
+		function setMap(map:Object):void;
+		/**
+		 * Move
+		 */		
+		function move(component:*,spatial_position:IsoPoint):void;
 		/**
 		 * To String
 		 */		

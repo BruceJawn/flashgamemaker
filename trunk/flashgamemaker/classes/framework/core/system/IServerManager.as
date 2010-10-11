@@ -68,6 +68,10 @@ package framework.core.system{
 		 */		
 		function getServer():Object;
 		/**
+		 * Server Send Player
+		 */		
+		function sendPlayer(playerXml:XML,playerName:String):void 
+		/**
 		 * To String
 		 */		
 		function ToString():void ;
