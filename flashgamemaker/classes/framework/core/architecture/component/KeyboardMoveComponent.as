@@ -40,10 +40,10 @@ package framework.core.architecture.component{
 	public class KeyboardMoveComponent extends GraphicComponent {
 
 		private var _keyboardManager:IKeyboardManager=null;
+		private var _xmlConfig:TextField=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
-		private var _xmlConfig:TextField=null;
-
+		
 		public function KeyboardMoveComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();

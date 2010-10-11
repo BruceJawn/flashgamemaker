@@ -89,6 +89,7 @@ package framework.core.system{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent= _entityManager.addComponent("Entity", "MouseInputComponent", "myMouseInputComponent");
+			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
 			//var serverInputComponent:ServerInputComponent=_entityManager.addComponent("Entity", "ServerInputComponent", "myServerInputComponent");
 			//serverInputComponent.setConnectionFromPath("xml/framework/game/serverConfig.xml", "ServerConfig");
 			//serverInputComponent.setConnection("localhost",4444);
@@ -103,14 +104,14 @@ package framework.core.system{
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			//bitmapPlayerComponent.setIso(true);
-			var swfPlayerComponent = _entityManager.addComponent("Entity", "SwfPlayerComponent", "mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
-			swfPlayerComponent.setIso(true);
+			//var swfPlayerComponent = _entityManager.addComponent("Entity", "SwfPlayerComponent", "mySwfPlayerComponent");
+			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
+			//var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
 			}
 		//------- ToString -------------------------------

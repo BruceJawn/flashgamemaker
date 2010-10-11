@@ -44,6 +44,7 @@ package framework.core.architecture.component{
 		private var _text:TextComponent=null;
 		private var _time:TimeComponent=null;
 		private var _systemInfo:SystemInfoComponent=null;
+		private var _jauge:JaugeComponent=null;
 		private var _tileMap:TileMapComponent=null;
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
 		private var _swfPlayer:SwfPlayerComponent=null;
@@ -79,6 +80,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"Message"});
 			_comboBox.addItem({label:"Time"});
 			_comboBox.addItem({label:"SystemInfo"});
+			_comboBox.addItem({label:"Jauge"});
 			_comboBox.addItem({label:"Sound"});
 			_comboBox.addItem({label:"TileMap"});
 			_comboBox.addItem({label:"BitmapPlayer"});
@@ -115,6 +117,10 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="SystemInfo" && _systemInfo!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="SystemInfo") {
+				_button.label = "Create";
+			}else if (selectedComponent=="Jauge" && _jauge!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Jauge") {
 				_button.label = "Create";
 			}else if (selectedComponent=="Sound" && _sound!=null) {
 				_button.label = "Remove";
@@ -157,6 +163,10 @@ package framework.core.architecture.component{
 		//------- Init Text Component -------------------------------
 		private function initSystemInfoComponent():void {
 			_systemInfo.moveTo(100,300);
+		}
+		//------- Init Jauge Component -------------------------------
+		private function initJaugeComponent():void {
+			_jauge.moveTo(250,250);
 		}
 		//------- Init Sound Component -------------------------------
 		private function initSoundComponent():void {
@@ -221,6 +231,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="SystemInfo") {
 				removeComponent("myFactorySystemInfo");
 				_systemInfo = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="Jauge" && _jauge==null) {
+				_jauge = addComponent(_componentOwner.getName(), "JaugeComponent", "myFactoryJauge");
+				initJaugeComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Jauge") {
+				removeComponent("myFactoryJauge");
+				_jauge = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="Sound" && _sound==null) {
 				_sound = addComponent(_componentOwner.getName(), "SoundComponent", "myFactorySound");

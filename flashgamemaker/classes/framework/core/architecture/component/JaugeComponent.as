@@ -23,62 +23,68 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.GraphicManager;
-	import framework.core.system.IGraphicManager;
-
+	
 	import flash.events.EventDispatcher;
-	import flash.events.*;
-	import flash.display.*;
 	import flash.utils.Dictionary;
+	import flash.events.*;
 	import fl.controls.ProgressBar;
 	import fl.controls.ProgressBarMode;
 
 	/**
-	* ProgressBar Class
+	* Jauge Class
 	* @ purpose: 
 	*/
-	public class ProgressBarComponent extends Component {
+	public class JaugeComponent extends GraphicComponent {
 
-		private var _graphicManager:IGraphicManager=null;
-		private var _listeners:Dictionary=null;
+		private var _jauge:ProgressBar=null;
+		private var _jauge_count:Number=0;
+		private var _jauge_max:Number=100;
+		private var _jauge_stepUp:Number=4;
+		private var _jauge_stepDown:Number=2;
+		//KeyboardInput properties
+		public var _keyboard_key:Object=null;
+		//Timer properties
+		public var _timer_delay:Number=30;
+		public var _timer_count:Number=0;
 
-		public function ProgressBarComponent(componentName:String, componentOwner:IEntity) {
+		public function JaugeComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_graphicManager=GraphicManager.getInstance();
-			_listeners = new Dictionary();
+			_jauge =  createProgressBar(100,20,0,0,-90);
+			_jauge.maximum = 100;
+			addChild(_jauge);
 		}
-		//------ Init Property  ------------------------------------
+		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
-			registerProperty("progressBar",_componentName);
+			super.initProperty();
+			setPropertyReference("keyboardInput",_componentName);
+			setPropertyReference("timer",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_listeners[component]==null) {
-				component.addEventListener(ProgressEvent.PROGRESS, onGraphicProgressProgress);
-				var progressBar:ProgressBar=createProgressBar(100,16,0,0,0);
-				_listeners[component]=progressBar;
-				component.addChild(progressBar);
+			if (_timer_count>=_timer_delay) {
+				updateJauge();
 			}
 		}
-		//------ On Graphic Progress Progress ------------------------------------
-		private function onGraphicProgressProgress( evt:ProgressEvent ):void {
-			var bytesLoaded:Number=evt.bytesLoaded;
-			var bytesTotal:Number=evt.bytesTotal;
-			var component:* =evt.target;
-			var progressBar:ProgressBar=_listeners[component];
-			progressBar.maximum = bytesTotal;
-			progressBar.setProgress(bytesLoaded,bytesTotal);
-			if(bytesLoaded==bytesTotal){
-				component.removeEventListener(ProgressEvent.PROGRESS, onGraphicProgressProgress);
-				component.removeChild(progressBar);
+		//------ Update Jauge ------------------------------------
+		private function updateJauge():void {
+			if (_keyboard_key!=null) {
+				var keyTouch:String=_keyboard_key.keyTouch;
+				var prevTouch:String=_keyboard_key.prevTouch;
+				var keyStatut:String=_keyboard_key.keyStatut;
+				if((keyTouch=="A" && prevTouch=="B" || keyTouch=="B" && prevTouch=="A") && keyStatut=="DOWN" && _jauge_count<_jauge_max ){
+					_jauge_count+=_jauge_stepUp;
+				}else if(_jauge_count-_jauge_stepDown>=0) {
+					_jauge_count-=_jauge_stepDown;
+				}
+				_jauge.setProgress(_jauge_count,_jauge_max);
 			}
 		}
-		//------ createProgressBar ------------------------------------
-		private function createProgressBar(width:Number,height:Number,x:Number,y:Number,rotation:Number):ProgressBar {
+		//------ Create Progress Bar ------------------------------------
+		public function createProgressBar(width:Number,height:Number,x:Number,y:Number, rotation:Number):ProgressBar {
 			var progressBar:ProgressBar = new ProgressBar();
 			progressBar.mode=ProgressBarMode.MANUAL;
 			progressBar.setSize(width, height);

@@ -97,6 +97,7 @@ package framework.core.architecture.entity {
 			var messageComponent:MessageComponent;
 			var multiPlayerComponent:MultiPlayerComponent;
 			var cursorComponent:CursorComponent;
+			var jaugeComponent:JaugeComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
