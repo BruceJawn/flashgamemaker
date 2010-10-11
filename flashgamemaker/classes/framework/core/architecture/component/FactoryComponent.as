@@ -186,6 +186,7 @@ package framework.core.architecture.component{
 		//------- Init Swf Player Component -------------------------------
 		private function initSwfPlayerComponent():void {
 			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			_swfPlayer.setPropertyReference("keyboardMove",_swfPlayer._componentName);
 			_swfPlayer.setIso(true);
 			_swfPlayer.moveTo(150,150);
 		}

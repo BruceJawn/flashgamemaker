@@ -106,6 +106,7 @@ package framework.core.system{
 			//bitmapPlayerComponent.setIso(true);
 			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml","SwfPlayer");
+			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(20,230);
 			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
@@ -113,7 +114,7 @@ package framework.core.system{
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
-			jaugeComponent.moveTo(200,320);
+			jaugeComponent.moveTo(200,310);
 			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
 		}

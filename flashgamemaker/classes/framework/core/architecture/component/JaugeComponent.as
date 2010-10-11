@@ -61,8 +61,8 @@ package framework.core.architecture.component{
 			addChild(_jauge);
 			_text=new TextField  ;
 			_text.autoSize="left";
-			_text.text= "Press 1 + 2 to run";
-			_text.x-=40;
+			_text.text= "Press 1 and 2 or Left and Right arrows to run";
+			_text.x-=90;
 			addChild(_text);
 		}
 		//------ Init Property Info ------------------------------------
@@ -89,7 +89,7 @@ package framework.core.architecture.component{
 				var keyTouch:String=_keyboard_key.keyTouch;
 				var prevTouch:String=_keyboard_key.prevTouch;
 				var keyStatut:String=_keyboard_key.keyStatut;
-				if ((keyTouch=="A"&&prevTouch=="B"||keyTouch=="B"&&prevTouch=="A")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
+				if ((keyTouch=="A"&&prevTouch=="B"||keyTouch=="B"&&prevTouch=="A" || keyTouch=="RIGHT"&&prevTouch=="LEFT"||keyTouch=="LEFT"&&prevTouch=="RIGHT")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
 					_jauge_count+=_jauge_stepUp;
 					_jauge_combinaison=keyTouch+prevTouch;
 				} else if (_jauge_count-_jauge_stepDown>0) {

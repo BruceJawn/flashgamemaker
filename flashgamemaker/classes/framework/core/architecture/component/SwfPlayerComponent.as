@@ -50,7 +50,7 @@ package framework.core.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			setPropertyReference("jaugeMove",_componentName);
+			//setPropertyReference("jaugeMove",_componentName);
 			//setPropertyReference("keyboardMove",_componentName);
 			//setPropertyReference("serverMove",_componentName);
 		}
