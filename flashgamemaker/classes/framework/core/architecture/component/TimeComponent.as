@@ -44,10 +44,8 @@ package framework.core.architecture.component{
 		private var _timeManager:ITimeManager = null;
 		private var _virtualTime:TextField=null;
 		private var _realTime:TextField=null;
-		
-		//Time properties
-		public var _time_virtualTime:Object = null;
-		public var _time_realTime:Object = null;
+		private var _time_virtualTime:Object = null;
+		private var _time_realTime:Object = null;
 		
 		public function TimeComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);

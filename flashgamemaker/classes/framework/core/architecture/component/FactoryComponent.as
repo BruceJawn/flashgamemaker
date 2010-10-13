@@ -42,6 +42,7 @@ package framework.core.architecture.component{
 		private var _name:TextComponent=null;
 		private var _cursor:CursorComponent=null;
 		private var _text:TextComponent=null;
+		private var _chrono:ChronoComponent=null;
 		private var _time:TimeComponent=null;
 		private var _systemInfo:SystemInfoComponent=null;
 		private var _jauge:JaugeComponent=null;
@@ -77,6 +78,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:""});
 			_comboBox.addItem({label:"Cursor"});
 			_comboBox.addItem({label:"Text"});
+			_comboBox.addItem({label:"Chrono"});
 			_comboBox.addItem({label:"Message"});
 			_comboBox.addItem({label:"Time"});
 			_comboBox.addItem({label:"SystemInfo"});
@@ -109,6 +111,10 @@ package framework.core.architecture.component{
 			}if (selectedComponent=="Message" && _message!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="Message") {
+				_button.label = "Create";
+			}if (selectedComponent=="Chrono" && _chrono!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Chrono") {
 				_button.label = "Create";
 			}else if (selectedComponent=="Time"&& _time!=null) {
 				_button.label = "Remove";
@@ -155,6 +161,10 @@ package framework.core.architecture.component{
 		private function initMessageComponent():void {
 		 	_message.loadGraphic("texture/framework/interface/messageClip.swf", "MessageClip");
 			_message.moveTo(150,250);
+		}
+		//------- Init Chrono Component -------------------------------
+		private function initChronoComponent():void {
+		 	_chrono.moveTo(150,150);
 		}
 		//------- Init Time Component -------------------------------
 		private function initTimeComponent():void {
@@ -209,13 +219,21 @@ package framework.core.architecture.component{
 				removeComponent("myFactoryText");
 				_text = null;
 				_button.label = "Create";
-			}if (selectedComponent=="Message" && _message==null) {
+			}else if (selectedComponent=="Message" && _message==null) {
 				_message = addComponent(_componentOwner.getName(), "MessageComponent", "myFactoryMessage");
 				initMessageComponent();
 				_button.label = "Remove";
 			}else if (selectedComponent=="Message") {
 				removeComponent("myFactoryMessage");
 				_message = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="Chrono" && _chrono==null) {
+				_chrono = addComponent(_componentOwner.getName(), "ChronoComponent", "myFactoryChrono");
+				initChronoComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Chrono") {
+				removeComponent("myFactoryChrono");
+				_chrono = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="Time" && _time==null) {
 				_time = addComponent(_componentOwner.getName(), "TimeComponent", "myFactoryTime");

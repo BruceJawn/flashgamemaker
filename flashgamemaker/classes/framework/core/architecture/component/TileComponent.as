@@ -36,6 +36,7 @@ package framework.core.architecture.component{
 
 		//Tile properties
 		public var _tileName:String =null;
+		public var _layer:int =0;
 		public var _ztile:int =0;
 		public var _ytile:int =0;
 		public var _xtile:int =0;
@@ -68,7 +69,7 @@ package framework.core.architecture.component{
 		//------ Create Tile ------------------------------------
 		public function createTile():void {
 			if(_tileName==null){
-				 _tileName="tile_"+_ztile+"_"+_ytile+"_"+_xtile;
+				 _tileName="tile_"+_layer+"_"+_ztile+"_"+_ytile+"_"+_xtile;
 				if (_tileFrame!=0) {
 					var x:int=(_tileFrame-1)% _X;
 					var y:int=Math.floor((_tileFrame-1)/(_X));

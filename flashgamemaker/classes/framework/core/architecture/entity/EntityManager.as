@@ -99,6 +99,7 @@ package framework.core.architecture.entity {
 			var cursorComponent:CursorComponent;
 			var jaugeComponent:JaugeComponent;
 			var jaugeMoveComponent:JaugeMoveComponent;
+			var chronoComponent:ChronoComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{

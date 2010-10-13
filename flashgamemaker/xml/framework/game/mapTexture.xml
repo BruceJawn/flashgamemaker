@@ -6,4 +6,10 @@
 	<KawaiiTileSet>
 		<path>texture/framework/game/tileSet/kawaiiTileSet.png</path>
 	</KawaiiTileSet>
+<KawaiiObjectSetMedium>
+		<path>texture/framework/game/tileSet/kawaiiObjectSetMedium.png</path>
+	</KawaiiObjectSetMedium>
+<KawaiiObjectSetHuge>
+		<path>texture/framework/game/tileSet/kawaiiObjectSetHuge.png</path>
+	</KawaiiObjectSetHuge>
 </MapTexture>
