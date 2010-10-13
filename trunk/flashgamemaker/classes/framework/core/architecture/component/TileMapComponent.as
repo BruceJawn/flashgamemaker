@@ -141,9 +141,10 @@ package framework.core.architecture.component{
 		//------- Build Map -------------------------------
 		private function buildMap():void {
 			for (var l:int=0; l<_mapLayer.length; l++) {
-				for (var k:int=0; k<_tileMap_high; k++) {
-					for (var j:int=0; j<_tileMap_height; j++) {
-						for (var i:int=0; i<_tileMap_width; i++) {
+			for (var k:int=0; k<_tileMap_high; k++) {
+				for (var j:int=0; j<_tileMap_height; j++) {
+					for (var i:int=0; i<_tileMap_width; i++) {
+						
 							createTile(l,k,j,i);
 						}
 					}
@@ -169,7 +170,7 @@ package framework.core.architecture.component{
 			var Y:int=_mapLayer[l].Y;
 			var tileComponent:TileComponent=addComponent(_componentOwner.getName(),"TileComponent",tileName);
 			updateTile(tileComponent,l,k,j,i,tileHigh,tileHeight,tileWidth,tileFrame,textureName,X,Y);
-			moveTile(tileComponent,k,j,i);
+			moveTile(tileComponent,k,j,i,tileHigh,tileHeight,tileWidth );
 			_tileMap_tiles[tileName]=tileComponent;
 		}
 		//------ Update Tile ------------------------------------
@@ -196,13 +197,13 @@ package framework.core.architecture.component{
 			tileComponent.actualizeComponent(tileName,_componentOwner.getName(),tileComponent);
 		}
 		//------ Move Tile ------------------------------------
-		private function moveTile(tileComponent:TileComponent,k:int,j:int,i:int):void {
+		private function moveTile(tileComponent:TileComponent,k:int,j:int,i:int,tileHigh:int,tileHeight:int,tileWidth:int):void {
 			var spatial_position:IsoPoint=tileToScreen(k,j,i,_tileMap_tileHigh,_tileMap_tileHeight,_tileMap_tileWidth);
 			if (_tileMap_iso) {
 				spatial_position=screenToIso(spatial_position);
 			}
 			spatial_position.x+=_spatial_position.x+_tileMap_width*_tileMap_tileWidth/2-1;
-			spatial_position.y+=_spatial_position.y-_elevation[k][j][i]-k*_tileMap_tileHigh;
+			spatial_position.y+=_spatial_position.y-_elevation[k][j][i]-k*_tileMap_tileHigh-tileHeight;
 			tileComponent._spatial_position=spatial_position;
 		}
 		//----- Tile To Screen -----------------------------------
@@ -210,6 +211,7 @@ package framework.core.architecture.component{
 			var point:IsoPoint=new IsoPoint  ;
 			point.x=i*tileMap_tileWidth/2;
 			point.y=j*tileMap_tileWidth/2;
+
 			return point;
 		}
 		//----- Screen To Iso -----------------------------------

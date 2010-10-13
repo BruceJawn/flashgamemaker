@@ -23,10 +23,12 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	
+
 	import flash.display.*;
-	import flash.geom.Rectangle;	
-	import flash.geom.Point;	
+	import flash.geom.Rectangle;
+	import flash.geom.Point;
+	import flash.geom.Matrix;
+
 	/**
 	* Tile Component
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
@@ -35,26 +37,27 @@ package framework.core.architecture.component{
 	public class TileComponent extends GraphicComponent {
 
 		//Tile properties
-		public var _tileName:String =null;
-		public var _layer:int =0;
-		public var _ztile:int =0;
-		public var _ytile:int =0;
-		public var _xtile:int =0;
-		public var _tileHigh:int = 0;
-		public var _tileHeight:int = 0;
-		public var _tileWidth:int = 0;
-		public var _tileFrame:int = 0;
-		public var _textureName:String = null;
-		public var _X:int = 0;
-		public var _Y:int = 0;
-		public var _walkable:int = 0;
-		public var _slopes:int = 0;
-		public var _ladder:int = 0;
-		public var _slide:int = 0;
-		public var _bounce:int = 0;
-		public var _teleportation:int = 0;
-		public var _elevation:int = 0;
-		
+		public var _tileName:String=null;
+		public var _layer:int=0;
+		public var _ztile:int=0;
+		public var _ytile:int=0;
+		public var _xtile:int=0;
+		public var _tileHigh:int=0;
+		public var _tileHeight:int=0;
+		public var _tileWidth:int=0;
+		public var _tileFrame:int=0;
+		public var _textureName:String=null;
+		public var _X:int=0;
+		public var _Y:int=0;
+		public var _flip:Boolean=false;
+		public var _walkable:int=0;
+		public var _slopes:int=0;
+		public var _ladder:int=0;
+		public var _slide:int=0;
+		public var _bounce:int=0;
+		public var _teleportation:int=0;
+		public var _elevation:int=0;
+
 		public function TileComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -64,22 +67,39 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-				createTile();
+			createTile();
 		}
 		//------ Create Tile ------------------------------------
 		public function createTile():void {
-			if(_tileName==null){
-				 _tileName="tile_"+_layer+"_"+_ztile+"_"+_ytile+"_"+_xtile;
+			if (_tileName==null) {
+				_tileName="tile_"+_layer+"_"+_ztile+"_"+_ytile+"_"+_xtile;
+				if (_tileFrame<0) {
+					_flip=true;
+					_tileFrame*=-1;
+				}
 				if (_tileFrame!=0) {
 					var x:int=(_tileFrame-1)% _X;
 					var y:int=Math.floor((_tileFrame-1)/(_X));
 					var bitmap:Bitmap=getGraphic(_textureName) as Bitmap;
-					var myBitmapData:BitmapData=new BitmapData(_tileWidth,_tileHeight+_tileHigh,true,0);
+					var myBitmapData:BitmapData=new BitmapData(_tileWidth,_tileHeight,true,0);
 					myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * _tileWidth, y * _tileHeight,_tileWidth,_tileHeight), new Point(0, 0),null,null,true);
+					if (_flip) {
+						flipBitmapData(myBitmapData);
+					}
 					var graphic:Bitmap=new Bitmap(myBitmapData);
 					setGraphic(_tileName,graphic);
 				}
 			}
+		}
+		//----- Flip BitmapData  -----------------------------------
+		public function flipBitmapData(myBitmapData:BitmapData):void {
+			var flipHorizontalMatrix:Matrix = new Matrix();
+			flipHorizontalMatrix.scale(-1,1);
+			flipHorizontalMatrix.translate(myBitmapData.width,0);
+			var flippedBitmapData:BitmapData=new BitmapData(myBitmapData.width,myBitmapData.height,true,0);
+			flippedBitmapData.draw(myBitmapData,flipHorizontalMatrix);
+			myBitmapData.fillRect(myBitmapData.rect,0);
+			myBitmapData.draw(flippedBitmapData);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

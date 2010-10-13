@@ -9,6 +9,9 @@
 <KawaiiObjectSetMedium>
 		<path>texture/framework/game/tileSet/kawaiiObjectSetMedium.png</path>
 	</KawaiiObjectSetMedium>
+<KawaiiObjectSetLarge>
+		<path>texture/framework/game/tileSet/kawaiiObjectSetLarge.png</path>
+	</KawaiiObjectSetLarge>
 <KawaiiObjectSetHuge>
 		<path>texture/framework/game/tileSet/kawaiiObjectSetHuge.png</path>
 	</KawaiiObjectSetHuge>
