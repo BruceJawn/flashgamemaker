@@ -68,7 +68,7 @@ package framework.core.architecture.component{
 		private var _elevation:Array=null;
 
 
-		public function TileMapComponent(componentName:String, componentOwner:IEntity) {
+		public function TileMapComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
@@ -76,8 +76,8 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_ressourceManager=RessourceManager.getInstance();
 			_physicManager=PhysicManager.getInstance();
-			_mapLayer = new Array();
-			_tileMap_tiles = new Dictionary();
+			_mapLayer=new Array  ;
+			_tileMap_tiles=new Dictionary  ;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -85,7 +85,7 @@ package framework.core.architecture.component{
 			registerProperty("tileMap",_componentName);
 		}
 		//------ Load Map ------------------------------------
-		public function loadMap(path:String, mapName:String):void {
+		public function loadMap(path:String,mapName:String):void {
 			_mapName=mapName;
 			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
@@ -99,7 +99,7 @@ package framework.core.architecture.component{
 				dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 				_mapXml=_ressourceManager.getXml(_mapName);
 				serializeXml();
-				loadGraphicsFromPath(_mapTexture, "TileMap");
+				loadGraphicsFromPath(_mapTexture,"TileMap");
 			}
 		}
 		//------ Serialize Xml ------------------------------------
@@ -120,7 +120,7 @@ package framework.core.architecture.component{
 				var tileWidth:int=layer.@tileWidth;
 				var X:int=layer.@X;
 				var Y:int=layer.@Y;
-				_mapLayer.push({tileTable: tab,texture:texture,tileHigh:tileHigh,tileHeight:tileHeight,tileWidth:tileWidth,X:X,Y:Y});
+				_mapLayer.push({tileTable:tab,texture:texture,tileHigh:tileHigh,tileHeight:tileHeight,tileWidth:tileWidth,X:X,Y:Y});
 			}
 			_walkable=StringTo.Tab(_mapXml.MapProperties.walkable.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
 			_slopes=StringTo.Tab(_mapXml.MapProperties.slopes.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
@@ -131,48 +131,51 @@ package framework.core.architecture.component{
 			_elevation=StringTo.Tab(_mapXml.MapProperties.elevation.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
 		}
 		//------ On Graphic Loading Successful ------------------------------------
-		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
+		protected override function onGraphicLoadingSuccessful(evt:Event):void {
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
-			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
-			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
+			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
 			buildMap();
 			setMap();
 		}
 		//------- Build Map -------------------------------
 		private function buildMap():void {
-			for (var k:int=0; k<_tileMap_high; k++) {
-				for (var j:int=0; j<_tileMap_height; j++) {
-					for (var i:int=0; i<_tileMap_width; i++) {
-						createTile(k,j,i);
+			for (var l:int=0; l<_mapLayer.length; l++) {
+				for (var k:int=0; k<_tileMap_high; k++) {
+					for (var j:int=0; j<_tileMap_height; j++) {
+						for (var i:int=0; i<_tileMap_width; i++) {
+							createTile(l,k,j,i);
+						}
 					}
 				}
 			}
 		}
 		//------- Set Map -------------------------------
 		public function setMap():void {
-			var mapPosition:IsoPoint = new IsoPoint(_spatial_position.x,_spatial_position.y);
-			mapPosition.x+=_tileMap_tileWidth/4+_tileMap_width*(_tileMap_tileWidth/2-1);
+			var mapPosition:IsoPoint=new IsoPoint(_spatial_position.x,_spatial_position.y);
+			mapPosition.x+=_tileMap_tileWidth/4+_tileMap_width*_tileMap_tileWidth/2-1;
 			var map:Object={position:mapPosition,mapHigh:_tileMap_high,mapHeight:_tileMap_height,mapWidth:_tileMap_width,tileHigh:_tileMap_tileHigh,tileHeight:_tileMap_tileHeight,tileWidth:_tileMap_tileWidth,tiles:_tileMap_tiles};
 			_physicManager.setMap(map);
 		}
 		//------ Create Tile ------------------------------------
-		private function createTile(k:int, j:int, i:int):void {
-			var tileName:String="tile_"+k+"_"+j+"_"+i;
-			var tileFrame:int=_mapLayer[0].tileTable[k][j][i];
-			var textureName:String=_mapLayer[0].texture;
-			var tileHigh:int=_mapLayer[0].tileHigh;
-			var tileHeight:int=_mapLayer[0].tileHeight;
-			var tileWidth:int=_mapLayer[0].tileWidth;
-			var X:int=_mapLayer[0].X;
-			var Y:int=_mapLayer[0].Y;
+		private function createTile(l:int,k:int,j:int,i:int):void {
+			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
+			var tileFrame:int=_mapLayer[l].tileTable[k][j][i];
+			var textureName:String=_mapLayer[l].texture;
+			var tileHigh:int=_mapLayer[l].tileHigh;
+			var tileHeight:int=_mapLayer[l].tileHeight;
+			var tileWidth:int=_mapLayer[l].tileWidth;
+			var X:int=_mapLayer[l].X;
+			var Y:int=_mapLayer[l].Y;
 			var tileComponent:TileComponent=addComponent(_componentOwner.getName(),"TileComponent",tileName);
-			updateTile(tileComponent,k,j,i,tileHigh,tileHeight,tileWidth,tileFrame,textureName,X,Y);
-			moveTile(tileComponent, k,j,i);
+			updateTile(tileComponent,l,k,j,i,tileHigh,tileHeight,tileWidth,tileFrame,textureName,X,Y);
+			moveTile(tileComponent,k,j,i);
 			_tileMap_tiles[tileName]=tileComponent;
 		}
 		//------ Update Tile ------------------------------------
-		private function updateTile(tileComponent:TileComponent,k:int, j:int, i:int,tileHigh:int, tileHeight:int,tileWidth:int,tileFrame:int, textureName:String, X:int, Y:int ):void {
-			var tileName:String="tile_"+k+"_"+j+"_"+i;
+		private function updateTile(tileComponent:TileComponent,l:int,k:int,j:int,i:int,tileHigh:int,tileHeight:int,tileWidth:int,tileFrame:int,textureName:String,X:int,Y:int):void {
+			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
+			tileComponent._layer=l;
 			tileComponent._ztile=k;
 			tileComponent._ytile=j;
 			tileComponent._xtile=i;
@@ -193,31 +196,31 @@ package framework.core.architecture.component{
 			tileComponent.actualizeComponent(tileName,_componentOwner.getName(),tileComponent);
 		}
 		//------ Move Tile ------------------------------------
-		private function moveTile(tileComponent:TileComponent,k:int, j:int, i:int):void {
+		private function moveTile(tileComponent:TileComponent,k:int,j:int,i:int):void {
 			var spatial_position:IsoPoint=tileToScreen(k,j,i,_tileMap_tileHigh,_tileMap_tileHeight,_tileMap_tileWidth);
 			if (_tileMap_iso) {
 				spatial_position=screenToIso(spatial_position);
 			}
-			spatial_position.x+=_spatial_position.x+_tileMap_width*(_tileMap_tileWidth/2-1);
+			spatial_position.x+=_spatial_position.x+_tileMap_width*_tileMap_tileWidth/2-1;
 			spatial_position.y+=_spatial_position.y-_elevation[k][j][i]-k*_tileMap_tileHigh;
 			tileComponent._spatial_position=spatial_position;
 		}
 		//----- Tile To Screen -----------------------------------
-		private function tileToScreen(k:int, j:int, i:int,tileMap_tileHigh:int,tileMap_tileHeight:int,tileMap_tileWidth:int):IsoPoint {
-			var point:IsoPoint = new IsoPoint();
+		private function tileToScreen(k:int,j:int,i:int,tileMap_tileHigh:int,tileMap_tileHeight:int,tileMap_tileWidth:int):IsoPoint {
+			var point:IsoPoint=new IsoPoint  ;
 			point.x=i*tileMap_tileWidth/2;
 			point.y=j*tileMap_tileWidth/2;
 			return point;
 		}
 		//----- Screen To Iso -----------------------------------
 		private function screenToIso(point:IsoPoint):IsoPoint {
-			var isoPoint:IsoPoint = new IsoPoint();
-			isoPoint.x = (point.x-point.y);
-			isoPoint.y = (point.x+point.y)/2;
+			var isoPoint:IsoPoint=new IsoPoint  ;
+			isoPoint.x=point.x-point.y;
+			isoPoint.y=(point.x+point.y)/2;
 			return isoPoint;
 		}
 		//------ Reset  ------------------------------------
-		public override function reset(ownerName:String, componentName:String):void {
+		public override function reset(ownerName:String,componentName:String):void {
 			destroyMap();
 		}
 		//------- Destroy Map -------------------------------
@@ -231,7 +234,7 @@ package framework.core.architecture.component{
 			}
 		}
 		//------ Remove Tile ------------------------------------
-		private function removeTile(k:int, j:int, i:int):void {
+		private function removeTile(k:int,j:int,i:int):void {
 			var tileName:String="tile_"+k+"_"+j+"_"+i;
 			removeComponent(tileName);
 			delete _tileMap_tiles[tileName];

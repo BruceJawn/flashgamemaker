@@ -41,8 +41,8 @@ package framework.core.architecture.component{
 		private var _jauge:ProgressBar=null;
 		private var _jauge_count:Number=0;
 		private var _jauge_max:Number=100;
-		private var _jauge_stepUp:Number=2;
-		private var _jauge_stepDown:Number=5;
+		private var _jauge_stepUp:Number=4;
+		private var _jauge_stepDown:Number=2;
 		private var _jauge_combinaison:String="";
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
