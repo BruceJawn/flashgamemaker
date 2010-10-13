@@ -99,8 +99,9 @@ package framework.core.system{
 			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
 			//var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("Entity", "SystemInfoComponent", "mySystInfoComponent");
 			//var timeComponent:TimeComponent =_entityManager.addComponent("Entity", "TimeComponent", "myTimeComponent");
-			var tileMapComponent:TileMapComponent = _entityManager.addComponent("Entity", "TileMapComponent", "myTileMapComponent");
+			var tileMapComponent:TileMapComponent=_entityManager.addComponent("Entity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
+			tileMapComponent.moveTo(-60,100);
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			//bitmapPlayerComponent.setIso(true);
@@ -113,9 +114,9 @@ package framework.core.system{
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
-			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
-			jaugeComponent.moveTo(200,310);
-			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
+			//var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
+			//jaugeComponent.moveTo(200,310);
+			//var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
 			//var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
 		}
