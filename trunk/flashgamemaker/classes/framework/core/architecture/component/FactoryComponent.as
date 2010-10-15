@@ -196,12 +196,12 @@ package framework.core.architecture.component{
 		}
 		//------- Init Swf Player Component -------------------------------
 		private function initSwfPlayerComponent():void {
-			//_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
-			_swfPlayer.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml","SwfPlayer");
+			_swfPlayer.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
+			//_swfPlayer.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml","SwfPlayer");
 			_swfPlayer.setPropertyReference("keyboardMove",_swfPlayer._componentName);
-			_swfPlayer.setDirection("Horizontal");
+			//_swfPlayer.setDirection("Horizontal");
 			//swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
-			//_swfPlayer.setIso(true);
+			_swfPlayer.setIso(true);
 			_swfPlayer.moveTo(150,150);
 		}
 		//------- On Create Change -------------------------------
