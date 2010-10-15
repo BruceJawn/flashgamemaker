@@ -43,6 +43,7 @@ package framework.core.architecture.component{
 		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
 		public var _spatial_jump:IsoPoint=null;//JumpHorizontal, jumpVertical, jumpStart
 		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
+		public var _spatial_rotation:Number=0;// dirx, diry and dirz
 		public var _spatial_position:IsoPoint=null;// x, y and z
 		public var _spatial_properties:Object = null;
 		//Timer properties
@@ -76,7 +77,12 @@ package framework.core.architecture.component{
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay) {
 				_physicManager.move(component,_spatial_position);
+				component.rotate();
 			}
+		}
+		//------ Rotate Graphic  ------------------------------------
+		public function rotate():void {
+			this.rotation+=_spatial_rotation;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

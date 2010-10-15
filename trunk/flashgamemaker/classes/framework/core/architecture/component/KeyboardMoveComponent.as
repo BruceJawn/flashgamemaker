@@ -79,14 +79,15 @@ package framework.core.architecture.component{
 				var prevTouch:String=keyboard_key.prevTouch;
 				var keyStatut:String=keyboard_key.keyStatut;
 				var doubleClick:Boolean=keyboard_key.doubleClick;
+				var spatialDirection:String = component._spatial_properties.direction;
 				if (keyStatut=="DOWN") {
-					if (keyTouch=="RIGHT") {
+					if (keyTouch=="RIGHT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal")) {
 						component._spatial_dir.x=1;
-					} else if (keyTouch=="LEFT") {
+					} else if (keyTouch=="LEFT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal")) {
 						component._spatial_dir.x=-1;
-					} else if (keyTouch=="UP") {
+					} else if (keyTouch=="UP" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical")) {
 						component._spatial_dir.y=-1;
-					} else if (keyTouch=="DOWN") {
+					} else if (keyTouch=="DOWN" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical")) {
 						component._spatial_dir.y=1;
 					} else if (keyTouch=="JUMP" && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
 						component._spatial_jump.y=component._spatial_jump.z;

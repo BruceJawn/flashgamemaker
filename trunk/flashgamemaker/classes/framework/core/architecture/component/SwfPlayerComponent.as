@@ -115,7 +115,7 @@ package framework.core.architecture.component{
 		//------ Change Color ------------------------------------
 		public override function changeColor(hexColor:String):void {
 			var i:int=1;
-			while(i<_source.numChildren){
+			while(i<_source.numChildren+1){
 				var source:MovieClip = _source[_name+i];
 				if(source!=null){
 					colorSourceSkin(source,hexColor);
@@ -139,6 +139,12 @@ package framework.core.architecture.component{
 					}
 				}
 				i++;
+			}
+		}
+		//------ Rotate Graphic  ------------------------------------
+		public override function rotate():void {
+			if(_spatial_rotation!=0){	
+				this.rotation-=_spatial_rotation;
 			}
 		}
 		//------- ToString -------------------------------

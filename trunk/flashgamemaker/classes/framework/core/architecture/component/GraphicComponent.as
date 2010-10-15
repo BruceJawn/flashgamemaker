@@ -58,6 +58,7 @@ package framework.core.architecture.component{
 		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_position:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
+		public var _spatial_rotation:Number=0;
 		public var _spatial_properties:Object = null;
 
 		public function GraphicComponent(componentName:String, componentOwner:IEntity) {
@@ -72,7 +73,7 @@ package framework.core.architecture.component{
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_jump=new IsoPoint(0,0,-6);
-			_spatial_properties = {iso:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_properties = {iso:false, direction:"Diagonal", isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -147,6 +148,12 @@ package framework.core.architecture.component{
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
 			_spatial_position.y=y;
+		}
+		//------ Rotate Graphic  ------------------------------------
+		public function rotate():void {
+			if(_spatial_rotation!=0){
+				this.rotation+=_spatial_rotation;
+			}
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

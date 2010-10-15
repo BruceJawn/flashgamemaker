@@ -226,17 +226,19 @@ package framework.core.architecture.component{
 		}
 		//------- Destroy Map -------------------------------
 		private function destroyMap():void {
-			for (var k:int=0; k<_tileMap_high; k++) {
-				for (var j:int=0; j<_tileMap_height; j++) {
-					for (var i:int=0; i<_tileMap_width; i++) {
-						removeTile(k,j,i);
+			for (var j:int=0; j<_tileMap_height; j++) {
+				for (var i:int=0; i<_tileMap_width; i++) {
+					for (var k:int=0; k<_tileMap_high; k++) {
+						for (var l:int=0; l<_mapLayer.length; l++) {
+							removeTile(l,k,j,i);
+						}
 					}
 				}
 			}
 		}
 		//------ Remove Tile ------------------------------------
-		private function removeTile(k:int,j:int,i:int):void {
-			var tileName:String="tile_"+k+"_"+j+"_"+i;
+		private function removeTile(l:int, k:int,j:int,i:int):void {
+			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
 			removeComponent(tileName);
 			delete _tileMap_tiles[tileName];
 		}

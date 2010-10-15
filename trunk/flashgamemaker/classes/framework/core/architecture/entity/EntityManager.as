@@ -100,6 +100,8 @@ package framework.core.architecture.entity {
 			var jaugeComponent:JaugeComponent;
 			var jaugeMoveComponent:JaugeMoveComponent;
 			var chronoComponent:ChronoComponent;
+			var keyboardRotationComponent:KeyboardRotationComponent;
+			var groundSphereComponent:GroundSphereComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
