@@ -184,8 +184,9 @@ package framework.core.architecture.component{
 		}
 		//------- Init TileMap Component -------------------------------
 		private function initTileMapComponent():void {
-		 	_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
-			_tileMap.moveTo(60,150);
+		 	//_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
+			_tileMap.loadMap("xml/framework/game/mapKawaii.xml", "TileMap");
+			_tileMap.moveTo(-100,150);
 		}
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {

@@ -109,7 +109,7 @@ package framework.core.architecture.component{
 				if (_playerXml.children().length()>1) {
 					loadGraphicsFromXml(_playerXml, _playerName);
 				} else {
-					loadGraphic(_playerTexture, _playerName);
+					loadGraphic(_playerTexture, _playerXml.children()[0].name());
 				}
 			}
 		}
@@ -134,7 +134,10 @@ package framework.core.architecture.component{
 		//------ Set Iso ------------------------------------
 		public function setIso(iso:Boolean):void {
 			_spatial_properties.iso=iso;
-
+		}
+		//------ Set Direction ------------------------------------
+		public function setDirection(direction:String):void {
+			_spatial_properties.direction=direction;
 		}
 		//------ On Color Picker Change ------------------------------------
 		private function onColorPickerChange(evt:Event):void {

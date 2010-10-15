@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Map mapHigh="2" mapHeight="9" mapWidth="9" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" mapVisibility="5">
+	<MapTexture >
+		<path>xml/framework/game/mapTexture.xml</path>
+		
+<layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">8*11,1,8*11,1,8*11,1,4*11,31,3*21,1,4*11,41,3*21,1,8*11,1,8*11,1,8*11,10*1,81*0</layer>		
+
+<layer texture="KawaiiObjectSetMedium" tileHigh="10" tileHeight="80" tileWidth="60" X="10" Y="6">1,6*0,-1,55*0,-1,6*0,1,91*0</layer>
+
+<layer texture="KawaiiObjectSetLarge" tileHigh="10" tileHeight="80" tileWidth="120" X="10" Y="6">10*0,-1,0,-1,0,-1,3*0,1,6*0,11,10*0,1,17*0,1,6*0,11,11*0,-11,0,-11,0,-11,84*0</layer>
+
+<layer texture="KawaiiObjectSetHuge" tileHigh="10" tileHeight="160" tileWidth="180" X="10" Y="6">20*0,1,143*0</layer>
+
+</MapTexture>
+	<MapProperties>
+		<walkable>162*1</walkable>
+		<slopes>162*0</slopes>
+		<ladder>162*0</ladder>
+		<slide>162*0</slide>
+		<bounce>162*0</bounce>
+		<teleportation>162*0</teleportation>
+		<elevation>162*0</elevation>
+	</MapProperties>
+</Map>
