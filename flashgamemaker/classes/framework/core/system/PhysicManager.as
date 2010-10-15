@@ -70,8 +70,12 @@ package framework.core.system{
 					speedX*=2;
 					speedY*=2;
 				}
-				component._spatial_position.x+=component._spatial_dir.x*speedX;
-				component._spatial_position.y+=component._spatial_dir.y*speedY;
+				if(component._spatial_properties.direction == "Diagonal" || component._spatial_properties.direction == "Horizontal"){
+					component._spatial_position.x+=component._spatial_dir.x*speedX;
+				}
+				if(component._spatial_properties.direction == "Diagonal" || component._spatial_properties.direction == "Vertical"){
+					component._spatial_position.y+=component._spatial_dir.y*speedY;
+				}
 				component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
 				component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
 				if (component._spatial_properties.iso) {
