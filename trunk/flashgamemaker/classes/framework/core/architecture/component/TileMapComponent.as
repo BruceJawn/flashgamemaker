@@ -140,11 +140,10 @@ package framework.core.architecture.component{
 		}
 		//------- Build Map -------------------------------
 		private function buildMap():void {
-			for (var l:int=0; l<_mapLayer.length; l++) {
-			for (var k:int=0; k<_tileMap_high; k++) {
-				for (var j:int=0; j<_tileMap_height; j++) {
-					for (var i:int=0; i<_tileMap_width; i++) {
-						
+			for (var j:int=0; j<_tileMap_height; j++) {
+				for (var i:int=0; i<_tileMap_width; i++) {
+					for (var k:int=0; k<_tileMap_high; k++) {
+						for (var l:int=0; l<_mapLayer.length; l++) {
 							createTile(l,k,j,i);
 						}
 					}
