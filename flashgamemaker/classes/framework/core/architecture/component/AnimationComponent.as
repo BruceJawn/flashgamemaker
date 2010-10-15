@@ -143,6 +143,7 @@ package framework.core.architecture.component{
 			}
 			return graphic_frame;
 		}
+		
 		//------- ToString -------------------------------
 		public override function ToString():void {
 
