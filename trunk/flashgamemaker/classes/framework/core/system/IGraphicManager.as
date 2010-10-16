@@ -24,6 +24,7 @@
 
 package framework.core.system{
 	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	
 	public interface IGraphicManager {
@@ -59,7 +60,11 @@ package framework.core.system{
 		 /**
 		 * Register and Display Graphic
 		 */		
-		 function displayGraphic(graphicName:String, graphic:*, layerId:int):void;
+		 function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject;
+		 /**
+		 * Set Layer
+		 */		
+		 function setLayer(graphicName:String,layerId:int):void ;
 		 /**
 		 * Unregister and remove Graphic
 		 */		

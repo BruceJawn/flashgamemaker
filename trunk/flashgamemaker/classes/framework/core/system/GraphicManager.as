@@ -27,6 +27,7 @@ package framework.core.system{
 
 	import flash.utils.Dictionary;
 	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 	import flash.events.*;
 	/**
 	* Interface Class
@@ -45,7 +46,7 @@ package framework.core.system{
 		private var _layers:Array=null;
 
 		public function GraphicManager() {
-			if (! _allowInstanciation || _instance!=null) {
+			if (! _allowInstanciation||_instance!=null) {
 				throw new Error("Error: Instantiation failed: Use XmlManager.getInstance() instead of new.");
 			}
 			initVar();
@@ -109,9 +110,10 @@ package framework.core.system{
 		}
 		//------ Load Graphic ------------------------------------
 		public function loadGraphic(path:String, graphicName:String):void {
-			if(_graphicsToLoad.length>0 && _graphicLoader.isLoading() || _graphicsToLoad.length==0){
+			if (_graphicsToLoad.length>0&&_graphicLoader.isLoading()||_graphicsToLoad.length==0) {
 				_graphicsToLoad.push({name:graphicName,path:path});
-			}if(!(_graphicsToLoad.length>0 && _graphicLoader.isLoading())){
+			}
+			if (!(_graphicsToLoad.length>0 && _graphicLoader.isLoading())) {
 				_graphicLoader=new GraphicLoader();
 				_graphicLoader.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 				_graphicLoader.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
@@ -163,13 +165,24 @@ package framework.core.system{
 			return _graphicsToLoad.length;
 		}
 		//------ Display Graphic ------------------------------------
-		public function displayGraphic(graphicName:String, graphic:*, layerId:int):void {
+		public function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject {
 			registerGraphicOnScene(graphicName,graphic);
 			if (layerId>=_layers.length) {
 				layerId=createNewLayer();
 			}
 			var layer:Sprite=_layers[layerId];
-			layer.addChild(graphic);
+			return layer.addChild(graphic);
+		}
+		//------ Set Layer ------------------------------------
+		public function setLayer(graphicName:String,layerId:int):void {
+			/*if (layerId>=_layers.length) {
+				layerId=createNewLayer();
+			}
+			var graphic:*=_graphicsOnScene[graphicName];
+			var layer:Sprite=_layers[graphic._render_layerId];
+			layer.removeChild(graphic);
+			layer=_layers[layerId];
+			layer.addChild(graphic);*/
 		}
 		//------ Contains Graphic ------------------------------------
 		public function containsGraphic(graphicName:String):Boolean {
@@ -180,7 +193,7 @@ package framework.core.system{
 		}
 		//------ Remove Graphic ------------------------------------
 		public function removeGraphic(graphicName:String):void {
-			var graphic:Sprite=_graphicsOnScene[graphicName];
+			var graphic:*=_graphicsOnScene[graphicName];
 			for each (var layer:Sprite in _layers) {
 				if (layer.contains(graphic)) {
 					layer.removeChild(graphic);
@@ -214,8 +227,8 @@ package framework.core.system{
 			delete _graphicsOnScene[graphicName];
 		}
 		//------- ToString -------------------------------
-		 public  function ToString():void{
-           
-        }
+		public function ToString():void {
+
+		}
 	}
 }
