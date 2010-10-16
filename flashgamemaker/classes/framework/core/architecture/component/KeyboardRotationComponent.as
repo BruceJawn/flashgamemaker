@@ -30,7 +30,7 @@ package framework.core.architecture.component{
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	
+
 	/**
 	* KeyBoard Rotate Component 
 	* @ purpose: 
@@ -41,14 +41,14 @@ package framework.core.architecture.component{
 		private var _keyboardManager:IKeyboardManager=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
-		
+
 		public function KeyboardRotationComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		protected function initVar():void {
-			_keyboardManager=KeyboardManager.getInstance();			
+			_keyboardManager=KeyboardManager.getInstance();
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -75,23 +75,22 @@ package framework.core.architecture.component{
 						component._spatial_rotation=1;
 						component._spatial_properties.isMoving=true;
 					} else if (keyTouch=="UP") {
-						
+
 					} else if (keyTouch=="DOWN") {
-						
-					} 
+
+					}
 				} else if (keyStatut=="UP") {
 					if (keyTouch=="RIGHT"||keyTouch=="LEFT"||prevTouch=="RIGHT"||prevTouch=="LEFT") {
 						component._spatial_rotation=0;
 						component._spatial_properties.isMoving=false;
 					}
 					if (keyTouch=="UP"||keyTouch=="DOWN"||prevTouch=="UP"||prevTouch=="DOWN") {
-						
+
 					}
 				}
-				
 			}
 		}
-		
+
 		//------- ToString -------------------------------
 		public override function ToString():void {
 

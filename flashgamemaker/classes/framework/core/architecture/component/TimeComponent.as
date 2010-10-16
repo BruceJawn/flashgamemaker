@@ -56,15 +56,13 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_time_virtualTime = new Object();
 			_time_realTime = new Object();
-			
 			_virtualTime = new TextField();
 			_virtualTime.width=200;
 			_realTime = new TextField();
 			_realTime.width=_virtualTime.width;
-			addChild(_virtualTime);			
-			addChild(_realTime);			
 			_realTime.y+=15;
-			
+			addChild(_virtualTime);
+			addChild(_realTime);
 			_timeManager = TimeManager.getInstance();
 		}
 		//------ Init Listener ------------------------------------

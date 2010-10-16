@@ -41,7 +41,6 @@ package framework.core.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-
 		}
 		//------ Rotate Graphic  ------------------------------------
 		public override function rotate():void {

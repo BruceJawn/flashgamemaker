@@ -46,6 +46,7 @@ package framework.core.architecture.component{
 		private var _time:TimeComponent=null;
 		private var _systemInfo:SystemInfoComponent=null;
 		private var _jauge:JaugeComponent=null;
+		private var _scrollingBitmap:ScrollingBitmapComponent=null;
 		private var _tileMap:TileMapComponent=null;
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
 		private var _swfPlayer:SwfPlayerComponent=null;
@@ -84,18 +85,21 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"SystemInfo"});
 			_comboBox.addItem({label:"Jauge"});
 			_comboBox.addItem({label:"Sound"});
+			_comboBox.addItem({label:"ScrollingBitmap"});
 			_comboBox.addItem({label:"TileMap"});
 			_comboBox.addItem({label:"BitmapPlayer"});
 			_comboBox.addItem({label:"SwfPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
-			addChild(_comboBox);
+			//addChild(_comboBox);
+			displayGraphic("myFactoryComboBox",_comboBox,2);
 			_button = new Button();
 			_button.label = "Create";
 			_button.width = 80;
 			_button.x=310;
 			_button.y=90;
 			_button.addEventListener(MouseEvent.CLICK, onCreate);
-			addChild(_button);
+			//addChild(_button);
+			displayGraphic("myFactoryButton",_button,2);
 		}
 		//------- On ComboBox Change -------------------------------
 		private function onComboBoxChange(evt:Event):void {
@@ -131,6 +135,10 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="Sound" && _sound!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="Sound") {
+				_button.label = "Create";
+			}else if (selectedComponent=="ScrollingBitmap" && _scrollingBitmap!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="ScrollingBitmap") {
 				_button.label = "Create";
 			}else if (selectedComponent=="TileMap" && _tileMap!=null) {
 				_button.label = "Remove";
@@ -181,6 +189,12 @@ package framework.core.architecture.component{
 		//------- Init Sound Component -------------------------------
 		private function initSoundComponent():void {
 			
+		}
+		//------- Init Scrolling Bitmap Component -------------------------------
+		private function initScrollingBitmapComponent():void {
+		 	_scrollingBitmap.loadGraphic("texture/framework/game/backGround/mario.jpg","Bg");
+			//_scrollingBitmap.setPropertyReference("keyboardInput",_scrollingBitmap._componentName);
+			_scrollingBitmap.setPropertyReference("timer",_scrollingBitmap._componentName);
 		}
 		//------- Init TileMap Component -------------------------------
 		private function initTileMapComponent():void {
@@ -270,6 +284,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="Sound") {
 				removeComponent("myFactorySound");
 				_sound = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="ScrollingBitmap" && _scrollingBitmap==null) {
+				_scrollingBitmap = addComponent(_componentOwner.getName(), "ScrollingBitmapComponent", "myFactoryScrollingBitmap");
+				initScrollingBitmapComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="ScrollingBitmap") {
+				removeComponent("myFactoryScrollingBitmap");
+				_scrollingBitmap = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="TileMap" && _tileMap==null) {
 				_tileMap = addComponent(_componentOwner.getName(), "TileMapComponent", "myFactoryTileMap");

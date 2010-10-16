@@ -84,7 +84,7 @@ package framework.core.architecture.entity {
 			var timerComponent:TimerComponent;
 			var graphicComponent:GraphicComponent;
 			var tileMapComponent:TileMapComponent;
-			var tileComponent:TileComponent;
+			var scrollingBitmapComponent:ScrollingBitmapComponent;
 			var playerComponent:PlayerComponent;
 			var bitmapPayerComponent:BitmapPlayerComponent;
 			var animationComponent:AnimationComponent;

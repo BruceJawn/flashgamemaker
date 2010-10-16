@@ -73,7 +73,7 @@ package framework.core.architecture.component{
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_jump=new IsoPoint(0,0,-6);
-			_spatial_properties = {iso:false, direction:"Diagonal", isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_properties = {iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -104,7 +104,7 @@ package framework.core.architecture.component{
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected function onGraphicLoadingSuccessful( evt:Event ):void {
-			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
+			var dispatcher:EventDispatcher=evt.target();
 			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 			if (_graphicName!=null) {
@@ -127,6 +127,11 @@ package framework.core.architecture.component{
 			_graphic=graphic;
 			addChild(_graphic);
 		}
+		//------ Set Layer  ------------------------------------
+		public function setLayer(graphicName:String, layerId:int):void {
+			_render_layerId = layerId;
+			_graphicManager.setLayer(graphicName,layerId);
+		}
 		//------ Get Graphic  ------------------------------------
 		public function getGraphic(graphicName:String):* {
 			var graphic:*=_graphicManager.getGraphic(graphicName);
@@ -137,11 +142,12 @@ package framework.core.architecture.component{
 			return _graphicName;
 		}
 		//------ Display Graphic  ------------------------------------
-		private function displayGraphic():void {
-			_graphicManager.displayGraphic(_graphicName,this,0);
+		protected function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject {
+			_render_layerId = layerId;
+			return _graphicManager.displayGraphic(graphicName,graphic,layerId);
 		}
 		//------ Remove Graphic  ------------------------------------
-		private function removeGraphic(graphicName:String):void {
+		protected function removeGraphic(graphicName:String):void {
 			_graphicManager.removeGraphic(_graphicName);
 		}
 		//------ Move Graphic  ------------------------------------

@@ -62,7 +62,7 @@ package framework.core.architecture.component{
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_jump=new IsoPoint(0,0,-12);
-			_spatial_properties = {iso:false, direction:"Diagonal", isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_properties = {iso:false, direction:"Diagonal", collision:false,isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
