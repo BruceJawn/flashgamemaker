@@ -102,6 +102,7 @@ package framework.core.architecture.entity {
 			var chronoComponent:ChronoComponent;
 			var keyboardRotationComponent:KeyboardRotationComponent;
 			var groundSphereComponent:GroundSphereComponent;
+			var exportComponent:ExportComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{

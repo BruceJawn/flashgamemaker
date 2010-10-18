@@ -104,7 +104,7 @@ package framework.core.architecture.component{
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected function onGraphicLoadingSuccessful( evt:Event ):void {
-			var dispatcher:EventDispatcher=evt.target();
+			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
 			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 			if (_graphicName!=null) {

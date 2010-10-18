@@ -131,6 +131,8 @@ package framework.core.system{
 			//jaugeComponent.moveTo(200,310);
 			//var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
 			//var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
+			//var exportComponent:ExportComponent = _entityManager.addComponent("Entity","ExportComponent","myExportComponent");
+			//exportComponent.createJPG(FlashGameMaker.STAGE, "FGM_screenshot");
 			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
 		}
 		//------- ToString -------------------------------
