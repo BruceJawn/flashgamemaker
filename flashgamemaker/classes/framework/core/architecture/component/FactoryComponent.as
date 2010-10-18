@@ -51,6 +51,7 @@ package framework.core.architecture.component{
 		private var _bitmapPlayer:BitmapPlayerComponent=null;
 		private var _swfPlayer:SwfPlayerComponent=null;
 		private var _sound:SoundComponent=null;
+		private var _export:ExportComponent=null;
 		private var _message:MessageComponent=null;
 		private var _comboBox:ComboBox=null;
 		private var _button:Button=null;
@@ -85,6 +86,7 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"SystemInfo"});
 			_comboBox.addItem({label:"Jauge"});
 			_comboBox.addItem({label:"Sound"});
+			_comboBox.addItem({label:"Export"});
 			_comboBox.addItem({label:"ScrollingBitmap"});
 			_comboBox.addItem({label:"TileMap"});
 			_comboBox.addItem({label:"BitmapPlayer"});
@@ -135,6 +137,10 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="Sound" && _sound!=null) {
 				_button.label = "Remove";
 			}else if (selectedComponent=="Sound") {
+				_button.label = "Create";
+			}else if (selectedComponent=="Export" && _export!=null) {
+				_button.label = "Remove";
+			}else if (selectedComponent=="Export") {
 				_button.label = "Create";
 			}else if (selectedComponent=="ScrollingBitmap" && _scrollingBitmap!=null) {
 				_button.label = "Remove";
@@ -188,6 +194,11 @@ package framework.core.architecture.component{
 		}
 		//------- Init Sound Component -------------------------------
 		private function initSoundComponent():void {
+			
+		}
+		//------- Init Export Component -------------------------------
+		private function initExportComponent():void {
+			_export.createJPG(FlashGameMaker.STAGE, "FGM_screenshot");
 			
 		}
 		//------- Init Scrolling Bitmap Component -------------------------------
@@ -284,6 +295,14 @@ package framework.core.architecture.component{
 			}else if (selectedComponent=="Sound") {
 				removeComponent("myFactorySound");
 				_sound = null;
+				_button.label = "Create";
+			}else if (selectedComponent=="Export" && _export==null) {
+				_export = addComponent(_componentOwner.getName(), "ExportComponent", "myFactoryExport");
+				initExportComponent();
+				_button.label = "Remove";
+			}else if (selectedComponent=="Export") {
+				removeComponent("myFactoryExport");
+				_export = null;
 				_button.label = "Create";
 			}else if (selectedComponent=="ScrollingBitmap" && _scrollingBitmap==null) {
 				_scrollingBitmap = addComponent(_componentOwner.getName(), "ScrollingBitmapComponent", "myFactoryScrollingBitmap");
