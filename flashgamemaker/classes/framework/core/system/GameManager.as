@@ -103,10 +103,14 @@ package framework.core.system{
 			//var tileMapComponent:TileMapComponent=_entityManager.addComponent("Entity","TileMapComponent","myTileMapComponent");
 			//tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			//tileMapComponent.setPropertyReference("keyboardMove",tileMapComponent._componentName);
-			//var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("Entity","ScrollingBitmapComponent","myScrollingBitmapComponent");
-			//scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/mario.jpg","Bg");
+			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("Entity","ScrollingBitmapComponent","myScrollingBitmapComponent");
+			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
 			//scrollingBitmapComponent.setPropertyReference("keyboardInput",scrollingBitmapComponent._componentName);
-			//scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
+			scrollingBitmapComponent.setScrolling(30,1);
+			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
+			var graphicComponent:GraphicComponent=_entityManager.addComponent("Entity","GraphicComponent","myGraphicComponent");
+			graphicComponent.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
+			graphicComponent.moveTo(0,108);
 			//var groundSphereComponent=_entityManager.addComponent("Entity","GroundSphereComponent","myGroundSphereComponent");
 			//groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			//groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
@@ -115,25 +119,26 @@ package framework.core.system{
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
 			//bitmapPlayerComponent.setIso(true);
-			//var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
-			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "SwfPlayer");
-			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml","SwfPlayer");
+			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "mySwfPlayer");
+			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml","mySwfPlayer");
 			//swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			//swfPlayerComponent.setDirection("Horizontal");
-			//swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
-			//swfPlayerComponent.moveTo(120,320);
+			swfPlayerComponent.setDirection("Horizontal");
+			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.moveTo(120,300);
 			//swfPlayerComponent.setIso(true);
 			//var textComponent:TextComponent = _entityManager.addComponent("Entity", "TextComponent", "myTextComponent");
 			//textComponent.setText("FlashGameMaker");
 			//textComponent.setFormat("Times New Roman",30, 0xFF0000);
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
-			//var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
-			//jaugeComponent.moveTo(200,310);
-			//var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
+			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
+			jaugeComponent.setDirection("vertical");
+			jaugeComponent.moveTo(200,315);
+			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
 			//var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
 			//var exportComponent:ExportComponent = _entityManager.addComponent("Entity","ExportComponent","myExportComponent");
 			//exportComponent.createJPG(FlashGameMaker.STAGE, "FGM_screenshot");
-			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
+			//var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
