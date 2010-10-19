@@ -44,6 +44,7 @@ package framework.core.architecture.component{
 		private var _jauge_stepUp:Number=4;
 		private var _jauge_stepDown:Number=2;
 		private var _jauge_combinaison:String="";
+		private var _jauge_direction:String="right";
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 		//Timer properties
@@ -56,13 +57,14 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_jauge=createProgressBar(50,20,0,0,-90);
+			_jauge=createProgressBar(50,20,0,0,0);
 			_jauge.maximum=100;
 			addChild(_jauge);
 			_text=new TextField  ;
 			_text.autoSize="left";
 			_text.text= "Press 1 and 2 or Left and Right arrows to run";
 			_text.x-=90;
+			_text.y+=15;
 			addChild(_text);
 		}
 		//------ Init Property Info ------------------------------------
@@ -108,6 +110,31 @@ package framework.core.architecture.component{
 			progressBar.move(x,y);
 			progressBar.rotation=rotation;
 			return progressBar;
+		}
+		//------- Set Text -------------------------------
+		public function setText(text:String):void {
+			_text.text =text;
+		}
+		//------- Set Text Position -------------------------------
+		public function setTextPosition(x:Number, y:Number):void {
+			_text.x =x;
+			_text.y =y;
+		}
+		//------- setDirection -------------------------------
+		public function setDirection(direction:String):void {
+			if(_jauge_direction!=direction && direction=="right"){
+			_jauge_direction=direction;
+			_jauge.rotation = 0;
+			}else if(_jauge_direction!=direction && direction=="left"){
+			_jauge_direction=direction;
+			_jauge.rotation = 180;
+			}else if(_jauge_direction!=direction && direction=="up"){
+			_jauge_direction=direction;
+			_jauge.rotation = -90;
+			}else if(_jauge_direction!=direction && direction=="down"){
+			_jauge_direction=direction;
+			_jauge.rotation = 90;
+			}
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

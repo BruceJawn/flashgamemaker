@@ -154,6 +154,11 @@ package framework.core.architecture.component{
 		public override function reset(ownerName:String,componentName:String):void {
 			removeGraphic(_graphicName);
 		}
+		//------ SetScrolling  ------------------------------------
+		public  function setScrolling(delay:Number, offset:Number=5):void {
+			_timer_delay=delay;
+			_offset=offset;
+		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
 
