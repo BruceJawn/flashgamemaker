@@ -103,7 +103,7 @@ package framework.core.architecture.component{
 							var clip:MovieClip = _source[_name+Number(i+j)] as MovieClip;
 							if(clip!= null && clip[clipName]!=null){
 								if(source[_name+Number(j+1)]!=null){
-									clip[clipName].addChild(source["clip"+Number(j+1)]);
+									clip[clipName].addChild(source[_name+Number(j+1)]);
 								}
 							}
 						}
