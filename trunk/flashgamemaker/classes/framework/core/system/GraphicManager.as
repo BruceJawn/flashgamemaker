@@ -77,7 +77,7 @@ package framework.core.system{
 		}
 		//------ Load Graphics From Xml ------------------------------------
 		public function loadGraphicsFromXml(xml:XML, xmlName:String):void {
-			_graphicsToLoad=parseXml(xml);
+			parseXml(xml);
 			var graphicPath:String=_graphicsToLoad[0].path;
 			var graphicName:String=_graphicsToLoad[0].name;
 			loadGraphic(graphicPath, graphicName);
@@ -92,21 +92,19 @@ package framework.core.system{
 		private function onXmlLoadingSuccessful(evt:Event):void {
 			_xmlLoader.removeEventListener(Event.COMPLETE, onXmlLoadingSuccessful);
 			var xml:XML=_xmlLoader.getXml();
-			_graphicsToLoad=parseXml(xml);
+			parseXml(xml);
 			var graphicPath:String=_graphicsToLoad[0].path;
 			var graphicName:String=_graphicsToLoad[0].name;
 			loadGraphic(graphicPath, graphicName);
 		}
 		//------ Parse Xml ------------------------------------
-		private function parseXml(xml:XML):Array {
-			var graphicsToLoad:Array = new Array();
+		private function parseXml(xml:XML):void {
 			var xmlList:XMLList=xml.children();
 			for each (var xmlChild:XML in xmlList) {
 				var graphicName:String=xmlChild.name();
 				var graphicPath:String=xmlChild.path;
-				graphicsToLoad.push({name:graphicName,path:graphicPath});
+				_graphicsToLoad.push({name:graphicName,path:graphicPath});
 			}
-			return graphicsToLoad;
 		}
 		//------ Load Graphic ------------------------------------
 		public function loadGraphic(path:String, graphicName:String):void {
