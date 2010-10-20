@@ -248,7 +248,7 @@ package framework.core.architecture.component{
 					position=screenToIso(position);
 				}
 				//position.x+=_tileMap_width*_tileMap_tileWidth/2-1;
-				//position.y-=- _elevation[tile.ztile][tile.ytile][tile.xtile]+tile.ztile*_tileMap_tileHigh+tile.tileHeight;
+				position.y-=- _elevation[tile.ztile][tile.ytile][tile.xtile]+tile.ztile*_tileMap_tileHigh+tile.tileHeight;
 				_tileMap_world[tileName].x=position.x;
 				_tileMap_world[tileName].y=position.y;
 			}
@@ -258,7 +258,6 @@ package framework.core.architecture.component{
 			var point:IsoPoint=new IsoPoint  ;
 			point.x=i*tileMap_tileWidth/2;
 			point.y=j*tileMap_tileWidth/2;
-
 			return point;
 		}
 		//----- Screen To Iso -----------------------------------
@@ -405,7 +404,7 @@ package framework.core.architecture.component{
 		//------ Center Map  ------------------------------------
 		private function centerMap(x:int=0, y:int=0):void {
 			_spatial_position.x=x;
-			_spatial_position.y=y - this.height/2;
+			_spatial_position.y=y ;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -28,6 +28,7 @@ package framework.core.architecture.component{
 
 	import flash.events.*;
 	import flash.geom.Point;
+	import flash.display.MovieClip;
 	
 	/**
 	* Cursor Component
@@ -36,6 +37,7 @@ package framework.core.architecture.component{
 	public class CursorComponent extends GraphicComponent {
 		
 		private var _mouseManager:IMouseManager=null;
+		private var _cursor:MovieClip = null;
 		//MouseInput properties
 		public var _mouse_object:Object = null;
 		
@@ -60,7 +62,8 @@ package framework.core.architecture.component{
 			if (_graphicName!=null) {
 				_graphic=_graphicManager.getGraphic(_graphicName);
 				_mouseManager.hideCursor();
-				addChild(_graphic);
+				//addChild(_graphic);
+				_cursor=displayGraphic("Cursor",_graphic,2) as MovieClip;
 			}
 		}
 		//------ Actualize Components  ------------------------------------
@@ -73,8 +76,10 @@ package framework.core.architecture.component{
 		}
 		//------ Move Cursor  ------------------------------------
 		private function moveCursor():void {
-			_spatial_position.x= _mouse_object.stageX;
-			_spatial_position.y= _mouse_object.stageY;
+			if(_cursor!=null){
+				_cursor.x= _mouse_object.stageX;
+				_cursor.y= _mouse_object.stageY;
+			}
 		}
 		//------ Click Cursor  ------------------------------------
 		private function clickCursor():void {
@@ -83,6 +88,7 @@ package framework.core.architecture.component{
 		//------ Reset  ------------------------------------
 		public override function reset(ownerName:String, componentName:String):void {
 			_mouseManager.showCursor();
+			removeGraphic("Cursor") as MovieClip;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

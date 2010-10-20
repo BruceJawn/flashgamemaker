@@ -154,6 +154,7 @@ package framework.core.architecture.component{
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
 			_spatial_position.y=y;
+			update("spatial");
 		}
 		//------ Rotate Graphic  ------------------------------------
 		public function rotate():void {

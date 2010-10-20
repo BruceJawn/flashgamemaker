@@ -4,15 +4,15 @@
 		<path>texture/framework/game/tileSet/tileSet.png</path>
 	</TileSet>
 	<KawaiiTileSet>
-		<path>texture/framework/game/tileSet/kawaiiTileSet.png</path>
+		<path>texture/framework/game/tileSet/bladesquad/kawaiiTileSet.png</path>
 	</KawaiiTileSet>
 <KawaiiObjectSetMedium>
-		<path>texture/framework/game/tileSet/kawaiiObjectSetMedium.png</path>
+		<path>texture/framework/game/tileSet/bladesquad/kawaiiObjectSetMedium.png</path>
 	</KawaiiObjectSetMedium>
 <KawaiiObjectSetLarge>
-		<path>texture/framework/game/tileSet/kawaiiObjectSetLarge.png</path>
+		<path>texture/framework/game/tileSet/bladesquad/kawaiiObjectSetLarge.png</path>
 	</KawaiiObjectSetLarge>
 <KawaiiObjectSetHuge>
-		<path>texture/framework/game/tileSet/kawaiiObjectSetHuge.png</path>
+		<path>texture/framework/game/tileSet/bladesquad/kawaiiObjectSetHuge.png</path>
 	</KawaiiObjectSetHuge>
 </MapTexture>

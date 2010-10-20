@@ -60,6 +60,7 @@ package framework.core.architecture.component{
 			_chrono = new TextField();
 			setFormat("Arial",30,0xFF0000);
 			addChild(_chrono);						
+			//displayGraphic("Chrono",_chrono,2);
 			_chrono_count = _chrono_max;
 			updateText();
 		}
@@ -73,6 +74,7 @@ package framework.core.architecture.component{
 			var textFormat:TextFormat = new TextFormat(font, size,color,bold,italic,underline,url,target,align);
 			_chrono.defaultTextFormat = textFormat;
 			_chrono.autoSize = "center";
+			_chrono.selectable = false;
 		}
 		//------ Restart Chrono ------------------------------------
 		public  function restartChrono():void {
@@ -101,6 +103,10 @@ package framework.core.architecture.component{
 			}else{
 				_chrono.text = _chrono_count.toString();
 			}
+		}
+		//------ Reset  ------------------------------------
+		public override function reset(ownerName:String,componentName:String):void {
+			removeGraphic("Chrono");
 		}
 	}
 }

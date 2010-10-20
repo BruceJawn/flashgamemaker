@@ -69,8 +69,8 @@ package framework.core.architecture.component{
 				var myBitmapData:BitmapData=new BitmapData(width,height,true,0);
 				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(0, 0,width,height), new Point(0, 0),null,null,true);
 				_bitmap=new Bitmap(myBitmapData);
-				//setGraphic(_graphicName,_bitmap);
-				displayGraphic(_graphicName,_bitmap,1);
+				setGraphic(_graphicName,_bitmap);
+				//displayGraphic(_graphicName,_bitmap,1);
 			}
 		}
 		//------ Actualize Components  ------------------------------------

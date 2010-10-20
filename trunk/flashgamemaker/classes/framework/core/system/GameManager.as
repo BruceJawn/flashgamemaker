@@ -117,7 +117,7 @@ package framework.core.system{
 			//groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
 			//groundSphereComponent.moveTo(220,1050);
 			//var bitmapPlayerComponent:BitmapPlayerComponent = _entityManager.addComponent("Entity", "BitmapPlayerComponent", "myBitmapPlayerComponent");
-			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
+			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "Knight");
 			//bitmapPlayerComponent.setIso(true);
 			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "mySwfPlayer");
@@ -133,9 +133,10 @@ package framework.core.system{
 			//var soundComponent:SoundComponent = _entityManager.addComponent("Entity", "SoundComponent", "mySoundComponent");
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.setDirection("vertical");
-			jaugeComponent.moveTo(200,315);
+			jaugeComponent.moveTo(180,315);
 			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
-			//var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
+			var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
+			chronoComponent.moveTo(160,60);
 			//var exportComponent:ExportComponent = _entityManager.addComponent("Entity","ExportComponent","myExportComponent");
 			//exportComponent.createJPG(FlashGameMaker.STAGE, "FGM_screenshot");
 			//var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
