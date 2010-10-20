@@ -87,8 +87,8 @@ package script{
 			//bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayer.xml", "Knight");
 			//bitmapPlayerComponent.setIso(true);
 			//var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
-			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayer.xml", "mySwfPlayer");
-			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml","mySwfPlayer");
+			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
+			//swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			//swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			//swfPlayerComponent.setDirection("Horizontal");
 			//swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);

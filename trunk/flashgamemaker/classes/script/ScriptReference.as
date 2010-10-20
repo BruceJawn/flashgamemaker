@@ -35,9 +35,9 @@ package script{
 		//------ Init Reference ------------------------------------
 		private function initReference():void {
 			var scriptFactory:ScriptFactory;
-			/*var scriptKawaiiIsland:scriptKawaiiIsland;
-			var scriptKawaiiFight:scriptKawaiiFight;
-			var scriptKawaiiOlympic:scriptKawaiiOlympic;*/
+			var scriptKawaiiIsland:ScriptKawaiiIsland;
+			var scriptKawaiiFight:ScriptKawaiiFight;
+			var scriptKawaiiOlympic:ScriptKawaiiOlympic;
 		}
 	}
 }

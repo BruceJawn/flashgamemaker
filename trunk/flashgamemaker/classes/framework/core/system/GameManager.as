@@ -82,7 +82,7 @@ package framework.core.system{
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
 			var navigationComponent:NavigationComponent=_entityManager.addComponent("GameEntity","NavigationComponent","myNavigationComponent");
-			navigationComponent.setScript("ScriptFactory");
+			navigationComponent.setScript("ScriptKawaiiFight");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
