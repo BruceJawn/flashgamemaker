@@ -72,7 +72,7 @@ package framework.core.architecture.component{
 			_animation["STATIC"]=0;
 			_animation["WALK"]=1;
 			_colorPicker = new ColorPicker();
-			_spatial_properties.collision =true;
+			//_spatial_properties.collision =true;
 			addChild(_colorPicker);
 		}
 		//------ Init Listener ------------------------------------

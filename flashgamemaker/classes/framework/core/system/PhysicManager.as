@@ -103,7 +103,7 @@ package framework.core.system{
 		//------- Iso Move -------------------------------
 		private function isoMove(component:*):void {
 			var x:Number=component.x-component.y;
-			var y:Number=component.x+component.y/2;
+			var y:Number=(component.x+component.y)/2;
 			component.x=x;
 			component.y=y;
 		}

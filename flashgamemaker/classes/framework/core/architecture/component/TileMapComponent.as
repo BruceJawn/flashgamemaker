@@ -141,8 +141,6 @@ package framework.core.architecture.component{
 			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
 			buildMap();
-			moveTo(FlashGameMaker.WIDTH/2,FlashGameMaker.HEIGHT/2);
-			//setMap();
 		}
 		//------- Build Map -------------------------------
 		private function buildMap():void {

@@ -29,12 +29,12 @@ package script{
 	* Script Class
 	*
 	*/
-	public class ScriptFactory {
+	public class ScriptKawaiiIsland {
 
 		private var _scriptName:String = null;
 		private var _entityManager:IEntityManager=null;
 		
-		public function ScriptFactory(scriptName:String) {
+		public function ScriptKawaiiIsland(scriptName:String) {
 			initVar(scriptName);
 			initEntity();
 			initComponent();
@@ -53,12 +53,24 @@ package script{
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
-			var keyboardRotationComponent:KeyboardRotationComponent=_entityManager.addComponent("Entity","KeyboardRotationComponent","myKeyboardRotationComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Entity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
-			var factoryComponent:FactoryComponent=_entityManager.addComponent("Entity","FactoryComponent","myFactoryComponent");
+			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("Entity","ScrollingBitmapComponent","myScrollingBitmapComponent");
+			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
+			scrollingBitmapComponent.setScrolling(30,1);
+			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
+			var groundSphereComponent=_entityManager.addComponent("Entity","GroundSphereComponent","myGroundSphereComponent");
+			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
+			groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
+			groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
+			groundSphereComponent.moveTo(220,1050);
+			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
+			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.setDirection("Horizontal");
+			swfPlayerComponent.moveTo(120,300);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

@@ -30,6 +30,7 @@ package framework.core.architecture.component{
 	import flash.events.MouseEvent;
 	import flash.display.SimpleButton;
 	import flash.display.MovieClip;
+	import flash.text.TextField;
 
 	/**
 	* Navigation Component Class
@@ -42,6 +43,7 @@ package framework.core.architecture.component{
 		private var _startBt:SimpleButton=null;
 		private var _scriptName:String=null;
 		private var _navigation:GraphicComponent=null;
+		private var _label:TextField=null;
 		
 		public function NavigationComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -59,6 +61,8 @@ package framework.core.architecture.component{
 			_navigation.removeEventListener(Event.COMPLETE,onNavigationLoadingSuccessful);
 			var navigationScreen:MovieClip = getGraphic("NavigationScreen") as MovieClip;
 			_startBt = navigationScreen.startBt;
+			_label = navigationScreen.label;
+			_label.text = _scriptName;
 			_startBt.addEventListener(MouseEvent.CLICK, onStart);
 		}
 		//------- Set Script -------------------------------

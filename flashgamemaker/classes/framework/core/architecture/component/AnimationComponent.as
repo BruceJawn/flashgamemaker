@@ -39,6 +39,7 @@ package framework.core.architecture.component{
 	public class AnimationComponent extends Component {
 
 		//Timer properties
+		public var _timer_on:Boolean = false;
 		public var _timer_delay:Number=120;
 		public var _timer_count:Number=0;
 
