@@ -23,6 +23,8 @@
 
 package framework{
 	import framework.core.system.*;
+	import framework.core.architecture.component.ComponentReference;
+	import script.ScriptReference;
 	
 	import flash.events.EventDispatcher;
 	/**
@@ -35,43 +37,49 @@ package framework{
 		private var _gameManager:IGameManager;
 		
 		public function Framework() {
+			initClassReference();
 			//initInterface("xml/framework/interface.xml");
 			initGame("xml/framework/game.xml");
 		}
+		//------ Init Class Reference  ------------------------------------
+		private  function initClassReference():void{
+			new ComponentReference();
+			new ScriptReference();
+		}
 		//------ Init Interface ------------------------------------
-		public function initInterface(path:String):void {
+		private function initInterface(path:String):void {
 			initInterfaceVar(path);
 			initInterfaceListener();
 		}
 		//------ Init InterfaceVar ------------------------------------
-		public function initInterfaceVar(path:String):void {
+		private function initInterfaceVar(path:String):void {
 			_interfaceManager = InterfaceManager.getInstance();
 			_interfaceManager.preloadInterface(path);
 		}
 		//------ Init Interface Listener ------------------------------------
-		public function initInterfaceListener():void {
+		private function initInterfaceListener():void {
 			var interfaceDispatcher:EventDispatcher = _interfaceManager.getDispatcher();
 			interfaceDispatcher.addEventListener(InterfaceEvent.COMPLETE,onInterfaceLoadingSuccessful);
 			interfaceDispatcher.addEventListener(InterfaceEvent.NAVIGATION_CHANGE,onInterfaceNavigationChange);
 		}
 		//------ On Interface Loading Successful ------------------------------------
-		public function onInterfaceLoadingSuccessful(evt:InterfaceEvent):void {
+		private function onInterfaceLoadingSuccessful(evt:InterfaceEvent):void {
 			_interfaceManager.goToScreen("MenuScreen");
 		}
 		//------ On Interface Navigation Change ------------------------------------
-		public function onInterfaceNavigationChange(evt:InterfaceEvent):void {
+		private function onInterfaceNavigationChange(evt:InterfaceEvent):void {
 			var currentScreen:String = _interfaceManager.getCurrentScreen();
 			if(currentScreen=="GameScreen"){
 				initGame("xml/framework/game.xml");
 			}
 		}
 		//------ Init Game ------------------------------------
-		public function initGame(path:String):void {
+		private function initGame(path:String):void {
 			initGameVar(path);
 			//initGameListener();
 		}
 		//------ Init Game Var ------------------------------------
-		public function initGameVar(path:String):void {
+		private function initGameVar(path:String):void {
 			_gameManager = GameManager.getInstance();
 			_gameManager.loadGame(path);
 		}

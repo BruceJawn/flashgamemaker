@@ -48,6 +48,7 @@ package framework.core.architecture.component{
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 		//Timer properties
+		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=30;
 		public var _timer_count:Number=0;
 

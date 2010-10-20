@@ -85,6 +85,9 @@ package framework.core.architecture.component{
 			component._timer_count+= _timer_delay;
 			component.refresh();
 			component.actualizeComponent(componentName,componentOwner,component);
+			if(component._timer_on==false){
+				component._timer_on=true;
+			}
 			if(component._timer_count>=component._timer_delay){
 				component._timer_count=0;
 			}

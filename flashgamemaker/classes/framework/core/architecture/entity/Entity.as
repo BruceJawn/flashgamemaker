@@ -79,8 +79,8 @@ package framework.core.architecture.entity{
 			_entityManager.unregisterProperty(propertyName,parentName,_entityName);
 		}
 		//------ Set Property Reference ------------------------------------
-		public function setPropertyReference(propertyReferenceName:String, componentName:String):void {
-			_entityManager.setPropertyReference(propertyReferenceName,componentName,_entityName);
+		public function setPropertyReference(propertyReferenceName:String, componentName:String):Boolean {
+			return _entityManager.setPropertyReference(propertyReferenceName,componentName,_entityName);
 		}
 		//------ Remove Property Reference ------------------------------------
 		public function removePropertyReference(propertyReferenceName:String, componentName:String):void {

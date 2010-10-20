@@ -51,7 +51,6 @@ package framework.core.architecture.entity {
 				 throw new Error("Error: Instantiation failed: Use EntityManager.getInstance() instead of new.");
 			}
 			initVar();
-			initClassRef();
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IEntityManager {
@@ -68,41 +67,6 @@ package framework.core.architecture.entity {
 			_families = new Dictionary();
 			_propertyInfos = new Dictionary();
 			_propertyReferences = new Dictionary();
-		}
-		//------ Init Class Ref  ------------------------------------
-		public  function initClassRef():void{
-			//-- In order to import your component  classes in the compiled SWF and use them at runtime --
-			//-- please insert your component classes here as follow --
-			var keyboardInputComponent:KeyboardInputComponent;
-			var keyboardMoveComponent:KeyboardMoveComponent;
-			var mouseInputComponent:MouseInputComponent;
-			var serverInputComponent:ServerInputComponent;
-			var systemInfoComponent:SystemInfoComponent;
-			var renderComponent:RenderComponent;
-			var spatialComponent:SpatialComponent;
-			var timeComponent:TimeComponent;
-			var timerComponent:TimerComponent;
-			var graphicComponent:GraphicComponent;
-			var tileMapComponent:TileMapComponent;
-			var scrollingBitmapComponent:ScrollingBitmapComponent;
-			var playerComponent:PlayerComponent;
-			var bitmapPayerComponent:BitmapPlayerComponent;
-			var animationComponent:AnimationComponent;
-			var loaderComponent:LoaderComponent;
-			var textComponent:TextComponent;
-			var factoryComponent:FactoryComponent;
-			var swfPlayerComponent:SwfPlayerComponent;
-			var progressBarComponent:ProgressBarComponent;
-			var soundComponent:SoundComponent;
-			var messageComponent:MessageComponent;
-			var multiPlayerComponent:MultiPlayerComponent;
-			var cursorComponent:CursorComponent;
-			var jaugeComponent:JaugeComponent;
-			var jaugeMoveComponent:JaugeMoveComponent;
-			var chronoComponent:ChronoComponent;
-			var keyboardRotationComponent:KeyboardRotationComponent;
-			var groundSphereComponent:GroundSphereComponent;
-			var exportComponent:ExportComponent;
 		}
 		//------ Create Entity ------------------------------------
 		public function createEntity(entityName:String):IEntity{
@@ -121,8 +85,12 @@ package framework.core.architecture.entity {
 		public function addComponent(entityName:String,componentName:String,newName:String):*{
 			var classRef:Class = getClass(componentName);
 			var entity:IEntity = _entities[entityName];
+			if(entity==null){
+				throw new Error("Error: The entity "+entityName+" doesn't exist!!\n Impossible to add the component"+componentName);
+			}
 			var component:Component = new classRef(newName,entity);
 			var components:Dictionary = entity.getComponents();
+			
 			if(components[newName] != null){
 				throw new Error("Error: A Component already exist with the name "+newName+" !!");
 			}
@@ -216,7 +184,8 @@ package framework.core.architecture.entity {
 			component.reset(ownerName,componentName);
 		}
 		//------ Set Property Reference ------------------------------------
-		public function setPropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
+		public function setPropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):Boolean {
+			var bool:Boolean = false;
 			var propertyReference:Array = _propertyReferences[propertyReferenceName] as Array;
 			if(propertyReference == null){
 				_propertyReferences[propertyReferenceName] = new Array();
@@ -231,9 +200,11 @@ package framework.core.architecture.entity {
 				var parentComponentName:String = propertyInfo.componentName;
 				var component:Component = getComponent(parentEntityName,parentComponentName);
 				component.update(propertyReferenceName);
+				bool=true;
 			}
 			component = getComponent(ownerName,componentName);
 			component.addPropertyReference(propertyReferenceName);
+			return bool;
 		}
 		//------ Remove Property Reference ------------------------------------
 		public function removePropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {

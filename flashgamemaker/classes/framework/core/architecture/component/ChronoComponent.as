@@ -47,6 +47,7 @@ package framework.core.architecture.component{
 		private var _chrono_count:Number = 3;
 		private var _chrono_statut:Boolean = false;
 		//Timer properties
+		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=800;
 		public var _timer_count:Number=0;
 		

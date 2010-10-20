@@ -74,8 +74,8 @@ package framework.core.architecture.component{
 			_componentOwner.unregisterProperty(propertyName,componentName);
 		}
 		//------ Set Property Reference ------------------------------------
-		public function setPropertyReference(propertyReferenceName:String, componentName:String):void {
-			_componentOwner.setPropertyReference(propertyReferenceName,componentName);
+		public function setPropertyReference(propertyReferenceName:String, componentName:String):Boolean {
+			return _componentOwner.setPropertyReference(propertyReferenceName,componentName);
 		}
 		//------ Refresh   ------------------------------------
 		public function refresh():void {

@@ -47,6 +47,7 @@ package framework.core.architecture.component{
 		public var _spatial_position:IsoPoint=null;// x, y and z
 		public var _spatial_properties:Object = null;
 		//Timer properties
+		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=30;
 		public var _timer_count:Number=0;
 
@@ -75,7 +76,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay) {
+			if (_timer_count>=_timer_delay || !_timer_on) {
 				_physicManager.move(component,_spatial_position);
 				component.rotate();
 			}
