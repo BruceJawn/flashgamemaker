@@ -66,7 +66,7 @@ package script{
 			graphicComponent.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
 			graphicComponent.moveTo(0,108);
 			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer");
 			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(120,300);
