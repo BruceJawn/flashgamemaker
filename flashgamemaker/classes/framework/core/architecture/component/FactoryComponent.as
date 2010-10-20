@@ -63,19 +63,19 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_title=addComponent(_componentOwner.getName(),"TextComponent","myTitle");
-			_title.moveTo(20,50);
+			_title.moveTo(20,10);
 			_title.setText("The Factory Component");
 			_title.setFormat("Times New Roman",16, 0x0000FF);
 			_description=addComponent(_componentOwner.getName(),"TextComponent","myDescription");
-			_description.moveTo(15,70);
+			_description.moveTo(15,30);
 			_description.setText("My FactoryComponent permits \nto create dynamically a component.");
 			_description.setFormat("Times New Roman",12, 0x000000);
 			_name=addComponent(_componentOwner.getName(),"TextComponent","myName");
-			_name.moveTo(225,60);
+			_name.moveTo(225,20);
 			_name.setText("Name");
 			_name.setFormat("Times New Roman",12, 0x000000);
 			_comboBox = new ComboBox();
-			_comboBox.move(260,60);
+			_comboBox.move(260,20);
 			_comboBox.width=130;
 			_comboBox.addItem({label:""});
 			_comboBox.addItem({label:"Cursor"});
@@ -98,7 +98,7 @@ package framework.core.architecture.component{
 			_button.label = "Create";
 			_button.width = 80;
 			_button.x=310;
-			_button.y=90;
+			_button.y=50;
 			_button.addEventListener(MouseEvent.CLICK, onCreate);
 			//addChild(_button);
 			displayGraphic("myFactoryButton",_button,2);
@@ -211,13 +211,12 @@ package framework.core.architecture.component{
 		private function initTileMapComponent():void {
 		 	//_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
 			_tileMap.loadMap("xml/framework/game/mapKawaii.xml", "TileMap");
-			_tileMap.moveTo(-100,150);
 		}
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {
-			_bitmapPlayer.loadPlayer("xml/framework/game/bitmapPlayer.xml", "BitmapPlayer");
+			_bitmapPlayer.loadPlayer("xml/framework/game/bitmapPlayer.xml", "Knight");
+			_bitmapPlayer.moveTo(200,0);
 			_bitmapPlayer.setIso(true);
-			_bitmapPlayer.moveTo(120,160);
 		}
 		//------- Init Swf Player Component -------------------------------
 		private function initSwfPlayerComponent():void {
@@ -226,8 +225,8 @@ package framework.core.architecture.component{
 			_swfPlayer.setPropertyReference("keyboardMove",_swfPlayer._componentName);
 			//_swfPlayer.setDirection("Horizontal");
 			//swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
+			_swfPlayer.moveTo(200,0);
 			_swfPlayer.setIso(true);
-			_swfPlayer.moveTo(150,150);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {
