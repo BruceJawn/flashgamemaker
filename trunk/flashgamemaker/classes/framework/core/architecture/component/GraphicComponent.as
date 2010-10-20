@@ -110,6 +110,7 @@ package framework.core.architecture.component{
 			if (_graphicName!=null) {
 				_graphic=_graphicManager.getGraphic(_graphicName);
 				addChild(_graphic);
+				dispatchEvent(evt);
 			}
 		}
 		//------ On Graphic Loading Progress ------------------------------------

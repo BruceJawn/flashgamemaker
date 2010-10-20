@@ -141,7 +141,7 @@ package framework.core.architecture.component{
 			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
 			buildMap();
-			centerMap(FlashGameMaker.WIDTH/2,FlashGameMaker.HEIGHT/2);
+			moveTo(FlashGameMaker.WIDTH/2,FlashGameMaker.HEIGHT/2);
 			//setMap();
 		}
 		//------- Build Map -------------------------------
@@ -400,11 +400,6 @@ package framework.core.architecture.component{
 				offset = y-(_tileMap_visibility.endY-_tileMap_visibility.beginY)/2;
 				blitUp(offset);
 			}
-		}
-		//------ Center Map  ------------------------------------
-		private function centerMap(x:int=0, y:int=0):void {
-			_spatial_position.x=x;
-			_spatial_position.y=y ;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
