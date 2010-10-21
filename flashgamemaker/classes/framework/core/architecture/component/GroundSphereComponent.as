@@ -45,7 +45,7 @@ package framework.core.architecture.component{
 		//------ Rotate Graphic  ------------------------------------
 		public override function rotate():void {
 			if (_spatial_rotation!=0) {
-				var mySwfPlayerComponent:SwfPlayerComponent=getComponent("Entity","mySwfPlayerComponent");
+				var mySwfPlayerComponent:SwfPlayerComponent=getComponent(_componentOwner.getName(),"mySwfPlayerComponent");
 				if (mySwfPlayerComponent!=null) {
 					if (mySwfPlayerComponent._spatial_position.x-mySwfPlayerComponent.width<=10||mySwfPlayerComponent._spatial_position.x+mySwfPlayerComponent.width>=350) {
 						this.rotation+=_spatial_rotation/2;
