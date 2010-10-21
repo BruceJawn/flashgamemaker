@@ -25,7 +25,7 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	import framework.core.system.ServerManager;
 	import framework.core.system.IServerManager;
-
+	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
@@ -67,7 +67,6 @@ package framework.core.architecture.component{
 		}
 		//-- On Send ---------------------------------------------
 		private function onSend(evt:MouseEvent):void {
-
 			var msgToSend:String=getInput();
 			if (msgToSend!="") {
 				sendMessage(msgToSend);

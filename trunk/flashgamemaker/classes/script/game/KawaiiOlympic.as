@@ -21,7 +21,7 @@
 *
 */
 
-package script{
+package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
 
@@ -29,12 +29,12 @@ package script{
 	* Script Class
 	*
 	*/
-	public class ScriptKawaiiOlympic {
+	public class KawaiiOlympic {
 
 		private var _scriptName:String = null;
 		private var _entityManager:IEntityManager=null;
 		
-		public function ScriptKawaiiOlympic(scriptName:String) {
+		public function KawaiiOlympic(scriptName:String) {
 			initVar(scriptName);
 			initEntity();
 			initComponent();
@@ -46,35 +46,35 @@ package script{
 		}
 		//------ Init Entity ------------------------------------
 		private function initEntity():void {
-			var entity:IEntity=_entityManager.createEntity("Entity");
+			var entity:IEntity=_entityManager.createEntity("GameEntity");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
+			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Entity","MouseInputComponent","myMouseInputComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
-			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
-			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("Entity","ScrollingBitmapComponent","myScrollingBitmapComponent");
+			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
+			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
+			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
+			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
+			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setPropertyReference("keyboardInput",scrollingBitmapComponent._componentName);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
-			var graphicComponent:GraphicComponent=_entityManager.addComponent("Entity","GraphicComponent","myGraphicComponent");
+			var graphicComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myGraphicComponent");
 			graphicComponent.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
 			graphicComponent.moveTo(0,108);
-			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
+			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer");
 			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(120,300);
-			var jaugeComponent:JaugeComponent=_entityManager.addComponent("Entity","JaugeComponent","myJaugeComponent");
+			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.setDirection("vertical");
 			jaugeComponent.moveTo(180,315);
-			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("Entity","JaugeMoveComponent","myJaugeMoveComponent");
-			var chronoComponent:ChronoComponent = _entityManager.addComponent("Entity","ChronoComponent","myChronoComponent");
+			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("GameEntity","JaugeMoveComponent","myJaugeMoveComponent");
+			var chronoComponent:ChronoComponent = _entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.moveTo(160,60);
 		}
 		//------- ToString -------------------------------

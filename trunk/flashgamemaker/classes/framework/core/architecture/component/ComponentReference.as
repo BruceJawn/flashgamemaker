@@ -51,7 +51,6 @@ package framework.core.architecture.component{
 			var playerComponent:PlayerComponent;
 			var bitmapPayerComponent:BitmapPlayerComponent;
 			var animationComponent:AnimationComponent;
-			var loaderComponent:LoaderComponent;
 			var textComponent:TextComponent;
 			var factoryComponent:FactoryComponent;
 			var swfPlayerComponent:SwfPlayerComponent;

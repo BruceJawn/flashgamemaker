@@ -23,9 +23,9 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import utils.time.Time;
 	import framework.core.system.TimeManager;
 	import framework.core.system.ITimeManager;
+	import utils.time.Time;
 	
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;

@@ -21,30 +21,15 @@
 *
 */
 
-package framework.core.architecture.component{
-	import framework.core.architecture.entity.*;
-	
-	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
-	import flash.events.*;
+package script.tutorial{
 	/**
-	* Loader Class
-	* @ purpose: 
+	* Hello World
+	*
 	*/
-	public class LoaderComponent extends Component{
-        
-		public function LoaderComponent(componentName:String, componentOwner:IEntity){
-			super(componentName,componentOwner);
-			initVar();
+	public class HelloWorld {
+
+		public function HelloWorld() {
+			trace("HelloWorld");
 		}
-		//------ Init Var ------------------------------------
-		private function initVar():void {
-			
-		}
-		//------- ToString -------------------------------
-		 public override function ToString():void{
-           
-        }
-		
 	}
 }

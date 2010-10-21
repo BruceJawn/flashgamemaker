@@ -29,46 +29,38 @@ package script{
 	* Script Class
 	*
 	*/
-	public class ScriptKawaiiFight {
+	public class Factory {
 
-		private var _scriptName:String = null;
 		private var _entityManager:IEntityManager=null;
 		
-		public function ScriptKawaiiFight(scriptName:String) {
-			initVar(scriptName);
+		public function Factory() {
+			initVar();
 			initEntity();
 			initComponent();
 		}
 		//------ Init Var ------------------------------------
-		private function initVar(scriptName:String):void {
-			_scriptName = scriptName;
+		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 		}
 		//------ Init Entity ------------------------------------
 		private function initEntity():void {
-			var entity:IEntity=_entityManager.createEntity("Entity");
+			var entity:IEntity=_entityManager.createEntity("Factory");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
+			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Factory","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Entity","MouseInputComponent","myMouseInputComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
-			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
-			var tileMapComponent:TileMapComponent=_entityManager.addComponent("Entity","TileMapComponent","myTileMapComponent");
-			tileMapComponent.loadMap("xml/framework/game/mapKawaii.xml", "TileMap");
-			tileMapComponent.moveTo(160,100);
-			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
-			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.moveTo(250,100);
-			swfPlayerComponent.setIso(true);
+			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Factory","KeyboardMoveComponent","myKeyMoveComponent");
+			var keyboardRotationComponent:KeyboardRotationComponent=_entityManager.addComponent("Factory","KeyboardRotationComponent","myKeyboardRotationComponent");
+			var animationComponent:AnimationComponent=_entityManager.addComponent("Factory","AnimationComponent","myAnimationComponent");
+			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Factory","MouseInputComponent","myMouseInputComponent");
+			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Factory","ProgressBarComponent","myProgressBarComponent");
+			var timerComponent:TimerComponent=_entityManager.addComponent("Factory","TimerComponent","myTimerComponent");
+			var factoryComponent:FactoryComponent=_entityManager.addComponent("Factory","FactoryComponent","myFactoryComponent");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
-			trace(_scriptName);
+			trace();
 		}
 	}
 }

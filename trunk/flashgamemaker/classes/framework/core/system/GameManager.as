@@ -26,6 +26,7 @@ package framework.core.system{
 	import utils.loader.*;
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
+	import script.*;
 
 	import flash.display.*;
 	import flash.events.*;
@@ -78,11 +79,7 @@ package framework.core.system{
 		protected function startGame():void {
 			removeGraphicListener();
 			removeLoadingProgress();
-			var entity:IEntity=_entityManager.createEntity("GameEntity");
-			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
-			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
-			var navigationComponent:NavigationComponent=_entityManager.addComponent("GameEntity","NavigationComponent","myNavigationComponent");
-			navigationComponent.setScript("ScriptKawaiiOlympic");
+			new MyGame();
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

@@ -23,7 +23,7 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-
+	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;

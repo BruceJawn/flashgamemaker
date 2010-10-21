@@ -15,8 +15,8 @@
 *   under the terms of the GNU Free Documentation License, Version 1.3
 *   or any later version published by the Free Software Foundation;
 *   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-*Under this licence you are free to copy, adapt and distrubute the work. 
-*You must attribute the work in the manner specified by the author or licensor. 
+*	Under this licence you are free to copy, adapt and distrubute the work. 
+*	You must attribute the work in the manner specified by the author or licensor. 
 *   A copy of the license is included in the section entitled "GNU
 *   Free Documentation License".
 *
@@ -24,6 +24,7 @@
 
 package framework.core.system{
 	import utils.loader.*;
+	import utils.clip.Clip;
 
 	import flash.utils.Dictionary;
 	import flash.display.Sprite;
@@ -169,7 +170,7 @@ package framework.core.system{
 				layerId=createNewLayer();
 			}
 			var layer:Sprite=_layers[layerId];
-			return layer.addChild(graphic);
+			return Clip.AddChild(layer,graphic);
 		}
 		//------ Set Layer ------------------------------------
 		public function setLayer(graphicName:String,layerId:int):void {

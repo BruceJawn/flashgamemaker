@@ -21,7 +21,7 @@
 *
 */
 
-package script{
+package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
 
@@ -29,12 +29,12 @@ package script{
 	* Script Class
 	*
 	*/
-	public class ScriptKawaiiIsland {
+	public class KawaiiIsland {
 
 		private var _scriptName:String = null;
 		private var _entityManager:IEntityManager=null;
 		
-		public function ScriptKawaiiIsland(scriptName:String) {
+		public function KawaiiIsland(scriptName:String) {
 			initVar(scriptName);
 			initEntity();
 			initComponent();
@@ -46,27 +46,27 @@ package script{
 		}
 		//------ Init Entity ------------------------------------
 		private function initEntity():void {
-			var entity:IEntity=_entityManager.createEntity("Entity");
+			var entity:IEntity=_entityManager.createEntity("GameEntity");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Entity","KeyboardInputComponent","myKeyInputComponent");
+			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Entity","KeyboardMoveComponent","myKeyMoveComponent");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("Entity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("Entity","MouseInputComponent","myMouseInputComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("Entity","ProgressBarComponent","myProgressBarComponent");
-			var timerComponent:TimerComponent=_entityManager.addComponent("Entity","TimerComponent","myTimerComponent");
-			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("Entity","ScrollingBitmapComponent","myScrollingBitmapComponent");
+			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
+			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
+			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
+			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
+			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
-			var groundSphereComponent=_entityManager.addComponent("Entity","GroundSphereComponent","myGroundSphereComponent");
+			var groundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
 			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
 			groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
 			groundSphereComponent.moveTo(220,1050);
-			var swfPlayerComponent=_entityManager.addComponent("Entity","SwfPlayerComponent","mySwfPlayerComponent");
+			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setDirection("Horizontal");
