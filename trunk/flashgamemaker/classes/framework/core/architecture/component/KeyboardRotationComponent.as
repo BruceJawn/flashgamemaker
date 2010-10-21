@@ -37,8 +37,9 @@ package framework.core.architecture.component{
 	* 
 	*/
 	public class KeyboardRotationComponent extends GraphicComponent {
-
+		
 		private var _keyboardManager:IKeyboardManager=null;
+		private var _degree:int=1;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 
@@ -69,10 +70,10 @@ package framework.core.architecture.component{
 				var doubleClick:Boolean=keyboard_key.doubleClick;
 				if (keyStatut=="DOWN") {
 					if (keyTouch=="RIGHT") {
-						component._spatial_rotation=-1;
+						component._spatial_rotation=-_degree;
 						component._spatial_properties.isMoving=true;
 					} else if (keyTouch=="LEFT") {
-						component._spatial_rotation=1;
+						component._spatial_rotation=_degree;
 						component._spatial_properties.isMoving=true;
 					} else if (keyTouch=="UP") {
 
