@@ -20,25 +20,31 @@
 package utils.clip{
 	import flash.display.*;
 	import flash.events.*;
-	
+
 	/**
 	* Clip Class
 	* 
 	*/
 	public class Clip {
-		
+
 		public function Clip() {
-	
 		}
 		//------ Center Clip ------------------------------------
-		public static function Center(_clip:Sprite ):void {
-			_clip.x = (FlashGameMaker.WIDTH - _clip.width)/2;
-			_clip.y = (FlashGameMaker.HEIGHT - _clip.height)/2;
+		public static function AddChild(container:Sprite, clip:*):DisplayObject {
+			FlashGameMaker.CLIP++;
+			return container.addChild(clip);
 		}
-		//------ Move Clip ------------------------------------
-		public static function MoveClip(_clip:Sprite, x:Number, y:Number ):void {
-			_clip.x = x;
-			_clip.y = y;
+		//------ Center Clip ------------------------------------
+		public static function RemoveChild(container:Sprite, clip:*):void {
+			FlashGameMaker.CLIP--;
+			container.removeChild(clip);
+			
+			
+		}
+		//------ Center Clip ------------------------------------
+		public static function Center(clip:Sprite):void {
+			clip.x = (FlashGameMaker.WIDTH - clip.width)/2;
+			clip.y = (FlashGameMaker.HEIGHT - clip.height)/2;
 		}
 	}
 }

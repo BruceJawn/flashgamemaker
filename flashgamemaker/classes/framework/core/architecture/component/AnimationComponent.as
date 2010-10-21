@@ -120,7 +120,7 @@ package framework.core.architecture.component{
 			var graphic_oldFrame:int=component._graphic_oldFrame;
 			var animation:Dictionary=component._animation;
 			if (isFalling && animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
-				//trace("Fall");
+				//trace("FALLING");
 				graphic_frame+=animation["JUMP"]*graphic_numFrame*graphic_numFrame;
 			}else if (isDoubleJumping && animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("DOUBLE_JUMP");
@@ -132,14 +132,13 @@ package framework.core.architecture.component{
 				//trace("ATTACK");
 				graphic_frame+=animation["ATTACK"]*graphic_numFrame*graphic_numFrame;
 			}  else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
-				//trace("RUN");
+				//trace("WALK");
 				graphic_frame+=animation["RUN"]*graphic_numFrame*graphic_numFrame;
 			} else if (isMoving && animation["WALK"]!= null && graphic_frame<animation["WALK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("WALK");
 				graphic_frame+=animation["WALK"]*graphic_numFrame*graphic_numFrame;
 			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame>graphic_numFrame*graphic_numFrame) {
 				//trace("STATIC");
-				trace(animation["STATIC"]);
 				graphic_frame+=animation["STATIC"]*graphic_numFrame*graphic_numFrame;
 			}
 			return graphic_frame;

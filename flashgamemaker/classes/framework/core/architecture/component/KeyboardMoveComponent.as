@@ -37,13 +37,13 @@ package framework.core.architecture.component{
 	* @ purpose: 
 	* 
 	*/
-	public class KeyboardMoveComponent extends GraphicComponent {
+	public class KeyboardMoveComponent extends Component {
 
 		private var _keyboardManager:IKeyboardManager=null;
 		private var _xmlConfig:TextField=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
-		
+
 		public function KeyboardMoveComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -57,8 +57,6 @@ package framework.core.architecture.component{
 			if (xmlConfig!=null) {
 				_xmlConfig.text=xmlConfig.toString();
 				//addChild(_xmlConfig);
-				_spatial_position.x=250;
-				_spatial_position.y=200;
 			}
 		}
 		//------ Init Property Info ------------------------------------
@@ -69,8 +67,11 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			updateDir(_keyboard_key,component);
 			component._keyboard_key=_keyboard_key;
+			if (componentName!=_componentName) {
+				updateDir(_keyboard_key,component);
+			}
+
 		}
 		//------ Update Dir  ------------------------------------
 		private function updateDir(keyboard_key:Object,component:*):void {
@@ -79,7 +80,7 @@ package framework.core.architecture.component{
 				var prevTouch:String=keyboard_key.prevTouch;
 				var keyStatut:String=keyboard_key.keyStatut;
 				var doubleClick:Boolean=keyboard_key.doubleClick;
-				var spatialDirection:String = component._spatial_properties.direction;
+				var spatialDirection:String=component._spatial_properties.direction;
 				if (keyStatut=="DOWN") {
 					if (keyTouch=="RIGHT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal")) {
 						component._spatial_dir.x=1;
@@ -90,7 +91,7 @@ package framework.core.architecture.component{
 					} else if (keyTouch=="DOWN" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical")) {
 						component._spatial_dir.y=1;
 					} else if (keyTouch=="JUMP" && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
-						component._spatial_jump.y=component._spatial_jump.z;
+						component._spatial_jump.z=component._spatial_jumpStart.z;
 						component._spatial_properties.isJumping=true;
 						component._spatial_properties.isFalling=false;
 					}
@@ -113,7 +114,7 @@ package framework.core.architecture.component{
 			var doubleClick:Boolean=keyboard_key.doubleClick;
 			var shiftKey:Boolean=keyboard_key.shiftKey;
 
-			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0) {
+			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0) {
 				component._spatial_properties.isMoving=true;
 				if (doubleClick||shiftKey) {
 					component._spatial_properties.isRunning=true;

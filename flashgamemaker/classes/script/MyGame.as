@@ -26,24 +26,22 @@ package script{
 	import script.game.*;
 	
 	/**
-	* Script Class
+	* MyGame Script 
 	*
 	*/
-	public class ScriptReference {
+	public class MyGame {
 
-		public function ScriptReference() {
-			initReference();
-		}
-		//------ Init Reference ------------------------------------
-		private function initReference():void {
-			var myGame:MyGame;
-			var helloWorld:HelloWorld;
-			var helloWorld2:HelloWorld2;
-			var helloWorld3:HelloWorld3;
-			var scriptFactory:Factory;
-			var scriptKawaiiIsland:KawaiiIsland;
-			var scriptKawaiiFight:KawaiiFight;
-			var scriptKawaiiOlympic:KawaiiOlympic;
+		public function MyGame() {
+			// ----- Start your game here ------------------------------------------------------
+			//----------------------------------------------------------------------------------
+			//new HelloWorld();
+			//new HelloWorld2();
+			//new HelloWorld3();
+			//new Factory();
+			//new Navigation("game.KawaiiFight");
+			new Navigation("game.KawaiiIsland");
+			//new Navigation("game.KawaiiOlympic");
+			//new Navigation("tutorial.HelloWorld");
 		}
 	}
 }

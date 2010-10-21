@@ -38,6 +38,7 @@ package framework.core.architecture.component{
 		private var _currentTime:Number = 0;
 		private var _Memory:TextField=null;
 		private var _FPS:TextField=null;
+		private var _clip:TextField=null;
 	
 		public function SystemInfoComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -50,9 +51,13 @@ package framework.core.architecture.component{
 			_Memory.selectable = false;
 			_FPS = new TextField();
 			_FPS.selectable = false;
-			_Memory.x+=80;
+			_clip = new TextField();
+			_clip.selectable = false;
+			_Memory.x=50;
+			_clip.x=_Memory.x+80;
 			addChild(_Memory);
 			addChild(_FPS);
+			addChild(_clip);
 			
 		}
 		//------ Init Listener ------------------------------------
@@ -68,6 +73,7 @@ package framework.core.architecture.component{
 			updateMemory();
 			updateFPS();
 			updateTime();
+			updateNumChildren();
 		}
 		//------Update Memory -------------------------------------
 		public function updateMemory():void {
@@ -81,6 +87,10 @@ package framework.core.architecture.component{
 		//------Update Time -------------------------------------
 		public function updateTime():void {
 			_currentTime = Time.GetTime();
+		}
+		//------Update Number Children -------------------------------------
+		public function updateNumChildren():void {
+			_clip.text = "Clip :"+FlashGameMaker.CLIP;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -62,7 +62,8 @@ package framework.core.architecture.component{
 			var navigationScreen:MovieClip = getGraphic("NavigationScreen") as MovieClip;
 			_startBt = navigationScreen.startBt;
 			_label = navigationScreen.label;
-			_label.text = _scriptName;
+			var name:Array= _scriptName.split(".");
+			_label.text = name[name.length-1];
 			_startBt.addEventListener(MouseEvent.CLICK, onStart);
 		}
 		//------- Set Script -------------------------------

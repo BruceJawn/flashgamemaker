@@ -27,6 +27,7 @@ package framework.core.architecture.component{
 	import framework.core.system.IRessourceManager;
 	import framework.core.system.ServerManager;
 	import framework.core.system.IServerManager;
+	import utils.iso.IsoPoint;
 
 	import flash.events.EventDispatcher;
 	import flash.events.*;
@@ -57,6 +58,10 @@ package framework.core.architecture.component{
 		public var _animation:Dictionary=null;
 		//Keyboard properties
 		public var _keyboard_key:Object=null;
+		//Spatial properties
+		public var _spatial_speed:IsoPoint=null;
+		public var _spatial_jump:IsoPoint=null;
+		public var _spatial_jumpStart:IsoPoint=null;		
 
 		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -72,7 +77,10 @@ package framework.core.architecture.component{
 			_animation["STATIC"]=0;
 			_animation["WALK"]=1;
 			_colorPicker = new ColorPicker();
-			//_spatial_properties.collision =true;
+			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_speed=new IsoPoint(2,2,1);
+			_spatial_jump=new IsoPoint(0,0,0);
+			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
 			addChild(_colorPicker);
 		}
 		//------ Init Listener ------------------------------------

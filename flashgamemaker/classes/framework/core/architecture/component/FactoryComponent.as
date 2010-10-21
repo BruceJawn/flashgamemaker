@@ -211,6 +211,7 @@ package framework.core.architecture.component{
 		private function initTileMapComponent():void {
 		 	//_tileMap.loadMap("xml/framework/game/map.xml", "TileMap");
 			_tileMap.loadMap("xml/framework/game/mapKawaii.xml", "TileMap");
+			_tileMap.moveTo(160,100);
 		}
 		//------- Init Bitmap Player Component -------------------------------
 		private function initBitmapPlayerComponent():void {

@@ -30,8 +30,9 @@ package framework.core.architecture.component{
 	import framework.core.system.PhysicManager;
 	import framework.core.system.IPhysicManager;
 	import utils.convert.*;
+	import utils.clip.Clip;
 	import utils.iso.IsoPoint;
-
+	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
@@ -206,7 +207,7 @@ package framework.core.architecture.component{
 			var tileName:String="tile_"+tile.ytile+"_"+tile.xtile;
 			if (tile.ztile==0) {
 				var clip:MovieClip = new MovieClip();
-				_tileMap_world[tileName]=addChild(clip);
+				_tileMap_world[tileName]=Clip.AddChild(this,clip);
 			} else {
 				clip=_tileMap_world[tileName];
 			}

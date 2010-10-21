@@ -39,7 +39,7 @@ package framework.core.system{
 		private static var _instance:IPhysicManager=null;
 		private static var _allowInstanciation:Boolean=false;
 		private var _boundaries:Rectangle=null;
-		private var _spatial_gravity:int=1;
+		private var _spatial_gravity:int=2;
 		private var _spatial_friction:int=1;
 		private var _map:Object=null;
 		public function PhysicManager() {
@@ -64,7 +64,17 @@ package framework.core.system{
 		//------- Move -------------------------------
 		public function move(component:*,spatial_position:IsoPoint):void {
 			if (component._spatial_properties.isMoving||hasMoved(component)) {
-				var speedX:Number=component._spatial_speed.x;
+				if(!component._spatial_properties.dynamic){
+					component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
+					component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
+				}else{
+					moveDynamic(component,spatial_position);
+				}				
+			}
+		}
+		//------- Move Dynamic -------------------------------
+		private function moveDynamic(component:*,spatial_position:IsoPoint):void {
+			var speedX:Number=component._spatial_speed.x;
 				var speedY:Number=component._spatial_speed.y;
 				if (component._spatial_properties.isRunning) {
 					speedX*=2;
@@ -86,7 +96,6 @@ package framework.core.system{
 				} else if (component._spatial_properties.isFalling) {
 					fallMove(component);
 				}
-			}
 		}
 		//------- Horizontal Move -------------------------------
 		private function horizontalMove(component:*, value:Number):void {
@@ -107,6 +116,15 @@ package framework.core.system{
 			component.x=x;
 			component.y=y;
 		}
+		//------ Is Moved  ------------------------------------
+		private function isMoving(component:*):Boolean {
+			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0) {
+				component._spatial_properties.isMoving=true;
+				return true;
+			}
+			component._spatial_properties.isMoving=false;
+			return false;
+		}
 		//------ Has Moved  ------------------------------------
 		private function hasMoved(component:*):Boolean {
 			if (component._spatial_position.x!=component.x||component._spatial_position.y!=component.y) {
@@ -116,21 +134,24 @@ package framework.core.system{
 		}
 		//------- Jump Move -------------------------------
 		private function jumpMove(component:*):void {
-			component._spatial_jump.y+=_spatial_gravity;
-			component.y+=component._spatial_jump.y;
-			if (component._spatial_jump.y>=0) {
-				component._spatial_jump.y=0;
+			component._spatial_jump.z+=_spatial_gravity;
+			component.y+=component._spatial_jump.z;
+			component._spatial_position.y+=component._spatial_jump.z;
+			if (component._spatial_jump.z>=0) {
+				component._spatial_jump.z=0;
 				component._spatial_properties.isJumping=false;
 				component._spatial_properties.isFalling=true;
 			}
 		}
 		//------- Fall Move -------------------------------
 		private function fallMove(component:*):void {
-			component._spatial_jump.y+=_spatial_gravity;
-			component.y+=component._spatial_jump.y;
-			if (component._spatial_jump.y>=Math.abs(component._spatial_jump.z)) {
-				component._spatial_jump.y=0;
+			component._spatial_jump.z-=_spatial_gravity;
+			component.y-=component._spatial_jump.z;
+			component._spatial_position.y-=component._spatial_jump.z;
+			if (component._spatial_jump.z<=component._spatial_jumpStart.z+_spatial_gravity) {
+				component._spatial_jump.z=0;
 				component._spatial_properties.isFalling=false;
+				isMoving(component);
 			}
 		}
 		//------ Check Position ------------------------------------

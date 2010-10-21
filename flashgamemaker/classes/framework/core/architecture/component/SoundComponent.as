@@ -28,7 +28,7 @@ package framework.core.architecture.component{
 
 	import flash.events.EventDispatcher;
 	import flash.events.*;
-
+	
 	/**
 	* Sound Component
 	* @ purpose: 

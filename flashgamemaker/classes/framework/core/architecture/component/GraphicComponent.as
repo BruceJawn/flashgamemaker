@@ -26,6 +26,7 @@ package framework.core.architecture.component{
 	import framework.core.system.GraphicManager;
 	import framework.core.system.IGraphicManager;
 	import utils.iso.IsoPoint;
+	import utils.clip.Clip;
 
 	import flash.events.*;
 	import flash.display.*;
@@ -54,8 +55,6 @@ package framework.core.architecture.component{
 		public var _transformMatrix:Matrix = new Matrix();*/
 
 		//Spatial properties
-		public var _spatial_speed:IsoPoint=null;
-		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_position:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
 		public var _spatial_rotation:Number=0;
@@ -71,9 +70,7 @@ package framework.core.architecture.component{
 			_graphic = addChild(new Sprite());
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
-			_spatial_speed=new IsoPoint(2,2,1);
-			_spatial_jump=new IsoPoint(0,0,-6);
-			_spatial_properties = {iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_properties = {dynamic:false, isMoving:false};
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
