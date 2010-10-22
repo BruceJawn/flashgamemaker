@@ -24,7 +24,6 @@
 package script.tutorial{
 	/**
 	* Hello World
-	*
 	*/
 	public class HelloWorld {
 
