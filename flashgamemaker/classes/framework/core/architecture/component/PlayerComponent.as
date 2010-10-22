@@ -94,8 +94,9 @@ package framework.core.architecture.component{
 			setPropertyReference("progressBar",_componentName);
 		}
 		//------ Load Player ------------------------------------
-		public function loadPlayer(path:String, playerName:String):void {
+		public function loadPlayer(path:String, playerName:String, layer:int=0):void {
 			_playerName=playerName;
+			_render_layerId = layer;
 			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 			_ressourceManager.loadXml(path,playerName);
@@ -118,7 +119,7 @@ package framework.core.architecture.component{
 				if (_playerXml.children().length()>1) {
 					loadGraphicsFromXml(_playerXml, _playerName);
 				} else {
-					loadGraphic(_playerTexture, _playerXml.children()[0].name());
+					loadGraphic(_playerTexture, _playerXml.children()[0].name(), _render_layerId);
 				}
 			}
 		}
@@ -135,6 +136,7 @@ package framework.core.architecture.component{
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
 			createPlayer();
+			dispatchEvent(evt);
 		}
 		//------ Set Animation ------------------------------------
 		public function setAnimation(animation:Dictionary):void {
@@ -147,6 +149,14 @@ package framework.core.architecture.component{
 		//------ Set Direction ------------------------------------
 		public function setDirection(direction:String):void {
 			_spatial_properties.direction=direction;
+		}
+		//------ Get Spatial Position ------------------------------------
+		public function getSpatialPosition():IsoPoint {
+			return _spatial_position;
+		}
+		//------ Get Spatial Direction ------------------------------------
+		public function getSpatialDirection():IsoPoint {
+			return _spatial_dir;
 		}
 		//------ On Color Picker Change ------------------------------------
 		private function onColorPickerChange(evt:Event):void {

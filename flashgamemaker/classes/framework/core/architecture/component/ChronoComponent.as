@@ -26,7 +26,7 @@ package framework.core.architecture.component{
 	import framework.core.system.TimeManager;
 	import framework.core.system.ITimeManager;
 	import utils.time.Time;
-	
+
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
@@ -41,28 +41,29 @@ package framework.core.architecture.component{
 	* @ purpose: 
 	*/
 	public class ChronoComponent extends GraphicComponent {
-		private var _timeManager:ITimeManager = null;
+		private var _timeManager:ITimeManager=null;
 		private var _chrono:TextField=null;
-		private var _chrono_max:Number = 3;
-		private var _chrono_count:Number = 3;
-		private var _chrono_statut:Boolean = false;
+		private var _chrono_on:Boolean=false;
+		private var _chrono_deleteAutomcatically:Boolean=true;
+		private var _chrono_max:Number=3;
+		private var _chrono_count:Number=3;
+		private var _chrono_statut:Boolean=false;
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=800;
 		public var _timer_count:Number=0;
-		
+
 		public function ChronoComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_timeManager = TimeManager.getInstance();
+			_timeManager=TimeManager.getInstance();
 			_chrono = new TextField();
 			setFormat("Arial",30,0xFF0000);
-			addChild(_chrono);						
-			//displayGraphic("Chrono",_chrono,2);
-			_chrono_count = _chrono_max;
+			addChild(_chrono);
+			_chrono_count=_chrono_max;
 			updateText();
 		}
 		//------ Init Property Info ------------------------------------
@@ -72,23 +73,29 @@ package framework.core.architecture.component{
 		}
 		//------Set Format -------------------------------------
 		private function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
-			var textFormat:TextFormat = new TextFormat(font, size,color,bold,italic,underline,url,target,align);
-			_chrono.defaultTextFormat = textFormat;
-			_chrono.autoSize = "center";
-			_chrono.selectable = false;
+			var textFormat:TextFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
+			_chrono.defaultTextFormat=textFormat;
+			_chrono.autoSize="center";
+			_chrono.selectable=false;
 		}
 		//------ Restart Chrono ------------------------------------
-		public  function restartChrono():void {
-			_chrono_count = _chrono_max;
+		public function start():void {
+			_chrono_count=_chrono_max;
+			_chrono_on=true;
 		}
-		//------ Reset Chrono ------------------------------------
-		public  function resetChrono(max:Number):void {
-			_chrono_max = max;
-			_chrono_count = _chrono_max;
+		//------ Stop Chrono ------------------------------------
+		public function stop():void {
+			_chrono_on=false;
+		}
+		//------ Restart Chrono ------------------------------------
+		public function restart(max:Number=3):void {
+			_chrono_max=max;
+			_chrono_count=_chrono_max;
+			_chrono_on=true;
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay && _chrono_count>0) {
+			if (_timer_count>=_timer_delay&&_chrono_count>=0&&_chrono_on) {
 				updateChrono();
 				updateText();
 			}
@@ -99,15 +106,13 @@ package framework.core.architecture.component{
 		}
 		//------ Get Time ------------------------------------
 		private function updateText():void {
-			if(_chrono_count==0){
-				_chrono.text= "START";
-			}else{
-				_chrono.text = _chrono_count.toString();
+			if (_chrono_count==0) {
+				_chrono.text="START";
+			} else if (_chrono_count==-1 && _chrono_deleteAutomcatically) {
+				removeComponent(_componentName);
+			} else {
+				_chrono.text=_chrono_count.toString();
 			}
-		}
-		//------ Reset  ------------------------------------
-		public override function reset(ownerName:String,componentName:String):void {
-			removeGraphic("Chrono");
 		}
 	}
 }

@@ -42,9 +42,9 @@ package framework.core.architecture.component{
 		private var _jauge_count:Number=0;
 		private var _jauge_max:Number=100;
 		private var _jauge_stepUp:Number=4;
-		private var _jauge_stepDown:Number=2;
-		private var _jauge_combinaison:String="";
+		private var _jauge_stepDown:Number=1;
 		private var _jauge_direction:String="right";
+		private var _keyTouch:String="";
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 		//Timer properties
@@ -90,16 +90,15 @@ package framework.core.architecture.component{
 		private function updateJauge():void {
 			if (_keyboard_key!=null) {
 				var keyTouch:String=_keyboard_key.keyTouch;
-				var prevTouch:String=_keyboard_key.prevTouch;
 				var keyStatut:String=_keyboard_key.keyStatut;
-				if ((keyTouch=="A"&&prevTouch=="B"||keyTouch=="B"&&prevTouch=="A" || keyTouch=="RIGHT"&&prevTouch=="LEFT"||keyTouch=="LEFT"&&prevTouch=="RIGHT")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
+				if ((keyTouch=="A"&&_keyTouch=="B"||keyTouch=="B"&&_keyTouch=="A" || keyTouch=="RIGHT"&&_keyTouch=="LEFT"||keyTouch=="LEFT"&&_keyTouch=="RIGHT")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
 					_jauge_count+=_jauge_stepUp;
-					_jauge_combinaison=keyTouch+prevTouch;
 				} else if (_jauge_count-_jauge_stepDown>0) {
 					_jauge_count-=_jauge_stepDown;
 				}else {
 					_jauge_count=0;
 				}
+				_keyTouch = keyTouch;
 				_jauge.setProgress(_jauge_count,_jauge_max);
 			}
 		}

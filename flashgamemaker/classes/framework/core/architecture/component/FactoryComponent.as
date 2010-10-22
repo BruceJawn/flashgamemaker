@@ -92,16 +92,14 @@ package framework.core.architecture.component{
 			_comboBox.addItem({label:"BitmapPlayer"});
 			_comboBox.addItem({label:"SwfPlayer"});
 			_comboBox.addEventListener(Event.CHANGE, onComboBoxChange);
-			//addChild(_comboBox);
-			displayGraphic("myFactoryComboBox",_comboBox,2);
+			addChild(_comboBox);
 			_button = new Button();
 			_button.label = "Create";
 			_button.width = 80;
 			_button.x=310;
 			_button.y=50;
 			_button.addEventListener(MouseEvent.CLICK, onCreate);
-			//addChild(_button);
-			displayGraphic("myFactoryButton",_button,2);
+			addChild(_button);
 		}
 		//------- On ComboBox Change -------------------------------
 		private function onComboBoxChange(evt:Event):void {
@@ -204,6 +202,8 @@ package framework.core.architecture.component{
 		//------- Init Scrolling Bitmap Component -------------------------------
 		private function initScrollingBitmapComponent():void {
 		 	_scrollingBitmap.loadGraphic("texture/framework/game/backGround/mario.jpg","Bg");
+			_scrollingBitmap.setLoop(true);
+			_scrollingBitmap.setScrolling(30,1);
 			//_scrollingBitmap.setPropertyReference("keyboardInput",_scrollingBitmap._componentName);
 			_scrollingBitmap.setPropertyReference("timer",_scrollingBitmap._componentName);
 		}

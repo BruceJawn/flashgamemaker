@@ -60,6 +60,7 @@ package script.game{
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
+			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
 			var groundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
@@ -71,6 +72,7 @@ package script.game{
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setDirection("Horizontal");
+			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.moveTo(120,300);
 		}
 		//------- ToString -------------------------------

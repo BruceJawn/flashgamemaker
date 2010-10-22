@@ -78,8 +78,9 @@ package framework.core.architecture.component{
 			setPropertyReference("spatial",_componentName);
 		}
 		//------ Load Graphic  ------------------------------------
-		public function loadGraphic(path:String,graphicName:String):void {
+		public function loadGraphic(path:String,graphicName:String, layer:int=0):void {
 			_graphicName=graphicName;
+			_render_layerId = layer;
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
@@ -139,7 +140,7 @@ package framework.core.architecture.component{
 		public function getGraphicName():String {
 			return _graphicName;
 		}
-		//------ Display Graphic  ------------------------------------
+		/*//------ Display Graphic  ------------------------------------
 		protected function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject {
 			_render_layerId = layerId;
 			return _graphicManager.displayGraphic(graphicName,graphic,layerId);
@@ -147,7 +148,7 @@ package framework.core.architecture.component{
 		//------ Remove Graphic  ------------------------------------
 		protected function removeGraphic(graphicName:String):void {
 			_graphicManager.removeGraphic(_graphicName);
-		}
+		}*/
 		//------ Move Graphic  ------------------------------------
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
