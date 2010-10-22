@@ -99,13 +99,13 @@ package framework.core.system{
 		}
 		//------- Horizontal Move -------------------------------
 		private function horizontalMove(component:*, value:Number):void {
-			if(!component._spatial_properties.collision || component._spatial_position.x-component.width+value>_boundaries.x && component._spatial_position.x+component.width<_boundaries.x+_boundaries.width){
+			if(!component._spatial_properties.collision || component._spatial_position.x+value>_boundaries.x && component._spatial_position.x+component.width<_boundaries.x+_boundaries.width){
 				component._spatial_position.x+=value;
 			}
 		}
 		//------- Vertical Move -------------------------------
 		private function verticalMove(component:*, value:Number):void {
-			if(!component._spatial_properties.collision || component._spatial_position.y-component.height+value>_boundaries.y && component._spatial_position.y+component.height<_boundaries.y+_boundaries.height){
+			if(!component._spatial_properties.collision || component._spatial_position.y+value>_boundaries.y && component._spatial_position.y+component.height<_boundaries.y+_boundaries.height){
 				component._spatial_position.y+=value;
 			}
 		}

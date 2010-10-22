@@ -63,11 +63,13 @@ package framework.core.architecture.component{
 		//------ Update Speed  ------------------------------------
 		private function updateSpeed(component:*):void {
 			if (_jauge_count>0) {
-				component._spatial_position.x+=Math.round(_jauge_count/20);
+				component._spatial_dir.x=1;
+				component._spatial_speed.x=Math.round(_jauge_count/20);
 				component._spatial_properties.isMoving=true;
 				component._spatial_properties.isRunning=true;
-			}else{
-				component._spatial_position.x=50;
+			} else {
+				component._spatial_dir.x=0;
+				component._spatial_speed.x=2;
 				component._spatial_properties.isMoving=false;
 				component._spatial_properties.isRunning=false;
 			}

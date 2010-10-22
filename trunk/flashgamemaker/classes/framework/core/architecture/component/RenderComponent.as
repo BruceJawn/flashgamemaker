@@ -77,7 +77,7 @@ package framework.core.architecture.component{
 				var _render_layerId:int=component._render_layerId;
 				var _render_alpha:Number=component._render_alpha;
 				component.alpha = _render_alpha;
-				_graphicManager.displayGraphic(componentName,component,0);
+				_graphicManager.displayGraphic(componentName,component,_render_layerId);
 			}
 		}
 		//------ Reset  ------------------------------------

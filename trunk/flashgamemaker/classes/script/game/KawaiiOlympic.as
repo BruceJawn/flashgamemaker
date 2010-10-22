@@ -24,16 +24,17 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
-
+	
+	import flash.events.Event;
 	/**
 	* Script Class
 	*
 	*/
 	public class KawaiiOlympic {
 
-		private var _scriptName:String = null;
+		private var _scriptName:String=null;
 		private var _entityManager:IEntityManager=null;
-		
+
 		public function KawaiiOlympic(scriptName:String) {
 			initVar(scriptName);
 			initEntity();
@@ -41,7 +42,7 @@ package script.game{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar(scriptName:String):void {
-			_scriptName = scriptName;
+			_scriptName=scriptName;
 			_entityManager=EntityManager.getInstance();
 		}
 		//------ Init Entity ------------------------------------
@@ -57,25 +58,37 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer", 2);
+			swfPlayerComponent.setDirection("Horizontal");
+			swfPlayerComponent.setCollision(true);
+			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.moveTo(50,300);
+			swfPlayerComponent.addEventListener(Event.COMPLETE,onLoadingSuccessful);
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
-			scrollingBitmapComponent.setPropertyReference("keyboardInput",scrollingBitmapComponent._componentName);
+			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
-			var graphicComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myGraphicComponent");
-			graphicComponent.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
-			graphicComponent.moveTo(0,108);
-			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer");
-			swfPlayerComponent.setDirection("Horizontal");
-			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.moveTo(120,300);
+			var scrollingBitmapComponent2:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent2");
+			scrollingBitmapComponent2.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
+			scrollingBitmapComponent2.setScrolling(30,1);
+			scrollingBitmapComponent.setLoop(true);
+			scrollingBitmapComponent2.setPropertyReference("timer",scrollingBitmapComponent2._componentName);
+			scrollingBitmapComponent2.moveTo(0,108);
+			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getSpatialDirection());
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.setDirection("vertical");
 			jaugeComponent.moveTo(180,315);
 			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("GameEntity","JaugeMoveComponent","myJaugeMoveComponent");
-			var chronoComponent:ChronoComponent = _entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
+			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.moveTo(160,60);
+		}
+		//------ On Loading Successful ------------------------------------
+		private function onLoadingSuccessful( evt:Event ):void {
+			evt.target.removeEventListener(Event.COMPLETE, onLoadingSuccessful);
+			var chronoComponent = _entityManager.getComponent("GameEntity","myChronoComponent");
+			chronoComponent.start();
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

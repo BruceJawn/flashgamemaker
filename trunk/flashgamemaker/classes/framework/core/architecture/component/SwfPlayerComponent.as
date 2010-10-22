@@ -46,7 +46,6 @@ package framework.core.architecture.component{
 			_animation["RUN"]=2;
 			_animation["JUMP"]=3;
 			_animation["DOUBLE_JUMP"]=4;
-			_spatial_properties.collision=true;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -147,6 +146,10 @@ package framework.core.architecture.component{
 			if(_spatial_rotation!=0){	
 				this.rotation-=_spatial_rotation;
 			}
+		}
+		//------ Set Collision  ------------------------------------
+		public  function setCollision(collision:Boolean):void {
+			_spatial_properties.collision=collision;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

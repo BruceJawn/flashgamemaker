@@ -39,8 +39,8 @@ package script{
 			//new HelloWorld3();
 			//new Factory();
 			//new Navigation("game.KawaiiFight");
-			new Navigation("game.KawaiiIsland");
-			//new Navigation("game.KawaiiOlympic");
+			//new Navigation("game.KawaiiIsland");
+			new Navigation("game.KawaiiOlympic");
 			//new Navigation("tutorial.HelloWorld");
 		}
 	}

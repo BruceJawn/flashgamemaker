@@ -62,8 +62,7 @@ package framework.core.architecture.component{
 			if (_graphicName!=null) {
 				_graphic=_graphicManager.getGraphic(_graphicName);
 				_mouseManager.hideCursor();
-				//addChild(_graphic);
-				_cursor=displayGraphic("Cursor",_graphic,2) as MovieClip;
+				_cursor=addChild(_graphic) as MovieClip;
 			}
 		}
 		//------ Actualize Components  ------------------------------------
@@ -88,7 +87,6 @@ package framework.core.architecture.component{
 		//------ Reset  ------------------------------------
 		public override function reset(ownerName:String, componentName:String):void {
 			_mouseManager.showCursor();
-			removeGraphic("Cursor") as MovieClip;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

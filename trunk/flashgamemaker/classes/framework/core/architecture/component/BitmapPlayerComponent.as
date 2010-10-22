@@ -69,7 +69,6 @@ package framework.core.architecture.component{
 		//----- Swap Frame -----------------------------------
 		public function swapFrame():void {
 			if(_bitmap!=null && _graphic_oldFrame!= _graphic_frame){
-				trace(_graphic_frame);
 				_bitmap.bitmapData.fillRect(_bitmap.bitmapData.rect, 0);
 				var x:int=(_graphic_frame-1)% (_graphic_numFrame*_graphic_numFrame);
 				var y:int=Math.floor((_graphic_frame-1)/(_graphic_numFrame*_graphic_numFrame));
