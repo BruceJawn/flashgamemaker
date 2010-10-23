@@ -64,48 +64,49 @@ package framework.core.system{
 		//------- Move -------------------------------
 		public function move(component:*,spatial_position:IsoPoint):void {
 			if (component._spatial_properties.isMoving||hasMoved(component)) {
-				if(!component._spatial_properties.dynamic){
+				if (! component._spatial_properties.dynamic) {
 					component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
 					component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
-				}else{
+				} else {
 					moveDynamic(component,spatial_position);
-				}				
+				}
 			}
 		}
 		//------- Move Dynamic -------------------------------
 		private function moveDynamic(component:*,spatial_position:IsoPoint):void {
 			var speedX:Number=component._spatial_speed.x;
-				var speedY:Number=component._spatial_speed.y;
-				if (component._spatial_properties.isRunning) {
-					speedX*=2;
-					speedY*=2;
-				}
-				if(component._spatial_properties.direction == "Diagonal" || component._spatial_properties.direction == "Horizontal"){
-					horizontalMove(component,component._spatial_dir.x*speedX);
-				}
-				if(component._spatial_properties.direction == "Diagonal" || component._spatial_properties.direction == "Vertical"){
-					verticalMove(component,component._spatial_dir.y*speedY);
-				}
-				component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
-				component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
-				if (component._spatial_properties.iso) {
-					isoMove(component);
-				}
-				if (component._spatial_properties.isJumping) {
-					jumpMove(component);
-				} else if (component._spatial_properties.isFalling) {
-					fallMove(component);
-				}
+			var speedY:Number=component._spatial_speed.y;
+			if (component._spatial_properties.isRunning) {
+				speedX*=2;
+				speedY*=2;
+			}
+			//trace(component._componentName,component._spatial_properties.direction);
+			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Horizontal") {
+				horizontalMove(component,component._spatial_dir.x*speedX);
+			}
+			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Vertical") {
+				verticalMove(component,component._spatial_dir.y*speedY);
+			}
+			component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
+			component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
+			if (component._spatial_properties.iso) {
+				isoMove(component);
+			}
+			if (component._spatial_properties.isJumping) {
+				jumpMove(component);
+			} else if (component._spatial_properties.isFalling) {
+				fallMove(component);
+			}
 		}
 		//------- Horizontal Move -------------------------------
 		private function horizontalMove(component:*, value:Number):void {
-			if(!component._spatial_properties.collision || component._spatial_position.x+value>_boundaries.x && component._spatial_position.x+component.width<_boundaries.x+_boundaries.width){
+			if (! component._spatial_properties.collision||component._spatial_position.x+value>_boundaries.x&&component._spatial_position.x+component.width<_boundaries.x+_boundaries.width) {
 				component._spatial_position.x+=value;
 			}
 		}
 		//------- Vertical Move -------------------------------
 		private function verticalMove(component:*, value:Number):void {
-			if(!component._spatial_properties.collision || component._spatial_position.y+value>_boundaries.y && component._spatial_position.y+component.height<_boundaries.y+_boundaries.height){
+			if (! component._spatial_properties.collision||component._spatial_position.y+value>_boundaries.y&&component._spatial_position.y+component.height<_boundaries.y+_boundaries.height) {
 				component._spatial_position.y+=value;
 			}
 		}

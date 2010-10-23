@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Map mapHigh="1" mapHeight="50" mapWidth="50" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" mapVisibility="5">
+<Map mapHigh="2" mapHeight="100" mapWidth="100" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" begin="0,0,0" end="10,10,2">
 	<MapTexture >
 		<path>xml/framework/game/mapTexture.xml</path>
 		
-<layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">2500*1</layer>		
+<layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">10000*1,10000*0</layer>		
 
 </MapTexture>
 	<MapProperties>

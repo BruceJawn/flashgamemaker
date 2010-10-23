@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Map mapHigh="2" mapHeight="9" mapWidth="9" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" mapVisibility="5">
+<Map mapHigh="2" mapHeight="9" mapWidth="9" tileHigh="10"  tileHeight="40" tileWidth="60" iso="true" begin="0,0,0" end="10,10,2">
 	<MapTexture >
 		<path>xml/framework/game/mapTexture.xml</path>
 		

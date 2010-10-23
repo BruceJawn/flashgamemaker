@@ -59,7 +59,6 @@ package framework.core.architecture.component{
 		//Keyboard properties
 		public var _keyboard_key:Object=null;
 		//Spatial properties
-		public var _spatial_speed:IsoPoint=null;
 		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_jumpStart:IsoPoint=null;		
 
@@ -78,7 +77,6 @@ package framework.core.architecture.component{
 			_animation["WALK"]=1;
 			_colorPicker = new ColorPicker();
 			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
-			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_jump=new IsoPoint(0,0,0);
 			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
 			addChild(_colorPicker);
@@ -150,13 +148,17 @@ package framework.core.architecture.component{
 		public function setDirection(direction:String):void {
 			_spatial_properties.direction=direction;
 		}
-		//------ Get Spatial Position ------------------------------------
-		public function getSpatialPosition():IsoPoint {
+		//------ Get Position ------------------------------------
+		public function getPosition():IsoPoint {
 			return _spatial_position;
 		}
-		//------ Get Spatial Direction ------------------------------------
-		public function getSpatialDirection():IsoPoint {
+		//------ Get Direction ------------------------------------
+		public function getDirection():IsoPoint {
 			return _spatial_dir;
+		}
+		//------ Get Speed ------------------------------------
+		public function getSpeed():IsoPoint {
+			return _spatial_speed;
 		}
 		//------ On Color Picker Change ------------------------------------
 		private function onColorPickerChange(evt:Event):void {

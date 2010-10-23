@@ -57,6 +57,7 @@ package framework.core.architecture.component{
 		//Spatial properties
 		public var _spatial_position:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
+		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
 		public var _spatial_rotation:Number=0;
 		public var _spatial_properties:Object = null;
 
@@ -70,6 +71,7 @@ package framework.core.architecture.component{
 			_graphic = addChild(new Sprite());
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
+			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_properties = {dynamic:false, isMoving:false};
 		}
 		//------ Init Property  ------------------------------------
@@ -140,15 +142,6 @@ package framework.core.architecture.component{
 		public function getGraphicName():String {
 			return _graphicName;
 		}
-		/*//------ Display Graphic  ------------------------------------
-		protected function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject {
-			_render_layerId = layerId;
-			return _graphicManager.displayGraphic(graphicName,graphic,layerId);
-		}
-		//------ Remove Graphic  ------------------------------------
-		protected function removeGraphic(graphicName:String):void {
-			_graphicManager.removeGraphic(_graphicName);
-		}*/
 		//------ Move Graphic  ------------------------------------
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
