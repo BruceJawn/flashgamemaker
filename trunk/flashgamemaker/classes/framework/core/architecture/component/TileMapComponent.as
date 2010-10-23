@@ -32,7 +32,7 @@ package framework.core.architecture.component{
 	import utils.convert.*;
 	import utils.clip.Clip;
 	import utils.iso.IsoPoint;
-	
+
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
@@ -70,6 +70,10 @@ package framework.core.architecture.component{
 		private var _teleportation:Array=null;
 		private var _elevation:Array=null;
 
+		private var _scroll_dir:IsoPoint=null;
+		private var _scroll_speed:IsoPoint=null;
+		private var _scroll_position:IsoPoint=null;
+
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 
@@ -85,6 +89,7 @@ package framework.core.architecture.component{
 			_tileMap_tiles=new Dictionary  ;
 			_tileMap_world=new Dictionary  ;
 			_tileMap_visibility={beginX:0,beginY:0,beginZ:0,endX:10,endY:10,endZ:5};
+			_spatial_properties = {dynamic:true,iso:true, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -116,6 +121,14 @@ package framework.core.architecture.component{
 			_tileMap_tileWidth=_mapXml.@tileWidth;
 			_tileMap_tileHeight=_mapXml.@tileHeight;
 			_tileMap_tileHigh=_mapXml.@tileHigh;
+			var begin:Array=_mapXml.@begin.split(",");
+			_tileMap_visibility.beginX=begin[0];
+			_tileMap_visibility.beginY=begin[1];
+			_tileMap_visibility.beginZ=begin[2];
+			var end:Array=_mapXml.@end.split(",");
+			_tileMap_visibility.endX=end[0];
+			_tileMap_visibility.endY=end[1];
+			_tileMap_visibility.endZ=end[2];
 			_tileMap_iso=_mapXml.@iso;
 			_mapTexture=_mapXml.MapTexture.path;
 			for each (var layer:XML in _mapXml.MapTexture.layer) {
@@ -128,13 +141,13 @@ package framework.core.architecture.component{
 				var Y:int=layer.@Y;
 				_mapLayer.push({tileTable:tab,texture:texture,tileHigh:tileHigh,tileHeight:tileHeight,tileWidth:tileWidth,X:X,Y:Y});
 			}
-			_walkable=StringTo.Tab(_mapXml.MapProperties.walkable.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_slopes=StringTo.Tab(_mapXml.MapProperties.slopes.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_ladder=StringTo.Tab(_mapXml.MapProperties.ladder.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_slide=StringTo.Tab(_mapXml.MapProperties.slide.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_bounce=StringTo.Tab(_mapXml.MapProperties.bounce.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_teleportation=StringTo.Tab(_mapXml.MapProperties.teleportation.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
-			_elevation=StringTo.Tab(_mapXml.MapProperties.elevation.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_walkable=StringTo.Tab(_mapXml.MapProperties.walkable.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_slopes=StringTo.Tab(_mapXml.MapProperties.slopes.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_ladder=StringTo.Tab(_mapXml.MapProperties.ladder.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_slide=StringTo.Tab(_mapXml.MapProperties.slide.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_bounce=StringTo.Tab(_mapXml.MapProperties.bounce.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_teleportation=StringTo.Tab(_mapXml.MapProperties.teleportation.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
+			//_elevation=StringTo.Tab(_mapXml.MapProperties.elevation.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingSuccessful(evt:Event):void {
@@ -193,13 +206,13 @@ package framework.core.architecture.component{
 			tile.textureName=textureName;
 			tile.X=X;
 			tile.Y=Y;
-			tile.walkable=_walkable[k][j][i];
+			/*tile.walkable=_walkable[k][j][i];
 			tile.slopes=_slopes[k][j][i];
 			tile.ladder=_ladder[k][j][i];
 			tile.slide=_slide[k][j][i];
 			tile.bounce=_bounce[k][j][i];
 			tile.teleportation=_teleportation[k][j][i];
-			tile.elevation=_elevation[k][j][i];
+			tile.elevation=_elevation[k][j][i];*/
 			_tileMap_tiles[tileName]=tile;
 		}
 		//------ Move Tile ------------------------------------
@@ -246,8 +259,7 @@ package framework.core.architecture.component{
 				if (_tileMap_iso) {
 					position=screenToIso(position);
 				}
-				//position.x+=_tileMap_width*_tileMap_tileWidth/2-1;
-				position.y-=- _elevation[tile.ztile][tile.ytile][tile.xtile]+tile.ztile*_tileMap_tileHigh+tile.tileHeight;
+				position.y-=/*- _elevation[tile.ztile][tile.ytile][tile.xtile]+*/tile.ztile*_tileMap_tileHigh+tile.tileHeight;
 				_tileMap_world[tileName].x=position.x;
 				_tileMap_world[tileName].y=position.y;
 			}
@@ -385,19 +397,67 @@ package framework.core.architecture.component{
 		}
 		//------ Blit  ------------------------------------
 		private function blit(x:int, y:int, z:int):void {
-			if(x>= _tileMap_visibility.beginX){
+			if (x>=_tileMap_visibility.beginX) {
 				var offset:int = x-(_tileMap_visibility.endX-_tileMap_visibility.beginX)/2;
 				blitRight(offset);
-			}else if(x< _tileMap_visibility.beginX){
+			} else if (x< _tileMap_visibility.beginX) {
 				offset = x-(_tileMap_visibility.endX-_tileMap_visibility.beginX)/2;
 				blitLeft(offset);
 			}
-			if(y>= _tileMap_visibility.beginY){
+			if (y>=_tileMap_visibility.beginY) {
 				offset = y-(_tileMap_visibility.endY-_tileMap_visibility.beginY)/2;
 				blitDown(offset);
-			}else if(y< _tileMap_visibility.beginY){
+			} else if (y< _tileMap_visibility.beginY) {
 				offset = y-(_tileMap_visibility.endY-_tileMap_visibility.beginY)/2;
 				blitUp(offset);
+			}
+		}
+		//----- Set Scrolling -----------------------------------
+		public function setScrolling(dir:IsoPoint, speed:IsoPoint, position:IsoPoint):void {
+			_scroll_dir=dir;
+			_scroll_speed=speed;
+			_scroll_position=position;
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			scrollMap();
+			blitMap();
+		}
+		//----- Scroll Map  -----------------------------------
+		public function scrollMap():void {
+			if (_scroll_dir!=null&&_scroll_speed!=null&&_keyboard_key!=null&&_keyboard_key.keyStatut=="DOWN") {
+				_spatial_dir.x=-_scroll_dir.x;
+				_spatial_dir.y=-_scroll_dir.y;
+				_spatial_dir.z=-_scroll_dir.z;
+				trace(_scroll_speed);
+				_spatial_speed.x=_scroll_speed.x;
+				_spatial_speed.y=_scroll_speed.y;
+				_spatial_speed.z=_scroll_speed.z;
+				_spatial_properties.isMoving=true;
+			} else if (_keyboard_key!=null&&_keyboard_key.keyStatut=="UP") {
+				_spatial_properties.isMoving=false;
+				_spatial_dir.x=0;
+				_spatial_dir.y=0;
+				_spatial_dir.z=0;
+			}
+		}
+		//----- Scroll Map  -----------------------------------
+		public function blitMap():void {
+			if (_scroll_dir!=null&&_scroll_position!=null&&_keyboard_key!=null&&_keyboard_key.keyStatut=="DOWN") {
+				//trace( Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1,_tileMap_visibility.endX);
+				if(_scroll_dir.x>0 && Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1>=_tileMap_visibility.endX){
+					trace("Blitz Right");
+					blitRight();
+				}else if(_scroll_dir.x<0 && Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1<=_tileMap_visibility.beginX){
+					//trace("Blitz Left");
+					blitLeft();
+				}else if(_scroll_dir.y>0 && Math.round(_scroll_position.y/(_tileMap_tileHeight/2))+1>=_tileMap_visibility.endY){
+					//trace("Blitz Down");				
+					blitDown();
+				}else if(_scroll_dir.y<0 && Math.round(_scroll_position.y/(_tileMap_tileHeight/2))+1<=_tileMap_visibility.beginY){
+					//trace("Blitz Up");
+					blitUp();
+				}
 			}
 		}
 		//------- ToString -------------------------------

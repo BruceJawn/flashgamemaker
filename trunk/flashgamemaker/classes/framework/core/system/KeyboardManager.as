@@ -93,13 +93,13 @@ package framework.core.system{
 		}
 		//------ On Key Down ------------------------------------
 		private function onKeyDown(evt:KeyboardEvent):void {
-			if(_keyStatut=="UP" || _keyCode!=evt.keyCode){
+			//if(_keyStatut=="UP" || _keyCode!=evt.keyCode){
 				_keyStatut= "DOWN"; 
 				initTimer();
 				updateKey(evt);
 				checkDoubleClick();
 				dispatchEvent(evt);
-			}
+			//}
 		}
 		//------ On Key Up ------------------------------------
 		private function onKeyUp(evt:KeyboardEvent):void {

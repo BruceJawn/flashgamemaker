@@ -76,7 +76,7 @@ package script.game{
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent2.setPropertyReference("timer",scrollingBitmapComponent2._componentName);
 			scrollingBitmapComponent2.moveTo(0,108);
-			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getSpatialDirection());
+			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getDirection());
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.setDirection("vertical");
 			jaugeComponent.moveTo(180,315);

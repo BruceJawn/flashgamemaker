@@ -58,14 +58,17 @@ package script.game{
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("GameEntity", "SystemInfoComponent", "mySystInfoComponent");
-			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
-			tileMapComponent.loadMap("xml/framework/game/mapKawaii.xml", "TileMap");
-			tileMapComponent.moveTo(160,100);
 			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.moveTo(250,100);
+			swfPlayerComponent.moveTo(200,100);
 			swfPlayerComponent.setIso(true);
+			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
+			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
+			tileMapComponent.setPropertyReference("keyboardInput",tileMapComponent._componentName);
+			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
+			tileMapComponent.moveTo(200,100);
+			
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

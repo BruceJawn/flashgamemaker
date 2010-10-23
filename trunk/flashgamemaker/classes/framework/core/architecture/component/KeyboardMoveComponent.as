@@ -71,7 +71,6 @@ package framework.core.architecture.component{
 			if (componentName!=_componentName) {
 				updateDir(_keyboard_key,component);
 			}
-
 		}
 		//------ Update Dir  ------------------------------------
 		private function updateDir(keyboard_key:Object,component:*):void {
