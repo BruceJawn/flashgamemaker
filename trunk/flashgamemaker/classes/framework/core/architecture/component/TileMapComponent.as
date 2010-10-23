@@ -275,8 +275,8 @@ package framework.core.architecture.component{
 				point.x=i*tileMap_tileWidth/2;
 				point.y=j*tileMap_tileWidth/2;
 			} else if (_tileMap_rect) {
-				point.x=i*tileMap_tileWidth;
-				point.y=j*tileMap_tileHeight/2;
+				point.x=i*(tileMap_tileWidth-2);
+				point.y=j*(tileMap_tileHeight-2)/2;
 			}
 			return point;
 		}
@@ -448,7 +448,6 @@ package framework.core.architecture.component{
 				_spatial_dir.x=- _scroll_dir.x;
 				_spatial_dir.y=- _scroll_dir.y;
 				_spatial_dir.z=- _scroll_dir.z;
-				trace(_scroll_speed);
 				_spatial_speed.x=_scroll_speed.x;
 				_spatial_speed.y=_scroll_speed.y;
 				_spatial_speed.z=_scroll_speed.z;
