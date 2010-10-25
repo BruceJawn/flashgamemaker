@@ -30,7 +30,7 @@ package framework.core.architecture.component{
 	/**
 	* BackGround Class
 	*/
-	public class BackGroundComponent extends GraphicComponent {
+	public class BackGroundComponent extends Component {
 		
 		private var _bgColor:uint = 0; //HecColor
 		
@@ -45,9 +45,9 @@ package framework.core.architecture.component{
 		//------- Change Color -------------------------------
 		public  function changeColor(hexColor:String):void {
 			_bgColor= uint("0x"+hexColor);
-			FlashGameMaker.STAGE.graphics.beginFill(_bgColor);
-            FlashGameMaker.STAGE.graphics.drawRect(0, 0, FlashGameMaker.WIDTH, FlashGameMaker.HEIGHT);
-            FlashGameMaker.STAGE.graphics.endFill();			
+			FlashGameMaker.CLIP.graphics.beginFill(_bgColor);
+            FlashGameMaker.CLIP.graphics.drawRect(0, 0, FlashGameMaker.WIDTH, FlashGameMaker.HEIGHT);
+            FlashGameMaker.CLIP.graphics.endFill();			
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -67,6 +67,7 @@ package framework.core.architecture.component{
 			var exportComponent:ExportComponent;
 			var navigationComponent:NavigationComponent;
 			var backGroundComponent:BackGroundComponent;
+			var tileMapEditorComponent:TileMapEditorComponent;
 		}
 	}
 }

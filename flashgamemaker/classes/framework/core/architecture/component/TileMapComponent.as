@@ -51,18 +51,8 @@ package framework.core.architecture.component{
 		private var _mapXml:XML=null;
 		private var _mapName:String=null;
 		private var _mapTexture:String=null;
-		private var _mapLayer:Array=null;
-		private var _tileMap_width:int=0;
-		private var _tileMap_height:int=0;
-		private var _tileMap_high:int=0;
-		private var _tileMap_tileWidth:int=0;
-		private var _tileMap_tileHeight:int=0;
-		private var _tileMap_tileHigh:int=0;
 		private var _tileMap_iso:Boolean=true;
 		private var _tileMap_rect:Boolean=true;
-		private var _tileMap_tiles:Dictionary=null;
-		private var _tileMap_world:Dictionary=null;
-		private var _tileMap_visibility:Object=null;
 		private var _walkable:Array=null;
 		private var _slopes:Array=null;
 		private var _ladder:Array=null;
@@ -70,11 +60,21 @@ package framework.core.architecture.component{
 		private var _bounce:Array=null;
 		private var _teleportation:Array=null;
 		private var _elevation:Array=null;
-
+		// Scroll properties
 		private var _scroll_dir:IsoPoint=null;
 		private var _scroll_speed:IsoPoint=null;
 		private var _scroll_position:IsoPoint=null;
-
+		//TileMap Properties
+		public var _mapLayer:Array=null;
+		public var _tileMap_width:int=0;
+		public var _tileMap_height:int=0;
+		public var _tileMap_high:int=0;
+		public var _tileMap_tileWidth:int=0;
+		public var _tileMap_tileHeight:int=0;
+		public var _tileMap_tileHigh:int=0;
+		public var _tileMap_tiles:Dictionary=null;
+		public var _tileMap_world:Dictionary=null;
+		public var _tileMap_visibility:Object=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 
@@ -222,7 +222,12 @@ package framework.core.architecture.component{
 			var tileName:String="tile_"+tile.ytile+"_"+tile.xtile;
 			if (tile.ztile==0) {
 				var clip:MovieClip = new MovieClip();
+				clip.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
+				clip.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
+				clip.addEventListener(MouseEvent.MOUSE_OVER, onMouseEvent);
+				clip.addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
 				_tileMap_world[tileName]=Clip.AddChild(this,clip);
+				
 			} else {
 				clip=_tileMap_world[tileName];
 			}
@@ -243,8 +248,12 @@ package framework.core.architecture.component{
 				clip.bitmap=clip.addChild(new Bitmap(myBitmapData));
 			}
 		}
+		//----- On Mouse Event  -----------------------------------
+		private function onMouseEvent(evt:MouseEvent):void{
+			dispatchEvent(evt);
+		}
 		//----- Flip BitmapData  -----------------------------------
-		public function flipBitmapData(myBitmapData:BitmapData):void {
+		private function flipBitmapData(myBitmapData:BitmapData):void {
 			var flipHorizontalMatrix:Matrix = new Matrix();
 			flipHorizontalMatrix.scale(-1,1);
 			flipHorizontalMatrix.translate(myBitmapData.width,0);
@@ -439,8 +448,8 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			scrollMap();
-			blitMap();
+			//scrollMap();
+			//blitMap();
 		}
 		//----- Scroll Map  -----------------------------------
 		public function scrollMap():void {
@@ -464,7 +473,7 @@ package framework.core.architecture.component{
 			if (_scroll_dir!=null&&_scroll_position!=null&&_keyboard_key!=null&&_keyboard_key.keyStatut=="DOWN") {
 				//trace( Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1,_tileMap_visibility.endX);
 				if (_scroll_dir.x>0 && Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1>=_tileMap_visibility.endX) {
-					trace("Blitz Right");
+					//trace("Blitz Right");
 					blitRight();
 				} else if (_scroll_dir.x<0 && Math.round(_scroll_position.x/(_tileMap_tileWidth/2))+1<=_tileMap_visibility.beginX) {
 					//trace("Blitz Left");

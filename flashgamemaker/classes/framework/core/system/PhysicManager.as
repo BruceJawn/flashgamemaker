@@ -80,7 +80,6 @@ package framework.core.system{
 				speedX*=2;
 				speedY*=2;
 			}
-			//trace(component._componentName,component._spatial_properties.direction);
 			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Horizontal") {
 				horizontalMove(component,component._spatial_dir.x*speedX);
 			}

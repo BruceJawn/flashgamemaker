@@ -90,7 +90,7 @@ package framework.core.architecture.component{
 		}
 		//------Update Number Children -------------------------------------
 		public function updateNumChildren():void {
-			_clip.text = "Clip :"+FlashGameMaker.CLIP;
+			_clip.text = "Clip :"+FlashGameMaker.NUM_CHILDREN;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -31,15 +31,13 @@ package utils.clip{
 		}
 		//------ Center Clip ------------------------------------
 		public static function AddChild(container:Sprite, clip:*):DisplayObject {
-			FlashGameMaker.CLIP++;
+			FlashGameMaker.NUM_CHILDREN++;
 			return container.addChild(clip);
 		}
 		//------ Center Clip ------------------------------------
 		public static function RemoveChild(container:Sprite, clip:*):void {
-			FlashGameMaker.CLIP--;
+			FlashGameMaker.NUM_CHILDREN--;
 			container.removeChild(clip);
-			
-			
 		}
 		//------ Center Clip ------------------------------------
 		public static function Center(clip:Sprite):void {

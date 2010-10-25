@@ -39,10 +39,10 @@ package script{
 			//new HelloWorld3();
 			//new Factory();
 			//new Navigation("tutorial.HelloWorld");
-			//new Navigation("game.KawaiiFight");
+			new Navigation("game.KawaiiFight");
 			//new Navigation("game.KawaiiIsland");
 			//new Navigation("game.KawaiiOlympic");
-			new Navigation("game.Korizon");
+			//new Navigation("game.Korizon");
 		}
 	}
 }
