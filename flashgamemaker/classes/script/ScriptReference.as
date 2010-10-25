@@ -40,10 +40,11 @@ package script{
 			var helloWorld:HelloWorld;
 			var helloWorld2:HelloWorld2;
 			var helloWorld3:HelloWorld3;
-			var scriptFactory:Factory;
-			var scriptKawaiiIsland:KawaiiIsland;
-			var scriptKawaiiFight:KawaiiFight;
-			var scriptKawaiiOlympic:KawaiiOlympic;
+			var factory:Factory;
+			var kawaiiIsland:KawaiiIsland;
+			var kawaiiFight:KawaiiFight;
+			var kawaiiOlympic:KawaiiOlympic;
+			var korizon:Korizon;
 		}
 	}
 }
