@@ -36,8 +36,9 @@ package {
 	*/
 	public class FlashGameMaker extends Sprite {
 
-		public static var STAGE:Sprite=null;
-		public static var CLIP:Number=0;
+		public static var CLIP:Sprite=null;
+		public static var STAGE:Stage=null;
+		public static var NUM_CHILDREN:Number=0;
 		public static var WIDTH:Number=400;
 		public static var HEIGHT:Number=345;
 		
@@ -55,7 +56,8 @@ package {
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			Security.allowInsecureDomain("*");
-			STAGE=this;
+			CLIP=this;
+			STAGE=this.stage;
 			var framework:Framework = new Framework();
 		}
 	}

@@ -66,9 +66,11 @@ package script.game{
 			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("keyboardInput",tileMapComponent._componentName);
+			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
 			tileMapComponent.moveTo(200,100);
-			
+			var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
+			tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
