@@ -66,6 +66,7 @@ package framework.core.architecture.component{
 			var groundSphereComponent:GroundSphereComponent;
 			var exportComponent:ExportComponent;
 			var navigationComponent:NavigationComponent;
+			var backGroundComponent:BackGroundComponent;
 		}
 	}
 }
