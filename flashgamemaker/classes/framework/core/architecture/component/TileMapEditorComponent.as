@@ -23,6 +23,7 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
+	import utils.adobe.Export;
 
 	import flash.display.*;
 	import flash.events.*;
@@ -48,6 +49,9 @@ package framework.core.architecture.component{
 		private var _option:MovieClip= new MovieClip();
 		private var _panel:MovieClip= new MovieClip();
 		private var _panelScrollPane:ScrollPane;
+		private var _panelSelectedTile=null;
+		private var _texture:Bitmap = null;
+		private var _tileMap:TileMapComponent = null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 
@@ -79,27 +83,49 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (! component.hasEventListener(MouseEvent.MOUSE_DOWN)) {
-				component.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEventDown);
-				component.addEventListener(MouseEvent.MOUSE_UP, onMouseEventUp);
-				component.addEventListener(MouseEvent.MOUSE_OVER, onMouseEventRollOver);
-				component.addEventListener(MouseEvent.MOUSE_OUT, onMouseEventRollOut);
+				component.addEventListener(MouseEvent.MOUSE_DOWN, onTileMouseDown);
+				component.addEventListener(MouseEvent.MOUSE_UP, onTileMouseUp);
+				component.addEventListener(MouseEvent.MOUSE_OVER, onTileMouseRollOver);
+				component.addEventListener(MouseEvent.MOUSE_OUT, onTileMouseRollOut);
+				_tileMap = component;
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
-		private function onMouseEventDown(evt:MouseEvent):void {
+		private function onTileMouseDown(evt:MouseEvent):void {
+			//trace(evt);
+			if (_panelSelectedTile!=null) {
+				swapTile(evt.target as MovieClip,_texture, _panelSelectedTile.frame,60,40,9);
+			}
+		}
+		//----- On Mouse Event  -----------------------------------
+		private function onTileMouseUp(evt:MouseEvent):void {
 			//trace(evt);
 		}
 		//----- On Mouse Event  -----------------------------------
-		private function onMouseEventUp(evt:MouseEvent):void {
-			//trace(evt);
+		private function onTileMouseRollOver(evt:MouseEvent):void {
+			//trace(evt.target);
+			colorTile(evt.target as MovieClip, 1,0,0,1,0,0,0);
 		}
 		//----- On Mouse Event  -----------------------------------
-		private function onMouseEventRollOver(evt:MouseEvent):void {
+		private function onTileMouseRollOut(evt:MouseEvent):void {
 			//trace(evt);
+			colorTile(evt.target as MovieClip, 1,1,1,1,0,0,0);
 		}
-		//----- On Mouse Event  -----------------------------------
-		private function onMouseEventRollOut(evt:MouseEvent):void {
-			//trace(evt);
+		//----- Color Tile  -----------------------------------
+		private function colorTile(tile:MovieClip, R:Number=1,G:Number=1,B:Number=1,A:Number=1, OR:Number=0,OG:Number=0,OB:Number=0,OA:Number=0):void {
+			if (tile!=null) {
+				tile.transform.colorTransform=new ColorTransform(R,G,B,A,OR,OG,OB,OA);
+			}
+		}
+		//----- Swap Tile  -----------------------------------
+		private function swapTile(tile:MovieClip, texture:Bitmap, frame:Number, tileWidth:Number, tileHeight:Number, X:int):void {
+			if (tile!=null) {
+				var x:int=Math.floor((frame-1)/(X));
+				var y:int=(frame-1)% X;
+				tile.bitmapData.fillRect(tile.bitmapData.rect,0);
+				trace(x * tileWidth,y *tileHeight);
+				tile.bitmapData.copyPixels(texture.bitmapData, new Rectangle(x * tileWidth,y *tileHeight,tileWidth,tileHeight), new Point(0, 0),null,null,true);
+			}
 		}
 		//-----Init Tile Editor Tool  -----------------------------------
 		private function initTool():void {
@@ -292,53 +318,93 @@ package framework.core.architecture.component{
 			//_option.buttonNew.addEventListener(MouseEvent.CLICK, onButtonNewClick);
 			_option.buttonLoad = new Button();
 			_option.buttonLoad.label="Load";
-			_option.buttonLoad.width=80;
-			_option.buttonLoad.y=175;
+			_option.buttonLoad.width=_option.buttonNew.width;
+			_option.buttonLoad.y=_option.buttonNew.y;
 			_option.buttonLoad.x=_option.buttonNew.x+85;
 			//_option.buttonLoad.addEventListener(MouseEvent.CLICK, onButtonLoadClick);
 			_option.buttonSave = new Button();
 			_option.buttonSave.label="Save";
-			_option.buttonSave.width=80;
-			_option.buttonSave.y=175;
+			_option.buttonSave.width=_option.buttonNew.width;
+			_option.buttonSave.y=_option.buttonNew.y;
 			_option.buttonSave.x=_option.buttonLoad.x+85;
 			//_option.buttonSave.addEventListener(MouseEvent.CLICK, onButtonSaveClick);
 			_option.buttonProperties = new Button();
 			_option.buttonProperties.label="Properties";
-			_option.buttonProperties.width=80;
-			_option.buttonProperties.y=175;
+			_option.buttonProperties.width=_option.buttonNew.width;
+			_option.buttonProperties.y=_option.buttonNew.y;
 			_option.buttonProperties.x=_option.buttonSave.x+85;
 			//_option.buttonProperties.addEventListener(MouseEvent.CLICK, onButtonPropertiesClick);
+			_option.buttonExport = new Button();
+			_option.buttonExport.label = "Export";
+			_option.buttonExport.width = _option.buttonNew.width;
+			_option.buttonExport.y=_option.buttonNew.y;
+			_option.buttonExport.x=_option.buttonProperties.x+85;
+			_option.buttonExport.addEventListener(MouseEvent.CLICK, onButtonExportClick);
 			_option.addChild(_option.buttonNew);
 			_option.addChild(_option.buttonLoad);
 			_option.addChild(_option.buttonSave);
 			_option.addChild(_option.buttonProperties);
+			_option.addChild(_option.buttonExport);
+		}
+		//----- On Button Export Click  -----------------------------------
+		public function onButtonExportClick(event:MouseEvent):void {
+			Export.ExportJPG(_tileMap,"TileMap");
 		}
 		//-----Init Tile Editor Panel  -----------------------------------
 		private function initPanel():void {
 			_panel.x=20;
 			_panel.y=20;
 			addChild(_panel);
-			
-			_panel.tileFrame=-1;
-			_panel.tileLevel=0;
-			_panel.tileFrameX=0;
-			_panel.tileFrameSet=0;
-			_panel.tileLayer=0;
-			_panel.tileFlip=0;
-			var pictLoad:Bitmap=getGraphic("KawaiiTileSet") as Bitmap;
+
+			_panel.level=0;
+			_panel.flip=false;
+			_texture=getGraphic("KawaiiTileSet") as Bitmap;
 			for (var i:Number=0; i<=5; i++) {
 				var myBitmapData:BitmapData=new BitmapData(60,40,true,0);
 				var frame:Number=i+1;
 				var x=0;
 				var y=i;
-				myBitmapData.copyPixels(pictLoad.bitmapData, new Rectangle(x * 60,y *40,60,40), new Point(0, 0),null,null,true);
-				var bm:Bitmap=new Bitmap(myBitmapData);
+				myBitmapData.copyPixels(_texture.bitmapData, new Rectangle(x * 60,y *40,60,40), new Point(0, 0),null,null,true);
+				var bitmap:Bitmap=new Bitmap(myBitmapData);
 				var tile:MovieClip = new MovieClip();
 				tile.name="tile_"+frame;
+				tile.frame=frame;
 				tile.bitmapData=myBitmapData;
-				tile.bm=tile.addChild(bm);
+				tile.bitmap=tile.addChild(bitmap);
 				tile.x=i*60;
+				tile.addEventListener(MouseEvent.MOUSE_DOWN, onPanelMouseDown);
+				tile.addEventListener(MouseEvent.MOUSE_UP, onPanelMouseUp);
+				tile.addEventListener(MouseEvent.MOUSE_OVER, onPanelMouseRollOver);
+				tile.addEventListener(MouseEvent.MOUSE_OUT, onPanelMouseRollOut);
 				_panel.addChild(tile);
+			}
+		}
+		//----- On Mouse Event  -----------------------------------
+		private function onPanelMouseDown(evt:MouseEvent):void {
+			//trace(evt);
+			if (_panelSelectedTile!=evt.target) {
+				colorTile(_panelSelectedTile, 1,1,1,1,0,0,0);
+				_panelSelectedTile=evt.target;
+				colorTile(evt.target as MovieClip, 0.5,0,0,1,0,0,0);
+			}
+		}
+		//----- On Mouse Event  -----------------------------------
+		private function onPanelMouseUp(evt:MouseEvent):void {
+			//trace(evt);
+			//colorTile(evt.target as MovieClip, 1,0,0,1,0,0,0);
+		}
+		//----- On Mouse Event  -----------------------------------
+		private function onPanelMouseRollOver(evt:MouseEvent):void {
+			//trace(evt.target);
+			if (_panelSelectedTile!=evt.target) {
+				colorTile(evt.target as MovieClip, 1,0,0,1,0,0,0);
+			}
+		}
+		//----- On Mouse Event  -----------------------------------
+		private function onPanelMouseRollOut(evt:MouseEvent):void {
+			//trace(evt);
+			if (_panelSelectedTile!=evt.target) {
+				colorTile(evt.target as MovieClip, 1,1,1,1,0,0,0);
 			}
 		}
 		//------- ToString -------------------------------
