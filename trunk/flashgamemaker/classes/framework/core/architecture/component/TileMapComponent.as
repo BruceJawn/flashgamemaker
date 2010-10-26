@@ -244,13 +244,16 @@ package framework.core.architecture.component{
 				if (tile.flip) {
 					flipBitmapData(myBitmapData);
 				}
+				clip.name=tileName;
+				clip.frame = tile.tileFrame;
 				clip.bitmapData=myBitmapData;
-				clip.bitmap=clip.addChild(new Bitmap(myBitmapData));
+				clip.bitmap=new Bitmap(myBitmapData);
+				clip.addChild(clip.bitmap);
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onMouseEvent(evt:MouseEvent):void{
-			dispatchEvent(evt);
+			
 		}
 		//----- Flip BitmapData  -----------------------------------
 		private function flipBitmapData(myBitmapData:BitmapData):void {
