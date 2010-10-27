@@ -24,11 +24,13 @@
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	import utils.adobe.Export;
+	import utils.convert.*;
 
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.text.TextField;
+	import fl.events.*;
 	import fl.containers.ScrollPane;
 	import fl.controls.CheckBox;
 	import fl.controls.ComboBox;
@@ -50,8 +52,7 @@ package framework.core.architecture.component{
 		private var _panel:MovieClip= new MovieClip();
 		private var _panelScrollPane:ScrollPane;
 		private var _panelSelectedTile=null;
-		private var _texture:Bitmap = null;
-		private var _tileMap:TileMapComponent = null;
+		private var _tileMap:TileMapComponent=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
 
@@ -61,8 +62,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			initTool();
-			initOption();
+
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -79,6 +79,8 @@ package framework.core.architecture.component{
 			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
 			initPanel();
+			initTool();
+			initOption();
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
@@ -87,14 +89,14 @@ package framework.core.architecture.component{
 				component.addEventListener(MouseEvent.MOUSE_UP, onTileMouseUp);
 				component.addEventListener(MouseEvent.MOUSE_OVER, onTileMouseRollOver);
 				component.addEventListener(MouseEvent.MOUSE_OUT, onTileMouseRollOut);
-				_tileMap = component;
+				_tileMap=component;
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onTileMouseDown(evt:MouseEvent):void {
 			//trace(evt);
 			if (_panelSelectedTile!=null) {
-				swapTile(evt.target as MovieClip,_texture, _panelSelectedTile.frame,60,40,9);
+				swapTile(evt.target as MovieClip,_tool.tileLayer.value, _panelSelectedTile.tileFrame, NumberTo.Bool(_tool.tileFlipFrame.value), _tool.tileLevel);
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
@@ -118,18 +120,36 @@ package framework.core.architecture.component{
 			}
 		}
 		//----- Swap Tile  -----------------------------------
-		private function swapTile(tile:MovieClip, texture:Bitmap, frame:Number, tileWidth:Number, tileHeight:Number, X:int):void {
+		private function swapTile(tile:MovieClip, layerIndex:int, frame:Number, flip:Boolean, level:int):void {
 			if (tile!=null) {
-				var x:int=Math.floor((frame-1)/(X));
-				var y:int=(frame-1)% X;
-				tile.bitmapData.fillRect(tile.bitmapData.rect,0);
-				trace(x * tileWidth,y *tileHeight);
-				tile.bitmapData.copyPixels(texture.bitmapData, new Rectangle(x * tileWidth,y *tileHeight,tileWidth,tileHeight), new Point(0, 0),null,null,true);
+				var layer:Object=_tileMap._tileMap_layer[layerIndex];
+				var x:int=Math.floor((frame-1)/(layer.X));
+				var y:int=(frame-1)% layer.X;
+				var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
+				tile.bitmap.bitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
+				tile.bitmap.bitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
+				if (flip) {
+					tile.flip = true;
+					//_tileMap._tileMap_tiles[tile.tileName+"_"+level].flip=true;
+					flipBitmapData(tile.bitmap.bitmapData);
+				}
+				tile.bitmap.x=-layer.tileWidth/2;
+				tile.bitmap.y=-layer.tileHeight;
 			}
+		}
+		//----- Flip BitmapData  -----------------------------------
+		private function flipBitmapData(myBitmapData:BitmapData):void {
+			var flipHorizontalMatrix:Matrix = new Matrix();
+			flipHorizontalMatrix.scale(-1,1);
+			flipHorizontalMatrix.translate(myBitmapData.width,0);
+			var flippedBitmapData:BitmapData=new BitmapData(myBitmapData.width,myBitmapData.height,true,0);
+			flippedBitmapData.draw(myBitmapData,flipHorizontalMatrix);
+			myBitmapData.fillRect(myBitmapData.rect,0);
+			myBitmapData.draw(flippedBitmapData);
 		}
 		//-----Init Tile Editor Tool  -----------------------------------
 		private function initTool():void {
-			_tool.x=20;
+			_tool.x=15;
 			_tool.y=80;
 			addChild(_tool);
 
@@ -215,13 +235,7 @@ package framework.core.architecture.component{
 			//_tool.tileFrameSet.addEventListener(SliderEvent.THUMB_DRAG, onTileEditorFrameSetChange);
 			//_tool.tileFrameSet.addEventListener(SliderEvent.CHANGE, onTileEditorFrameSetChange);
 			_tool.tileLayer = new Slider();
-			_tool.tileLayer.maximum=0;
-			/*if(graphicAddTileTable.length>0){
-			_tool.tileLayer.maximum += 1;
-			}
-			if(graphicObjectTable.length>0){
-			_tool.tileLayer.maximum += 2;
-			}*/
+			_tool.tileLayer.maximum=_tileMap._tileMap_layer.length-1;
 			_tool.tileLayer.width=50;
 			_tool.tileLayer.tabEnabled=false;
 			_tool.tileLayer.y+=_tool.tileFrameSet.y+25;
@@ -231,8 +245,8 @@ package framework.core.architecture.component{
 			_tool.tileLayerText.textColor=0x000000;
 			_tool.tileLayerText.y=_tool.tileLayer.y+3;
 			_tool.tileLayerText.x+=14;
-			//_tool.tileLayer.addEventListener(SliderEvent.THUMB_DRAG, onTileEditorLayerChange);
-			//_tool.tileLayer.addEventListener(SliderEvent.CHANGE, onTileEditorLayerChange);
+			_tool.tileLayer.addEventListener(SliderEvent.THUMB_DRAG, onTileEditorLayerChange);
+			_tool.tileLayer.addEventListener(SliderEvent.CHANGE, onTileEditorLayerChange);
 			_tool.tileZoom = new Slider();
 			_tool.tileZoom.maximum=10;
 			_tool.tileZoom.minimum=5;
@@ -304,6 +318,12 @@ package framework.core.architecture.component{
 			_tool.addChild(_tool.tileZoom);
 			_tool.addChild(_tool.tileFlipFrame);
 		}
+		//----- On Tile Editor Layer Change -----------------------------------
+		private function onTileEditorLayerChange(evt:SliderEvent):void {
+			removeChild(_panel);
+			_panel = new MovieClip();
+			initPanel(_tool.tileLayer.value);
+		}
 		//-----Init Tile Editor Option  -----------------------------------
 		private function initOption():void {
 			_option.x=20;
@@ -335,8 +355,8 @@ package framework.core.architecture.component{
 			_option.buttonProperties.x=_option.buttonSave.x+85;
 			//_option.buttonProperties.addEventListener(MouseEvent.CLICK, onButtonPropertiesClick);
 			_option.buttonExport = new Button();
-			_option.buttonExport.label = "Export";
-			_option.buttonExport.width = _option.buttonNew.width;
+			_option.buttonExport.label="Export";
+			_option.buttonExport.width=_option.buttonNew.width;
 			_option.buttonExport.y=_option.buttonNew.y;
 			_option.buttonExport.x=_option.buttonProperties.x+85;
 			_option.buttonExport.addEventListener(MouseEvent.CLICK, onButtonExportClick);
@@ -351,32 +371,33 @@ package framework.core.architecture.component{
 			Export.ExportJPG(_tileMap,"TileMap");
 		}
 		//-----Init Tile Editor Panel  -----------------------------------
-		private function initPanel():void {
-			_panel.x=20;
-			_panel.y=20;
+		private function initPanel(layerIndex:int=0):void {
+			_panel.x=100;
+			_panel.y=80;
 			addChild(_panel);
 
-			_panel.level=0;
-			_panel.flip=false;
-			_texture=getGraphic("KawaiiTileSet") as Bitmap;
+			var layer:Object=_tileMap._tileMap_layer[layerIndex];
+			var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
 			for (var i:Number=0; i<=5; i++) {
-				var myBitmapData:BitmapData=new BitmapData(60,40,true,0);
 				var frame:Number=i+1;
 				var x=0;
 				var y=i;
-				myBitmapData.copyPixels(_texture.bitmapData, new Rectangle(x * 60,y *40,60,40), new Point(0, 0),null,null,true);
+				var myBitmapData:BitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
+				myBitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
 				var bitmap:Bitmap=new Bitmap(myBitmapData);
 				var tile:MovieClip = new MovieClip();
 				tile.name="tile_"+frame;
 				tile.frame=frame;
 				tile.bitmapData=myBitmapData;
 				tile.bitmap=tile.addChild(bitmap);
-				tile.x=i*60;
+				tile.bitmap.x-=layer.tileWidth/2;
+				tile.bitmap.y-=layer.tileHeight;
+				tile.x=i*layer.tileWidth;
 				tile.addEventListener(MouseEvent.MOUSE_DOWN, onPanelMouseDown);
 				tile.addEventListener(MouseEvent.MOUSE_UP, onPanelMouseUp);
 				tile.addEventListener(MouseEvent.MOUSE_OVER, onPanelMouseRollOver);
 				tile.addEventListener(MouseEvent.MOUSE_OUT, onPanelMouseRollOut);
-				_panel.addChild(tile);
+				_panel.addChild(tile);				
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
