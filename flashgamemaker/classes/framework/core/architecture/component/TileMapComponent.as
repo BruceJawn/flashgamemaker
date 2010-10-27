@@ -65,7 +65,7 @@ package framework.core.architecture.component{
 		private var _scroll_speed:IsoPoint=null;
 		private var _scroll_position:IsoPoint=null;
 		//TileMap Properties
-		public var _mapLayer:Array=null;
+		public var _tileMap_layer:Array=null;
 		public var _tileMap_width:int=0;
 		public var _tileMap_height:int=0;
 		public var _tileMap_high:int=0;
@@ -86,7 +86,7 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_ressourceManager=RessourceManager.getInstance();
 			_physicManager=PhysicManager.getInstance();
-			_mapLayer=new Array  ;
+			_tileMap_layer=new Array  ;
 			_tileMap_tiles=new Dictionary  ;
 			_tileMap_world=new Dictionary  ;
 			_tileMap_visibility={beginX:0,beginY:0,beginZ:0,endX:10,endY:10,endZ:5};
@@ -141,7 +141,7 @@ package framework.core.architecture.component{
 				var tileWidth:int=layer.@tileWidth;
 				var X:int=layer.@X;
 				var Y:int=layer.@Y;
-				_mapLayer.push({tileTable:tab,texture:texture,tileHigh:tileHigh,tileHeight:tileHeight,tileWidth:tileWidth,X:X,Y:Y});
+				_tileMap_layer.push({tileTable:tab,texture:texture,tileHigh:tileHigh,tileHeight:tileHeight,tileWidth:tileWidth,X:X,Y:Y});
 			}
 			//_walkable=StringTo.Tab(_mapXml.MapProperties.walkable.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
 			//_slopes=StringTo.Tab(_mapXml.MapProperties.slopes.toString(),_tileMap_high,_tileMap_height,_tileMap_width);
@@ -163,7 +163,7 @@ package framework.core.architecture.component{
 			for (var j:int=_tileMap_visibility.beginY; j<_tileMap_visibility.endY; j++) {
 				for (var i:int=_tileMap_visibility.beginX; i<_tileMap_visibility.endX; i++) {
 					for (var k:int=_tileMap_visibility.beginZ; k<_tileMap_visibility.endZ; k++) {
-						for (var l:int=0; l<_mapLayer.length; l++) {
+						for (var l:int=0; l<_tileMap_layer.length; l++) {
 							if (onSight(i,j,k)) {
 								createTile(l,k,j,i);
 							}
@@ -182,13 +182,13 @@ package framework.core.architecture.component{
 		//------ Create Tile ------------------------------------
 		private function createTile(l:int,k:int,j:int,i:int):void {
 			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
-			var tileFrame:int=_mapLayer[l].tileTable[k][j][i];
-			var textureName:String=_mapLayer[l].texture;
-			var tileHigh:int=_mapLayer[l].tileHigh;
-			var tileHeight:int=_mapLayer[l].tileHeight;
-			var tileWidth:int=_mapLayer[l].tileWidth;
-			var X:int=_mapLayer[l].X;
-			var Y:int=_mapLayer[l].Y;
+			var tileFrame:int=_tileMap_layer[l].tileTable[k][j][i];
+			var textureName:String=_tileMap_layer[l].texture;
+			var tileHigh:int=_tileMap_layer[l].tileHigh;
+			var tileHeight:int=_tileMap_layer[l].tileHeight;
+			var tileWidth:int=_tileMap_layer[l].tileWidth;
+			var X:int=_tileMap_layer[l].X;
+			var Y:int=_tileMap_layer[l].Y;
 			var tile:Object = new Object();
 			updateTile(tile,l,k,j,i,tileHigh,tileHeight,tileWidth,tileFrame,textureName,X,Y);
 			displayTile(tile);
@@ -197,6 +197,7 @@ package framework.core.architecture.component{
 		//------ Update Tile ------------------------------------
 		private function updateTile(tile:Object,l:int,k:int,j:int,i:int,tileHigh:int,tileHeight:int,tileWidth:int,tileFrame:int,textureName:String,X:int,Y:int):void {
 			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
+			tile.tileName = tileName;
 			tile.layer=l;
 			tile.ztile=k;
 			tile.ytile=j;
@@ -206,6 +207,7 @@ package framework.core.architecture.component{
 			tile.tileWidth=tileWidth;
 			tile.tileFrame=tileFrame;
 			tile.textureName=textureName;
+			tile.flip=false;
 			tile.X=X;
 			tile.Y=Y;
 			/*tile.walkable=_walkable[k][j][i];
@@ -242,12 +244,16 @@ package framework.core.architecture.component{
 				var myBitmapData:BitmapData=new BitmapData(tile.tileWidth,tile.tileHeight,true,0);
 				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
 				if (tile.flip) {
+					clip.flip = true;
+					tile.flip = true;
 					flipBitmapData(myBitmapData);
 				}
-				clip.name=tileName;
-				clip.frame = tile.tileFrame;
+				clip.tileName=tileName;
+				clip.tileFrame = tile.tileFrame;
 				clip.bitmapData=myBitmapData;
 				clip.bitmap=new Bitmap(myBitmapData);
+				clip.bitmap.x=-tile.tileWidth/2;
+				clip.bitmap.y=-tile.tileHeight;
 				clip.addChild(clip.bitmap);
 			}
 		}
@@ -275,7 +281,7 @@ package framework.core.architecture.component{
 				} else if (_tileMap_rect) {
 					position=screenToIsoRectange(position,tile.ytile);
 				}
-				position.y-=/*- _elevation[tile.ztile][tile.ytile][tile.xtile]+*/tile.ztile*_tileMap_tileHigh+tile.tileHeight;
+				position.y-=/*- _elevation[tile.ztile][tile.ytile][tile.xtile]+*/tile.ztile*_tileMap_tileHigh;
 				_tileMap_world[tileName].x=position.x;
 				_tileMap_world[tileName].y=position.y;
 			}
@@ -359,7 +365,7 @@ package framework.core.architecture.component{
 					}
 					for (var k:int=_tileMap_visibility.beginZ; k<_tileMap_visibility.endZ; k++) {
 						if (onSight(_tileMap_visibility.endX,j,k)) {
-							for (var l:int=0; l<_mapLayer.length; l++) {
+							for (var l:int=0; l<_tileMap_layer.length; l++) {
 								createTile(l,k,j,_tileMap_visibility.endX);
 							}
 						}
@@ -378,7 +384,7 @@ package framework.core.architecture.component{
 					}
 					for (var k:int=_tileMap_visibility.beginZ; k<_tileMap_visibility.endZ; k++) {
 						if (onSight(_tileMap_visibility.beginX-1,j,k)) {
-							for (var l:int=0; l<_mapLayer.length; l++) {
+							for (var l:int=0; l<_tileMap_layer.length; l++) {
 								createTile(l,k,j,_tileMap_visibility.beginX-1);
 							}
 						}
@@ -397,7 +403,7 @@ package framework.core.architecture.component{
 					}
 					for (var k:int=_tileMap_visibility.beginZ; k<_tileMap_visibility.endZ; k++) {
 						if (onSight(i,_tileMap_visibility.endY,k)) {
-							for (var l:int=0; l<_mapLayer.length; l++) {
+							for (var l:int=0; l<_tileMap_layer.length; l++) {
 								createTile(l,k,_tileMap_visibility.endY,i);
 							}
 						}
@@ -416,7 +422,7 @@ package framework.core.architecture.component{
 					}
 					for (var k:int=_tileMap_visibility.beginZ; k<_tileMap_visibility.endZ; k++) {
 						if (onSight(i,_tileMap_visibility.beginY-1,k)) {
-							for (var l:int=0; l<_mapLayer.length; l++) {
+							for (var l:int=0; l<_tileMap_layer.length; l++) {
 								createTile(l,k,_tileMap_visibility.beginY-1,i);
 							}
 						}
