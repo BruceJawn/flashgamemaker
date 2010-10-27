@@ -133,8 +133,8 @@ package framework.core.architecture.component{
 					//_tileMap._tileMap_tiles[tile.tileName+"_"+level].flip=true;
 					flipBitmapData(tile.bitmap.bitmapData);
 				}
-				tile.bitmap.x=-layer.tileWidth/2;
-				tile.bitmap.y=-layer.tileHeight;
+				tile.bitmap.x=-layer.tileWidth/2-_tileMap._tileMap_tileWidth;
+				tile.bitmap.y=-layer.tileHeight-_tileMap._tileMap_tileHeight;
 			}
 		}
 		//----- Flip BitmapData  -----------------------------------
@@ -150,7 +150,7 @@ package framework.core.architecture.component{
 		//-----Init Tile Editor Tool  -----------------------------------
 		private function initTool():void {
 			_tool.x=15;
-			_tool.y=80;
+			_tool.y=50;
 			addChild(_tool);
 
 			_tool.inside = new CheckBox();
@@ -326,13 +326,13 @@ package framework.core.architecture.component{
 		}
 		//-----Init Tile Editor Option  -----------------------------------
 		private function initOption():void {
-			_option.x=20;
+			_option.x=0;
 			_option.y=150;
 			addChild(_option);
 
 			_option.buttonNew = new Button();
 			_option.buttonNew.label="New";
-			_option.buttonNew.width=80;
+			_option.buttonNew.width=75;
 			_option.buttonNew.y=175;
 			_option.buttonNew.x=0;
 			//_option.buttonNew.addEventListener(MouseEvent.CLICK, onButtonNewClick);
@@ -340,25 +340,25 @@ package framework.core.architecture.component{
 			_option.buttonLoad.label="Load";
 			_option.buttonLoad.width=_option.buttonNew.width;
 			_option.buttonLoad.y=_option.buttonNew.y;
-			_option.buttonLoad.x=_option.buttonNew.x+85;
+			_option.buttonLoad.x=_option.buttonNew.x+80;
 			//_option.buttonLoad.addEventListener(MouseEvent.CLICK, onButtonLoadClick);
 			_option.buttonSave = new Button();
 			_option.buttonSave.label="Save";
 			_option.buttonSave.width=_option.buttonNew.width;
 			_option.buttonSave.y=_option.buttonNew.y;
-			_option.buttonSave.x=_option.buttonLoad.x+85;
+			_option.buttonSave.x=_option.buttonLoad.x+80;
 			//_option.buttonSave.addEventListener(MouseEvent.CLICK, onButtonSaveClick);
 			_option.buttonProperties = new Button();
 			_option.buttonProperties.label="Properties";
 			_option.buttonProperties.width=_option.buttonNew.width;
 			_option.buttonProperties.y=_option.buttonNew.y;
-			_option.buttonProperties.x=_option.buttonSave.x+85;
+			_option.buttonProperties.x=_option.buttonSave.x+80;
 			//_option.buttonProperties.addEventListener(MouseEvent.CLICK, onButtonPropertiesClick);
 			_option.buttonExport = new Button();
 			_option.buttonExport.label="Export";
 			_option.buttonExport.width=_option.buttonNew.width;
 			_option.buttonExport.y=_option.buttonNew.y;
-			_option.buttonExport.x=_option.buttonProperties.x+85;
+			_option.buttonExport.x=_option.buttonProperties.x+80;
 			_option.buttonExport.addEventListener(MouseEvent.CLICK, onButtonExportClick);
 			_option.addChild(_option.buttonNew);
 			_option.addChild(_option.buttonLoad);
@@ -372,22 +372,22 @@ package framework.core.architecture.component{
 		}
 		//-----Init Tile Editor Panel  -----------------------------------
 		private function initPanel(layerIndex:int=0):void {
-			_panel.x=100;
+			_panel.x=120;
 			_panel.y=80;
 			addChild(_panel);
 
 			var layer:Object=_tileMap._tileMap_layer[layerIndex];
 			var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
 			for (var i:Number=0; i<=5; i++) {
-				var frame:Number=i+1;
+				var tileFrame:Number=i+1;
 				var x=0;
 				var y=i;
 				var myBitmapData:BitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
 				myBitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
 				var bitmap:Bitmap=new Bitmap(myBitmapData);
 				var tile:MovieClip = new MovieClip();
-				tile.name="tile_"+frame;
-				tile.frame=frame;
+				tile.name="tile_"+tileFrame;
+				tile.tileFrame=tileFrame;
 				tile.bitmapData=myBitmapData;
 				tile.bitmap=tile.addChild(bitmap);
 				tile.bitmap.x-=layer.tileWidth/2;

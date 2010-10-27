@@ -68,7 +68,7 @@ package script.game{
 			tileMapComponent.setPropertyReference("keyboardInput",tileMapComponent._componentName);
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
-			tileMapComponent.moveTo(200,100);
+			tileMapComponent.moveTo(260,100);
 			var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
 			tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
 		}

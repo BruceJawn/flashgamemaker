@@ -4,7 +4,7 @@
 		<path>xml/framework/game/mapTexture.xml</path>
 
 <layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">2500*1,2500*0</layer>
-<layer texture="KawaiiObjectSetMedium" tileHigh="10" tileHeight="80" tileWidth="60" X="10" Y="6">1,5000*0</layer>	
+<layer texture="KawaiiObjectSetMedium" tileHigh="10" tileHeight="80" tileWidth="60" X="10" Y="6">5000*0</layer>	
 <layer texture="KawaiiObjectSetLarge" tileHigh="10" tileHeight="80" tileWidth="120" X="10" Y="6">5000*0</layer>
 <layer texture="KawaiiObjectSetHuge" tileHigh="10" tileHeight="160" tileWidth="160" X="10" Y="6">5000*0</layer>	
 		

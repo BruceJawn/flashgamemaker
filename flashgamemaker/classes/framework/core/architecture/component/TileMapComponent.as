@@ -252,8 +252,8 @@ package framework.core.architecture.component{
 				clip.tileFrame = tile.tileFrame;
 				clip.bitmapData=myBitmapData;
 				clip.bitmap=new Bitmap(myBitmapData);
-				clip.bitmap.x=-tile.tileWidth/2;
-				clip.bitmap.y=-tile.tileHeight;
+				clip.bitmap.x=-tile.tileWidth/2-_tileMap_tileWidth;
+				clip.bitmap.y=-tile.tileHeight-_tileMap_tileHeight;
 				clip.addChild(clip.bitmap);
 			}
 		}
