@@ -92,6 +92,14 @@ package framework.core.architecture.component{
 		public function setKeysFromXml(xml:XML):void {
 			_keyboardManager.setKeysFromXml(xml);
 		}
+		//------ Set Key ------------------------------------
+		public function setKey(keyCode:Number,keyName:String ):void {
+			_keyboardManager.setKey(keyCode, keyName);
+		}
+		//------ Set Key From Char Code------------------------------------
+		public function setKeyFromCharCode(charCode:String,keyName:String ):void {
+			_keyboardManager.setKeyFromCharCode(charCode,keyName);
+		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{
            

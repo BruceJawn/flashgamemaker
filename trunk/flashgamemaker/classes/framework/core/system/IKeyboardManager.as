@@ -15,8 +15,8 @@
 *   under the terms of the GNU Free Documentation License, Version 1.3
 *   or any later version published by the Free Software Foundation;
 *   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-*	Under this licence you are free to copy, adapt and distrubute the work. 
-*	You must attribute the work in the manner specified by the author or licensor. 
+*Under this licence you are free to copy, adapt and distrubute the work. 
+*You must attribute the work in the manner specified by the author or licensor. 
 *   A copy of the license is included in the section entitled "GNU
 *   Free Documentation License".
 *
@@ -24,40 +24,48 @@
 
 package framework.core.system{
 	import flash.events.EventDispatcher;
-	
-	public interface IKeyboardManager	{
-		
+
+	public interface IKeyboardManager {
+
 		/**
 		 * Get Dispatcher
-		 */		
+		 */
 		function getDispatcher():EventDispatcher;
 		/**
 		 * Define wich keys will be used in the game
-		 */		
+		 */
 		function setKeysFromPath(path:String, name:String):void;
 		/**
 		 * Define wich keys will be used in the game
-		 */		
-		function setKeysFromXml(xml:XML):void ;
+		 */
+		function setKeysFromXml(xml:XML):void;
+		/**
+		 * Set Key 
+		 */
+		function setKey(keyCode:Number,keyName:String ):void;
+		/**
+		 * Set Key From Char Code
+		 */
+		function setKeyFromCharCode(charCode:String,keyName:String ):void;
 		/**
 		 * Register
-		 */		
+		 */
 		function register(obj:Object):void;
 		/**
 		 * Unregister
-		 */		
+		 */
 		function unregister(obj:Object):void;
 		/**
 		 * Retourn Key
-		 */		
-		function getKey():Object ;
+		 */
+		function getKey():Object;
 		/**
 		 * Retourn Xml Config
-		 */		
+		 */
 		function getXmlConfig():XMLList;
 		/**
 		 * To String
-		 */		
-		function ToString():void ;
+		 */
+		function ToString():void;
 	}
 }

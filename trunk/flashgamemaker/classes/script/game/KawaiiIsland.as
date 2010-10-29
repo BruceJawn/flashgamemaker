@@ -52,12 +52,15 @@ package script.game{
 		private function initComponent():void {
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
+			keyboardInputComponent.setKey(38, "JUMP");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			var keyboardRotationComponent:KeyboardRotationComponent=_entityManager.addComponent("GameEntity","KeyboardRotationComponent","myKeyboardRotationComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var backGroundComponent:BackGroundComponent= _entityManager.addComponent("GameEntity","BackGroundComponent","myBackGroundComponent");
+			backGroundComponent.changeColor("95eaff");
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setLoop(true);
