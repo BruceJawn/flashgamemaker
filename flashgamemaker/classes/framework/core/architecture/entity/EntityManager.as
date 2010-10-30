@@ -110,8 +110,8 @@ package framework.core.architecture.entity {
 			}
 			return components[componentName];
 		}
-		//------ Get Components' Property With PropertyName ------------------------------------
-		public function getComponentsPropertyWithPropertyName(propertyName:String):Array{	
+		//------ Get Components With PropertyName ------------------------------------
+		public function getComponentsWithPropertyName(propertyName:String):Array{	
 			if(_propertyReferences[propertyName]==null){
 				//trace("Error: The Property "+propertyName+" is not registered !!");
 			}

@@ -58,9 +58,9 @@ package framework.core.architecture.entity{
 		public function getComponent(entityName:String,componentName:String):*{	
 			return _entityManager.getComponent(entityName,componentName);
 		}
-		//------ Get Components'Property With PropertyName ------------------------------------
-		public function getComponentsPropertyWithPropertyName(propertyName:String):Array{	
-			return _entityManager.getComponentsPropertyWithPropertyName(propertyName);
+		//------ Get Components With PropertyName ------------------------------------
+		public function getComponentsWithPropertyName(propertyName:String):Array{	
+			return _entityManager.getComponentsWithPropertyName(propertyName);
 		}
 		//------ Component Is Registered With Property ------------------------------------
 		public function componentIsRegisteredWithProperty(componentName:String, propertyName:String):Boolean{

@@ -61,6 +61,11 @@ package framework.core.architecture.component{
 		//Spatial properties
 		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_jumpStart:IsoPoint=null;		
+		//Attack properties
+		public var _attack:Number=1;
+		//Health properties
+		public var _health:Number=10;
+		public var _healthMax:Number=10;		
 
 		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);

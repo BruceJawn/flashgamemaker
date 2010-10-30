@@ -58,7 +58,7 @@ package framework.core.architecture.entity{
 		/**
 		 * Get Components with Property
 		 */	
-		function getComponentsPropertyWithPropertyName(propertyName:String):Array;
+		function getComponentsWithPropertyName(propertyName:String):Array;
 		/**
 		 * Component Is Registered With Property
 		 */	

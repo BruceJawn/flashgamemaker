@@ -23,27 +23,41 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import utils.adobe.*;
-
-	import flash.display.DisplayObject;
+	
 	
 	/**
 	* Entity Class
-	* @ purpose:
 	*/
-	public class ExportComponent extends Component {
-
-		public function ExportComponent(componentName:String, componentOwner:IEntity) {
+	public class HealthComponent extends Component {
+		
+		private var _players:Array = null;
+		
+		public function HealthComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
-		}
-		//------ Create JPG ------------------------------------
-		public function createJPG(clip:DisplayObject, fileName:String, quality:Number=90):void {
-			Export.ExportJPG(clip,fileName,quality);
+			
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-
+			_players = new Array();
+		}
+		//------ Init Property Info ------------------------------------
+		public override function initProperty():void {
+			super.initProperty();
+			registerProperty("health",_componentName);
+		}
+		//------- Add Player -------------------------------
+		public function addPlayer(playerComponent:PlayerComponent):void {
+			for each( var player:PlayerComponent in _players){
+				if(player == playerComponent){
+					return;
+				}
+			}
+			_players.push(playerComponent);
+		}
+		//------ Actualize Components  ------------------------------------
+		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+			trace(componentName, component._health);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

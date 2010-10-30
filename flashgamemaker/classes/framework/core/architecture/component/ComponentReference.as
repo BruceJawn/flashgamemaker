@@ -68,6 +68,8 @@ package framework.core.architecture.component{
 			var navigationComponent:NavigationComponent;
 			var backGroundComponent:BackGroundComponent;
 			var tileMapEditorComponent:TileMapEditorComponent;
+			var healthComponent:HealthComponent;
+			var keyboardAttackComponent:KeyboardAttackComponent;
 		}
 	}
 }
