@@ -85,7 +85,7 @@ package framework.core.architecture.component{
 		}
 		//------ Update ------------------------------------
 		public function update(propertyName:String):void {//I update my son referents
-			var componentsProperty:Array=_componentOwner.getComponentsPropertyWithPropertyName(propertyName);
+			var componentsProperty:Array=_componentOwner.getComponentsWithPropertyName(propertyName);
 			if (componentsProperty!=null) {
 				for each (var propertyReference:Object in componentsProperty) {
 					var componentName:String=propertyReference.componentName;
@@ -122,6 +122,10 @@ package framework.core.architecture.component{
 		//------ Get Component  ------------------------------------
 		public function getComponent(entityName:String,componentName:String):* {
 			return _componentOwner.getComponent(entityName,componentName);
+		}
+		//------ Get Components With Property Name  ------------------------------------
+		public function getComponentsWithPropertyName(propertyName:String):Array {
+			return _componentOwner.getComponentsWithPropertyName(propertyName);
 		}
 		//------ Add Property Reference  ------------------------------------
 		public function addPropertyReference(propertyName:String):void {
