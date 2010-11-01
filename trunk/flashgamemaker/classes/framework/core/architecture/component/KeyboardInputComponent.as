@@ -81,7 +81,6 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			component._keyboard_key = _keyboard_key;
-			component.refresh();
 			component.actualizeComponent(componentName,componentOwner,component);
 		}
 		//------ Set Keys From Path ------------------------------------

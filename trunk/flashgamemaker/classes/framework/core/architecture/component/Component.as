@@ -65,6 +65,10 @@ package framework.core.architecture.component{
 		public function getName():String {
 			return _componentName;
 		}
+		//------- Get Owner Name -------------------------------
+		public function getOwnerName():String {
+			return _componentOwner.getName();
+		}
 		//------ Register Property  ------------------------------------
 		public function registerProperty(propertyName:String, componentName:String):void {
 			_componentOwner.registerProperty(propertyName,componentName);
@@ -78,10 +82,8 @@ package framework.core.architecture.component{
 			return _componentOwner.setPropertyReference(propertyReferenceName,componentName);
 		}
 		//------ Refresh   ------------------------------------
-		public function refresh():void {
-			for each (var propertyName:String in  _propertyInfo){
-				_componentOwner.refresh(propertyName);
-			}
+		public function refresh(propertyName:String):void {
+			_componentOwner.refresh(propertyName);
 		}
 		//------ Update ------------------------------------
 		public function update(propertyName:String):void {//I update my son referents

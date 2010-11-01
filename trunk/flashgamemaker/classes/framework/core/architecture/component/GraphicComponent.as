@@ -154,6 +154,10 @@ package framework.core.architecture.component{
 				this.rotation+=_spatial_rotation;
 			}
 		}
+		//------ SetRotation  ------------------------------------
+		public function setRotation(angle:Number):void {
+			_spatial_rotation=angle;
+		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
 

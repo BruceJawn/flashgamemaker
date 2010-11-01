@@ -68,7 +68,13 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			component._keyboard_key=_keyboard_key;
-			if (componentName!=_componentName) {
+			if (componentName==_componentName) {
+				var keyboardMoveComponents:Array=getComponentsWithPropertyName("keyboardMove");
+				for each (var obj in keyboardMoveComponents) {
+					var keyboardMoveComponent:*=getComponent(obj.ownerName,obj.componentName);
+					updateDir(_keyboard_key,keyboardMoveComponent);
+				}
+			} else {
 				updateDir(_keyboard_key,component);
 			}
 		}

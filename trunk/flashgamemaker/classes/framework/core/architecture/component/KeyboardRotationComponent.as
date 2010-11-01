@@ -37,7 +37,7 @@ package framework.core.architecture.component{
 	* 
 	*/
 	public class KeyboardRotationComponent extends GraphicComponent {
-		
+
 		private var _keyboardManager:IKeyboardManager=null;
 		private var _degree:int=1;
 		//KeyboardInput properties
@@ -59,7 +59,15 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			updateRotation(_keyboard_key,component);
+			if (componentName==_componentName) {
+				var rotationComponents:Array=getComponentsWithPropertyName("keyboardRotation");
+				for each (var obj in rotationComponents) {
+					var rotationComponent:*=getComponent(obj.ownerName,obj.componentName);
+					updateRotation(_keyboard_key,rotationComponent);
+				}
+			} else {
+				updateRotation(_keyboard_key,component);
+			}
 		}
 		//------ Update Dir  ------------------------------------
 		private function updateRotation(keyboard_key:Object,component:*):void {
@@ -70,7 +78,7 @@ package framework.core.architecture.component{
 				var doubleClick:Boolean=keyboard_key.doubleClick;
 				if (keyStatut=="DOWN") {
 					if (keyTouch=="RIGHT") {
-						component._spatial_rotation=-_degree;
+						component._spatial_rotation=- _degree;
 						component._spatial_properties.isMoving=true;
 					} else if (keyTouch=="LEFT") {
 						component._spatial_rotation=_degree;

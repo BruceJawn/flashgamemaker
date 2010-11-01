@@ -68,7 +68,6 @@ package framework.core.architecture.component{
 		//------- Check Attack -------------------------------
 		private function checkAttack():void {
 			if (_keyboard_key.keyStatut=="DOWN"&&_keyboard_key.keyTouch=="ATTACK") {
-				trace("Attack");
 				var componentWithProperty:Array=getComponentsWithPropertyName("health");
 				for each (var playerAttacking:PlayerComponent in _players) {
 					for each (var obj:Object in componentWithProperty) {
@@ -77,6 +76,7 @@ package framework.core.architecture.component{
 						var playerHit:PlayerComponent=getComponent(ownerName,componentName);
 						if(isHit(playerAttacking,playerHit)){
 							attack(playerAttacking,playerHit);
+							refresh("health");
 						}
 					}
 				}
@@ -86,7 +86,6 @@ package framework.core.architecture.component{
 		private function attack(playerAttacking:PlayerComponent, playerHit:PlayerComponent):void {
 			if(playerHit._health>0){
 				playerHit._health-=playerAttacking._attack;
-				update("health");
 			}
 		}
 		//------- Is Hi -------------------------------

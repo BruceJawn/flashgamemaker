@@ -39,7 +39,7 @@ package framework.core.architecture.component{
 	public class AnimationComponent extends Component {
 
 		//Timer properties
-		public var _timer_on:Boolean = false;
+		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=120;
 		public var _timer_count:Number=0;
 
@@ -59,25 +59,34 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay) {
-				if (componentName!=_componentName) {
-					var frame:int=getFrame(component);
-					frame=setAnimation(component,frame);
-					frame=setFrame(component,frame);
-					component._graphic_oldFrame=component._graphic_frame;
-					component._graphic_frame=frame;
-					component.actualizeComponent(componentName,componentOwner,component);
+				if (componentName==_componentName) {
+					var animationComponents:Array=getComponentsWithPropertyName("animation");
+					for each (var obj in animationComponents) {
+						var animationComponent:*=getComponent(obj.ownerName,obj.componentName);
+						updateFrame(obj.componentName,obj.ownerName,animationComponent);
+					}
 				}
 			}
 		}
+		//-- Update Frame ---------------------------------------------------
+		private function updateFrame(componentName:String,componentOwner:String,component:*) {
+			var frame:int=getFrame(component);
+			frame=setAnimation(component,frame);
+			frame=setFrame(component,frame);
+			component._graphic_oldFrame=component._graphic_frame;
+			component._graphic_frame=frame;
+			component.actualizeComponent(componentName,componentOwner,component);
+		}
+
 		//-- Get Frame ---------------------------------------------------
 		public function getFrame(component:*):int {
 			var graphic_frame:int=component._graphic_frame;
 			var graphic_numFrame:int=component._graphic_numFrame;
 			var graphic_oldFrame:int=component._graphic_oldFrame;
 			var totalFrame:int=graphic_numFrame*graphic_numFrame;
-			
+
 			var spatial_dir:IsoPoint=component._spatial_dir;
-			
+
 			if (spatial_dir.x>0) {//Right
 				graphic_frame=1;
 			} else if (spatial_dir.x<0) {//Left
@@ -86,13 +95,13 @@ package framework.core.architecture.component{
 				graphic_frame=graphic_numFrame+1;
 			} else if (spatial_dir.y<0) {//Up
 				graphic_frame=graphic_numFrame*3+1;
-			}else if(graphic_frame%totalFrame<=graphic_numFrame){//Right
+			} else if (graphic_frame%totalFrame<=graphic_numFrame) {//Right
 				graphic_frame=1;
-			}else if(graphic_frame%totalFrame<=graphic_numFrame*2){//Down
+			} else if (graphic_frame%totalFrame<=graphic_numFrame*2) {//Down
 				graphic_frame=graphic_numFrame+1;
-			}else if(graphic_frame%totalFrame<=graphic_numFrame*3){//Left
+			} else if (graphic_frame%totalFrame<=graphic_numFrame*3) {//Left
 				graphic_frame=graphic_numFrame*2+1;
-			}else if(graphic_frame%totalFrame<=graphic_numFrame*4){//Up
+			} else if (graphic_frame%totalFrame<=graphic_numFrame*4) {//Up
 				graphic_frame=graphic_numFrame*3+1;
 			}
 			return graphic_frame;
@@ -101,7 +110,7 @@ package framework.core.architecture.component{
 		private function setFrame(component:*, graphic_frame:int):int {
 			var graphic_numFrame:int=component._graphic_numFrame;
 			var graphic_oldFrame:int=component._graphic_oldFrame;
-			
+
 			graphic_frame++;
 			if (graphic_oldFrame!=0 && (graphic_oldFrame+1)%4==0 && graphic_frame==graphic_oldFrame+2) {
 				graphic_frame-=4;
@@ -119,19 +128,19 @@ package framework.core.architecture.component{
 			var graphic_numFrame:int=component._graphic_numFrame;
 			var graphic_oldFrame:int=component._graphic_oldFrame;
 			var animation:Dictionary=component._animation;
-			if (isFalling && animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
+			if (isFalling&&animation["JUMP"]!=null&&graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("FALLING");
 				graphic_frame+=animation["JUMP"]*graphic_numFrame*graphic_numFrame;
-			}else if (isDoubleJumping && animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
+			} else if (isDoubleJumping && animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("DOUBLE_JUMP");
 				graphic_frame+=animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame;
 			} else if (isJumping && animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("JUMP");
 				graphic_frame+=animation["JUMP"]*graphic_numFrame*graphic_numFrame;
-			}else if (isAttacking && animation["ATTACK"]!= null && graphic_frame<animation["ATTACK"]*graphic_numFrame*graphic_numFrame) {
+			} else if (isAttacking && animation["ATTACK"]!= null && graphic_frame<animation["ATTACK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("ATTACK");
 				graphic_frame+=animation["ATTACK"]*graphic_numFrame*graphic_numFrame;
-			}  else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
+			} else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
 				//trace("WALK");
 				graphic_frame+=animation["RUN"]*graphic_numFrame*graphic_numFrame;
 			} else if (isMoving && animation["WALK"]!= null && graphic_frame<animation["WALK"]*graphic_numFrame*graphic_numFrame) {
@@ -143,7 +152,7 @@ package framework.core.architecture.component{
 			}
 			return graphic_frame;
 		}
-		
+
 		//------- ToString -------------------------------
 		public override function ToString():void {
 
