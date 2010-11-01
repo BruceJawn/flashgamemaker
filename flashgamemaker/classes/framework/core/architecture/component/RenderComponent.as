@@ -73,7 +73,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (! _graphicManager.containsGraphic(componentName)) {
+			if (!_graphicManager.containsGraphic(componentName)) {
 				var _render_layerId:int=component._render_layerId;
 				var _render_alpha:Number=component._render_alpha;
 				component.alpha = _render_alpha;

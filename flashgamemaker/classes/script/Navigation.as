@@ -46,13 +46,13 @@ package script{
 		}
 		//------ Init Entity ------------------------------------
 		private function initEntity():void {
-			var entity:IEntity=_entityManager.createEntity("myGameEntity");
+			var entity:IEntity=_entityManager.createEntity("GameEntity");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var spatialComponent:SpatialComponent=_entityManager.addComponent("myGameEntity","SpatialComponent","mySpatialComponent");
-			var renderComponent:RenderComponent=_entityManager.addComponent("myGameEntity","RenderComponent","myRenderComponent");
-			var navigationComponent:NavigationComponent=_entityManager.addComponent("myGameEntity","NavigationComponent","myNavigationComponent");
+			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
+			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
+			var navigationComponent:NavigationComponent=_entityManager.addComponent("GameEntity","NavigationComponent","myNavigationComponent");
 			navigationComponent.setScript(_scriptName);
 		}
 		//------- ToString -------------------------------

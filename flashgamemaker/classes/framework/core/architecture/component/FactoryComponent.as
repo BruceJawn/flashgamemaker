@@ -337,7 +337,6 @@ package framework.core.architecture.component{
 				_swfPlayer = null;
 				_button.label = "Create";
 			}
-			refresh();
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -46,7 +46,7 @@ package script.game{
 		}
 		//------ Init Entity ------------------------------------
 		private function initEntity():void {
-			var entity:IEntity=_entityManager.createEntity("GameEntity");
+			//var entity:IEntity=_entityManager.createEntity("GameEntity");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -67,9 +67,10 @@ package script.game{
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
 			var groundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
-			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
+			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
+			groundSphereComponent.setRotation(2);
 			groundSphereComponent.moveTo(220,1050);
 			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
@@ -78,7 +79,7 @@ package script.game{
 			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.moveTo(120,300);
-			var swfEnnemyComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","swfEnnemyComponent");
+			var swfEnnemyComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
 			swfEnnemyComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfEnnemyComponent.setDirection("Horizontal");
 			swfEnnemyComponent.setPropertyReference("health",swfEnnemyComponent._componentName);

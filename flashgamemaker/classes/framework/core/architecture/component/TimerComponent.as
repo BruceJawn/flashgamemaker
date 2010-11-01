@@ -83,7 +83,6 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			component._timer_count+= _timer_delay;
-			component.refresh();
 			component.actualizeComponent(componentName,componentOwner,component);
 			if(component._timer_on==false){
 				component._timer_on=true;

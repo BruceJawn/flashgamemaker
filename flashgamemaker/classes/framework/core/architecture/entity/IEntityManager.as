@@ -89,6 +89,6 @@ package framework.core.architecture.entity{
 		/**
 		 * Refresh
 		 */	
-		function refresh(propertyName:String):void 
+		function refresh(propertyName:String):void; 
 	}
 }

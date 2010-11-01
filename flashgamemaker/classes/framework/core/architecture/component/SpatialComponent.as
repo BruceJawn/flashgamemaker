@@ -45,7 +45,7 @@ package framework.core.architecture.component{
 		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
 		public var _spatial_rotation:Number=0;// dirx, diry and dirz
 		public var _spatial_position:IsoPoint=null;// x, y and z
-		public var _spatial_properties:Object = null;
+		public var _spatial_properties:Object=null;
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=30;
@@ -63,8 +63,8 @@ package framework.core.architecture.component{
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
 			_spatial_jump=new IsoPoint(0,0,-12);
-			_spatial_properties = {dynamic:false,iso:false, direction:"Diagonal", collision:false,isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
-			
+			_spatial_properties={dynamic:false,iso:false,direction:"Diagonal",collision:false,isMoving:false,isrunning:false,isJumping:false,isDoubleJumping:false,isFalling:false,isAttacking:false,isSliding:false,isClimbing:false};
+
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -77,7 +77,19 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay || !_timer_on) {
+			if (componentName==_componentName) {
+				var spatialComponents:Array=getComponentsWithPropertyName("spatial");
+				for each (var obj in spatialComponents) {
+					var spatialComponent:*=getComponent(obj.ownerName,obj.componentName);
+					updatePosition(spatialComponent);
+				}
+			} else {
+				updatePosition(component);
+			}
+		}
+		//------ Update Position ------------------------------------
+		private function updatePosition(component:*):void {
+			if (_timer_count>=_timer_delay||! _timer_on) {
 				_physicManager.move(component,_spatial_position);
 				component.rotate();
 			}
