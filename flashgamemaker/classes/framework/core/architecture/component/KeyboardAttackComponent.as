@@ -75,17 +75,11 @@ package framework.core.architecture.component{
 						var ownerName:String=obj.ownerName;
 						var playerHit:PlayerComponent=getComponent(ownerName,componentName);
 						if(isHit(playerAttacking,playerHit)){
-							attack(playerAttacking,playerHit);
+							playerHit._health_hit=playerAttacking._attack;
 							refresh("health");
 						}
 					}
 				}
-			}
-		}
-		//------- Attack -------------------------------
-		private function attack(playerAttacking:PlayerComponent, playerHit:PlayerComponent):void {
-			if(playerHit._health>0){
-				playerHit._health-=playerAttacking._attack;
 			}
 		}
 		//------- Is Hi -------------------------------

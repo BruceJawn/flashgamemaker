@@ -81,9 +81,9 @@ package framework.core.architecture.entity{
 		 */	
 		function setPropertyReference(propertyReferenceName:String, componentName:String):Boolean;
 		/**
-		 * Remove property Reference
+		 * Unregister property Reference
 		 */	
-		function removePropertyReference(propertyReferenceName:String, componentName:String):void;
+		function unregisterPropertyReference(propertyReferenceName:String, componentName:String):void;
 		/**
 		 * Create Entity
 		 */	
