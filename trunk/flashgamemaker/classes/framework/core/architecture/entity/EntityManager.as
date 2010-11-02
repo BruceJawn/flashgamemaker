@@ -142,7 +142,7 @@ package framework.core.architecture.entity{
 			var propertyReference:Array=component.getPropertyReference();
 			for each (var propertyName:String in propertyReference) {
 				try {
-					removePropertyReference(propertyName, componentName,entityName);
+					unregisterPropertyReference(propertyName, componentName,entityName);
 				} catch (e:Error) {
 					trace(e);
 				}
@@ -215,8 +215,8 @@ package framework.core.architecture.entity{
 			component.addPropertyReference(propertyReferenceName);
 			return bool;
 		}
-		//------ Remove Property Reference ------------------------------------
-		public function removePropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
+		//------ Unregister Property Reference ------------------------------------
+		public function unregisterPropertyReference(propertyReferenceName:String, componentName:String, ownerName:String):void {
 			if (_propertyReferences[propertyReferenceName]==null) {
 				throw new Error("Error: There is no Property Reference with the name "+propertyReferenceName+" !!");
 			}

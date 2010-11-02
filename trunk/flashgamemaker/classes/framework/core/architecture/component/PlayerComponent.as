@@ -64,8 +64,9 @@ package framework.core.architecture.component{
 		//Attack properties
 		public var _attack:Number=1;
 		//Health properties
-		public var _health:Number=10;
-		public var _healthMax:Number=10;		
+		public var _health_life:Number=10;
+		public var _health_lifeMax:Number=10;		
+		public var _health_hit:Number=0;
 
 		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
