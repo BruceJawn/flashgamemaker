@@ -38,14 +38,7 @@ package framework.core.architecture.component{
 
 		private var _textField:TextField=null;
 		private var _textFormat:TextFormat=null;
-		private var _tweener:Boolean=false;
-		private var _tweener_type:String=null;
-		private var _tweener_properties:Object=null;
-		//Timer properties
-		public var _timer_on:Boolean=false;
-		public var _timer_delay:Number=30;
-		public var _timer_count:Number=0;
-
+		
 		public function TextComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -56,7 +49,10 @@ package framework.core.architecture.component{
 			_textFormat = new TextFormat();
 			_textField.defaultTextFormat=_textFormat;
 			addChild(_textField);
-			_tweener_properties = new Object();
+		}
+		//------ Init Property  ------------------------------------
+		public override function initProperty():void {
+			super.initProperty();
 		}
 		//------Set Text -------------------------------------
 		public function setText(text:String,autoSize:String=TextFieldAutoSize.LEFT, width:Number =100 , height:Number=50 , selectable:Boolean=false, rotation:Number=0, background:Boolean=false,backgroundColor:uint=0, border:Boolean=false, displayAsPassword :Boolean=false , multiline:Boolean= true, maxChars:int =0 ):void {
@@ -77,64 +73,6 @@ package framework.core.architecture.component{
 		public function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
 			_textFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
 			_textField.setTextFormat(_textFormat);
-		}
-		//------Set Movment Tweener -------------------------------------
-		public function setMovmentTweener(destination:Point,speed:int=1,delay:int=30,autodestruction:Boolean=false):void {
-			_tweener=true;
-			_tweener_properties.movment=true;
-			_tweener_properties.destination=destination;
-			_tweener_properties.speed=speed;
-			_tweener_properties.autodestruction=autodestruction;
-			_timer_on=true;
-			_timer_delay=delay;
-			setPropertyReference("timer",_componentName);
-		}
-		//------ Actualize Components  ------------------------------------
-		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_tweener) {
-				if (_tweener_properties.movment) {
-					tweenMove(component);
-				}
-				if (_tweener_properties.shape) {
-					tweenShape(component);
-				}
-			}
-		}
-		//------- Tween Move -------------------------------
-		private function tweenMove(component:*):void {
-			if (Math.round(_spatial_position.x)!=Math.round(_tweener_properties.destination.x)||Math.round(_spatial_position.y)!=Math.round(_tweener_properties.destination.y)) {
-				if (_spatial_position.x<_tweener_properties.destination.x) {
-					_spatial_position.x+=_tweener_properties.speed;
-					if(_spatial_position.x>_tweener_properties.destination.x){
-						_spatial_position.x=_tweener_properties.destination.x;
-					}
-				} else if (_spatial_position.x>_tweener_properties.destination.x) {
-					_spatial_position.x-=_tweener_properties.speed;
-					if(_spatial_position.x<_tweener_properties.destination.x){
-						_spatial_position.x=_tweener_properties.destination.x;
-					}
-				}
-				if (_spatial_position.y<_tweener_properties.destination.y) {
-					_spatial_position.y+=_tweener_properties.speed;
-					if(_spatial_position.y>_tweener_properties.destination.y){
-						_spatial_position.y=_tweener_properties.destination.y;
-					}
-				} else if (_spatial_position.y>_tweener_properties.destination.y) {
-					_spatial_position.y-=_tweener_properties.speed;
-					if(_spatial_position.y<_tweener_properties.destination.y){
-						_spatial_position.y=_tweener_properties.destination.y;
-					}
-				}
-			}else{
-				unregisterPropertyReference("timer", _componentName);
-				if(_tweener_properties.autodestruction){
-					removeComponent(_componentName);
-				}
-			}
-		}
-		//------- Tween Shape -------------------------------
-		private function tweenShape(component:*):void {
-
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

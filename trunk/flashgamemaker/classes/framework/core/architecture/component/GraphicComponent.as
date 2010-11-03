@@ -31,6 +31,7 @@ package framework.core.architecture.component{
 	import flash.events.*;
 	import flash.display.*;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 
 	/**
 	* Entity Class
@@ -46,20 +47,16 @@ package framework.core.architecture.component{
 		//Render properties
 		public var _render_layerId:int=0;
 		public var _render_alpha:Number=1;
-		/*public var _width:Number;
-		public var _height:Number;
-		public var _scaleX:Number = 1;
-		public var _scaleY:Number = 1;
-		public var _rotation:Number = 0;
-		public var _blendMode:String = BlendMode.NORMAL;
-		public var _transformMatrix:Matrix = new Matrix();*/
-
 		//Spatial properties
 		public var _spatial_position:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
 		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
 		public var _spatial_rotation:Number=0;
-		public var _spatial_properties:Object = null;
+		public var _spatial_properties:Object=null;
+		//Tweener Properties
+		public var _tweener:Boolean=false;
+		public var _tweener_type:String=null;
+		public var _tweener_properties:Object=null;
 
 		public function GraphicComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -72,7 +69,8 @@ package framework.core.architecture.component{
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
-			_spatial_properties = {dynamic:false, isMoving:false};
+			_spatial_properties={dynamic:false,isMoving:false};
+			_tweener_properties = new Object();
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -82,7 +80,7 @@ package framework.core.architecture.component{
 		//------ Load Graphic  ------------------------------------
 		public function loadGraphic(path:String,graphicName:String, layer:int=0):void {
 			_graphicName=graphicName;
-			_render_layerId = layer;
+			_render_layerId=layer;
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
@@ -130,7 +128,7 @@ package framework.core.architecture.component{
 		}
 		//------ Set Layer  ------------------------------------
 		public function setLayer(graphicName:String, layerId:int):void {
-			_render_layerId = layerId;
+			_render_layerId=layerId;
 			_graphicManager.setLayer(graphicName,layerId);
 		}
 		//------ Get Graphic  ------------------------------------
@@ -150,13 +148,29 @@ package framework.core.architecture.component{
 		}
 		//------ Rotate Graphic  ------------------------------------
 		public function rotate():void {
-			if(_spatial_rotation!=0){
+			if (_spatial_rotation!=0) {
 				this.rotation+=_spatial_rotation;
 			}
 		}
 		//------ SetRotation  ------------------------------------
 		public function setRotation(angle:Number):void {
 			_spatial_rotation=angle;
+		}
+		//------Set Movment Tweener -------------------------------------
+		public function setMovmentTweener(destination:Point,speed:int=1,autodestruction:Boolean=false):void {
+			_tweener=true;
+			_tweener_properties.movment=true;
+			_tweener_properties.destination=destination;
+			_tweener_properties.speed=speed;
+			_tweener_properties.autodestruction=autodestruction;
+			setPropertyReference("tween",_componentName);
+		}
+		//------Set Shape Tweener -------------------------------------
+		public function setShapeTweener(width:Number,height:Number,delay:int=30,autodestruction:Boolean=false):void {
+			_tweener=true;
+			_tweener_properties.shape=true;
+			setPropertyReference("tween",_componentName);
+
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

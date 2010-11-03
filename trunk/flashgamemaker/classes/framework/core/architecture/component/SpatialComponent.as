@@ -78,11 +78,7 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (componentName==_componentName) {
-				var spatialComponents:Array=getComponentsWithPropertyName("spatial");
-				for each (var obj in spatialComponents) {
-					var spatialComponent:*=getComponent(obj.ownerName,obj.componentName);
-					updatePosition(spatialComponent);
-				}
+				update("spatial");
 			} else {
 				updatePosition(component);
 			}

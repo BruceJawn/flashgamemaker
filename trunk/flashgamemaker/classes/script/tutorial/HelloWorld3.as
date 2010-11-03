@@ -49,7 +49,7 @@ package script.tutorial{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var renderComponent:RenderComponent=_entityManager.addComponent("Entity","RenderComponent","myRenderComponent");
-			var textComponent=_entityManager.addComponent("Entity","TextComponent","myText");
+			var textComponent:TextComponent=_entityManager.addComponent("Entity","TextComponent","myText");
 			textComponent.moveTo(160,160);
 			textComponent.setText("HelloWorld");
 			textComponent.setFormat("Times New Roman",16, 0xFF0000);//Font police, size, color

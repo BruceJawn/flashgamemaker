@@ -51,11 +51,7 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (componentName==_componentName) {
-				var healthComponents:Array=getComponentsWithPropertyName("health");
-				for each (var obj in healthComponents) {
-					var healthComponent:*=getComponent(obj.ownerName,obj.componentName);
-					updateHealth(healthComponent);
-				}
+				update("health");
 			} else {
 				updateHealth(component);
 			}
@@ -76,7 +72,7 @@ package framework.core.architecture.component{
 			textComponent.moveTo(component._spatial_position.x,component._spatial_position.y-component.height-5);
 			textComponent.setText("-"+component._health_hit);
 			textComponent.setFormat("Arial",20,0xFF0000);
-			textComponent.setMovmentTweener(new Point(textComponent._spatial_position.x,textComponent._spatial_position.y-35),1,30,true);
+			textComponent.setMovmentTweener(new Point(textComponent._spatial_position.x,textComponent._spatial_position.y-35),2,true);
 			_index++;
 		}
 		//------- ToString -------------------------------

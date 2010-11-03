@@ -58,7 +58,7 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
+			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer", 2);
 			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setCollision(true);
@@ -87,7 +87,7 @@ package script.game{
 		//------ On Loading Successful ------------------------------------
 		private function onLoadingSuccessful( evt:Event ):void {
 			evt.target.removeEventListener(Event.COMPLETE, onLoadingSuccessful);
-			var chronoComponent = _entityManager.getComponent("GameEntity","myChronoComponent");
+			var chronoComponent: ChronoComponent= _entityManager.getComponent("GameEntity","myChronoComponent");
 			chronoComponent.start();
 		}
 		//------- ToString -------------------------------

@@ -70,6 +70,7 @@ package framework.core.architecture.component{
 			var tileMapEditorComponent:TileMapEditorComponent;
 			var healthComponent:HealthComponent;
 			var keyboardAttackComponent:KeyboardAttackComponent;
+			var tweenComponent:TweenComponent;
 		}
 	}
 }
