@@ -162,6 +162,17 @@ package framework.core.architecture.component{
 		public function getDirection():IsoPoint {
 			return _spatial_dir;
 		}
+		//------ Get Facing Direction ------------------------------------
+		public function getFacingDirection():String {
+			if(Math.round(_graphic_frame/_graphic_numFrame)==1){
+				return "RIGHT"
+			}else if(Math.round(_graphic_frame/_graphic_numFrame)==2){
+				return "DOWN"
+			}else if(Math.round(_graphic_frame/_graphic_numFrame)==3){
+				return "LEFT"
+			}
+			return "UP";
+		}
 		//------ Get Speed ------------------------------------
 		public function getSpeed():IsoPoint {
 			return _spatial_speed;

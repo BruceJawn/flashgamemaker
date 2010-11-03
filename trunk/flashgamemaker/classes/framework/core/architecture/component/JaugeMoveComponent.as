@@ -53,12 +53,16 @@ package framework.core.architecture.component{
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			setPropertyReference("jauge",_componentName);
 			registerProperty("jaugeMove",_componentName);
+			setPropertyReference("jauge",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			updateSpeed(component);
+			if (componentName==_componentName) {
+				update("jaugeMove");
+			} else {
+				updateSpeed(component);
+			}
 		}
 		//------ Update Speed  ------------------------------------
 		private function updateSpeed(component:*):void {

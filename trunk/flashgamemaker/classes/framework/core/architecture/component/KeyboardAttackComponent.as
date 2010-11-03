@@ -82,7 +82,7 @@ package framework.core.architecture.component{
 				}
 			}
 		}
-		//------- Is Hi -------------------------------
+		//------- Is Hit -------------------------------
 		private function isHit(playerAttacking:PlayerComponent, playerHit:PlayerComponent):Boolean {
 			if (playerAttacking.hitTestObject(playerHit)) {
 				return true;
