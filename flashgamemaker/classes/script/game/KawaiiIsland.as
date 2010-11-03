@@ -59,8 +59,8 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var backGroundComponent:BackGroundComponent= _entityManager.addComponent("GameEntity","BackGroundComponent","myBackGroundComponent");
-			backGroundComponent.changeColor("95eaff");
+			var backGroundColorComponent:BackGroundColorComponent= _entityManager.addComponent("GameEntity","BackGroundColorComponent","myBackGroundColorComponent");
+			backGroundColorComponent.changeColor("95eaff");
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setLoop(true);
@@ -87,7 +87,6 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardAttackComponent:KeyboardAttackComponent=_entityManager.addComponent("GameEntity","KeyboardAttackComponent","myKeyboardAttackComponent");
-			
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

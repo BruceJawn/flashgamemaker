@@ -58,8 +58,8 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var backGroundComponent:BackGroundComponent= _entityManager.addComponent("GameEntity","BackGroundComponent","myBackGroundComponent");
-			backGroundComponent.changeColor("000000");
+			var backGroundColorComponent:BackGroundColorComponent= _entityManager.addComponent("GameEntity","BackGroundColorComponent","myBackGroundColorComponent");
+			backGroundColorComponent.changeColor("000000");
 			var header:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","KorizonHeader");
 			header.loadGraphic("texture/framework/game/interface/korizon/header.gif", "KorizonHeader");
 			var statut:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","KorizonStatut");

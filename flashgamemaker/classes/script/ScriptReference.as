@@ -45,6 +45,7 @@ package script{
 			var kawaiiFight:KawaiiFight;
 			var kawaiiOlympic:KawaiiOlympic;
 			var korizon:Korizon;
+			var msOrigin:MSOrigin;
 		}
 	}
 }

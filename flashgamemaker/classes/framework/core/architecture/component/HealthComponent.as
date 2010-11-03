@@ -23,19 +23,19 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	
+
 	import flash.geom.Point;
 	/**
 	* Entity Class
 	*/
 	public class HealthComponent extends Component {
-		
+
 		private var _index:Number=0;
 		//Health properties
 		public var _health_life:Number=10;
-		public var _health_lifeMax:Number=10;		
+		public var _health_lifeMax:Number=10;
 		public var _health_hit:Number=0;
-		
+
 		public function HealthComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -58,8 +58,8 @@ package framework.core.architecture.component{
 		}
 		//------ Update Health ------------------------------------
 		private function updateHealth(component:*):void {
-			if(component._health_hit!=0){
-				if(component._health_life>0){
+			if (component._health_hit!=0) {
+				if (component._health_life>0) {
 					displayHit(component);
 					component._health_life-=component._health_hit;
 				}
@@ -68,7 +68,7 @@ package framework.core.architecture.component{
 		}
 		//------ Display Hit ------------------------------------
 		private function displayHit(component:*):void {
-			var textComponent:TextComponent= addComponent(_componentOwner.getName(),"TextComponent","myHealthHitTextComponent"+_index);
+			var textComponent:TextComponent=addComponent(_componentOwner.getName(),"TextComponent","myHealthHitTextComponent"+_index);
 			textComponent.moveTo(component._spatial_position.x,component._spatial_position.y-component.height-5);
 			textComponent.setText("-"+component._health_hit);
 			textComponent.setFormat("Arial",20,0xFF0000);

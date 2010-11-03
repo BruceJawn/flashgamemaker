@@ -144,7 +144,7 @@ package framework.core.architecture.component{
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
 			_spatial_position.y=y;
-			update("spatial");
+			//update("spatial");
 		}
 		//------ Rotate Graphic  ------------------------------------
 		public function rotate():void {
@@ -170,7 +170,6 @@ package framework.core.architecture.component{
 			_tweener=true;
 			_tweener_properties.shape=true;
 			setPropertyReference("tween",_componentName);
-
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -58,7 +58,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay&&componentName==_componentName) {
+			if (componentName==_componentName && (_timer_count>=_timer_delay||! _timer_on)) {
 				update("animation");
 			} else if (componentName!=_componentName) {
 				updateFrame(componentName,componentOwner,component);
