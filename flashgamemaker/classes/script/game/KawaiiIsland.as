@@ -66,26 +66,27 @@ package script.game{
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
-			var groundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
+			var groundSphereComponent:GroundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
 			groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
 			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
 			groundSphereComponent.setRotation(2);
 			groundSphereComponent.moveTo(220,1050);
-			var swfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
+			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setPropertyReference("keyboardAttack",swfPlayerComponent._componentName);
 			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.moveTo(120,300);
-			var swfEnnemyComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
+			var swfEnnemyComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
 			swfEnnemyComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfEnnemyComponent.setDirection("Horizontal");
 			swfEnnemyComponent.setPropertyReference("health",swfEnnemyComponent._componentName);
 			swfEnnemyComponent.moveTo(200,300);
-			var healthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
-			var keyboardAttackComponent=_entityManager.addComponent("GameEntity","KeyboardAttackComponent","myKeyboardAttackComponent");
+			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
+			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
+			var keyboardAttackComponent:KeyboardAttackComponent=_entityManager.addComponent("GameEntity","KeyboardAttackComponent","myKeyboardAttackComponent");
 			
 		}
 		//------- ToString -------------------------------

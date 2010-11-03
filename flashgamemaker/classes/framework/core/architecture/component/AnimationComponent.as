@@ -40,7 +40,7 @@ package framework.core.architecture.component{
 
 		//Timer properties
 		public var _timer_on:Boolean=false;
-		public var _timer_delay:Number=120;
+		public var _timer_delay:Number=60;
 		public var _timer_count:Number=0;
 
 		public function AnimationComponent(componentName:String, componentOwner:IEntity) {
@@ -58,18 +58,14 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay) {
-				if (componentName==_componentName) {
-					var animationComponents:Array=getComponentsWithPropertyName("animation");
-					for each (var obj in animationComponents) {
-						var animationComponent:*=getComponent(obj.ownerName,obj.componentName);
-						updateFrame(obj.componentName,obj.ownerName,animationComponent);
-					}
-				}
+			if (_timer_count>=_timer_delay&&componentName==_componentName) {
+				update("animation");
+			} else if (componentName!=_componentName) {
+				updateFrame(componentName,componentOwner,component);
 			}
 		}
 		//-- Update Frame ---------------------------------------------------
-		private function updateFrame(componentName:String,componentOwner:String,component:*) {
+		private function updateFrame(componentName:String,componentOwner:String,component:*):void {
 			var frame:int=getFrame(component);
 			frame=setAnimation(component,frame);
 			frame=setFrame(component,frame);

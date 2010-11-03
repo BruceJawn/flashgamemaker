@@ -43,7 +43,7 @@ package framework.core.architecture.component{
 	public class TimerComponent extends Component {
 		
 		private var _timer:Timer = null;
-		private var _timer_delay:Number = 100;
+		private var _timer_delay:Number = 30;
 		private var _timer_count:Number = 0;
 		
 		public function TimerComponent(componentName:String, componentOwner:IEntity) {
@@ -53,8 +53,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-			_timer_delay = 30;
-			_timer_count = 0;
+			
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {

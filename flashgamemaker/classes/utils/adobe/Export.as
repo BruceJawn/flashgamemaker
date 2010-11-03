@@ -30,7 +30,7 @@ package utils.adobe{
 
 	public class Export {
 
-		public static function ExportJPG(clip:DisplayObject, fileName:String, quality:Number=90) {
+		public static function ExportJPG(clip:DisplayObject, fileName:String, quality:Number=90):void{
 			var jpgSource:BitmapData=new BitmapData(clip.width,clip.height);
 			jpgSource.draw(clip);
 			var jpgEncoder:JPGEncoder=new JPGEncoder(quality);

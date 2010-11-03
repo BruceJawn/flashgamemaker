@@ -51,7 +51,7 @@ package framework.core.architecture.component{
 		private var _option:MovieClip= new MovieClip();
 		private var _panel:MovieClip= new MovieClip();
 		private var _panelScrollPane:ScrollPane;
-		private var _panelSelectedTile=null;
+		private var _panelSelectedTile:MovieClip=null;
 		private var _tileMap:TileMapComponent=null;
 		//KeyboardInput properties
 		public var _keyboard_key:Object=null;
@@ -380,8 +380,8 @@ package framework.core.architecture.component{
 			var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
 			for (var i:Number=0; i<=5; i++) {
 				var tileFrame:Number=i+1;
-				var x=0;
-				var y=i;
+				var x:int=0;
+				var y:int=i;
 				var myBitmapData:BitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
 				myBitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
 				var bitmap:Bitmap=new Bitmap(myBitmapData);
@@ -405,7 +405,7 @@ package framework.core.architecture.component{
 			//trace(evt);
 			if (_panelSelectedTile!=evt.target) {
 				colorTile(_panelSelectedTile, 1,1,1,1,0,0,0);
-				_panelSelectedTile=evt.target;
+				_panelSelectedTile=evt.target as MovieClip;
 				colorTile(evt.target as MovieClip, 0.5,0,0,1,0,0,0);
 			}
 		}

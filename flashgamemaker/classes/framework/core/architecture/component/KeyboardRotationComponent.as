@@ -60,11 +60,7 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (componentName==_componentName) {
-				var rotationComponents:Array=getComponentsWithPropertyName("keyboardRotation");
-				for each (var obj in rotationComponents) {
-					var rotationComponent:*=getComponent(obj.ownerName,obj.componentName);
-					updateRotation(_keyboard_key,rotationComponent);
-				}
+				update("keyboardRotation");
 			} else {
 				updateRotation(_keyboard_key,component);
 			}

@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="bin\FlashGameMaker.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="400" />
+    <movie height="345" />
     <movie version="10" />
     <movie background="#FFFFFF" />
   </output>
@@ -28,10 +28,10 @@
     <option showBindingWarnings="True" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
-    <option strict="True" />
+    <option strict="False" />
     <option useNetwork="True" />
     <option useResourceBundleMetadata="True" />
-    <option warnings="True" />
+    <option warnings="False" />
     <option verboseStackTraces="False" />
     <option linkReport="" />
     <option loadExterns="" />
