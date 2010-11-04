@@ -167,7 +167,10 @@ package framework.core.system{
 		public function displayGraphic(graphicName:String, graphic:*, layerId:int):DisplayObject {
 			registerGraphicOnScene(graphicName,graphic);
 			if (layerId>=_layers.length) {
-				layerId=createNewLayer();
+				for (var i:int =_layers.length;i<=layerId;i++){
+					layerId=createNewLayer();
+					//trace(i);
+				}
 			}
 			var layer:Sprite=_layers[layerId];
 			return Clip.AddChild(layer,graphic);

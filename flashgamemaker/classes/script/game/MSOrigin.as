@@ -51,7 +51,6 @@ package script.game{
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var smusicComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
 			keyboardInputComponent.setKey(40, "SIT");
@@ -78,7 +77,10 @@ package script.game{
 			//backGroundComponent.setDirection(swfPlayerComponent.getDirection());
 			backGroundComponent.setPropertyReference("timer",backGroundComponent._componentName);
 			backGroundComponent.moveTo(0,100);
-			backGroundComponent.setSound( "sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
+			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
+			soundComponent.setController("texture/framework/interface/soundControl.swf","SoundControl");
+			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
+			soundComponent.moveTo(300,310);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");

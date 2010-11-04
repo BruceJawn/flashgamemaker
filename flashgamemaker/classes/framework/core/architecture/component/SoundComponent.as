@@ -28,53 +28,90 @@ package framework.core.architecture.component{
 
 	import flash.events.EventDispatcher;
 	import flash.events.*;
-	
+
 	/**
 	* Sound Component
 	* @ purpose: 
 	* 
 	*/
-	public class SoundComponent extends Component {
+	public class SoundComponent extends GraphicComponent {
 
 		private var _soundManager:ISoundManager=null;
 		//Sound properties
 		public var _sound_name:String;
 		public var _sound_path:String;
-		public var _sound_volume:Number =0.5;//Between 0 and 100
-		public var _sound_isPlaying:Boolean = false;
-		public var _sound_play:Boolean = false;
-		
-		public function SoundComponent(componentName:String, componentOwner:IEntity) {
+		public var _sound_volume:Number=0.5;//Between 0 and 100
+		public var _sound_isPlaying:Boolean=false;
+		public var _sound_play:Boolean=false;
+		public var _sound_position:Number=0;
+
+		public function SoundComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_soundManager=SoundManager.getInstance();
-			_sound_name = "MySound";
-			_sound_path = "sound/sound.mp3";
+			_sound_name="MySound";
+			_sound_path="sound/sound.mp3";
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
-			registerProperty("sound", _componentName);
-			setPropertyReference("sound", _componentName);
+			super.initProperty();
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if(!component._sound_isPlaying && component._sound_play){
-				component._sound_isPlaying= true;
-				_soundManager.play(component._sound_name,component._sound_path,component._sound_volume);
-			}else if(component._sound_isPlaying && !component._sound_play){
-				component._sound_isPlaying= false;
+			/*if (! component._sound_isPlaying&&component._sound_play) {
+			component._sound_isPlaying=true;
+			_soundManager.play(component._sound_name,component._sound_path,component._sound_volume);
+			} else if (component._sound_isPlaying&&! component._sound_play) {
+			component._sound_isPlaying=false;
+			_soundManager.stop(component._sound_name);
+			}*/
+		}
+
+		//------- Play -------------------------------
+		public function play(path:String,name:String, volume:Number):void {
+			_sound_name=name;
+			_sound_path=path;
+			_sound_volume=volume;
+			_sound_isPlaying=true;
+			_soundManager.play(_sound_name,_sound_path,_sound_volume);
+		}
+		//------- ToString -------------------------------
+		public override function reset(ownerName:String,componentName:String):void {
+			if (_sound_isPlaying) {
+				_sound_isPlaying=false;
+				_sound_play=false;
 				_soundManager.stop(_sound_name);
 			}
 		}
-		//------- ToString -------------------------------
-		public override function reset(ownerName:String, componentName:String):void {
-			if(_sound_isPlaying){
-				_sound_isPlaying = false;
-				_sound_play = false;
-				_soundManager.stop(_sound_name);
+		//------- SetController -------------------------------
+		public function setController(path:String,name:String):void {
+			loadGraphic(path,name);
+		}
+		//------ On Graphic Loading Successful ------------------------------------
+		protected override function onGraphicLoadingSuccessful(evt:Event):void {
+			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
+			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
+			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
+			if (_graphicName!=null) {
+				_graphic=_graphicManager.getGraphic(_graphicName);
+				_graphic.addEventListener(MouseEvent.CLICK,onClick);
+				addChild(_graphic);
+				dispatchEvent(evt);
+			}
+		}
+		//------- On Click -------------------------------
+		private function onClick(evt:MouseEvent):void {
+			if (_graphic.currentFrame==1) {
+				_graphic.nextFrame();
+				_sound_isPlaying=false;
+				_sound_position=_soundManager.stop(_sound_name);
+			} else {
+				_graphic.prevFrame();
+				_sound_isPlaying=true;
+				_soundManager.resume(_sound_name, _sound_position);
 			}
 		}
 		//------- ToString -------------------------------
