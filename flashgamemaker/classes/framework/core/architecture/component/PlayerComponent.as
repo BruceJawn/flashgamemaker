@@ -85,7 +85,6 @@ package framework.core.architecture.component{
 			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 			_spatial_jump=new IsoPoint(0,0,0);
 			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
-			addChild(_colorPicker);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
@@ -146,6 +145,10 @@ package framework.core.architecture.component{
 		public function setAnimation(animation:Dictionary):void {
 			_animation=animation;
 		}
+		//------ Set Anim ------------------------------------
+		public function setAnim(animation:String, index:int):void {
+			_animation[animation]=index
+		}
 		//------ Set Iso ------------------------------------
 		public function setIso(iso:Boolean):void {
 			_spatial_properties.iso=iso;
@@ -186,6 +189,10 @@ package framework.core.architecture.component{
 		//------ Change Color ------------------------------------
 		public function changeColor(hexColor:String):void {
 
+		}
+		//------ Set Collision  ------------------------------------
+		public  function setCollision(collision:Boolean):void {
+			_spatial_properties.collision=collision;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

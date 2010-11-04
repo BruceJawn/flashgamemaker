@@ -44,7 +44,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-		
+
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
