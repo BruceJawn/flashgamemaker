@@ -53,7 +53,6 @@ package framework.core.architecture.component{
 			_soundManager=SoundManager.getInstance();
 			_sound_name = "MySound";
 			_sound_path = "sound/sound.mp3";
-			_sound_play = true;
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -62,11 +61,11 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if(!_sound_isPlaying && _sound_play){
-				_sound_isPlaying= true;
-				_soundManager.play(_sound_name,_sound_path,_sound_volume);
-			}else if(_sound_isPlaying && !_sound_play){
-				_sound_isPlaying= false;
+			if(!component._sound_isPlaying && component._sound_play){
+				component._sound_isPlaying= true;
+				_soundManager.play(component._sound_name,component._sound_path,component._sound_volume);
+			}else if(component._sound_isPlaying && !component._sound_play){
+				component._sound_isPlaying= false;
 				_soundManager.stop(_sound_name);
 			}
 		}
