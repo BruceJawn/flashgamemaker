@@ -27,26 +27,28 @@ package framework.core.architecture.component{
 	import framework.core.system.ITimeManager;
 	import utils.time.Time;
 
+	import flash.display.*;
+	import flash.events.*;
+	import flash.geom.*;
 	import flash.utils.Timer;
-	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.geom.Point;
-	import flash.events.EventDispatcher;
-	/**
 	
 	/**
 	* Chrono Class
 	* @ purpose: 
 	*/
 	public class ChronoComponent extends GraphicComponent {
+		private var _source:Bitmap=null;
+		private var _bitmap:Bitmap=null;
+		
 		private var _timeManager:ITimeManager=null;
 		private var _chrono:TextField=null;
 		private var _chrono_on:Boolean=false;
 		private var _chrono_deleteAutomcatically:Boolean=true;
-		private var _chrono_max:Number=3;
-		private var _chrono_count:Number=3;
+		private var _chrono_max:Number=59;
+		private var _chrono_count:Number=59;
 		private var _chrono_statut:Boolean=false;
 		//Timer properties
 		public var _timer_on:Boolean=false;
@@ -97,12 +99,45 @@ package framework.core.architecture.component{
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay&&_chrono_count>=0&&_chrono_on) {
 				updateChrono();
-				updateText();
+				if(_source==null){
+					updateText();
+				}else{
+					actualizeChrono();
+				}
 			}
 		}
 		//------ Update Chrono ------------------------------------
 		private function updateChrono():void {
 			_chrono_count--;
+		}
+		//------ Set Chrono ------------------------------------
+		public function setChrono(path:String,name:String):void {
+			loadGraphic(path,name);
+			if(contains(_chrono)){
+				removeChild(_chrono);
+			}
+		}
+		//------ On Graphic Loading Successful ------------------------------------
+		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
+			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
+			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
+			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+			if (_graphicName!=null) {
+				_source=_graphicManager.getGraphic(_graphicName) as Bitmap;
+				createChrono();
+			}
+		}
+		//------ Create Chrono ------------------------------------
+		private function createChrono():void {
+			if (_source!=null) {
+				var myBitmapData:BitmapData=new BitmapData(_source.width/5,_source.height,true,0);
+				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(0,0,_source.width/10 ,_source.height), new Point(0, 0),null,null,true);
+				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(_source.width/10,0,_source.width/10 ,_source.height), new Point(_source.width/10, 0),null,null,true);
+				_bitmap=new Bitmap(myBitmapData);
+				setGraphic(_graphicName,_bitmap);
+				actualizeChrono();
+				start();
+			}
 		}
 		//------ Get Time ------------------------------------
 		private function updateText():void {
@@ -112,6 +147,17 @@ package framework.core.architecture.component{
 				removeComponent(_componentName);
 			} else {
 				_chrono.text=_chrono_count.toString();
+			}
+		}
+		//------ ActualizeChrono ------------------------------------
+		public function actualizeChrono():void {
+			if(_bitmap!=null){
+				var myBitmapData:BitmapData=_bitmap.bitmapData;
+				myBitmapData.fillRect(myBitmapData.rect,0);
+				var X:int=Math.floor(_chrono_count/10);
+				var Y:int = _chrono_count%10
+				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point(0, 0),null,null,true);
+				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(Y*_source.width/10,0,_source.width/10 ,_source.height), new Point(_source.width/10, 0),null,null,true);
 			}
 		}
 	}

@@ -84,6 +84,10 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");
+			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
+			//chronoComponent.restart(60);
+			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
+			chronoComponent.moveTo(180,20);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
