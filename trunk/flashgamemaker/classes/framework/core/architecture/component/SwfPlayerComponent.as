@@ -46,6 +46,7 @@ package framework.core.architecture.component{
 			_animation["RUN"]=2;
 			_animation["JUMP"]=3;
 			_animation["DOUBLE_JUMP"]=4;
+			addChild(_colorPicker);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -71,7 +72,7 @@ package framework.core.architecture.component{
 		public function swapFrame():void {
 			if(_swf!=null && _graphic_oldFrame!= _graphic_frame && _swf.numChildren>0){
 				var index:int = Math.floor((_graphic_frame-1)/4+1);
-				if(!_swf.contains(_source[_name+index])){
+				if(_source[_name+index]!=null && !_swf.contains(_source[_name+index])){
 					_swf.removeChildAt(0);
 					_swf.addChild(_source[_name+index]);   
 				}
@@ -143,10 +144,6 @@ package framework.core.architecture.component{
 			if(_spatial_rotation!=0){	
 				this.rotation-=_spatial_rotation;
 			}
-		}
-		//------ Set Collision  ------------------------------------
-		public  function setCollision(collision:Boolean):void {
-			_spatial_properties.collision=collision;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

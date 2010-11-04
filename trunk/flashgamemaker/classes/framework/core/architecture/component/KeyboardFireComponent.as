@@ -88,8 +88,8 @@ package framework.core.architecture.component{
 			var facingDirection:String = playerAttacking.getFacingDirection();
 			if(facingDirection=="RIGHT"){
 				var beginX:Number= playerAttacking.x+playerAttacking.width/2;
-				var beginY:Number=playerAttacking.y-playerAttacking.height/2;
-				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,10,6),beginX,beginY,beginX+250,beginY,5);
+				var beginY:Number=playerAttacking.y+playerAttacking.height/2;
+				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,20,20),beginX,beginY,beginX+250,beginY,5);
 			}else if(facingDirection=="LEFT"){
 				beginX= playerAttacking.x-10;
 				beginY=playerAttacking.y-playerAttacking.height/2;

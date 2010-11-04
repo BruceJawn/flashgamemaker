@@ -40,7 +40,7 @@ package framework.core.architecture.component{
 
 		//Timer properties
 		public var _timer_on:Boolean=false;
-		public var _timer_delay:Number=60;
+		public var _timer_delay:Number=120;
 		public var _timer_count:Number=0;
 
 		public function AnimationComponent(componentName:String, componentOwner:IEntity) {
@@ -83,21 +83,21 @@ package framework.core.architecture.component{
 
 			var spatial_dir:IsoPoint=component._spatial_dir;
 
-			if (spatial_dir.x>0) {//Right
+			if (spatial_dir.x>0 && graphic_frame%totalFrame>graphic_numFrame) {//Right
 				graphic_frame=1;
-			} else if (spatial_dir.x<0) {//Left
+			} else if (spatial_dir.x<0 && (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3)) {//Left
 				graphic_frame=graphic_numFrame*2+1;
-			} else if (spatial_dir.y>0) {//Down
+			} else if (spatial_dir.y>0 && (graphic_frame%totalFrame<=graphic_numFrame || graphic_frame%totalFrame>graphic_numFrame*2) ) {//Down
 				graphic_frame=graphic_numFrame+1;
-			} else if (spatial_dir.y<0) {//Up
+			} else if (spatial_dir.y<0  && graphic_frame%totalFrame<=graphic_numFrame*3) {//Up
 				graphic_frame=graphic_numFrame*3+1;
-			} else if (graphic_frame%totalFrame<=graphic_numFrame) {//Right
+			} else if (spatial_dir.x==0 && spatial_dir.y==0 && graphic_frame>graphic_numFrame*graphic_numFrame && graphic_frame%totalFrame<=graphic_numFrame) {//Right
 				graphic_frame=1;
-			} else if (graphic_frame%totalFrame<=graphic_numFrame*2) {//Down
+			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*2) {//Down
 				graphic_frame=graphic_numFrame+1;
-			} else if (graphic_frame%totalFrame<=graphic_numFrame*3) {//Left
+			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*3) {//Left
 				graphic_frame=graphic_numFrame*2+1;
-			} else if (graphic_frame%totalFrame<=graphic_numFrame*4) {//Up
+			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*4) {//Up
 				graphic_frame=graphic_numFrame*3+1;
 			}
 			return graphic_frame;
@@ -137,12 +137,12 @@ package framework.core.architecture.component{
 				//trace("ATTACK");
 				graphic_frame+=animation["ATTACK"]*graphic_numFrame*graphic_numFrame;
 			} else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
-				//trace("WALK");
+				//trace("RUN");
 				graphic_frame+=animation["RUN"]*graphic_numFrame*graphic_numFrame;
 			} else if (isMoving && animation["WALK"]!= null && graphic_frame<animation["WALK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("WALK");
 				graphic_frame+=animation["WALK"]*graphic_numFrame*graphic_numFrame;
-			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame>graphic_numFrame*graphic_numFrame) {
+			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame<graphic_numFrame*graphic_numFrame) {
 				//trace("STATIC");
 				graphic_frame+=animation["STATIC"]*graphic_numFrame*graphic_numFrame;
 			}

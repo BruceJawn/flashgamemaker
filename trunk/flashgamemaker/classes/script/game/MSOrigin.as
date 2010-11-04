@@ -53,6 +53,7 @@ package script.game{
 		private function initComponent():void {
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
 			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
+			keyboardInputComponent.setKey(40, "SIT");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
@@ -60,18 +61,16 @@ package script.game{
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var backGroundColorComponent:BackGroundColorComponent= _entityManager.addComponent("GameEntity","BackGroundColorComponent","myBackGroundColorComponent");
 			backGroundColorComponent.changeColor("111111");
-			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
-			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.setPropertyReference("keyboardFire",swfPlayerComponent._componentName);
-			swfPlayerComponent.setDirection("Horizontal");
-			swfPlayerComponent.setCollision(true);
-			swfPlayerComponent.moveTo(50,300);
-			var swfEnnemyComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
-			swfEnnemyComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
-			swfEnnemyComponent.setDirection("Horizontal");
-			swfEnnemyComponent.setPropertyReference("health",swfEnnemyComponent._componentName);
-			swfEnnemyComponent.moveTo(300,300);
+			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
+			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
+			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
+			bitmapPlayerComponent.setDirection("Horizontal");
+			bitmapPlayerComponent.setCollision(true);
+			bitmapPlayerComponent.moveTo(50,200);
+			bitmapPlayerComponent.setAnim("WALK",2);
+			bitmapPlayerComponent.setAnim("ATTACK",1);
+			bitmapPlayerComponent.setAnim("JUMP",8);
+			bitmapPlayerComponent.setAnim("SIT",5);
 			var backGroundComponent:ScrollingBitmapComponent= _entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackGroundComponent");
 			backGroundComponent.loadGraphic("texture/framework/game/background/MS/BG.gif", "MS_BG");
 			backGroundComponent.setScrolling(30,5);
