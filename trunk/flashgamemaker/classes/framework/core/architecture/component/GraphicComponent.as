@@ -57,12 +57,6 @@ package framework.core.architecture.component{
 		public var _tweener:Boolean=false;
 		public var _tweener_type:String=null;
 		public var _tweener_properties:Object=null;
-		//Sound properties
-		public var _sound_name:String;
-		public var _sound_path:String;
-		public var _sound_volume:Number=0.5;//Between 0 and 100
-		public var _sound_isPlaying:Boolean=false;
-		public var _sound_play:Boolean=false;
 
 		public function GraphicComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -176,14 +170,6 @@ package framework.core.architecture.component{
 			_tweener=true;
 			_tweener_properties.shape=true;
 			setPropertyReference("tween",_componentName);
-		}
-		//------Set Sound -------------------------------------
-		public function setSound(path:String, name:String, volume:Number=0.5):void {
-			_sound_name=name;
-			_sound_path=path;
-			_sound_play =true;
-			_sound_volume=volume;
-			setPropertyReference("sound",_componentName);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

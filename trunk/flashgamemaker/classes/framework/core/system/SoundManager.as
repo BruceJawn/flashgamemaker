@@ -15,8 +15,8 @@
 *   under the terms of the GNU Free Documentation License, Version 1.3
 *   or any later version published by the Free Software Foundation;
 *   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-*Under this licence you are free to copy, adapt and distrubute the work. 
-*You must attribute the work in the manner specified by the author or licensor. 
+*	Under this licence you are free to copy, adapt and distrubute the work. 
+*	You must attribute the work in the manner specified by the author or licensor. 
 *   A copy of the license is included in the section entitled "GNU
 *   Free Documentation License".
 *
@@ -107,7 +107,7 @@ package framework.core.system{
 		public function resume(soundName:String, position:Number):void {
 			var sound:Sound=_sounds[soundName].sound;
 			var soundChannel:SoundChannel=_sounds[soundName].soundChannel;
-			if (sound.bytesTotal>0) {
+			if (sound.bytesTotal>0 && !_isSoundPlaying) {
 				soundChannel=sound.play(position);
 				_isSoundPlaying=true;
 			}
@@ -119,9 +119,21 @@ package framework.core.system{
 			if (sound.bytesTotal>0) {
 				var position:Number=soundChannel.position;
 				soundChannel.stop();
+				_isSoundPlaying=false;
 				return position;
 			}
 			return 0;
+		}
+		//------ Mute ------------------------------------
+		public function mute(soundName:String):void {
+			var sound:Sound=_sounds[soundName].sound;
+			var soundChannel:SoundChannel=_sounds[soundName].soundChannel;
+			var soundTransform:SoundTransform=soundChannel.soundTransform;
+			if (soundTransform.volume>0) {
+				_sounds[soundName].soundChannel.soundTransform.volume=0;
+			}else{
+				_sounds[soundName].soundChannel.soundTransform.volume = _volume;
+			}
 		}
 		//------ Change Volume ------------------------------------
 		public function changeVolume(soundName:String, volume:Number):void {

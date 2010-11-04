@@ -44,6 +44,10 @@ package framework.core.system{
 		 */		
 		function resume(soundName:String, position:Number):void;
 		/**
+		 * Mute
+		 */		
+		function mute(soundName:String):void ;
+		/**
 		 * Change Volume
 		 */		
 		function changeVolume(soundName:String, volume:Number):void;
