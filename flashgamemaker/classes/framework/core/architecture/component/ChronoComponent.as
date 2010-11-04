@@ -131,8 +131,6 @@ package framework.core.architecture.component{
 		private function createChrono():void {
 			if (_source!=null) {
 				var myBitmapData:BitmapData=new BitmapData(_source.width/5,_source.height,true,0);
-				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(0,0,_source.width/10 ,_source.height), new Point(0, 0),null,null,true);
-				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(_source.width/10,0,_source.width/10 ,_source.height), new Point(_source.width/10, 0),null,null,true);
 				_bitmap=new Bitmap(myBitmapData);
 				setGraphic(_graphicName,_bitmap);
 				actualizeChrono();
