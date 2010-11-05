@@ -42,9 +42,8 @@ package framework.core.architecture.component{
 		private var _entityManager:IEntityManager=null;
 		private var _startBt:SimpleButton=null;
 		private var _scriptName:String=null;
-		private var _navigation:GraphicComponent=null;
 		private var _label:TextField=null;
-		
+
 		public function NavigationComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
@@ -52,30 +51,33 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
-			_navigation=_entityManager.addComponent(_componentOwner.getName(),"GraphicComponent","myGraphicNavigation");
-			_navigation.loadGraphic("texture/framework/interface/navigationScreen.swf","NavigationScreen");
-			_navigation.addEventListener(Event.COMPLETE,onNavigationLoadingSuccessful);
 		}
-		//------ On Navigation Loading Successful ------------------------------------
-		private function onNavigationLoadingSuccessful( evt:Event ):void {
-			_navigation.removeEventListener(Event.COMPLETE,onNavigationLoadingSuccessful);
-			var navigationScreen:MovieClip = getGraphic("NavigationScreen") as MovieClip;
-			_startBt = navigationScreen.startBt;
-			_label = navigationScreen.label;
-			var name:Array= _scriptName.split(".");
-			_label.text = name[name.length-1];
-			_startBt.addEventListener(MouseEvent.CLICK, onStart);
+		//------ On Graphic Loading Successful ------------------------------------
+		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
+			_graphic=getGraphic(_graphicName) as MovieClip;
+			if (_graphic!=null) {
+				_startBt=_graphic.startBt;
+				if (_startBt!=null) {
+					_startBt.addEventListener(MouseEvent.CLICK, onStart);
+				}
+				_label=_graphic.label;
+				if (_label!=null) {
+					var name:Array=_scriptName.split(".");
+					_label.text=name[name.length-1];
+				}
+				setGraphic(_graphicName,_graphic);
+				dispatchEvent(evt);
+			}
 		}
 		//------- Set Script -------------------------------
 		public function setScript(scriptName:String):void {
-			_scriptName = scriptName;
+			_scriptName=scriptName;
 		}
 		//------- Lauch Script -------------------------------
 		public function launchScript():void {
-			if(_scriptName!=null){
-				var classRef:Class = getClass(_scriptName);
+			if (_scriptName!=null) {
+				var classRef:Class=getClass(_scriptName);
 				new classRef(_scriptName);
-				removeComponent("myGraphicNavigation");
 				removeComponent(_componentName);
 			}
 		}
@@ -84,7 +86,7 @@ package framework.core.architecture.component{
 			launchScript();
 		}
 		//------ Gets class name from instance ------------------------------------
-		private function getClass(scriptName:String):Class{
+		private function getClass(scriptName:String):Class {
 			var classRef:Class=getDefinitionByName("script."+scriptName) as Class;
 			return (classRef);
 		}

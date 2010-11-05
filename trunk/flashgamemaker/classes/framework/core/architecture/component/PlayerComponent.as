@@ -29,7 +29,6 @@ package framework.core.architecture.component{
 	import framework.core.system.IServerManager;
 	import utils.iso.IsoPoint;
 
-	import flash.events.EventDispatcher;
 	import flash.events.*;
 	import flash.display.*;
 	import flash.utils.Dictionary;

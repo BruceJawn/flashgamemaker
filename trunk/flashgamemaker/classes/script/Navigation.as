@@ -53,6 +53,7 @@ package script{
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
 			var navigationComponent:NavigationComponent=_entityManager.addComponent("GameEntity","NavigationComponent","myNavigationComponent");
+			navigationComponent.loadGraphic("texture/framework/interface/navigationScreen.swf","NavigationScreen");
 			navigationComponent.setScript(_scriptName);
 		}
 		//------- ToString -------------------------------

@@ -65,7 +65,6 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_graphicManager=GraphicManager.getInstance();
-			_graphic = addChild(new Sprite());
 			_spatial_position=new IsoPoint(0,0,0);
 			_spatial_dir=new IsoPoint(0,0,0);
 			_spatial_speed=new IsoPoint(2,2,1);
@@ -94,7 +93,7 @@ package framework.core.architecture.component{
 			_graphicManager.loadGraphicsFromPath(path, graphicName);
 		}
 		//------ Load Graphic  ------------------------------------
-		public function loadGraphicsFromXml(xml:XML,graphicName:String, loadingProgress:Boolean = false):void {
+		public function loadGraphicsFromXml(xml:XML,graphicName:String):void {
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
@@ -121,10 +120,24 @@ package framework.core.architecture.component{
 		}
 		//------ Set Graphic  ------------------------------------
 		public function setGraphic(graphicName:String, graphic:*):void {
-			removeChild(_graphic);
+			if(_graphic!=null && contains(_graphic)){
+				removeChild(_graphic);
+			}
 			_graphicName=graphicName;
 			_graphic=graphic;
 			addChild(_graphic);
+		}
+		//------ Set Graphic From Name ------------------------------------
+		public function setGraphicFromName(graphicName:String):void {
+			var graphic:*=_graphicManager.getGraphic(graphicName);
+			if(_graphic!=null && contains(_graphic)){
+				removeChild(_graphic);
+			}
+			if(graphic!=null){
+				_graphicName=graphicName;
+				_graphic=graphic;
+				addChild(_graphic);
+			}
 		}
 		//------ Set Layer  ------------------------------------
 		public function setLayer(graphicName:String, layerId:int):void {
@@ -144,6 +157,12 @@ package framework.core.architecture.component{
 		public function moveTo(x:Number,y:Number):void {
 			_spatial_position.x=x;
 			_spatial_position.y=y;
+			//update("spatial");
+		}
+		//------ Center  ------------------------------------
+		public function center():void {
+			_spatial_position.x=(FlashGameMaker.WIDTH-this.width)/2;
+			_spatial_position.y=(FlashGameMaker.HEIGHT-this.height)/2;
 			//update("spatial");
 		}
 		//------ Rotate Graphic  ------------------------------------
