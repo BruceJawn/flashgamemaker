@@ -42,7 +42,7 @@ package framework.core.architecture.component{
 
 		protected var _graphicManager:IGraphicManager=null;
 		protected var _graphicName:String=null;
-		protected var _graphic:* =null;
+		public var _graphic:* =null;
 
 		//Render properties
 		public var _render_layerId:int=0;
