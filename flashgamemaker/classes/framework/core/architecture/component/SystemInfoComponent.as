@@ -54,7 +54,7 @@ package framework.core.architecture.component{
 			_clip = new TextField();
 			_clip.selectable = false;
 			_Memory.x=50;
-			_clip.x=_Memory.x+80;
+			_clip.x=_Memory.x+85;
 			addChild(_Memory);
 			addChild(_FPS);
 			addChild(_clip);

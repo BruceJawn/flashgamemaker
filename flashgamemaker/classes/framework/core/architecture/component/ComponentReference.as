@@ -71,6 +71,7 @@ package framework.core.architecture.component{
 			var healthComponent:HealthComponent;
 			var keyboardAttackComponent:KeyboardAttackComponent;
 			var tweenComponent:TweenComponent;
+			var loadingComponent:LoadingComponent;
 		}
 	}
 }

@@ -44,6 +44,7 @@ package script{
 			var kawaiiIsland:KawaiiIsland;
 			var kawaiiFight:KawaiiFight;
 			var kawaiiOlympic:KawaiiOlympic;
+			var kawaiiWorld:KawaiiWorld;
 			var korizon:Korizon;
 			var msOrigin:MSOrigin;
 		}

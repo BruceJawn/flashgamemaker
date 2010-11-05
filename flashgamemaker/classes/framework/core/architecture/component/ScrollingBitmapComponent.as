@@ -74,6 +74,7 @@ package framework.core.architecture.component{
 				myBitmapData.copyPixels(_source.bitmapData, _rectangle, new Point(0, 0),null,null,true);
 				_bitmap=new Bitmap(myBitmapData);
 				setGraphic(_graphicName,_bitmap);
+				dispatchEvent(evt);
 			}
 		}
 		//------ Actualize Components  ------------------------------------

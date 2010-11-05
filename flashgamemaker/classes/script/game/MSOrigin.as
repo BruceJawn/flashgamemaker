@@ -72,13 +72,13 @@ package script.game{
 			bitmapPlayerComponent.setAnim("JUMP",8);
 			bitmapPlayerComponent.setAnim("SIT",5);
 			var backGroundComponent:ScrollingBitmapComponent= _entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackGroundComponent");
-			backGroundComponent.loadGraphic("texture/framework/game/background/ms/BG.gif", "MS_BG");
+			backGroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backGroundComponent.setScrolling(30,5);
 			//backGroundComponent.setDirection(swfPlayerComponent.getDirection());
 			backGroundComponent.setPropertyReference("timer",backGroundComponent._componentName);
 			backGroundComponent.moveTo(0,100);
 			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
-			soundComponent.setController("texture/framework/interface/soundControl.swf","SoundControl");
+			soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
 			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
 			soundComponent.moveTo(300,310);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
@@ -89,6 +89,11 @@ package script.game{
 			chronoComponent.moveTo(180,20);
 			var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
 			scoreComponent.setScore("texture/framework/game/interface/score.png","Score");
+			/*var textComponent:TextComponent=_entityManager.addComponent("GameEntity","TextComponent","myTextComponent");
+			textComponent.loadGraphic("texture/framework/game/interface/text.png", "Text_BG");
+			textComponent.setText("Start","none",250,100);
+			textComponent.setFormat("arial",20,null, null, null,null, null, null,"center");
+			textComponent.moveTo(80,70);*/
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

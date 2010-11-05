@@ -160,7 +160,7 @@ package framework.core.architecture.component{
 		}
 		//------- Init Text Component -------------------------------
 		private function initCursorComponent():void {
-			_cursor.loadGraphic("texture/framework/interface/kawaiiCursor.swf", "KawaiiCursor");
+			_cursor.loadGraphic("texture/framework/game/interface/bladesquad/kawaiiCursor.swf", "KawaiiCursor");
 			_cursor.moveTo(150,250);
 		}
 		//------- Init Text Component -------------------------------
@@ -197,7 +197,6 @@ package framework.core.architecture.component{
 		//------- Init Export Component -------------------------------
 		private function initExportComponent():void {
 			_export.createJPG(FlashGameMaker.STAGE, "FGM_screenshot");
-			
 		}
 		//------- Init Scrolling Bitmap Component -------------------------------
 		private function initScrollingBitmapComponent():void {
