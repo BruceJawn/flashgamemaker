@@ -43,8 +43,8 @@ package script{
 			//new Navigation("game.KawaiiIsland");
 			//new Navigation("game.KawaiiOlympic");
 			//new Navigation("game.Korizon");
-			//new Navigation("game.MSOrigin");
-			new KawaiiWorld();
+			new Navigation("game.MSOrigin");
+			//new KawaiiWorld();
 		}
 	}
 }
