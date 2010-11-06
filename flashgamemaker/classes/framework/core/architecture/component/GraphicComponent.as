@@ -143,7 +143,7 @@ package framework.core.architecture.component{
 		public function addGraphic(graphicName:String, clipName:String):void {
 			var graphic:*=_graphicManager.getGraphic(graphicName);
 			if(_graphic!=null && contains(_graphic) && graphic!=null){
-				_graphic[clipName].addChild(graphic);
+				//_graphic[clipName].addChild(graphic);
 			}
 		}
 		//------ Set Layer  ------------------------------------
