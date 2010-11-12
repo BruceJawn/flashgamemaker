@@ -82,14 +82,15 @@ package framework.core.architecture.component{
 				var keyStatut:String=keyboard_key.keyStatut;
 				var doubleClick:Boolean=keyboard_key.doubleClick;
 				var spatialDirection:String=component._spatial_properties.direction;
+				var spatialStrict:Boolean=component._spatial_properties.strict;
 				if (keyStatut=="DOWN") {
-					if (keyTouch=="RIGHT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal")) {
+					if (keyTouch=="RIGHT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
 						component._spatial_dir.x=1;
-					} else if (keyTouch=="LEFT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal")) {
+					} else if (keyTouch=="LEFT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
 						component._spatial_dir.x=-1;
-					} else if (keyTouch=="UP" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical")) {
+					} else if (keyTouch=="UP" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
 						component._spatial_dir.y=-1;
-					} else if (keyTouch=="DOWN" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical")) {
+					} else if (keyTouch=="DOWN" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
 						component._spatial_dir.y=1;
 					} else if (keyTouch=="JUMP" && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
 						component._spatial_jump.z=component._spatial_jumpStart.z;

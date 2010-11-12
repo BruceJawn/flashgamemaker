@@ -81,7 +81,7 @@ package framework.core.architecture.component{
 			_animation["STATIC"]=0;
 			_animation["WALK"]=1;
 			_colorPicker = new ColorPicker();
-			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal", collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal",strict:true, collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
 			_spatial_jump=new IsoPoint(0,0,0);
 			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
 		}
@@ -153,8 +153,9 @@ package framework.core.architecture.component{
 			_spatial_properties.iso=iso;
 		}
 		//------ Set Direction ------------------------------------
-		public function setDirection(direction:String):void {
+		public function setDirection(direction:String, strict:Boolean=true):void {
 			_spatial_properties.direction=direction;
+			_spatial_properties.strict=strict;
 		}
 		//------ Get Position ------------------------------------
 		public function getPosition():IsoPoint {

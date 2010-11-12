@@ -78,6 +78,7 @@ package framework.core.architecture.component{
 			if (_scriptName!=null) {
 				var classRef:Class=getClass(_scriptName);
 				new classRef(_scriptName);
+				FlashGameMaker.STAGE.focus=FlashGameMaker.STAGE;
 				removeComponent(_componentName);
 			}
 		}

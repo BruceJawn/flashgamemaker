@@ -38,7 +38,6 @@ package framework.core.architecture.entity{
 	 * @author Tom Davies
 	 */
 	public class EntityManager implements IEntityManager {
-
 		private static var _instance:IEntityManager=null;
 		private static var _allowInstanciation:Boolean=false;
 		private var _entities:Dictionary=null;
@@ -131,10 +130,27 @@ package framework.core.architecture.entity{
 		public function removeComponent(entityName:String,componentName:String):void {
 			var entity:IEntity=_entities[entityName];
 			var components:Dictionary=entity.getComponents();
-			var component:Component=getComponent(entityName,componentName);
-			component.reset(entityName,componentName);
-			unregisterComponent(entityName,componentName);
-			delete components[componentName];
+			try{
+				var component:Component=getComponent(entityName,componentName);
+				component.reset(entityName,componentName);
+				unregisterComponent(entityName,componentName);
+				delete components[componentName];
+			}catch(e:Error){
+				trace("Error EntityManager!!!\n"+e);
+			}
+		}
+		//------ Remove All Components ------------------------------------
+		public function removeAllComponents(entityName:String):void {
+			/*var entity:IEntity=_entities[entityName];
+			var components:Dictionary=entity.getComponents();
+			try{
+				var component:Component=getComponent(entityName,componentName);
+				component.reset(entityName,componentName);
+				unregisterComponent(entityName,componentName);
+				delete components[componentName];
+			}catch(e:Error){
+				trace("Error EntityManager!!!\n"+e);
+			}*/
 		}
 		//------ Unregister Component ------------------------------------
 		public function unregisterComponent(entityName:String,componentName:String):void {
@@ -174,8 +190,8 @@ package framework.core.architecture.entity{
 			if (_propertyInfos[propertyName]==null) {
 				throw new Error("Error: There is no component registered the property with the name "+propertyName+" !!");
 			}
-			var propertyInfo:Object = _propertyInfos[propertyName];
-			var component:* = getComponent(propertyInfo.ownerName,propertyInfo.componentName);
+			var propertyInfo:Object=_propertyInfos[propertyName];
+			var component:* =getComponent(propertyInfo.ownerName,propertyInfo.componentName);
 			return component;
 		}
 		//------ Unregister Property ------------------------------------
@@ -259,7 +275,11 @@ package framework.core.architecture.entity{
 	}
 	//------ Gets class name from instance ------------------------------------
 	private function getClass(componentName:String):Class {
-		var classRef:Class=getDefinitionByName("framework.core.architecture.component."+componentName) as Class;
+		try{
+			var classRef:Class=getDefinitionByName("framework.core.architecture.component."+componentName) as Class;
+		}catch(e:Error){
+			classRef=getDefinitionByName("framework.add.architecture.component."+componentName) as Class;
+		}
 		return (classRef);
 	}
 }

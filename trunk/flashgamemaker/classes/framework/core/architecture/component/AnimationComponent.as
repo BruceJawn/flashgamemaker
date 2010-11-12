@@ -82,7 +82,12 @@ package framework.core.architecture.component{
 			var totalFrame:int=graphic_numFrame*graphic_numFrame;
 
 			var spatial_dir:IsoPoint=component._spatial_dir;
-
+			var spatialDirection:String=component._spatial_properties.direction;
+			var spatialStrict:Boolean=component._spatial_properties.strict;
+			
+			if((spatialDirection=="Horizontal" && spatial_dir.y!=0 || spatialDirection=="Vertical" && spatial_dir.x!=0) && !spatialStrict){
+				return graphic_frame;
+			}
 			if (spatial_dir.x>0 && graphic_frame%totalFrame>graphic_numFrame) {//Right
 				graphic_frame=1;
 			} else if (spatial_dir.x<0 && (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3)) {//Left

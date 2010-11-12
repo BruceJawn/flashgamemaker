@@ -55,6 +55,7 @@ package script.game{
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
+			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("GameEntity", "SystemInfoComponent", "mySystInfoComponent");
 			var loadingComponent:LoadingComponent=_entityManager.addComponent("GameEntity","LoadingComponent","myLoadingComponent");
 			loadingComponent.loadGraphic("texture/framework/game/interface/bladesquad/loadingBar.swf","LoadingBar");
 			loadingComponent.preloadGraphic("xml/framework/game/textureKawaii.xml","TextureKawaii");
@@ -84,6 +85,8 @@ package script.game{
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
 			tileMapComponent.moveTo(260,100);
+			//var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
+			//tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
 		*/}
 		//------- Creat Background -------------------------------
 		public function createBackground():void {

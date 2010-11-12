@@ -66,12 +66,12 @@ package script.game{
 			swfPlayerComponent.moveTo(50,300);
 			swfPlayerComponent.addEventListener(Event.COMPLETE,onLoadingSuccessful);
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
-			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
+			scrollingBitmapComponent.loadGraphic("texture/framework/game/background/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
 			var scrollingBitmapComponent2:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent2");
-			scrollingBitmapComponent2.loadGraphic("texture/framework/game/backGround/bladesquad/piste.jpg","Piste");
+			scrollingBitmapComponent2.loadGraphic("texture/framework/game/background/bladesquad/piste.jpg","Piste");
 			scrollingBitmapComponent2.setScrolling(30,1);
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent2.setPropertyReference("timer",scrollingBitmapComponent2._componentName);

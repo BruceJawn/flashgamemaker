@@ -80,10 +80,10 @@ package framework.core.system{
 				speedX*=2;
 				speedY*=2;
 			}
-			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Horizontal") {
+			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Horizontal" || ! component._spatial_properties.strict) {
 				horizontalMove(component,component._spatial_dir.x*speedX);
 			}
-			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Vertical") {
+			if (component._spatial_properties.direction=="Diagonal"||component._spatial_properties.direction=="Vertical" || ! component._spatial_properties.strict) {
 				verticalMove(component,component._spatial_dir.y*speedY);
 			}
 			component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
