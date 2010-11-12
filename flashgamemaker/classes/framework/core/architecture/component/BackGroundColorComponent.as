@@ -30,11 +30,11 @@ package framework.core.architecture.component{
 	/**
 	* BackGround Class
 	*/
-	public class BackGroundColorComponent extends Component {
+	public class BackgroundColorComponent extends Component {
 		
 		private var _bgColor:uint = 0; //HecColor
 		
-		public function BackGroundColorComponent(componentName:String, componentOwner:IEntity) {
+		public function BackgroundColorComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}

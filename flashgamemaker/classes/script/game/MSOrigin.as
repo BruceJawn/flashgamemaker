@@ -24,8 +24,9 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
+	import framework.add.architecture.component.*;
 	
-	import flash.events.Event;
+	import flash.events.*;
 	/**
 	* Script Class
 	*
@@ -59,8 +60,8 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var backGroundColorComponent:BackGroundColorComponent= _entityManager.addComponent("GameEntity","BackGroundColorComponent","myBackGroundColorComponent");
-			backGroundColorComponent.changeColor("111111");
+			var backgroundColorComponent:BackgroundColorComponent= _entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
+			backgroundColorComponent.changeColor("111111");
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
@@ -71,12 +72,12 @@ package script.game{
 			bitmapPlayerComponent.setAnim("ATTACK",1);
 			bitmapPlayerComponent.setAnim("JUMP",8);
 			bitmapPlayerComponent.setAnim("SIT",5);
-			var backGroundComponent:ScrollingBitmapComponent= _entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackGroundComponent");
-			backGroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
-			backGroundComponent.setScrolling(30,5);
-			//backGroundComponent.setDirection(swfPlayerComponent.getDirection());
-			backGroundComponent.setPropertyReference("timer",backGroundComponent._componentName);
-			backGroundComponent.moveTo(0,100);
+			var backgroundComponent:ScrollingBitmapComponent= _entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
+			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
+			backgroundComponent.setScrolling(30,5);
+			//backgroundComponent.setDirection(swfPlayerComponent.getDirection());
+			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
+			backgroundComponent.moveTo(0,100);
 			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
 			soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
 			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
@@ -87,13 +88,37 @@ package script.game{
 			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
 			chronoComponent.moveTo(180,20);
+			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
 			var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
-			scoreComponent.setScore("texture/framework/game/interface/score.png","Score");
-			/*var textComponent:TextComponent=_entityManager.addComponent("GameEntity","TextComponent","myTextComponent");
-			textComponent.loadGraphic("texture/framework/game/interface/text.png", "Text_BG");
-			textComponent.setText("Start","none",250,100);
-			textComponent.setFormat("arial",20,null, null, null,null, null, null,"center");
-			textComponent.moveTo(80,70);*/
+			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);
+			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");
+			rpgTextComponent.loadGraphic("texture/framework/game/interface/rpgText.swf", "RPGText");
+			var sequence:String="<rpgText><sequence title='???' icon='unknown?' graphic=''>...Roger...RAS</sequence><sequence title='Squad' icon='Squad' graphic=''>1,2,3,...GO!</sequence></rpgText>";
+			rpgTextComponent.setSequence(sequence);
+			rpgTextComponent.moveTo(60,70);
+		}
+		//------ On Chrono Complete ------------------------------------
+		private function onChronoComplete(evt:Event):void {
+			_entityManager.removeComponent("GameEntity","myBackgroundComponent");
+			_entityManager.removeComponent("GameEntity","myBitmapPlayerComponent");
+			_entityManager.removeComponent("GameEntity","mySoundComponent");
+			_entityManager.removeComponent("GameEntity","myRPGTextComponent");
+			var gameOver:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","myGOGraphicComponent");
+			gameOver.loadGraphic("texture/framework/game/interface/MSGameOver.swf", "GameOver");
+			gameOver.addEventListener(Event.COMPLETE,onGameOverComplete);
+			gameOver.moveTo(0,30);
+			var scoreComponent:ScoreComponent=_entityManager.getComponent("GameEntity","myScoreComponent");
+		}
+		//------ On Game Over Complete ------------------------------------
+		private function onGameOverComplete(evt:Event):void {
+			evt.target.removeEventListener(Event.COMPLETE,onGameOverComplete);
+			evt.target._graphic.playBt.addEventListener(MouseEvent.CLICK,onGameOverPlayClick);
+		}
+		//------ On Game Over Play Click ------------------------------------
+		private function onGameOverPlayClick(evt:Event):void {
+			evt.target.removeEventListener(MouseEvent.CLICK,onGameOverPlayClick);
+			//_entityManager.removeAllComponents("GameEntity");
+			//initComponent();
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

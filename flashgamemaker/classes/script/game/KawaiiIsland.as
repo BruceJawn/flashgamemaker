@@ -59,7 +59,7 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var backGroundColorComponent:BackGroundColorComponent= _entityManager.addComponent("GameEntity","BackGroundColorComponent","myBackGroundColorComponent");
+			var backGroundColorComponent:BackgroundColorComponent= _entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
 			backGroundColorComponent.changeColor("95eaff");
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
 			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");

@@ -75,6 +75,10 @@ package framework.core.architecture.component{
 		private function onTimer(evt:TimerEvent):void {
 			update("timer");
 		}
+		//------Stop ------------------------------------
+		public function stop():void {
+			_timer.stop();
+		}
 		//------ On Timer Complete ------------------------------------
 		private function onTimerComplete(evt:TimerEvent):void {
 			trace("Timer Complete");

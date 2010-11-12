@@ -57,20 +57,15 @@ package script.game{
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("GameEntity", "SystemInfoComponent", "mySystInfoComponent");
+			var bg:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","myBgGraphicComponent");
+			bg.loadGraphic("texture/framework/game/background/bladesquad/kawaiiFight.png", "KawaiiBG");
+			var statut:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","myStatutGraphicComponent");
+			statut.loadGraphic("texture/framework/game/interface/bladesquad/statutClip.swf", "KawaiiStatut");
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.setDirection("Horizontal",false);
 			swfPlayerComponent.moveTo(200,100);
-			swfPlayerComponent.setIso(true);
-			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
-			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
-			tileMapComponent.setPropertyReference("keyboardInput",tileMapComponent._componentName);
-			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
-			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
-			tileMapComponent.moveTo(260,100);
-			//var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
-			//tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

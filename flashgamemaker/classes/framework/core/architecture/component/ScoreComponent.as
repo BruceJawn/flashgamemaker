@@ -70,8 +70,8 @@ package framework.core.architecture.component{
 			_score_count = 0;
 		}
 		//------ Set Score ------------------------------------
-		public function setScore(path:String,name:String):void {
-			loadGraphic(path,name);
+		public function setScore(path:String,name:String, layer:int=0):void {
+			loadGraphic(path,name,layer);
 			if(contains(_score)){
 				removeChild(_score);
 			}

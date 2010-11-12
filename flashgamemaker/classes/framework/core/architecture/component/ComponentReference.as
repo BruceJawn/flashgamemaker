@@ -23,6 +23,7 @@
 
 package framework.core.architecture.component{
 	
+	import framework.add.architecture.component.*;
 	/**
 	* Component Reference Class
 	* 
@@ -66,7 +67,7 @@ package framework.core.architecture.component{
 			var groundSphereComponent:GroundSphereComponent;
 			var exportComponent:ExportComponent;
 			var navigationComponent:NavigationComponent;
-			var backGroundColorComponent:BackGroundColorComponent;
+			var backgroundColorComponent:BackgroundColorComponent;
 			var tileMapEditorComponent:TileMapEditorComponent;
 			var healthComponent:HealthComponent;
 			var keyboardAttackComponent:KeyboardAttackComponent;

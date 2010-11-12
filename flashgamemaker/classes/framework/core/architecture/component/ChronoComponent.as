@@ -34,7 +34,7 @@ package framework.core.architecture.component{
 	import flash.utils.getTimer;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	
+
 	/**
 	* Chrono Class
 	* @ purpose: 
@@ -42,27 +42,27 @@ package framework.core.architecture.component{
 	public class ChronoComponent extends GraphicComponent {
 		private var _source:Bitmap=null;
 		private var _bitmap:Bitmap=null;
-		
+
 		private var _timeManager:ITimeManager=null;
 		private var _chrono:TextField=null;
 		private var _chrono_on:Boolean=false;
 		private var _chrono_deleteAutomcatically:Boolean=true;
-		private var _chrono_max:Number=59;
-		private var _chrono_count:Number=59;
+		private var _chrono_max:Number=9;
+		private var _chrono_count:Number=9;
 		private var _chrono_statut:Boolean=false;
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=800;
 		public var _timer_count:Number=0;
 
-		public function ChronoComponent(componentName:String, componentOwner:IEntity) {
+		public function ChronoComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_timeManager=TimeManager.getInstance();
-			_chrono = new TextField();
+			_chrono=new TextField  ;
 			setFormat("Arial",30,0xFF0000);
 			addChild(_chrono);
 			_chrono_count=_chrono_max;
@@ -74,7 +74,7 @@ package framework.core.architecture.component{
 			setPropertyReference("timer",_componentName);
 		}
 		//------Set Format -------------------------------------
-		private function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
+		private function setFormat(font:String=null,size:Object=null,color:Object=null,bold:Object=null,italic:Object=null,underline:Object=null,url:String=null,target:String=null,align:String=null):void {
 			var textFormat:TextFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
 			_chrono.defaultTextFormat=textFormat;
 			_chrono.autoSize="center";
@@ -97,11 +97,11 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (_timer_count>=_timer_delay&&_chrono_count>=0&&_chrono_on) {
+			if (_timer_count>=_timer_delay&&_chrono_count>0&&_chrono_on) {
 				updateChrono();
-				if(_source==null){
+				if (_source==null) {
 					updateText();
-				}else{
+				} else {
 					actualizeChrono();
 				}
 			}
@@ -109,19 +109,27 @@ package framework.core.architecture.component{
 		//------ Update Chrono ------------------------------------
 		private function updateChrono():void {
 			_chrono_count--;
+			if (_chrono_count==0&&_chrono_deleteAutomcatically) {
+				dispatchEvent(new Event(Event.COMPLETE));
+				removeComponent(_componentName);
+			} else if (_chrono_count==0) {
+				_chrono.text="START";
+				stop();
+				dispatchEvent(new Event("COMPLETE"));
+			}
 		}
 		//------ Set Chrono ------------------------------------
 		public function setChrono(path:String,name:String):void {
 			loadGraphic(path,name);
-			if(contains(_chrono)){
+			if (contains(_chrono)) {
 				removeChild(_chrono);
 			}
 		}
 		//------ On Graphic Loading Successful ------------------------------------
-		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
+		protected override function onGraphicLoadingSuccessful(evt:Event):void {
 			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
-			dispatcher.removeEventListener(Event.COMPLETE, onGraphicLoadingSuccessful);
-			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
+			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
 			if (_graphicName!=null) {
 				_source=_graphicManager.getGraphic(_graphicName) as Bitmap;
 				createChrono();
@@ -139,23 +147,17 @@ package framework.core.architecture.component{
 		}
 		//------ Get Time ------------------------------------
 		private function updateText():void {
-			if (_chrono_count==0) {
-				_chrono.text="START";
-			} else if (_chrono_count==-1 && _chrono_deleteAutomcatically) {
-				removeComponent(_componentName);
-			} else {
-				_chrono.text=_chrono_count.toString();
-			}
+			_chrono.text=_chrono_count.toString();
 		}
 		//------ ActualizeChrono ------------------------------------
 		public function actualizeChrono():void {
-			if(_bitmap!=null){
+			if (_bitmap!=null) {
 				var myBitmapData:BitmapData=_bitmap.bitmapData;
 				myBitmapData.fillRect(myBitmapData.rect,0);
 				var X:int=Math.floor(_chrono_count/10);
-				var Y:int = _chrono_count%10
-				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point(0, 0),null,null,true);
-				myBitmapData.copyPixels(_source.bitmapData, new Rectangle(Y*_source.width/10,0,_source.width/10 ,_source.height), new Point(_source.width/10, 0),null,null,true);
+				var Y:int=_chrono_count%10;
+				myBitmapData.copyPixels(_source.bitmapData,new Rectangle(X*_source.width/10,0,_source.width/10,_source.height),new Point(0,0),null,null,true);
+				myBitmapData.copyPixels(_source.bitmapData,new Rectangle(Y*_source.width/10,0,_source.width/10,_source.height),new Point(_source.width/10,0),null,null,true);
 			}
 		}
 	}

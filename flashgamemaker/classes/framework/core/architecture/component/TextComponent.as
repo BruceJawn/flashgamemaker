@@ -38,24 +38,21 @@ package framework.core.architecture.component{
 	*/
 	public class TextComponent extends GraphicComponent {
 
-		private var _ressourceManager:IRessourceManager=null;
-		private var _textField:TextField=null;
-		private var _textFormat:TextFormat=null;
-		private var _text_properties:Object = null;
-		private var _textXml:XML = null;
-		private var _texts:Array = null;
+		protected var _ressourceManager:IRessourceManager=null;
+		protected var _textField:TextField=null;
+		protected var _textFormat:TextFormat=null;
 		
 		public function TextComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 		}
 		//------ Init Var ------------------------------------
-		private function initVar():void {
+		protected function initVar():void {
 			_ressourceManager=RessourceManager.getInstance();
 			_textField = new TextField();
+			_textField.text="TextComponent";
 			_textFormat = new TextFormat();
 			_textField.defaultTextFormat=_textFormat;
-			_texts = new Array();
 			addChild(_textField);
 		}
 		//------ Init Property  ------------------------------------
@@ -65,7 +62,6 @@ package framework.core.architecture.component{
 		//------Set Text -------------------------------------
 		public function setText(text:String,autoSize:String=TextFieldAutoSize.LEFT, width:Number =100 , height:Number=50 , selectable:Boolean=false, rotation:Number=0, background:Boolean=false,backgroundColor:uint=0, border:Boolean=false, displayAsPassword :Boolean=false , multiline:Boolean= true, maxChars:int =0 ):void {
 			_textField.text=text;
-			_texts[0]=text;
 			_textField.autoSize=autoSize;
 			_textField.width=width;
 			_textField.height=height;
@@ -82,17 +78,6 @@ package framework.core.architecture.component{
 		public function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
 			_textFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
 			_textField.setTextFormat(_textFormat);
-		}
-		//------Set Sequence -------------------------------------
-		public function setSequence(path:String, textName:String, properties:Object):void {
-			_text_properties = properties;
-			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
-			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
-			_ressourceManager.loadXml(path,textName);
-		}
-		//------ On Xml Loading Successfull ------------------------------------
-		private function onXmlLoadingSuccessful(evt:Event):void {
-			trace(evt.target);
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
