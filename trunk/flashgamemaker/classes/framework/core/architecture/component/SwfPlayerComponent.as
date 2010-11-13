@@ -113,8 +113,6 @@ package framework.core.architecture.component{
 		//------ Change Color ------------------------------------
 		public override function changeColor(hexColor:String):void {
 			var i:int=1;
-			trace(FlashGameMaker.STAGE.focus);
-				
 			while(i<_source.numChildren+1){
 				var source:MovieClip = _source[_name+i];
 				if(source!=null){
