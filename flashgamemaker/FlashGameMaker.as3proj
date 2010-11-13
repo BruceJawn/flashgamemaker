@@ -4,7 +4,7 @@
   <output>
     <movie disabled="False" />
     <movie input="" />
-    <movie path="bin\FlashGameMaker.swf" />
+    <movie path="FlashGameMaker.swf" />
     <movie fps="30" />
     <movie width="400" />
     <movie height="345" />
@@ -14,6 +14,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="classes" />
+    <class path="." />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -24,8 +25,8 @@
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
-    <option showActionScriptWarnings="True" />
-    <option showBindingWarnings="True" />
+    <option showActionScriptWarnings="False" />
+    <option showBindingWarnings="False" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="False" />

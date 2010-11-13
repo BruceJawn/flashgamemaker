@@ -24,6 +24,7 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
+	import framework.add.architecture.component.*;
 
 	/**
 	* Script Class
@@ -65,7 +66,9 @@ package script.game{
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setDirection("Horizontal",false);
-			swfPlayerComponent.moveTo(200,100);
+			swfPlayerComponent.moveTo(150,300);
+			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
+			gamePadComponent.moveTo(60,290);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

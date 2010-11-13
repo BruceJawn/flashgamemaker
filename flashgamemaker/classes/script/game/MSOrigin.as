@@ -25,7 +25,7 @@ package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
 	import framework.add.architecture.component.*;
-	
+
 	import flash.events.*;
 	/**
 	* Script Class
@@ -52,15 +52,12 @@ package script.game{
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
-			keyboardInputComponent.setKey(40, "SIT");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var backgroundColorComponent:BackgroundColorComponent= _entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
+			var backgroundColorComponent:BackgroundColorComponent=_entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
 			backgroundColorComponent.changeColor("111111");
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
@@ -72,7 +69,7 @@ package script.game{
 			bitmapPlayerComponent.setAnim("ATTACK",1);
 			bitmapPlayerComponent.setAnim("JUMP",8);
 			bitmapPlayerComponent.setAnim("SIT",5);
-			var backgroundComponent:ScrollingBitmapComponent= _entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
+			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
 			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backgroundComponent.setScrolling(30,5);
 			//backgroundComponent.setDirection(swfPlayerComponent.getDirection());
@@ -85,10 +82,6 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");
-			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
-			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
-			chronoComponent.moveTo(180,20);
-			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
 			var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
 			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);
 			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");
@@ -96,14 +89,31 @@ package script.game{
 			var sequence:String="<rpgText><sequence title='???' icon='unknown?' graphic=''>...Roger...RAS</sequence><sequence title='Squad' icon='Squad' graphic=''>1,2,3,...GO!</sequence></rpgText>";
 			rpgTextComponent.setSequence(sequence);
 			rpgTextComponent.moveTo(60,70);
+			rpgTextComponent.addEventListener("_RPGTextCOMPLETE",onRPGTextComplete);
+		}
+		//------ On RPG Text Complete ------------------------------------
+		private function onRPGTextComplete(evt:Event):void {
+			evt.target.removeEventListener(Event.COMPLETE,onRPGTextComplete);
+			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
+			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
+			keyboardInputComponent.setKey(40, "SIT");
+			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
+			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
+			chronoComponent.moveTo(180,20);
+			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onChronoComplete(evt:Event):void {
+			evt.target.removeEventListener(Event.COMPLETE,onChronoComplete);
 			_entityManager.removeComponent("GameEntity","myBackgroundComponent");
 			_entityManager.removeComponent("GameEntity","myBitmapPlayerComponent");
+			_entityManager.removeComponent("GameEntity","myKeyInputComponent");
 			_entityManager.removeComponent("GameEntity","mySoundComponent");
-			_entityManager.removeComponent("GameEntity","myRPGTextComponent");
-			var gameOver:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","myGOGraphicComponent");
+			try {
+				_entityManager.removeComponent("GameEntity","myRPGTextComponent");
+			} catch (e:Error) {
+			}
+			var gameOver:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myGOGraphicComponent");
 			gameOver.loadGraphic("texture/framework/game/interface/MSGameOver.swf", "GameOver");
 			gameOver.addEventListener(Event.COMPLETE,onGameOverComplete);
 			gameOver.moveTo(0,30);

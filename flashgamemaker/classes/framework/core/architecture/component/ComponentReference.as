@@ -73,6 +73,7 @@ package framework.core.architecture.component{
 			var keyboardAttackComponent:KeyboardAttackComponent;
 			var tweenComponent:TweenComponent;
 			var loadingComponent:LoadingComponent;
+			var gamePadComponent:GamePadComponent;
 		}
 	}
 }

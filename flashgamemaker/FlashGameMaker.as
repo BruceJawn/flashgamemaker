@@ -18,7 +18,7 @@
 *	Under this licence you are free to copy, adapt and distrubute the work. 
 *	You must attribute the work in the manner specified by the author or licensor. 
 *   A full copy of the license is available at http://www.gnu.org/licenses/fdl-1.3-standalone.html.
-GNU General Public License v3
+    GNU General Public License v3
 *
 */
 
