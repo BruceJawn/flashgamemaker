@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <docProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <pageTitle>FlashGameMaker AS3</pageTitle>
-  <classPaths>D:\FlashGameMaker\FGM\classes\utils;D:\FlashGameMaker\FGM\classes\framework;D:\FlashGameMaker\FGM\classes;D:\FlashGameMaker\FGM\classes\script;C:\Program Files\Adobe\Adobe Flash CS4\Common\Configuration\Component Source\ActionScript 3.0\User Interface;D:\FlashGameMaker\FGM</classPaths>
-  <sourcesList>fl.controls</sourcesList>
-  <outputDirectory>D:\FlashGameMaker\FGM\doc</outputDirectory>
+  <classPaths>D:\FlashGameMaker\FGM\classes\utils;D:\FlashGameMaker\FGM\classes\framework;D:\FlashGameMaker\FGM\classes;D:\FlashGameMaker\FGM\classes\script;D:\FlashGameMaker\FGM</classPaths>
+  <sourcesList />
+  <outputDirectory />
   <activeCompiler>1</activeCompiler>
-  <extraOptions>-warnings=false </extraOptions>
+  <extraOptions>-warnings=false</extraOptions>
 </docProject>
