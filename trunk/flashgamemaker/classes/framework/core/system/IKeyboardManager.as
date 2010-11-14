@@ -32,22 +32,6 @@ package framework.core.system{
 		 */
 		function getDispatcher():EventDispatcher;
 		/**
-		 * Define wich keys will be used in the game
-		 */
-		function setKeysFromPath(path:String, name:String):void;
-		/**
-		 * Define wich keys will be used in the game
-		 */
-		function setKeysFromXml(xml:XML):void;
-		/**
-		 * Set Key 
-		 */
-		function setKey(keyCode:Number,keyName:String ):void;
-		/**
-		 * Set Key From Char Code
-		 */
-		function setKeyFromCharCode(charCode:String,keyName:String ):void;
-		/**
 		 * Register
 		 */
 		function register(obj:Object):void;
@@ -56,13 +40,37 @@ package framework.core.system{
 		 */
 		function unregister(obj:Object):void;
 		/**
-		 * Retourn Key
+		 * Configure manually the keys to move
 		 */
-		function getKey():Object;
+		function mapDirection(up:int, down:int, left:int, right:int, replaceExisting:Boolean = false):void;
 		/**
-		 * Retourn Xml Config
+		 * Use the keys WASD to move 
 		 */
-		function getXmlConfig():XMLList;
+		function useWASD(replaceExisting:Boolean = false):void;
+		/**
+		 * Use the keys IJKL to move
+		 */
+		function useIJKL(replaceExisting:Boolean = false):void;
+		/**
+		 * Use the keys ZQSD to move
+		 */
+		function useZQSD(replaceExisting:Boolean = false):void;
+		/**
+		 * Configure manually the gaming buttons
+		 */
+		function mapFireButtons(fire1:int, fire2:int,fire3:int,fire4:int, replaceExisting:Boolean = false):void;
+		/**
+		 * Use the keys JKLM as buttons
+		 */
+		function useJKLM(replaceExisting:Boolean = false):void;
+		/**
+		 * Use the keys OKLM as buttons
+		 */
+		function useOKLM(replaceExisting:Boolean = false):void;
+		/**
+		 * Return GamePad
+		 */
+		function getGamePad():Object;
 		/**
 		 * To String
 		 */

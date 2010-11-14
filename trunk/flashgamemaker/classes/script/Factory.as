@@ -49,7 +49,7 @@ package script{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("Factory","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
+			//keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("Factory","KeyboardMoveComponent","myKeyMoveComponent");
 			var keyboardRotationComponent:KeyboardRotationComponent=_entityManager.addComponent("Factory","KeyboardRotationComponent","myKeyboardRotationComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("Factory","AnimationComponent","myAnimationComponent");

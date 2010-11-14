@@ -26,10 +26,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package com.cheezeworld.utils
-{
-	public class KeyCode
-	{
+package utils.keyboard{
+	
+	public class KeyCode{
+		
 		//LETTERS
 		public static const A:int = 65;
 		public static const B:int = 66;
@@ -141,6 +141,5 @@ package com.cheezeworld.utils
 		public static const DELETE:int = 46;
 		public static const HELP:int = 47;
 		public static const NUM_LOCK:int = 144;		
-
 	}
 }

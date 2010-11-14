@@ -23,14 +23,11 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.KeyboardManager;
-	import framework.core.system.IKeyboardManager;
 	import utils.iso.IsoPoint;
 
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.events.*;
-	import flash.text.TextField;
 
 	/**
 	* Spatial Component 
@@ -39,10 +36,8 @@ package framework.core.architecture.component{
 	*/
 	public class KeyboardMoveComponent extends Component {
 
-		private var _keyboardManager:IKeyboardManager=null;
-		private var _xmlConfig:TextField=null;
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 
 		public function KeyboardMoveComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -50,14 +45,7 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		protected function initVar():void {
-			_keyboardManager=KeyboardManager.getInstance();
-			_xmlConfig=new TextField  ;
-			_xmlConfig.autoSize="left";
-			var xmlConfig:XMLList=_keyboardManager.getXmlConfig();
-			if (xmlConfig!=null) {
-				_xmlConfig.text=xmlConfig.toString();
-				//addChild(_xmlConfig);
-			}
+
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -67,60 +55,47 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._keyboard_key=_keyboard_key;
+			component._keyboard_gamePad=_keyboard_gamePad;
 			if (componentName==_componentName) {
 				update("keyboardMove");
 			} else {
-				updateDir(_keyboard_key,component);
+				updateDir(_keyboard_gamePad,component);
 			}
 		}
 		//------ Update Dir  ------------------------------------
-		private function updateDir(keyboard_key:Object,component:*):void {
-			if (keyboard_key!=null) {
-				var keyTouch:String=keyboard_key.keyTouch;
-				var prevTouch:String=keyboard_key.prevTouch;
-				var keyStatut:String=keyboard_key.keyStatut;
-				var doubleClick:Boolean=keyboard_key.doubleClick;
+		private function updateDir(keyboard_gamePad:Object,component:*):void {
+			if (keyboard_gamePad!=null) {
 				var spatialDirection:String=component._spatial_properties.direction;
 				var spatialStrict:Boolean=component._spatial_properties.strict;
-				if (keyStatut=="DOWN") {
-					if (keyTouch=="RIGHT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
-						component._spatial_dir.x=1;
-					} else if (keyTouch=="LEFT" && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
-						component._spatial_dir.x=-1;
-					} else if (keyTouch=="UP" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
-						component._spatial_dir.y=-1;
-					} else if (keyTouch=="DOWN" && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
-						component._spatial_dir.y=1;
-					} else if (keyTouch=="JUMP" && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
-						component._spatial_jump.z=component._spatial_jumpStart.z;
-						component._spatial_properties.isJumping=true;
-						component._spatial_properties.isFalling=false;
-					}
-				} else if (keyStatut=="UP") {
-					if (keyTouch=="RIGHT"||keyTouch=="LEFT"||prevTouch=="RIGHT"||prevTouch=="LEFT") {
-						component._spatial_dir.x=0;
-					}
-					if (keyTouch=="UP"||keyTouch=="DOWN"||prevTouch=="UP"||prevTouch=="DOWN") {
-						component._spatial_dir.y=0;
-					}
+				if (keyboard_gamePad.right.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
+					component._spatial_dir.x=1;
+				} else if (keyboard_gamePad.left.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
+					component._spatial_dir.x=-1;
+				} else if (keyboard_gamePad.up.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
+					component._spatial_dir.y=-1;
+				} else if (keyboard_gamePad.down.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
+					component._spatial_dir.y=1;
+				} else if (keyboard_gamePad.fire2.isDown && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
+					component._spatial_jump.z=component._spatial_jumpStart.z;
+					component._spatial_properties.isJumping=true;
+					component._spatial_properties.isFalling=false;
 				}
-				isMoving(component,keyboard_key);
+				if (! keyboard_gamePad.right.isDown&&! keyboard_gamePad.left.isDown) {
+					component._spatial_dir.x=0;
+				}
+				if (! keyboard_gamePad.up.isDown&&! keyboard_gamePad.down.isDown) {
+					component._spatial_dir.y=0;
+				}
+				isMoving(component);
 			}
 		}
 		//------ Is Moving  ------------------------------------
-		private function isMoving(component:*,keyboard_key:Object):void {
-			var keyTouch:String=keyboard_key.keyTouch;
-			var prevTouch:String=keyboard_key.prevTouch;
-			var keyStatut:String=keyboard_key.keyStatut;
-			var doubleClick:Boolean=keyboard_key.doubleClick;
-			var shiftKey:Boolean=keyboard_key.shiftKey;
-
+		private function isMoving(component:*):void {
 			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0) {
 				component._spatial_properties.isMoving=true;
-				if (doubleClick||shiftKey) {
-					component._spatial_properties.isRunning=true;
-				}
+				/*if (doubleClick||shiftKey) {
+				component._spatial_properties.isRunning=true;
+				}*/
 			} else {
 				component._spatial_properties.isMoving=false;
 				component._spatial_properties.isRunning=false;
