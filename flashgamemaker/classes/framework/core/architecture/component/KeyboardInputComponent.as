@@ -38,7 +38,7 @@ package framework.core.architecture.component{
 	public class KeyboardInputComponent extends Component{
 
 		private var _keyboardManager:IKeyboardManager = null;
-		private var _keyboard_key:Object = null;
+		private var _keyboard_gamePad:Object = null;
 		
 		public function KeyboardInputComponent(componentName:String, componentOwner:IEntity){
 			super(componentName,componentOwner);
@@ -68,36 +68,45 @@ package framework.core.architecture.component{
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire(evt:KeyboardEvent):void {
-			getKey();
+			getGamePad();
 			update("keyboardInput");
 		}
-		//------ Get Key ------------------------------------
-		private function getKey():void {
-			_keyboard_key = _keyboardManager.getKey();
-			var keyObject:String="KeyInput KeyStatut:"+_keyboard_key.keyStatut+" ,KeyTouch:"+_keyboard_key.keyTouch+" ,PrevTouch:"+_keyboard_key.prevTouch;
-			keyObject+=" ,KeyCode:"+_keyboard_key.keyCode+" ,CharCode:"+_keyboard_key.charCode+" ,DoubleClick:"+_keyboard_key.doubleClick;
-			keyObject+=" ,LongClick:"+_keyboard_key.longClick+" ,Shift:"+_keyboard_key.shiftKey+" ,Ctrl:"+_keyboard_key.ctrlKey;
+		//------ Get GamePad ------------------------------------
+		private function getGamePad():void {
+			_keyboard_gamePad = _keyboardManager.getGamePad();
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			component._keyboard_key = _keyboard_key;
+			component._keyboard_gamePad = _keyboard_gamePad;
 			component.actualizeComponent(componentName,componentOwner,component);
 		}
-		//------ Set Keys From Path ------------------------------------
-		public function setKeysFromPath(path:String, name:String):void {
-			_keyboardManager.setKeysFromPath(path, name);
+		//------ Map Direction ------------------------------------
+		public function mapDirection(up:int, down:int, left:int, right:int, replaceExisting:Boolean = false):void{
+			_keyboardManager.mapDirection(up,down,left,right,replaceExisting);
 		}
-		//------ Set Keys From Xml ------------------------------------
-		public function setKeysFromXml(xml:XML):void {
-			_keyboardManager.setKeysFromXml(xml);
+		//------ Use WASD ------------------------------------
+		public function useWASD(replaceExisting:Boolean = false):void{
+			_keyboardManager.useWASD(replaceExisting);
 		}
-		//------ Set Key ------------------------------------
-		public function setKey(keyCode:Number,keyName:String ):void {
-			_keyboardManager.setKey(keyCode, keyName);
+		//------ Use IJKL ------------------------------------
+		public function useIJKL(replaceExisting:Boolean = false):void{
+			_keyboardManager.useIJKL(replaceExisting);
 		}
-		//------ Set Key From Char Code------------------------------------
-		public function setKeyFromCharCode(charCode:String,keyName:String ):void {
-			_keyboardManager.setKeyFromCharCode(charCode,keyName);
+		//------ Use ZQSD ------------------------------------
+		public function useZQSD(replaceExisting:Boolean = false):void{
+			_keyboardManager.useZQSD(replaceExisting);
+		}
+		//------ Map Fire Buttons ------------------------------------
+		public function mapFireButtons(fire1:int, fire2:int,fire3:int,fire4:int, replaceExisting:Boolean = false):void{
+			_keyboardManager.mapFireButtons(fire1,fire2,fire3,fire4,replaceExisting);
+		}
+		//------ Use JKLM ------------------------------------
+		public function useJKLM(replaceExisting:Boolean = false):void{
+			_keyboardManager.useJKLM(replaceExisting);
+		}
+		//------ Use OKLM ------------------------------------
+		public function useOKLM(replaceExisting:Boolean = false):void{
+			_keyboardManager.useOKLM(replaceExisting);
 		}
 		//------- ToString -------------------------------
 		 public override function ToString():void{

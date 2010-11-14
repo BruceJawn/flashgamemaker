@@ -56,7 +56,7 @@ package framework.core.architecture.component{
 		//Animation properties
 		public var _animation:Dictionary=null;
 		//Keyboard properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 		//Spatial properties
 		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_jumpStart:IsoPoint=null;		

@@ -95,8 +95,9 @@ package script.game{
 		private function onRPGTextComplete(evt:Event):void {
 			evt.target.removeEventListener(Event.COMPLETE,onRPGTextComplete);
 			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.setKeysFromPath("xml/framework/game/keyboardConfig.xml","KeyboardConfig");
-			keyboardInputComponent.setKey(40, "SIT");
+			keyboardInputComponent.useZQSD();//AZERTY
+			//keyboardInputComponent.useWASD();//QWERTY
+			keyboardInputComponent.useOKLM();
 			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
 			chronoComponent.moveTo(180,20);
