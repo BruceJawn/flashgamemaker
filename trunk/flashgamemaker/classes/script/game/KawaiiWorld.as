@@ -56,6 +56,7 @@ package script.game{
 			var spatialComponent:SpatialComponent=_entityManager.addComponent("GameEntity","SpatialComponent","mySpatialComponent");
 			var renderComponent:RenderComponent=_entityManager.addComponent("GameEntity","RenderComponent","myRenderComponent");
 			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("GameEntity", "SystemInfoComponent", "mySystInfoComponent");
+			systemInfoComponent.moveTo(25,0);
 			var loadingComponent:LoadingComponent=_entityManager.addComponent("GameEntity","LoadingComponent","myLoadingComponent");
 			loadingComponent.loadGraphic("texture/framework/game/interface/bladesquad/loadingBar.swf","LoadingBar");
 			loadingComponent.preloadGraphic("xml/framework/game/textureKawaii.xml","TextureKawaii");
@@ -66,30 +67,7 @@ package script.game{
 			_entityManager.removeComponent("GameEntity","myLoadingComponent");
 			createBackground();
 			createLogin();
-			/*var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.useZQSD();//AZERTY
-			//keyboardInputComponent.useWASD();//QWERTY
-			keyboardInputComponent.useOKLM();
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
-			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var systemInfoComponent:SystemInfoComponent = _entityManager.addComponent("GameEntity", "SystemInfoComponent", "mySystInfoComponent");
-			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
-			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.moveTo(200,100);
-			swfPlayerComponent.setIso(true);
-			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
-			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
-			tileMapComponent.setPropertyReference("keyboardInput",tileMapComponent._componentName);
-			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
-			tileMapComponent.setScrolling(swfPlayerComponent.getDirection(),swfPlayerComponent.getSpeed(),swfPlayerComponent.getPosition());
-			tileMapComponent.moveTo(260,100);
-			//var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
-			//tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
-		*/}
+		}
 		//------- Creat Background -------------------------------
 		public function createBackground():void {
 			var bg:GraphicComponent =_entityManager. addComponent("GameEntity","GraphicComponent","myBG");
@@ -137,8 +115,8 @@ package script.game{
 			customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
 			customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
 			var bebeCustomize:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBebeComponent");
-			bebeCustomize.setGraphicFromName("bebeCustomized");
-			bebeCustomize.addGraphic("BebeVisage", "clip.Head");
+			bebeCustomize.setGraphicFromName("bebeCustomized",2);
+			bebeCustomize.addGraphic("bebeVisage", "clip.Head");
 			bebeCustomize.moveTo(200,140);
 		}
 		//------ On Male Click ------------------------------------
@@ -150,13 +128,6 @@ package script.game{
 		private function onFemaleClick(evt:MouseEvent):void {
 			var bebeCustomize:GraphicComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			bebeCustomize._graphic.clip.Head.gotoAndStop(2);
-		}
-		//------ On Next Click ------------------------------------
-		private function onNextClick(evt:MouseEvent):void {
-			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
-			customizeScreen._graphic.nameText.removeEventListener(MouseEvent.CLICK, onTextClick);
-			customizeScreen._graphic.nextBt.removeEventListener(MouseEvent.CLICK, onNextClick);
-			_entityManager.removeComponent("GameEntity","myCustomizeScreen");
 		}
 		//------ On Color Clip Click ------------------------------------
 		private function onColorClipClick(evt:MouseEvent):void {
@@ -185,6 +156,41 @@ package script.game{
 				}
 				i++;
 			}
+		}
+		//------ On Next Click ------------------------------------
+		private function onNextClick(evt:MouseEvent):void {
+			_entityManager.removeComponent("GameEntity","myBebeComponent");
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.nameText.removeEventListener(MouseEvent.CLICK, onTextClick);
+			customizeScreen._graphic.nextBt.removeEventListener(MouseEvent.CLICK, onNextClick);
+			_entityManager.removeComponent("GameEntity","myCustomizeScreen");
+			var statutBar:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myStatutBarComponent");
+			statutBar.setGraphicFromName("statutClip");
+			statutBar.moveTo(560,30);
+			var messageClip:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myMessageClipComponent");
+			messageClip.setGraphicFromName("messageClip");
+			messageClip.moveTo(50,460);
+			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
+			backgroundComponent.setGraphicFromName("canvas");
+			backgroundComponent.moveTo(40,60);
+			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
+			keyboardInputComponent.useZQSD();//AZERTY
+			//keyboardInputComponent.useWASD();//QWERTY
+			keyboardInputComponent.useOKLM();
+			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
+			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
+			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
+			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.moveTo(200,50);
+			swfPlayerComponent.setIso(true);
+			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
+			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
+			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
+			tileMapComponent.moveTo(247,100);
+			//var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
+			//tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
+			FlashGameMaker.Focus();
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

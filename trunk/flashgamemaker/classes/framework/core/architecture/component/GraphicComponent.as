@@ -119,7 +119,8 @@ package framework.core.architecture.component{
 			dispatchEvent(evt);
 		}
 		//------ Set Graphic  ------------------------------------
-		public function setGraphic(graphicName:String, graphic:*):void {
+		public function setGraphic(graphicName:String, graphic:*, layer:int=0):void {
+			_render_layerId=layer;
 			if(_graphic!=null && contains(_graphic)){
 				removeChild(_graphic);
 			}
@@ -128,7 +129,8 @@ package framework.core.architecture.component{
 			addChild(_graphic);
 		}
 		//------ Set Graphic From Name ------------------------------------
-		public function setGraphicFromName(graphicName:String):void {
+		public function setGraphicFromName(graphicName:String, layer:int=0):void {
+			_render_layerId=layer;
 			var graphic:*=_graphicManager.getGraphic(graphicName);
 			if(_graphic!=null && contains(_graphic)){
 				removeChild(_graphic);
