@@ -74,11 +74,14 @@ package script.game{
 			backgroundComponent.setScrolling(30,5);
 			//backgroundComponent.setDirection(swfPlayerComponent.getDirection());
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
-			backgroundComponent.moveTo(0,100);
+			backgroundComponent.moveTo(0,90);
+			var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","mySTatutBarGraphicComponent");
+			statutBarComponent.loadGraphic("texture/framework/game/interface/MsOriginStatutBar.swf", "MsOriginStatutBar");
+			statutBarComponent.moveTo(0,310);
 			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
 			soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
 			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
-			soundComponent.moveTo(300,310);
+			soundComponent.moveTo(300,5);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");
@@ -88,7 +91,7 @@ package script.game{
 			rpgTextComponent.loadGraphic("texture/framework/game/interface/rpgText.swf", "RPGText");
 			var sequence:String="<rpgText><sequence title='???' icon='unknown?' graphic=''>...Roger...RAS</sequence><sequence title='Squad' icon='Squad' graphic=''>1,2,3,...GO!</sequence></rpgText>";
 			rpgTextComponent.setSequence(sequence);
-			rpgTextComponent.moveTo(60,70);
+			rpgTextComponent.moveTo(60,50);
 			rpgTextComponent.addEventListener("_RPGTextCOMPLETE",onRPGTextComplete);
 		}
 		//------ On RPG Text Complete ------------------------------------
@@ -100,8 +103,11 @@ package script.game{
 			keyboardInputComponent.useOKLM();
 			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
+			chronoComponent.restart(59);
 			chronoComponent.moveTo(180,20);
 			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
+			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
+			gamePadComponent.moveTo(100,100);
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onChronoComplete(evt:Event):void {

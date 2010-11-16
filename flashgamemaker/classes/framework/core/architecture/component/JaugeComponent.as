@@ -44,9 +44,9 @@ package framework.core.architecture.component{
 		private var _jauge_stepUp:Number=4;
 		private var _jauge_stepDown:Number=1;
 		private var _jauge_direction:String="right";
-		private var _keyTouch:String="";
+		private var _prevKey:Object=new Object;
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=30;
@@ -63,8 +63,8 @@ package framework.core.architecture.component{
 			addChild(_jauge);
 			_text=new TextField  ;
 			_text.autoSize="left";
-			_text.text= "Press 1 and 2 or Left and Right arrows to run";
-			_text.x-=90;
+			_text.text= "Press Left and Right arrows to run";
+			_text.x-=120;
 			_text.y+=15;
 			addChild(_text);
 		}
@@ -89,17 +89,24 @@ package framework.core.architecture.component{
 		}
 		//------ Update Jauge ------------------------------------
 		private function updateJauge():void {
-			if (_keyboard_key!=null) {
-				var keyTouch:String=_keyboard_key.keyTouch;
-				var keyStatut:String=_keyboard_key.keyStatut;
-				if ((keyTouch=="A"&&_keyTouch=="B"||keyTouch=="B"&&_keyTouch=="A" || keyTouch=="RIGHT"&&_keyTouch=="LEFT"||keyTouch=="LEFT"&&_keyTouch=="RIGHT")&&keyStatut=="DOWN"&&_jauge_count<_jauge_max /*&& _jauge_combinaison!=keyTouch+prevTouch*/) {
-					_jauge_count+=_jauge_stepUp;
-				} else if (_jauge_count-_jauge_stepDown>0) {
+			if (_keyboard_gamePad!=null) {
+				if (_keyboard_gamePad.right.isDown &&_jauge_count<_jauge_max) {
+					if(_prevKey==_keyboard_gamePad.left && !_prevKey.isDown){
+						_jauge_count+=_jauge_stepUp;
+					}
+					_prevKey = _keyboard_gamePad.right;
+				}else if (_keyboard_gamePad.left.isDown &&_jauge_count<_jauge_max) {
+					if(_prevKey==_keyboard_gamePad.right && !_prevKey.isDown){
+						_jauge_count+=_jauge_stepUp;
+					}
+					_prevKey = _keyboard_gamePad.left;
+				}
+				else if (_jauge_count-_jauge_stepDown>0) {
 					_jauge_count-=_jauge_stepDown;
 				}else {
 					_jauge_count=0;
 				}
-				_keyTouch = keyTouch;
+				
 				_jauge.setProgress(_jauge_count,_jauge_max);
 			}
 		}

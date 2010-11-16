@@ -75,7 +75,7 @@ package framework.core.architecture.component{
 					component._spatial_dir.y=-1;
 				} else if (keyboard_gamePad.down.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
 					component._spatial_dir.y=1;
-				} else if (keyboard_gamePad.fire2.isDown && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
+				} if (keyboard_gamePad.fire2.isDown && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
 					component._spatial_jump.z=component._spatial_jumpStart.z;
 					component._spatial_properties.isJumping=true;
 					component._spatial_properties.isFalling=false;

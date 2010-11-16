@@ -72,7 +72,9 @@ package framework.core.architecture.component{
 				_bitmap.bitmapData.fillRect(_bitmap.bitmapData.rect, 0);
 				var x:int=(_graphic_frame-1)% (_graphic_numFrame*_graphic_numFrame);
 				var y:int=Math.floor((_graphic_frame-1)/(_graphic_numFrame*_graphic_numFrame));
+				_bitmap.bitmapData.lock();
 				_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(x*_playerWidth,y*_playerHeight,_playerWidth,_playerHeight), new Point(0,0),null,null,true);
+				_bitmap.bitmapData.unlock();
 			}
 		}
 		//------- ToString -------------------------------

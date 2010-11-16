@@ -66,8 +66,8 @@ package framework.core.architecture.component{
 		}
 		//-- Update Frame ---------------------------------------------------
 		private function updateFrame(componentName:String,componentOwner:String,component:*):void {
-			var frame:int=getFrame(component);
-			frame=setAnimation(component,frame);
+			var frame:int=setAnimation(component);
+			frame=getFrame(component,frame);
 			frame=setFrame(component,frame);
 			component._graphic_oldFrame=component._graphic_frame;
 			component._graphic_frame=frame;
@@ -75,10 +75,8 @@ package framework.core.architecture.component{
 		}
 
 		//-- Get Frame ---------------------------------------------------
-		public function getFrame(component:*):int {
-			var graphic_frame:int=component._graphic_frame;
+		public function getFrame(component:*,graphic_frame:int):int {
 			var graphic_numFrame:int=component._graphic_numFrame;
-			var graphic_oldFrame:int=component._graphic_oldFrame;
 			var totalFrame:int=graphic_numFrame*graphic_numFrame;
 
 			var spatial_dir:IsoPoint=component._spatial_dir;
@@ -89,7 +87,7 @@ package framework.core.architecture.component{
 				return graphic_frame;
 			}
 			if (spatial_dir.x>0 && graphic_frame%totalFrame>graphic_numFrame) {//Right
-				graphic_frame=1;
+				graphic_frame-=Math.floor(graphic_frame/graphic_numFrame)*graphic_numFrame;
 			} else if (spatial_dir.x<0 && (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3)) {//Left
 				graphic_frame=graphic_numFrame*2+1;
 			} else if (spatial_dir.y>0 && (graphic_frame%totalFrame<=graphic_numFrame || graphic_frame%totalFrame>graphic_numFrame*2) ) {//Down
@@ -110,16 +108,16 @@ package framework.core.architecture.component{
 		//----- Set Frame -----------------------------------
 		private function setFrame(component:*, graphic_frame:int):int {
 			var graphic_numFrame:int=component._graphic_numFrame;
-			var graphic_oldFrame:int=component._graphic_oldFrame;
-
-			graphic_frame++;
-			if (graphic_oldFrame!=0 && (graphic_oldFrame+1)%4==0 && graphic_frame==graphic_oldFrame+2) {
-				graphic_frame-=4;
+			trace(graphic_frame,(graphic_frame)%graphic_numFrame);
+			if ((graphic_frame)%graphic_numFrame==0) {
+				graphic_frame-=3;
+			}else{
+				graphic_frame++;
 			}
 			return graphic_frame;
 		}
 		//----- Set Animation -----------------------------------
-		private function setAnimation(component:*, graphic_frame:int):int {
+		private function setAnimation(component:*):int {
 			var isMoving:Boolean=component._spatial_properties.isMoving;
 			var isRunning:Boolean=component._spatial_properties.isRunning;
 			var isAttacking:Boolean=component._spatial_properties.isAttacking;
@@ -127,29 +125,29 @@ package framework.core.architecture.component{
 			var isDoubleJumping:Boolean=component._spatial_properties.isDoubleJumping;
 			var isFalling:Boolean=component._spatial_properties.isFalling;
 			var graphic_numFrame:int=component._graphic_numFrame;
-			var graphic_oldFrame:int=component._graphic_oldFrame;
+			var graphic_frame:int=component._graphic_frame;
 			var animation:Dictionary=component._animation;
 			if (isFalling&&animation["JUMP"]!=null&&graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("FALLING");
-				graphic_frame+=animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["JUMP"]*graphic_numFrame*graphic_numFrame+1;
 			} else if (isDoubleJumping && animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("DOUBLE_JUMP");
-				graphic_frame+=animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame+1;
 			} else if (isJumping && animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("JUMP");
-				graphic_frame+=animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["JUMP"]*graphic_numFrame*graphic_numFrame+1;
 			} else if (isAttacking && animation["ATTACK"]!= null && graphic_frame<animation["ATTACK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("ATTACK");
-				graphic_frame+=animation["ATTACK"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["ATTACK"]*graphic_numFrame*graphic_numFrame+1;
 			} else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
 				//trace("RUN");
-				graphic_frame+=animation["RUN"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["RUN"]*graphic_numFrame*graphic_numFrame+1;
 			} else if (isMoving && animation["WALK"]!= null && graphic_frame<animation["WALK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("WALK");
-				graphic_frame+=animation["WALK"]*graphic_numFrame*graphic_numFrame;
-			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame<graphic_numFrame*graphic_numFrame) {
-				//trace("STATIC");
-				graphic_frame+=animation["STATIC"]*graphic_numFrame*graphic_numFrame;
+				graphic_frame=animation["WALK"]*graphic_numFrame*graphic_numFrame+1;
+			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame>graphic_numFrame*graphic_numFrame) {
+				trace("STATIC");
+				graphic_frame=animation["STATIC"]*graphic_numFrame*graphic_numFrame+1;
 			}
 			return graphic_frame;
 		}

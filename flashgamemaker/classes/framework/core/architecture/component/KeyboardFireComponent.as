@@ -43,7 +43,7 @@ package framework.core.architecture.component{
 		private var _players:Array=null;
 		private var _bullets:Array=null;
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 
 		public function KeyboardFireComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -68,7 +68,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (componentName==_componentName&&_keyboard_key!=null) {
+			if (componentName==_componentName&&_keyboard_gamePad!=null) {
 				fire();
 			} else if (componentName!=_componentName) {
 				addPlayer(component);
@@ -76,7 +76,7 @@ package framework.core.architecture.component{
 		}
 		//------- Check Attack -------------------------------
 		private function fire():void {
-			if (_keyboard_key.keyStatut=="DOWN"&&_keyboard_key.keyTouch=="ATTACK") {
+			if (_keyboard_gamePad.fire1.isDown) {
 				for each (var playerAttacking:PlayerComponent in _players) {
 					createBullet(playerAttacking);
 				}

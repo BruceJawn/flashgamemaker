@@ -47,7 +47,7 @@ package framework.core.architecture.component{
 		private var _direction:IsoPoint=null;
 		private var _speed:Point=new Point(1,0);
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=30;
@@ -81,7 +81,7 @@ package framework.core.architecture.component{
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_timer_count>=_timer_delay && _timer_on && _bitmap!=null) {
 				scrollBitmap();
-			} else if (!_timer_on && _keyboard_key!=null && _keyboard_key.keyStatut=="DOWN") {
+			} else if (!_timer_on && _keyboard_gamePad!=null) {
 				scrollBitmapKeyboard();
 			}
 		}
@@ -128,13 +128,13 @@ package framework.core.architecture.component{
 		}
 		//----- Scroll Bitmap Keyboard  -----------------------------------
 		public function scrollBitmapKeyboard():void {
-			if (_keyboard_key.keyTouch=="RIGHT") {
+			if (_keyboard_gamePad.right.isDown) {
 				_direction.x=1;
-			} else if (_keyboard_key.keyTouch=="LEFT") {
+			} else if (_keyboard_gamePad.left.isDown) {
 				_direction.x=-1;
-			}else if (_keyboard_key.keyTouch=="UP") {
+			}else if (_keyboard_gamePad.up.isDown) {
 				_direction.y=1;
-			}else if (_keyboard_key.keyTouch=="DOWN") {
+			}else if (_keyboard_gamePad.down.isDown) {
 				_direction.y=-1;
 			}else{
 				_direction.x=0;
