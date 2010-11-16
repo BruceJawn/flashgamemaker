@@ -34,7 +34,7 @@ package {
 	* <p>Instanciate the core framework.</p>
 	* @see framework.Framework
 	*/
-	[SWF(width=800, height=600, backgroundColor=0xFFFFFF, frameRate=30)]
+	[SWF(width=400, height=345, backgroundColor=0xFFFFFF, frameRate=30)]
 	public class FlashGameMaker extends Sprite {
 
 		public static var CLIP:Sprite=null;

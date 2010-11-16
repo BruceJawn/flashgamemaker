@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <SwfPlayerTexture playerWidth="100" playerHeight="120">
 	<Body>
-		<path>texture/framework/game/charSet/bladesquad/kidClip.swf</path>
+		<path>texture/framework/game/charset/bladesquad/kidClip.swf</path>
 	</Body>
 </SwfPlayerTexture>
