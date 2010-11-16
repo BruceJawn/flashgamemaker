@@ -46,7 +46,7 @@ package framework.core.architecture.component{
 			_animation["RUN"]=2;
 			_animation["JUMP"]=3;
 			_animation["DOUBLE_JUMP"]=4;
-			addChild(_colorPicker);
+			//addChild(_colorPicker);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {

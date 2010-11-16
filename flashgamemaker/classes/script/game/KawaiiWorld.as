@@ -167,7 +167,7 @@ package script.game{
 			var statutBar:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myStatutBarComponent");
 			statutBar.setGraphicFromName("statutClip");
 			statutBar.moveTo(560,30);
-			var messageClip:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myMessageClipComponent");
+			var messageClip:MessageComponent=_entityManager.addComponent("GameEntity","MessageComponent","myMessageClipComponent");
 			messageClip.setGraphicFromName("messageClip");
 			messageClip.moveTo(50,460);
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
@@ -188,8 +188,6 @@ package script.game{
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.moveTo(247,100);
-			//var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
-			//tileMapEditorComponent.loadTexture("xml/framework/game/mapTexture.xml", "MapTexture");
 			FlashGameMaker.Focus();
 		}
 		//------- ToString -------------------------------
