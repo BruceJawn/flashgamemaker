@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <SwfPlayerTexture playerWidth="80" playerHeight="100">
 	<Body >
-		<path>texture/framework/game/charSet/bladesquad/bebeClip.swf</path>
+		<path>texture/framework/game/charset/bladesquad/bebeClip.swf</path>
 	</Body >
 	<Head>
-		<path>texture/framework/game/charSet/bladesquad/visageClip.swf</path>
+		<path>texture/framework/game/charset/bladesquad/visageClip.swf</path>
 	</Head >
 </SwfPlayerTexture>

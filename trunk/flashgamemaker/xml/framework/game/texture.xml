@@ -4,16 +4,16 @@
 		<path>texture/framework/game/tileSet/tileSet.png</path>
 	</TileSet>
 	<KawaiiTileSet>
-		<path>texture/framework/game/tileSet/bladesquad/kawaiiTileSet.png</path>
+		<path>texture/framework/game/tileset/bladesquad/kawaiiTileSet.png</path>
 	</KawaiiTileSet>
 
 	<Knight tileWidth="64" tileHeight="64" tileX="8" tileY="4">
-		<path>texture/framework/game/charSet/windship/templeKnightSet.png</path>
+		<path>texture/framework/game/charset/windship/templeKnightSet.png</path>
 	</Knight>
 	<BebeClip tileWidth="80" tileHeight="100">
-		<path>texture/framework/game/charSet/bladesquad/bebeClip.swf</path>
+		<path>texture/framework/game/charset/bladesquad/bebeClip.swf</path>
 	</BebeClip >
 	<BebeVisage tileWidth="80" tileHeight="100">
-		<path>texture/framework/game/charSet/bladesquad/bebeVisages.swf</path>
+		<path>texture/framework/game/charset/bladesquad/bebeVisages.swf</path>
 	</BebeVisage>
 </Texture >
