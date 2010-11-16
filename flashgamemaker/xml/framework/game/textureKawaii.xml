@@ -15,13 +15,16 @@
 	<fx>
 		<path>texture/framework/game/fx/element.png</path>
 	</fx>
-	<BebeClip >
-		<path>texture/framework/game/charSet/bladesquad/bebeClip.swf</path>
-	</BebeClip >
-	<BebeVisage >
-		<path>texture/framework/game/charSet/bladesquad/visageClip.swf</path>
-	</BebeVisage>
-	<LoginScreen >
+	<loginScreen >
 		<path>texture/framework/game/interface/bladesquad/loginScreen.swf</path>
-	</LoginScreen >
+	</loginScreen >
+	<statutClip >
+		<path>texture/framework/game/interface/bladesquad/statutClip2.swf</path>
+	</statutClip >
+	<messageClip >
+		<path>texture/framework/game/interface/bladesquad/messageClip.swf</path>
+	</messageClip >
+	<canvas >
+		<path>texture/framework/game/background/bladesquad/canvas.png</path>
+	</canvas >
 </Texture >

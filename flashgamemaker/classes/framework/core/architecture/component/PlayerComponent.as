@@ -59,15 +59,15 @@ package framework.core.architecture.component{
 		public var _keyboard_gamePad:Object=null;
 		//Spatial properties
 		public var _spatial_jump:IsoPoint=null;
-		public var _spatial_jumpStart:IsoPoint=null;		
+		public var _spatial_jumpStart:IsoPoint=null;
 		//Attack properties
 		public var _attack:Number=1;
 		//Health properties
 		public var _health_life:Number=10;
-		public var _health_lifeMax:Number=10;		
+		public var _health_lifeMax:Number=10;
 		public var _health_hit:Number=0;
 
-		public function PlayerComponent(componentName:String, componentOwner:IEntity) {
+		public function PlayerComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
 			initVar();
 			initListener();
@@ -77,17 +77,17 @@ package framework.core.architecture.component{
 			_ressourceManager=RessourceManager.getInstance();
 			_serverManager=ServerManager.getInstance();
 			_render_layerId=1;
-			_animation = new Dictionary();
+			_animation=new Dictionary  ;
 			_animation["STATIC"]=0;
 			_animation["WALK"]=1;
-			_colorPicker = new ColorPicker();
-			_spatial_properties = {dynamic:true,iso:false, direction:"Diagonal",strict:true, collision:false, isMoving:false, isrunning:false, isJumping:false,isDoubleJumping:false, isFalling:false, isAttacking:false,isSliding:false, isClimbing:false};
+			_colorPicker=new ColorPicker  ;
+			_spatial_properties={dynamic:true,iso:false,direction:"Diagonal",strict:true,collision:false,isMoving:false,isrunning:false,isJumping:false,isDoubleJumping:false,isFalling:false,isAttacking:false,isSliding:false,isClimbing:false};
 			_spatial_jump=new IsoPoint(0,0,0);
 			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
-			_colorPicker.addEventListener(Event.CHANGE, onColorPickerChange);
+			_colorPicker.addEventListener(Event.CHANGE,onColorPickerChange);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -96,9 +96,9 @@ package framework.core.architecture.component{
 			setPropertyReference("progressBar",_componentName);
 		}
 		//------ Load Player ------------------------------------
-		public function loadPlayer(path:String, playerName:String, layer:int=0):void {
+		public function loadPlayer(path:String,playerName:String,layer:int=0):void {
 			_playerName=playerName;
-			_render_layerId = layer;
+			_render_layerId=layer;
 			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 			_ressourceManager.loadXml(path,playerName);
@@ -119,9 +119,9 @@ package framework.core.architecture.component{
 				dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 				serializeXml();
 				if (_playerXml.children().length()>1) {
-					loadGraphicsFromXml(_playerXml, _playerName);
+					loadGraphicsFromXml(_playerXml,_playerName);
 				} else {
-					loadGraphic(_playerTexture, _playerXml.children()[0].name(), _render_layerId);
+					loadGraphic(_playerTexture,_playerXml.children()[0].name(),_render_layerId);
 				}
 			}
 		}
@@ -136,24 +136,37 @@ package framework.core.architecture.component{
 
 		}
 		//------ On Graphic Loading Successful ------------------------------------
-		protected override function onGraphicLoadingSuccessful( evt:Event ):void {
+		protected override function onGraphicLoadingSuccessful(evt:Event):void {
 			createPlayer();
 			dispatchEvent(evt);
+		}
+		//------ Set Graphic From Name ------------------------------------
+		public override function setGraphicFromName(graphicName:String,layer:int=0):void {
+			_render_layerId=layer;
+			var graphic:*=_graphicManager.getGraphic(graphicName);
+			if (_graphic!=null&&contains(_graphic)) {
+				removeChild(_graphic);
+			}
+			if (graphic!=null) {
+				_graphicName=graphicName;
+				_graphic=graphic;
+				createPlayer();
+			}
 		}
 		//------ Set Animation ------------------------------------
 		public function setAnimation(animation:Dictionary):void {
 			_animation=animation;
 		}
 		//------ Set Anim ------------------------------------
-		public function setAnim(animation:String, index:int):void {
-			_animation[animation]=index
+		public function setAnim(animation:String,index:int):void {
+			_animation[animation]=index;
 		}
 		//------ Set Iso ------------------------------------
 		public function setIso(iso:Boolean):void {
 			_spatial_properties.iso=iso;
 		}
 		//------ Set Direction ------------------------------------
-		public function setDirection(direction:String, strict:Boolean=true):void {
+		public function setDirection(direction:String,strict:Boolean=true):void {
 			_spatial_properties.direction=direction;
 			_spatial_properties.strict=strict;
 		}
@@ -167,12 +180,12 @@ package framework.core.architecture.component{
 		}
 		//------ Get Facing Direction ------------------------------------
 		public function getFacingDirection():String {
-			if(Math.round(_graphic_frame/_graphic_numFrame)==1){
-				return "RIGHT"
-			}else if(Math.round(_graphic_frame/_graphic_numFrame)==2){
-				return "DOWN"
-			}else if(Math.round(_graphic_frame/_graphic_numFrame)==3){
-				return "LEFT"
+			if (Math.round(_graphic_frame/_graphic_numFrame)==1) {
+				return "RIGHT";
+			} else if (Math.round(_graphic_frame/_graphic_numFrame)==2) {
+				return "DOWN";
+			} else if (Math.round(_graphic_frame/_graphic_numFrame)==3) {
+				return "LEFT";
 			}
 			return "UP";
 		}
@@ -191,7 +204,7 @@ package framework.core.architecture.component{
 
 		}
 		//------ Set Collision  ------------------------------------
-		public  function setCollision(collision:Boolean):void {
+		public function setCollision(collision:Boolean):void {
 			_spatial_properties.collision=collision;
 		}
 		//------- ToString -------------------------------
