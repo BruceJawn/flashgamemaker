@@ -41,7 +41,7 @@ package framework.core.architecture.component{
 		private var _keyboardManager:IKeyboardManager=null;
 		private var _degree:int=1;
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 
 		public function KeyboardRotationComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -62,40 +62,28 @@ package framework.core.architecture.component{
 			if (componentName==_componentName) {
 				update("keyboardRotation");
 			} else {
-				updateRotation(_keyboard_key,component);
+				updateRotation(_keyboard_gamePad,component);
 			}
 		}
 		//------ Update Dir  ------------------------------------
-		private function updateRotation(keyboard_key:Object,component:*):void {
-			if (keyboard_key!=null) {
-				var keyTouch:String=keyboard_key.keyTouch;
-				var prevTouch:String=keyboard_key.prevTouch;
-				var keyStatut:String=keyboard_key.keyStatut;
-				var doubleClick:Boolean=keyboard_key.doubleClick;
-				if (keyStatut=="DOWN") {
-					if (keyTouch=="RIGHT") {
-						component._spatial_rotation=- _degree;
-						component._spatial_properties.isMoving=true;
-					} else if (keyTouch=="LEFT") {
-						component._spatial_rotation=_degree;
-						component._spatial_properties.isMoving=true;
-					} else if (keyTouch=="UP") {
+		private function updateRotation(_keyboard_gamePad:Object,component:*):void {
+			if (_keyboard_gamePad!=null) {
+				if (_keyboard_gamePad.right.isDown) {
+					component._spatial_rotation=- _degree;
+					component._spatial_properties.isMoving=true;
+				} else if (_keyboard_gamePad.left.isDown) {
+					component._spatial_rotation=_degree;
+					component._spatial_properties.isMoving=true;
+				} else if (_keyboard_gamePad.up.isDown) {
 
-					} else if (keyTouch=="DOWN") {
+				} else if (_keyboard_gamePad.down.isDown) {
 
-					}
-				} else if (keyStatut=="UP") {
-					if (keyTouch=="RIGHT"||keyTouch=="LEFT"||prevTouch=="RIGHT"||prevTouch=="LEFT") {
-						component._spatial_rotation=0;
-						component._spatial_properties.isMoving=false;
-					}
-					if (keyTouch=="UP"||keyTouch=="DOWN"||prevTouch=="UP"||prevTouch=="DOWN") {
-
-					}
+				} else {
+					component._spatial_rotation=0;
+					component._spatial_properties.isMoving=false;
 				}
 			}
 		}
-
 		//------- ToString -------------------------------
 		public override function ToString():void {
 

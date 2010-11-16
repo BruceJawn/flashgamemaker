@@ -66,7 +66,6 @@ package framework.core.architecture.component{
 			setFormat("Arial",30,0xFF0000);
 			addChild(_chrono);
 			_chrono_count=_chrono_max;
-			updateText();
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -93,7 +92,9 @@ package framework.core.architecture.component{
 		public function restart(max:Number=3):void {
 			_chrono_max=max;
 			_chrono_count=_chrono_max;
+			updateText();
 			_chrono_on=true;
+			
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
@@ -142,7 +143,6 @@ package framework.core.architecture.component{
 				_bitmap=new Bitmap(myBitmapData);
 				setGraphic(_graphicName,_bitmap);
 				actualizeChrono();
-				start();
 			}
 		}
 		//------ Get Time ------------------------------------

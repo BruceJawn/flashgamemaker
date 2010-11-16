@@ -3,7 +3,7 @@
   <pageTitle>FlashGameMaker AS3</pageTitle>
   <classPaths>D:\FlashGameMaker\FGM\classes\utils;D:\FlashGameMaker\FGM\classes\framework;D:\FlashGameMaker\FGM\classes;D:\FlashGameMaker\FGM\classes\script;D:\FlashGameMaker\FGM</classPaths>
   <sourcesList />
-  <outputDirectory />
+  <outputDirectory>D:\FlashGameMaker\FGM\asdoc</outputDirectory>
   <activeCompiler>1</activeCompiler>
   <extraOptions>-warnings=false</extraOptions>
 </docProject>

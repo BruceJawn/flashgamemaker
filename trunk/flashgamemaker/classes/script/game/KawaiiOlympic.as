@@ -76,7 +76,7 @@ package script.game{
 			scrollingBitmapComponent2.loadGraphic("texture/framework/game/background/bladesquad/piste.jpg","Piste");
 			scrollingBitmapComponent2.setScrolling(30,1);
 			scrollingBitmapComponent.setLoop(true);
-			scrollingBitmapComponent2.setPropertyReference("timer",scrollingBitmapComponent2._componentName);
+			scrollingBitmapComponent2.setPropertyReference("keyboardInput",scrollingBitmapComponent2._componentName);
 			scrollingBitmapComponent2.moveTo(0,108);
 			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getDirection());
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
@@ -90,7 +90,7 @@ package script.game{
 		private function onLoadingSuccessful( evt:Event ):void {
 			evt.target.removeEventListener(Event.COMPLETE, onLoadingSuccessful);
 			var chronoComponent: ChronoComponent= _entityManager.getComponent("GameEntity","myChronoComponent");
-			chronoComponent.start();
+			chronoComponent.restart();
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
