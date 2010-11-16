@@ -65,6 +65,21 @@ package framework.core.architecture.component{
 				addChild(_clip);
 			}
 		}
+		//------ Set Graphic From Name ------------------------------------
+		public override function setGraphicFromName(graphicName:String, layer:int=0):void {
+			_render_layerId=layer;
+			var graphic:*=_graphicManager.getGraphic(graphicName);
+			if(_graphic!=null && contains(_graphic)){
+				removeChild(_graphic);
+			}
+			if(graphic!=null){
+				_graphicName=graphicName;
+				_clip=graphic;
+				_clip.sendBt.addEventListener(MouseEvent.CLICK,onSend);
+				_clip.inputTxt.addEventListener(MouseEvent.CLICK,onInput);
+				addChild(_clip);
+			}
+		}
 		//-- On Send ---------------------------------------------
 		private function onSend(evt:MouseEvent):void {
 			var msgToSend:String=getInput();
@@ -76,7 +91,9 @@ package framework.core.architecture.component{
 		}
 		//-- On Input ---------------------------------------------
 		private function onInput(evt:MouseEvent):void {
-			_clip.inputTxt.text="";
+			if(_clip.inputTxt.text=="Write your message here"){
+				_clip.inputTxt.text="";
+			}
 		}
 		//-- Send Message ---------------------------------------------
 		public function sendMessage(msgToSend:String):void {
