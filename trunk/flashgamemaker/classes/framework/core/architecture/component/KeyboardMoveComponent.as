@@ -36,6 +36,7 @@ package framework.core.architecture.component{
 	*/
 	public class KeyboardMoveComponent extends Component {
 
+		private var _mode:String="4Dir";
 		//KeyboardInput properties
 		public var _keyboard_gamePad:Object=null;
 
@@ -58,49 +59,110 @@ package framework.core.architecture.component{
 			component._keyboard_gamePad=_keyboard_gamePad;
 			if (componentName==_componentName) {
 				update("keyboardMove");
-			} else {
+			} else if (_keyboard_gamePad!=null) {
 				updateDir(_keyboard_gamePad,component);
+				updateProp(_keyboard_gamePad,component);
 			}
 		}
 		//------ Update Dir  ------------------------------------
 		private function updateDir(keyboard_gamePad:Object,component:*):void {
-			if (keyboard_gamePad!=null) {
-				var spatialDirection:String=component._spatial_properties.direction;
-				var spatialStrict:Boolean=component._spatial_properties.strict;
-				if (keyboard_gamePad.right.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
-					component._spatial_dir.x=1;
-				} else if (keyboard_gamePad.left.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Horizontal"|| !spatialStrict)) {
-					component._spatial_dir.x=-1;
-				} else if (keyboard_gamePad.up.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
-					component._spatial_dir.y=-1;
-				} else if (keyboard_gamePad.down.isDown && (spatialDirection=="Diagonal" || spatialDirection=="Vertical"|| !spatialStrict)) {
-					component._spatial_dir.y=1;
-				} if (keyboard_gamePad.fire2.isDown && !component._spatial_properties.isJumping && !component._spatial_properties.isFalling) {
-					component._spatial_jump.z=component._spatial_jumpStart.z;
-					component._spatial_properties.isJumping=true;
-					component._spatial_properties.isFalling=false;
-				}
-				if (! keyboard_gamePad.right.isDown&&! keyboard_gamePad.left.isDown) {
-					component._spatial_dir.x=0;
-				}
-				if (! keyboard_gamePad.up.isDown&&! keyboard_gamePad.down.isDown) {
-					component._spatial_dir.y=0;
-				}
-				isMoving(component);
+			if (_mode=="2Dir") {
+				twoDirMove(keyboard_gamePad,component);
+			} else if (_mode=="4Dir") {
+				fourDirMove(keyboard_gamePad,component);
+			} else if (_mode=="4DirIso") {
+				fourDirIsoMove(keyboard_gamePad,component);
 			}
 		}
+		//------ 2 Direction Move ------------------------------------
+		private function twoDirMove(keyboard_gamePad:Object,component:*):void {
+			if (keyboard_gamePad.right.isDown) {
+				component._spatial_dir.x=1;
+			} else if (keyboard_gamePad.left.isDown) {
+				component._spatial_dir.x=-1;
+			}
+			if (! keyboard_gamePad.right.isDown&&! keyboard_gamePad.left.isDown) {
+				component._spatial_dir.x=0;
+			}
+		}
+		//------ 4 Direction Move ------------------------------------
+		private function fourDirMove(keyboard_gamePad:Object,component:*):void {
+			if (keyboard_gamePad.downRight.isDown) {
+				component._spatial_dir.x=1;
+				component._spatial_dir.y=1;
+			} else if (keyboard_gamePad.downLeft.isDown) {
+				component._spatial_dir.x=-1;
+				component._spatial_dir.y=1;
+			} else if (keyboard_gamePad.upLeft.isDown) {
+				component._spatial_dir.x=-1;
+				component._spatial_dir.y=-1;
+			} else if (keyboard_gamePad.upRight.isDown ) {
+				component._spatial_dir.x=1;
+				component._spatial_dir.y=-1;
+			} else if (keyboard_gamePad.right.isDown) {
+				component._spatial_dir.x=1;
+			} else if (keyboard_gamePad.left.isDown) {
+				component._spatial_dir.x=-1;
+			} else if (keyboard_gamePad.up.isDown) {
+				component._spatial_dir.y=-1;
+			} else if (keyboard_gamePad.down.isDown ) {
+				component._spatial_dir.y=1;
+			} else {
+				component._spatial_dir.x=0;
+				component._spatial_dir.y=0;
+			}
+		}
+		//------ 4 Direction IsoMove ------------------------------------
+		private function fourDirIsoMove(keyboard_gamePad:Object,component:*):void {
+			if (keyboard_gamePad.right.isDown) {
+				component._spatial_dir.x=1;
+				component._spatial_dir.y=1;
+			} else if (keyboard_gamePad.left.isDown) {
+				component._spatial_dir.x=-1;
+				component._spatial_dir.y=-1;
+			} else if (keyboard_gamePad.up.isDown) {
+				component._spatial_dir.x=1;
+				component._spatial_dir.y=-1;
+			} else if (keyboard_gamePad.down.isDown) {
+				component._spatial_dir.x=-1;
+				component._spatial_dir.y=1;
+			} else {
+				component._spatial_dir.x=0;
+				component._spatial_dir.y=0;
+			}
+		}
+		//------ Update Properties  ------------------------------------
+		private function updateProp(keyboard_gamePad:Object,component:*):void {
+			if (keyboard_gamePad.fire1.isDown) {
+				component._spatial_properties.isAttacking=true;
+			} 
+			if (keyboard_gamePad.fire2.isDown&&! component._spatial_properties.isJumping&&! component._spatial_properties.isFalling&&component._spatial_jump.z==0) {
+				component._spatial_jump.z=component._spatial_jumpStart.z;
+				component._spatial_properties.isJumping=true;
+				component._spatial_properties.isFalling=false;
+			}
+			isMoving(keyboard_gamePad,component);
+		}
 		//------ Is Moving  ------------------------------------
-		private function isMoving(component:*):void {
-			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0) {
+		private function isMoving(keyboard_gamePad:Object,component:*):void {
+			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0||component._spatial_properties.isFalling||component._spatial_properties.isJumping) {
 				component._spatial_properties.isMoving=true;
-				/*if (doubleClick||shiftKey) {
-				component._spatial_properties.isRunning=true;
-				}*/
+				if (keyboard_gamePad.shift) {
+					component._spatial_properties.isRunning=true;
+				} else {
+					component._spatial_properties.isRunning=false;
+				}
 			} else {
 				component._spatial_properties.isMoving=false;
 				component._spatial_properties.isRunning=false;
-				component._spatial_properties.isAttacking=false;
 			}
+		}
+		//------ Set Mode  ------------------------------------
+		private function setMode(mode:String):void {
+			if (! (mode=="2Dir" || mode=="4Dir"||mode=="4DirIso") ) {
+				throw new Error("Error KeyboardMoveComponent: direction must be 2Dir, 4Dir or 4dirIso");
+			}
+			_mode=mode;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

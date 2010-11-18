@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<BitmapPlayerTexture playerWidth="100" playerHeight="100">
+<BitmapPlayerTexture playerWidth="160" playerHeight="100">
 	<MSOrigin>
 		<path>texture/framework/game/charset/ms/MS.png</path>
 	</MSOrigin>

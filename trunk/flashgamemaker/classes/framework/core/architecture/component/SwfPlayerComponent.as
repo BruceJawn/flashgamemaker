@@ -46,6 +46,7 @@ package framework.core.architecture.component{
 			_animation["RUN"]=2;
 			_animation["JUMP"]=3;
 			_animation["DOUBLE_JUMP"]=4;
+			_animation["ATTACK"]=5;
 			//addChild(_colorPicker);
 		}
 		//------ Init Property  ------------------------------------

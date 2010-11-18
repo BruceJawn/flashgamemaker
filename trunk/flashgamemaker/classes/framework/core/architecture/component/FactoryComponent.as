@@ -216,7 +216,6 @@ package framework.core.architecture.component{
 		private function initBitmapPlayerComponent():void {
 			_bitmapPlayer.loadPlayer("xml/framework/game/bitmapPlayer.xml", "Knight");
 			_bitmapPlayer.moveTo(200,0);
-			_bitmapPlayer.setIso(true);
 		}
 		//------- Init Swf Player Component -------------------------------
 		private function initSwfPlayerComponent():void {
@@ -226,7 +225,6 @@ package framework.core.architecture.component{
 			//_swfPlayer.setDirection("Horizontal");
 			//swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			_swfPlayer.moveTo(200,0);
-			_swfPlayer.setIso(true);
 		}
 		//------- On Create Change -------------------------------
 		private function onCreate(evt:MouseEvent):void {

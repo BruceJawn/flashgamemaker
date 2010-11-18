@@ -62,7 +62,6 @@ package script.game{
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer", 2);
-			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(50,300);

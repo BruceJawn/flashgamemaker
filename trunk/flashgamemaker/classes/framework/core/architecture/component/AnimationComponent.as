@@ -38,6 +38,7 @@ package framework.core.architecture.component{
 	*/
 	public class AnimationComponent extends Component {
 
+		private var _mode:String="2Dir";
 		//Timer properties
 		public var _timer_on:Boolean=false;
 		public var _timer_delay:Number=120;
@@ -66,41 +67,30 @@ package framework.core.architecture.component{
 		}
 		//-- Update Frame ---------------------------------------------------
 		private function updateFrame(componentName:String,componentOwner:String,component:*):void {
-			var frame:int=setAnimation(component);
-			frame=getFrame(component,frame);
+			var frame:int=setDirection(component);
+			frame=setAnimation(component,frame);
 			frame=setFrame(component,frame);
-			component._graphic_oldFrame=component._graphic_frame;
 			component._graphic_frame=frame;
 			component.actualizeComponent(componentName,componentOwner,component);
 		}
 
-		//-- Get Frame ---------------------------------------------------
-		public function getFrame(component:*,graphic_frame:int):int {
+		//-- Set Frame ---------------------------------------------------
+		public function setDirection(component:*):int {
+			var graphic_frame:int=component._graphic_frame;
 			var graphic_numFrame:int=component._graphic_numFrame;
 			var totalFrame:int=graphic_numFrame*graphic_numFrame;
-
 			var spatial_dir:IsoPoint=component._spatial_dir;
-			var spatialDirection:String=component._spatial_properties.direction;
-			var spatialStrict:Boolean=component._spatial_properties.strict;
-			
-			if((spatialDirection=="Horizontal" && spatial_dir.y!=0 || spatialDirection=="Vertical" && spatial_dir.x!=0) && !spatialStrict){
+
+			if (_mode=="2Dir"&&spatial_dir.x==0&&spatial_dir.y!=0) {
 				return graphic_frame;
 			}
-			if (spatial_dir.x>0 && graphic_frame%totalFrame>graphic_numFrame) {//Right
-				graphic_frame-=Math.floor(graphic_frame/graphic_numFrame)*graphic_numFrame;
-			} else if (spatial_dir.x<0 && (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3)) {//Left
-				graphic_frame=graphic_numFrame*2+1;
-			} else if (spatial_dir.y>0 && (graphic_frame%totalFrame<=graphic_numFrame || graphic_frame%totalFrame>graphic_numFrame*2) ) {//Down
-				graphic_frame=graphic_numFrame+1;
-			} else if (spatial_dir.y<0  && graphic_frame%totalFrame<=graphic_numFrame*3) {//Up
-				graphic_frame=graphic_numFrame*3+1;
-			} else if (spatial_dir.x==0 && spatial_dir.y==0 && graphic_frame>graphic_numFrame*graphic_numFrame && graphic_frame%totalFrame<=graphic_numFrame) {//Right
+			if ((spatial_dir.x>0 && spatial_dir.y==0 || spatial_dir.x>0 && spatial_dir.y>0) && graphic_frame%totalFrame>graphic_numFrame) {//Right
 				graphic_frame=1;
-			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*2) {//Down
-				graphic_frame=graphic_numFrame+1;
-			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*3) {//Left
+			} else if ((spatial_dir.x<0 && spatial_dir.y==0 || spatial_dir.x<0 && spatial_dir.y<0)&& (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3 )) {//Left
 				graphic_frame=graphic_numFrame*2+1;
-			} else if (spatial_dir.x==0 && spatial_dir.y==0 &&graphic_frame>graphic_numFrame*graphic_numFrame &&graphic_frame%totalFrame<=graphic_numFrame*4) {//Up
+			} else if ((spatial_dir.y>0 && spatial_dir.x==0 || spatial_dir.x<0 && spatial_dir.y>0) && (graphic_frame%totalFrame<=graphic_numFrame||graphic_frame%totalFrame>graphic_numFrame*2)) {//Down
+				graphic_frame=graphic_numFrame+1;
+			} else if ((spatial_dir.y<0 && spatial_dir.x==0 || spatial_dir.x>0 && spatial_dir.y<0)  && graphic_frame%totalFrame<=graphic_numFrame*3) {//Up
 				graphic_frame=graphic_numFrame*3+1;
 			}
 			return graphic_frame;
@@ -108,16 +98,15 @@ package framework.core.architecture.component{
 		//----- Set Frame -----------------------------------
 		private function setFrame(component:*, graphic_frame:int):int {
 			var graphic_numFrame:int=component._graphic_numFrame;
-			trace(graphic_frame,(graphic_frame)%graphic_numFrame);
 			if ((graphic_frame)%graphic_numFrame==0) {
 				graphic_frame-=3;
-			}else{
+			} else {
 				graphic_frame++;
 			}
 			return graphic_frame;
 		}
 		//----- Set Animation -----------------------------------
-		private function setAnimation(component:*):int {
+		private function setAnimation(component:*,graphic_frame:int):int {
 			var isMoving:Boolean=component._spatial_properties.isMoving;
 			var isRunning:Boolean=component._spatial_properties.isRunning;
 			var isAttacking:Boolean=component._spatial_properties.isAttacking;
@@ -125,33 +114,41 @@ package framework.core.architecture.component{
 			var isDoubleJumping:Boolean=component._spatial_properties.isDoubleJumping;
 			var isFalling:Boolean=component._spatial_properties.isFalling;
 			var graphic_numFrame:int=component._graphic_numFrame;
-			var graphic_frame:int=component._graphic_frame;
 			var animation:Dictionary=component._animation;
 			if (isFalling&&animation["JUMP"]!=null&&graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("FALLING");
-				graphic_frame=animation["JUMP"]*graphic_numFrame*graphic_numFrame+1;
-			} else if (isDoubleJumping && animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+			} else if (isDoubleJumping && !isFalling&& animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("DOUBLE_JUMP");
-				graphic_frame=animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame+1;
-			} else if (isJumping && animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+			} else if (isJumping && !isDoubleJumping && !isFalling&& animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("JUMP");
-				graphic_frame=animation["JUMP"]*graphic_numFrame*graphic_numFrame+1;
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
 			} else if (isAttacking && animation["ATTACK"]!= null && graphic_frame<animation["ATTACK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("ATTACK");
-				graphic_frame=animation["ATTACK"]*graphic_numFrame*graphic_numFrame+1;
-			} else if (isRunning && animation["RUN"]!=null&&graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame) {
+				graphic_frame=Math.floor(graphic_frame%(graphic_numFrame*graphic_numFrame)/4)+animation["ATTACK"]*graphic_numFrame*graphic_numFrame+1;
+			}else if (isAttacking && animation["ATTACK"]!= null && graphic_frame%graphic_numFrame==0) {
+				//trace("ATTACK_STOP");
+				component._spatial_properties.isAttacking=false;
+			} else if (isRunning && !isAttacking && !isJumping && !isDoubleJumping&& !isFalling && animation["RUN"]!=null && (graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["RUN"]+1)*graphic_numFrame*graphic_numFrame)) {
 				//trace("RUN");
-				graphic_frame=animation["RUN"]*graphic_numFrame*graphic_numFrame+1;
-			} else if (isMoving && animation["WALK"]!= null && graphic_frame<animation["WALK"]*graphic_numFrame*graphic_numFrame) {
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["RUN"]*graphic_numFrame*graphic_numFrame;
+			} else if (isMoving && !isRunning && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["WALK"]!= null && (graphic_frame<=animation["WALK"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["WALK"]+1)*graphic_numFrame*graphic_numFrame)) {
 				//trace("WALK");
-				graphic_frame=animation["WALK"]*graphic_numFrame*graphic_numFrame+1;
-			} else if (!isMoving && animation["STATIC"]!= null && graphic_frame>graphic_numFrame*graphic_numFrame) {
-				trace("STATIC");
-				graphic_frame=animation["STATIC"]*graphic_numFrame*graphic_numFrame+1;
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK"]*graphic_numFrame*graphic_numFrame;
+			} else if (!isMoving && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["STATIC"]!= null && graphic_frame>animation["STATIC"]*graphic_numFrame*graphic_numFrame) {
+				//trace("STATIC");
+				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["STATIC"]*graphic_numFrame*graphic_numFrame;
 			}
 			return graphic_frame;
 		}
-
+		//------ Set Mode  ------------------------------------
+		private function setMode(mode:String):void {
+			if (! (mode=="2Dir" || mode=="4Dir"||mode=="4DirIso") ) {
+				throw new Error("Error KeyboardMoveComponent: direction must be 2Dir, 4Dir or 4dirIso");
+			}
+			_mode=mode;
+		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
 
