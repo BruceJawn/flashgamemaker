@@ -77,12 +77,10 @@ package script.game{
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setPropertyReference("keyboardAttack",swfPlayerComponent._componentName);
-			swfPlayerComponent.setDirection("Horizontal");
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.moveTo(120,300);
 			var swfEnnemyComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
 			swfEnnemyComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
-			swfEnnemyComponent.setDirection("Horizontal");
 			swfEnnemyComponent.setPropertyReference("health",swfEnnemyComponent._componentName);
 			swfEnnemyComponent.moveTo(200,300);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");

@@ -67,7 +67,6 @@ package script.game{
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.setDirection("Horizontal",false);
 			swfPlayerComponent.moveTo(150,300);
 			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
 			gamePadComponent.moveTo(60,290);

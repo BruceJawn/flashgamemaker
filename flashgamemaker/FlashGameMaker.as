@@ -24,7 +24,6 @@
 
 package {
 	import framework.Framework;
-	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.system.Security;

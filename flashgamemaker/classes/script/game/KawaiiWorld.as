@@ -183,7 +183,6 @@ package script.game{
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(200,50);
-			swfPlayerComponent.setIso(true);
 			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);

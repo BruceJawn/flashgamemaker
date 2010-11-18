@@ -62,7 +62,6 @@ package script.game{
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
-			bitmapPlayerComponent.setDirection("Horizontal");
 			bitmapPlayerComponent.setCollision(true);
 			bitmapPlayerComponent.moveTo(50,200);
 			bitmapPlayerComponent.setAnim("WALK",2);
