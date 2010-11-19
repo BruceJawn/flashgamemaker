@@ -23,7 +23,7 @@
 
 package framework.core.architecture.component{
 	
-	import framework.add.architecture.component.*;
+	import framework.core.architecture.component.add.*;
 	/**
 	* Component Reference Class
 	* 
