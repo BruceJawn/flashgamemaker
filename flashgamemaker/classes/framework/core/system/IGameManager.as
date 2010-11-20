@@ -26,15 +26,10 @@ package framework.core.system{
 	import flash.events.EventDispatcher;
 	
 	public interface IGameManager	{
-		
 		/**
-		 * Get Dispatcher 
+		 * Start Game
 		 */		
-		function getDispatcher():EventDispatcher;
-		/**
-		 * Load Game
-		 */		
-		function loadGame(path:String):void;
+		function startGame():void;
 		/**
 		 * To String
 		 */		

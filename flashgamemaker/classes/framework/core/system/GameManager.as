@@ -23,36 +23,25 @@
 */
 
 package framework.core.system{
-	import utils.loader.*;
-	import framework.core.architecture.entity.*;
-	import framework.core.architecture.component.*;
 	import script.*;
-
-	import flash.display.*;
-	import flash.events.*;
-	import flash.utils.getDefinitionByName;
-	import flash.net.URLRequest;
-
 	/**
 	* Game Manager Class
 	* @ purpose: Store and manage all the interfaces.
 	*/
-	public class GameManager extends SimpleLoader implements IGameManager {
+	public class GameManager implements IGameManager {
 
 		private static var _instance:IGameManager=null;
 		private static var _allowInstanciation:Boolean=false;
-		private var _entityManager:IEntityManager=null;
-		private var _keyboardManager:IKeyboardManager=null;
-		private var _mouseManager:IMouseManager=null;
-		private var _serverManager:IServerManager=null;
-		private var _timeManager:ITimeManager=null;
-
 
 		public function GameManager() {
 			if (! _allowInstanciation||_instance!=null) {
 				throw new Error("Error: Instantiation failed: Use GameManager.getInstance() instead of new.");
 			}
 			initVar();
+		}
+		//------ Init Var ------------------------------------
+		private function initVar():void {
+		
 		}
 		//------ Get Instance ------------------------------------
 		public static function getInstance():IGameManager {
@@ -63,22 +52,8 @@ package framework.core.system{
 			}
 			return _instance;
 		}
-		//------ Init Var ------------------------------------
-		private function initVar():void {
-			_entityManager=EntityManager.getInstance();
-			_keyboardManager=KeyboardManager.getInstance();
-			_mouseManager=MouseManager.getInstance();
-			_serverManager=ServerManager.getInstance();
-			_timeManager=TimeManager.getInstance();
-		}
-		//------ Load Game ------------------------------------
-		public function loadGame(path:String):void {
-			startGame();
-		}
 		//------ Start Game ------------------------------------
-		protected function startGame():void {
-			removeGraphicListener();
-			removeLoadingProgress();
+		public function startGame():void {
 			new MyGame();
 		}
 		//------- ToString -------------------------------

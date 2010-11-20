@@ -278,7 +278,7 @@ package framework.core.architecture.entity{
 		try{
 			var classRef:Class=getDefinitionByName("framework.core.architecture.component."+componentName) as Class;
 		}catch(e:Error){
-			classRef=getDefinitionByName("framework.core.architecture.component.add."+componentName) as Class;
+			classRef=getDefinitionByName("framework.add.architecture.component."+componentName) as Class;
 		}
 		return (classRef);
 	}
