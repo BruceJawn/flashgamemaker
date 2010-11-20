@@ -40,8 +40,8 @@ package script{
 			//new Factory();
 			//new Navigation("tutorial.HelloWorld");
 			//new Navigation("game.KawaiiFight");
-			//new Navigation("game.KawaiiIsland");
-			new Navigation("game.KawaiiOlympic");
+			new Navigation("game.KawaiiIsland");
+			//new Navigation("game.KawaiiOlympic");
 			//new Navigation("game.Korizon");
 			//new Navigation("game.MSOrigin");
 			//new KawaiiWorld();
