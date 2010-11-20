@@ -101,8 +101,8 @@ package script.game{
 			gamePadComponent.hideAll();
 			gamePadComponent.showButton("_left");
 			gamePadComponent.moveButton("_left",170,60);
-			gamePadComponent.moveButton("_right",220,60);
 			gamePadComponent.showButton("_right");
+			gamePadComponent.moveButton("_right",220,60);
 			gamePadComponent.changeColor("FF0000");
 		}
 		//------- ToString -------------------------------
