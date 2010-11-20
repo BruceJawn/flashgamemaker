@@ -24,6 +24,7 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
+	import framework.add.architecture.component.*;
 
 	/**
 	* Script Class
@@ -86,7 +87,11 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardAttackComponent:KeyboardAttackComponent=_entityManager.addComponent("GameEntity","KeyboardAttackComponent","myKeyboardAttackComponent");
-			
+			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");
+			rpgTextComponent.loadGraphic("texture/framework/game/interface/rpgText.swf", "RPGText");
+			var sequence:String="<rpgText><sequence title='Welcome' icon='unknown?' graphic=''>Welcome to Kawaii Island</sequence><sequence title='Introduction' icon='Hero' graphic=''>Kawaii Island is a beautifull world...</sequence></rpgText>";
+			rpgTextComponent.setSequence(sequence);
+			rpgTextComponent.moveTo(60,20);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
