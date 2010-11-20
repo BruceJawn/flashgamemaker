@@ -25,72 +25,27 @@ package framework{
 	import framework.core.system.*;
 	import framework.core.architecture.component.ComponentReference;
 	import script.ScriptReference;
-	
-	import flash.events.EventDispatcher;
 	/**
 	* Framework Class
 	* @ purpose: Initialize the framework
 	*/
 	public class Framework{
 
-		private var _interfaceManager:IInterfaceManager;
 		private var _gameManager:IGameManager;
 		
 		public function Framework() {
 			initClassReference();
-			//initInterface("xml/framework/interface.xml");
-			initGame("xml/framework/game.xml");
+			initGame();
 		}
 		//------ Init Class Reference  ------------------------------------
 		private  function initClassReference():void{
 			new ComponentReference();
 			new ScriptReference();
 		}
-		//------ Init Interface ------------------------------------
-		private function initInterface(path:String):void {
-			initInterfaceVar(path);
-			initInterfaceListener();
-		}
-		//------ Init InterfaceVar ------------------------------------
-		private function initInterfaceVar(path:String):void {
-			_interfaceManager = InterfaceManager.getInstance();
-			_interfaceManager.preloadInterface(path);
-		}
-		//------ Init Interface Listener ------------------------------------
-		private function initInterfaceListener():void {
-			var interfaceDispatcher:EventDispatcher = _interfaceManager.getDispatcher();
-			interfaceDispatcher.addEventListener(InterfaceEvent.COMPLETE,onInterfaceLoadingSuccessful);
-			interfaceDispatcher.addEventListener(InterfaceEvent.NAVIGATION_CHANGE,onInterfaceNavigationChange);
-		}
-		//------ On Interface Loading Successful ------------------------------------
-		private function onInterfaceLoadingSuccessful(evt:InterfaceEvent):void {
-			_interfaceManager.goToScreen("MenuScreen");
-		}
-		//------ On Interface Navigation Change ------------------------------------
-		private function onInterfaceNavigationChange(evt:InterfaceEvent):void {
-			var currentScreen:String = _interfaceManager.getCurrentScreen();
-			if(currentScreen=="GameScreen"){
-				initGame("xml/framework/game.xml");
-			}
-		}
 		//------ Init Game ------------------------------------
-		private function initGame(path:String):void {
-			initGameVar(path);
-			//initGameListener();
-		}
-		//------ Init Game Var ------------------------------------
-		private function initGameVar(path:String):void {
+		private function initGame():void {
 			_gameManager = GameManager.getInstance();
-			_gameManager.loadGame(path);
+			_gameManager.startGame();
 		}
-		/*//------ Init Game Listener ------------------------------------
-		public function initGameListener():void {
-			var gameDispatcher:EventDispatcher = _gameManager.getDispatcher();
-			gameDispatcher.addEventListener(GameEvent.NAVIGATION_CHANGE,onNavigationChange);
-		}
-		//------ On Game Navigation Change ------------------------------------
-		public function onGameNavigationChange(evt:GameEvent):void {
-			
-		}*/
 	}
 }

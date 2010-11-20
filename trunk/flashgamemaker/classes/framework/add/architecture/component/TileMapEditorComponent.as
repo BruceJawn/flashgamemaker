@@ -21,7 +21,7 @@
 *
 */
 
-package framework.core.architecture.component.add{
+package framework.add.architecture.component{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
 	import utils.adobe.Export;
