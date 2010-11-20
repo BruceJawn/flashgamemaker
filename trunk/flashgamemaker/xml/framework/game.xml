@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Game>
-	<ServerConfig>
-		<path>xml/framework/game/serverConfig.xml</path>	</ServerConfig>
-	<KeyboardConfig>
-		<path>xml/framework/game/keyboardConfig.xml</path>	
-</KeyboardConfig>
-</Game>

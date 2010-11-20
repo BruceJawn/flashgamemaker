@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Texture>
 	<TileSet>
-		<path>texture/framework/game/tileSet/tileSet.png</path>
+		<path>texture/framework/game/tileset/tileSet.png</path>
 	</TileSet>
 	<KawaiiTileSet>
 		<path>texture/framework/game/tileset/bladesquad/kawaiiTileSet.png</path>

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<engine>
-	<isoEngine>engine/isoEngine.xml</map>
-	<twoDEngine>engine/twoDEngine.xml</twoDEngine>
-</engine>
