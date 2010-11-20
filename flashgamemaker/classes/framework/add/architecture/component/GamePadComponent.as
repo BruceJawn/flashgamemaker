@@ -32,6 +32,7 @@ package framework.add.architecture.component{
 
 	import flash.events.*;
 	import flash.display.Sprite;
+	import flash.geom.ColorTransform;
 
 	/**
 	* GamePad Class
@@ -39,6 +40,7 @@ package framework.add.architecture.component{
 	public class GamePadComponent extends GraphicComponent {
 
 		private var _isCircle:Boolean;
+		private var _background:Sprite;
 		private var _ball:Sprite;
 		private var _button1:Sprite;
 		private var _button2:Sprite;
@@ -82,15 +84,16 @@ package framework.add.architecture.component{
 		}
 		//------ Draw Square ------------------------------------
 		private function drawSquare():void {
-			graphics.beginFill(_colour, 0.5);
-			graphics.drawRoundRect(-40, -40, 80, 80, 40, 40);
-			graphics.endFill();
+			_background = new Sprite();
+			_background.graphics.beginFill(_colour, 0.5);
+			_background.graphics.drawRoundRect(-40, -40, 80, 80, 40, 40);
+			_background.graphics.endFill();
 		}
 		//------ Draw Circle ------------------------------------
 		private function drawCircle():void {
-			graphics.beginFill(_colour, 0.2);
-			graphics.drawCircle(0, 0, 40);
-			graphics.endFill();
+			_background.graphics.beginFill(_colour, 0.2);
+			_background.graphics.drawCircle(0, 0, 40);
+			_background.graphics.endFill();
 		}
 		//------ Create Ball ------------------------------------
 		private function createBall():void {
@@ -162,11 +165,15 @@ package framework.add.architecture.component{
 		}
 		//------ On Button Down ------------------------------------
 		private function onButtonDown(evt:MouseEvent):void {
-			evt.target.alpha=1;
+			if (evt.target.alpha!=0) {
+				evt.target.alpha=1;
+			}
 		}
 		//------ On Button Up ------------------------------------
 		private function onButtonUp(evt:MouseEvent):void {
-			evt.target.alpha=0.5;
+			if (evt.target.alpha!=0) {
+				evt.target.alpha=0.5;
+			}
 		}
 		//------ On Ball Down ------------------------------------
 		private function onBallDown(evt:MouseEvent):void {
@@ -193,17 +200,63 @@ package framework.add.architecture.component{
 				_keyboard_gamePad.targetX=Math.sin(targetAngle);
 				_keyboard_gamePad.targetY=Math.cos(targetAngle);
 			}
-			_ball.x = _keyboard_gamePad.x * 20;
-			_ball.y = _keyboard_gamePad.y * 20;
-			_button1.alpha=_keyboard_gamePad.fire1.isDown?1:0.5;
-			_button2.alpha=_keyboard_gamePad.fire2.isDown?1:0.5;
-			_button3.alpha=_keyboard_gamePad.fire3.isDown?1:0.5;
-			_button4.alpha=_keyboard_gamePad.fire4.isDown?1:0.5;
-
-			_up.alpha=_keyboard_gamePad.up.isDown?1:0.5;
-			_down.alpha=_keyboard_gamePad.down.isDown?1:0.5;
-			_left.alpha=_keyboard_gamePad.left.isDown?1:0.5;
-			_right.alpha=_keyboard_gamePad.right.isDown?1:0.5;
+			_ball.x=_keyboard_gamePad.x*20;
+			_ball.y=_keyboard_gamePad.y*20;
+			if (_button1.alpha!=0) {
+				_button1.alpha=_keyboard_gamePad.fire1.isDown?1:0.5;
+			}
+			if (_button2.alpha!=0) {
+				_button2.alpha=_keyboard_gamePad.fire2.isDown?1:0.5;
+			}
+			if (_button3.alpha!=0) {
+				_button3.alpha=_keyboard_gamePad.fire3.isDown?1:0.5;
+			}
+			if (_button4.alpha!=0) {
+				_button4.alpha=_keyboard_gamePad.fire4.isDown?1:0.5;
+			}
+			if (_up.alpha!=0) {
+				_up.alpha=_keyboard_gamePad.up.isDown?1:0.5;
+			}
+			if (_down.alpha!=0) {
+				_down.alpha=_keyboard_gamePad.down.isDown?1:0.5;
+			}
+			if (_left.alpha!=0) {
+				_left.alpha=_keyboard_gamePad.left.isDown?1:0.5;
+			}
+			if (_right.alpha!=0) {
+				_right.alpha=_keyboard_gamePad.right.isDown?1:0.5;
+			}
+		}
+		//------ DisplayButton ------------------------------------
+		public function showButton(buttonName:String):void {
+			this[buttonName].alpha=0.5;
+		}
+		//------ HideButton ------------------------------------
+		public function hideButton(buttonName:String):void {
+			this[buttonName].alpha=0;
+		}
+		//------ Show All ------------------------------------
+		public function showAll():void {
+			for (var i:int=0; i<this.numChildren; i++) {
+				this.getChildAt(i).alpha=0.5;
+			}
+		}
+		//------ Hide All ------------------------------------
+		public function hideAll():void {
+			for (var i:int=0; i<this.numChildren; i++) {
+				this.getChildAt(i).alpha=0;
+			}
+		}
+		//------ Move Button ------------------------------------
+		public function moveButton(buttonName:String,x:Number,y:Number):void {
+			this[buttonName].x=x;
+			this[buttonName].y=y;
+		}
+		//------ Change Color ------------------------------------
+		public function changeColor(color:String):void {
+			var myColorTransform:ColorTransform = this.transform.colorTransform;
+			myColorTransform.color = uint("0x"+color);
+			this.transform.colorTransform = myColorTransform; 
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -24,7 +24,8 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
-	
+	import framework.add.architecture.component.*;
+
 	import flash.events.Event;
 	/**
 	* Script Class
@@ -55,8 +56,6 @@ package script.game{
 			keyboardInputComponent.useZQSD();//AZERTY
 			//keyboardInputComponent.useWASD();//QWERTY
 			keyboardInputComponent.useOKLM();
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
@@ -79,17 +78,32 @@ package script.game{
 			scrollingBitmapComponent2.moveTo(0,108);
 			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getDirection());
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
+			jaugeComponent.isListening(false);
 			jaugeComponent.setDirection("vertical");
-			jaugeComponent.moveTo(180,315);
-			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("GameEntity","JaugeMoveComponent","myJaugeMoveComponent");
+			jaugeComponent.moveTo(180,305);
 			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.moveTo(160,60);
 		}
 		//------ On Loading Successful ------------------------------------
 		private function onLoadingSuccessful( evt:Event ):void {
 			evt.target.removeEventListener(Event.COMPLETE, onLoadingSuccessful);
-			var chronoComponent: ChronoComponent= _entityManager.getComponent("GameEntity","myChronoComponent");
+			var chronoComponent:ChronoComponent=_entityManager.getComponent("GameEntity","myChronoComponent");
 			chronoComponent.restart();
+			chronoComponent.addEventListener(Event.COMPLETE, onChronoComplete);
+		}
+		//------ On Loading Successful ------------------------------------
+		private function onChronoComplete( evt:Event ):void {
+			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
+			var jaugeComponent:JaugeComponent=_entityManager.getComponent("GameEntity","myJaugeComponent");
+			jaugeComponent.isListening(true);
+			var jaugeMoveComponent:JaugeMoveComponent=_entityManager.addComponent("GameEntity","JaugeMoveComponent","myJaugeMoveComponent");
+			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
+			gamePadComponent.hideAll();
+			gamePadComponent.showButton("_left");
+			gamePadComponent.moveButton("_left",170,60);
+			gamePadComponent.moveButton("_right",220,60);
+			gamePadComponent.showButton("_right");
+			gamePadComponent.changeColor("FF0000");
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
