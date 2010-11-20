@@ -45,6 +45,7 @@ package framework.core.architecture.component{
 		private var _jauge_stepDown:Number=1;
 		private var _jauge_direction:String="right";
 		private var _prevKey:Object=new Object;
+		private var _isListening:Boolean=true;
 		//KeyboardInput properties
 		public var _keyboard_gamePad:Object=null;
 		//Timer properties
@@ -59,13 +60,14 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_jauge=createProgressBar(50,20,0,0,0);
+			_jauge.setStyle("themeColor", 0xFF0000);
 			_jauge.maximum=100;
 			addChild(_jauge);
 			_text=new TextField  ;
 			_text.autoSize="left";
 			_text.text= "Press Left and Right arrows to run";
-			_text.x-=120;
-			_text.y+=15;
+			_text.x-=70;
+			_text.y+=20;
 			addChild(_text);
 		}
 		//------ Init Property Info ------------------------------------
@@ -77,10 +79,10 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (componentName==_componentName && (_timer_count>=_timer_delay||! _timer_on)) {
+			if (componentName==_componentName && (_timer_count>=_timer_delay||! _timer_on) && _isListening) {
 				updateJauge();
 				update("jauge");
-			}else if (componentName!=_componentName){
+			}else if (componentName!=_componentName && _isListening){
 				component._jauge_count = _jauge_count;
 				component._jauge_max = _jauge_max;
 				component._jauge = _jauge;
@@ -143,6 +145,10 @@ package framework.core.architecture.component{
 			_jauge_direction=direction;
 			_jauge.rotation = 90;
 			}
+		}
+		//------- isListeneing -------------------------------
+		public function isListening(value:Boolean):void {
+			_isListening=value;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

@@ -63,12 +63,12 @@ package script.game{
 			var backGroundColorComponent:BackgroundColorComponent= _entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
 			backGroundColorComponent.changeColor("95eaff");
 			var scrollingBitmapComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent");
-			scrollingBitmapComponent.loadGraphic("texture/framework/game/backGround/bladesquad/nuage.jpg","Nuage");
+			scrollingBitmapComponent.loadGraphic("texture/framework/game/background/bladesquad/nuage.jpg","Nuage");
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent.setScrolling(30,1);
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);			
 			var groundSphereComponent:GroundSphereComponent=_entityManager.addComponent("GameEntity","GroundSphereComponent","myGroundSphereComponent");
-			groundSphereComponent.loadGraphic("texture/framework/game/backGround/groundClip.swf","GroundClip");
+			groundSphereComponent.loadGraphic("texture/framework/game/background/groundClip.swf","GroundClip");
 			groundSphereComponent.setPropertyReference("progressBar",groundSphereComponent._componentName);
 			groundSphereComponent.setPropertyReference("keyboardRotation",groundSphereComponent._componentName);
 			groundSphereComponent.setRotation(2);
@@ -86,6 +86,7 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardAttackComponent:KeyboardAttackComponent=_entityManager.addComponent("GameEntity","KeyboardAttackComponent","myKeyboardAttackComponent");
+			
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
