@@ -92,6 +92,17 @@ package script.game{
 			var sequence:String="<rpgText><sequence title='Welcome' icon='unknown?' graphic=''>Welcome to Kawaii Island</sequence><sequence title='Introduction' icon='Hero' graphic=''>Kawaii Island is a beautifull world...</sequence></rpgText>";
 			rpgTextComponent.setSequence(sequence);
 			rpgTextComponent.moveTo(60,20);
+			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
+			gamePadComponent.hideAll();
+			gamePadComponent.moveTo(-40,300);
+			gamePadComponent.showButton("_left");
+			gamePadComponent.showButton("_right");
+			gamePadComponent.showButton("_up");
+			gamePadComponent.showButton("_down");
+			gamePadComponent.showButton("_button1");
+			gamePadComponent.moveButton("_button1",300,25);
+			gamePadComponent.showButton("_button2");
+			gamePadComponent.moveButton("_button2",340,25);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
