@@ -61,7 +61,7 @@ package framework.core.architecture.component{
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (componentName==_componentName && (_timer_count>=_timer_delay||! _timer_on)) {
 				update("animation");
-			} else if (componentName!=_componentName) {
+			} else if (componentName!=_componentName && (_timer_count>=_timer_delay||! _timer_on)) {
 				updateFrame(componentName,componentOwner,component);
 			}
 		}
@@ -73,7 +73,6 @@ package framework.core.architecture.component{
 			component._graphic_frame=frame;
 			component.actualizeComponent(componentName,componentOwner,component);
 		}
-
 		//-- Set Frame ---------------------------------------------------
 		public function setDirection(component:*):int {
 			var graphic_frame:int=component._graphic_frame;
@@ -95,16 +94,6 @@ package framework.core.architecture.component{
 			}
 			return graphic_frame;
 		}
-		//----- Set Frame -----------------------------------
-		private function setFrame(component:*, graphic_frame:int):int {
-			var graphic_numFrame:int=component._graphic_numFrame;
-			if ((graphic_frame)%graphic_numFrame==0) {
-				graphic_frame-=3;
-			} else {
-				graphic_frame++;
-			}
-			return graphic_frame;
-		}
 		//----- Set Animation -----------------------------------
 		private function setAnimation(component:*,graphic_frame:int):int {
 			var isMoving:Boolean=component._spatial_properties.isMoving;
@@ -115,30 +104,63 @@ package framework.core.architecture.component{
 			var isFalling:Boolean=component._spatial_properties.isFalling;
 			var graphic_numFrame:int=component._graphic_numFrame;
 			var animation:Dictionary=component._animation;
+			var spatial_dir:IsoPoint=component._spatial_dir;
+			var keyboard_gamePad:Object=component._keyboard_gamePad;
+
 			if (isFalling&&animation["JUMP"]!=null&&graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("FALLING");
 				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
 			} else if (isDoubleJumping && !isFalling&& animation["DOUBLE_JUMP"]!=null&& graphic_frame<animation["DOUBLE_JUMP"]*graphic_numFrame*graphic_numFrame) {
 				//trace("DOUBLE_JUMP");
 				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
-			} else if (isJumping && !isDoubleJumping && !isFalling&& animation["JUMP"]!=null && graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame) {
+			} else if (isJumping && !isDoubleJumping && !isFalling&& animation["JUMP"]!=null && (graphic_frame<animation["JUMP"]*graphic_numFrame*graphic_numFrame || keyboard_gamePad.down.isDown)) {
 				//trace("JUMP");
-				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+				if (_mode=="2Dir"&&keyboard_gamePad!=null&&keyboard_gamePad.down.isDown&&animation["JUMP_DOWN"]!=null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP_DOWN"]*graphic_numFrame*graphic_numFrame;
+				} else {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["JUMP"]*graphic_numFrame*graphic_numFrame;
+				}
 			} else if (isAttacking && animation["ATTACK"]!= null && graphic_frame<animation["ATTACK"]*graphic_numFrame*graphic_numFrame) {
 				//trace("ATTACK");
-				graphic_frame=Math.floor(graphic_frame%(graphic_numFrame*graphic_numFrame)/4)+animation["ATTACK"]*graphic_numFrame*graphic_numFrame+1;
-			}else if (isAttacking && animation["ATTACK"]!= null && graphic_frame%graphic_numFrame==0) {
+				if (_mode=="2Dir" && keyboard_gamePad!=null && (keyboard_gamePad.downRight.isDown || keyboard_gamePad.downLeft.isDown ) && animation["ATTACK_DOWN"]!= null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["ATTACK_DOWN"]*graphic_numFrame*graphic_numFrame;
+				} else {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["ATTACK"]*graphic_numFrame*graphic_numFrame;
+				}
+			} else if (isAttacking && animation["ATTACK"]!= null && graphic_frame%graphic_numFrame==0) {
 				//trace("ATTACK_STOP");
 				component._spatial_properties.isAttacking=false;
 			} else if (isRunning && !isAttacking && !isJumping && !isDoubleJumping&& !isFalling && animation["RUN"]!=null && (graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["RUN"]+1)*graphic_numFrame*graphic_numFrame)) {
 				//trace("RUN");
 				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["RUN"]*graphic_numFrame*graphic_numFrame;
-			} else if (isMoving && !isRunning && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["WALK"]!= null && (graphic_frame<=animation["WALK"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["WALK"]+1)*graphic_numFrame*graphic_numFrame)) {
+			} else if (isMoving && !isRunning && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["WALK"]!= null && (graphic_frame<=animation["WALK"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["WALK"]+1)*graphic_numFrame*graphic_numFrame || (keyboard_gamePad.upRight.isDown || keyboard_gamePad.upLeft.isDown || keyboard_gamePad.downRight.isDown || keyboard_gamePad.downLeft.isDown) )) {
 				//trace("WALK");
-				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK"]*graphic_numFrame*graphic_numFrame;
+				if (_mode=="2Dir"&& keyboard_gamePad!=null && (keyboard_gamePad.downRight.isDown || keyboard_gamePad.downLeft.isDown )  && animation["WALK_DOWN"]!= null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK_DOWN"]*graphic_numFrame*graphic_numFrame;
+				} else if (_mode=="2Dir"&& keyboard_gamePad!=null && (keyboard_gamePad.upRight.isDown || keyboard_gamePad.upLeft.isDown )  && animation["WALK_UP"]!= null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK_UP"]*graphic_numFrame*graphic_numFrame;
+				} else {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK"]*graphic_numFrame*graphic_numFrame;
+				}
 			} else if (!isMoving && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["STATIC"]!= null && graphic_frame>animation["STATIC"]*graphic_numFrame*graphic_numFrame) {
 				//trace("STATIC");
-				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["STATIC"]*graphic_numFrame*graphic_numFrame;
+				if (_mode=="2Dir"&&keyboard_gamePad!=null&&keyboard_gamePad.down.isDown&&animation["STATIC_DOWN"]!=null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["STATIC_DOWN"]*graphic_numFrame*graphic_numFrame;
+				} else if (_mode=="2Dir"&& keyboard_gamePad!=null && keyboard_gamePad.up.isDown && animation["STATIC_UP"]!= null) {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["STATIC_UP"]*graphic_numFrame*graphic_numFrame;
+				} else {
+					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["STATIC"]*graphic_numFrame*graphic_numFrame;
+				}
+			}
+			return graphic_frame;
+		}
+		//----- Set Frame -----------------------------------
+		private function setFrame(component:*, graphic_frame:int):int {
+			var graphic_numFrame:int=component._graphic_numFrame;
+			if ((graphic_frame)%graphic_numFrame==0) {
+				graphic_frame-=3;
+			} else {
+				graphic_frame++;
 			}
 			return graphic_frame;
 		}
