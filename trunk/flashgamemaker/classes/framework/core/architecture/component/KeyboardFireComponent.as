@@ -84,20 +84,22 @@ package framework.core.architecture.component{
 		}
 		//------ CreateBullet ------------------------------------
 		private function createBullet(playerAttacking:PlayerComponent):void {
-			var bullet:ProjectileComponent = addComponent("GameEntity","ProjectileComponent","myProjectileComponent"+_bullets.length);
-			var facingDirection:String = playerAttacking.getFacingDirection();
-			if(facingDirection=="RIGHT"){
-				var beginX:Number= playerAttacking.x+playerAttacking.width/2;
+			var bullet:ProjectileComponent=addComponent("GameEntity","ProjectileComponent","myProjectileComponent"+_bullets.length);
+			var facingDirection:String=playerAttacking.getFacingDirection();
+			if (facingDirection=="RIGHT") {
+				var beginX:Number=playerAttacking.x+playerAttacking.width/2;
 				var beginY:Number=playerAttacking.y+playerAttacking.height/2;
 				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,20,20),beginX,beginY,beginX+250,beginY,5);
-			}else if(facingDirection=="LEFT"){
-				beginX= playerAttacking.x-10;
+			} else if (facingDirection=="LEFT") {
+				beginX=playerAttacking.x-10;
 				beginY=playerAttacking.y-playerAttacking.height/2;
 				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,10,6),beginX,beginY,beginX-250,beginY,5);
-			}else if(facingDirection=="DOWN"){
-			
-			}else if(facingDirection=="UP"){
-			
+			} else if (facingDirection=="DOWN") {
+				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,10,6),beginX,beginY,beginX-250,beginY,5);
+				bullet.rotation=90;
+			} else if (facingDirection=="UP") {
+				bullet.loadProjectile("texture/framework/game/fx/bullet.png","Bullet",1,new Rectangle(0,0,10,6),beginX,beginY,beginX-250,beginY,5);
+				bullet.rotation=-90;
 			}
 			_bullets.push(bullet);
 		}

@@ -81,7 +81,7 @@ package framework.core.architecture.component{
 			_animation["STATIC"]=0;
 			_animation["WALK"]=1;
 			_colorPicker=new ColorPicker  ;
-			_spatial_properties={dynamic:true,collision:false,isMoving:false,isrunning:false,isJumping:false,isDoubleJumping:false,isFalling:false,isAttacking:false,isSliding:false,isClimbing:false};
+			_spatial_properties={dynamic:true,collision:false,isMoving:false,isColliding:false,isrunning:false,isJumping:false,isDoubleJumping:false,isFalling:false,isAttacking:false,isSliding:false,isClimbing:false};
 			_spatial_jump=new IsoPoint(0,0,0);
 			_spatial_jumpStart=new IsoPoint(-12,-12,-20);
 		}
