@@ -25,7 +25,7 @@
 package framework.core.system{
 	import utils.loader.*;
 	import utils.iso.IsoPoint;
-
+	
 	import flash.utils.Dictionary;
 	import flash.events.*;
 	import flash.geom.Rectangle;
