@@ -39,7 +39,7 @@ package {
 		public static var CLIP:Sprite=null;
 		public static var STAGE:Stage=null;
 		public static var NUM_CHILDREN:Number=0;
-		public static var WIDTH:Number=400;
+		public static var WIDTH:Number = 400;
 		public static var HEIGHT:Number=345;
 		
 		public function FlashGameMaker() {
