@@ -182,11 +182,11 @@ package script.game{
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
 			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
-			swfPlayerComponent.moveTo(200,50);
+			swfPlayerComponent.moveTo(100,150);
 			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
-			tileMapComponent.moveTo(247,100);
+			tileMapComponent.moveTo(145,170);
 			FlashGameMaker.Focus();
 		}
 		//------- ToString -------------------------------

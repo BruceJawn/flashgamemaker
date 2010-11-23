@@ -82,7 +82,7 @@ package framework.core.architecture.component{
 			if (_timer_count>=_timer_delay && _timer_on && _bitmap!=null) {
 				scrollBitmap();
 			} else if (!_timer_on && _keyboard_gamePad!=null) {
-				scrollBitmapKeyboard();
+				//scrollBitmapKeyboard();
 			}
 		}
 		//----- Set Loop -----------------------------------
