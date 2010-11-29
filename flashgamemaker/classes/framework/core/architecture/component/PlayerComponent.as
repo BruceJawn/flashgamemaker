@@ -44,7 +44,6 @@ package framework.core.architecture.component{
 		private var _ressourceManager:IRessourceManager=null;
 		private var _serverManager:IServerManager=null;
 		protected var _playerXml:XML=null;
-		protected var _playerName:String=null;
 		protected var _playerTexture:String=null;
 		protected var _playerHeight:Number;
 		protected var _playerWidth:Number;
@@ -96,30 +95,30 @@ package framework.core.architecture.component{
 			setPropertyReference("progressBar",_componentName);
 		}
 		//------ Load Player ------------------------------------
-		public function loadPlayer(path:String,playerName:String,layer:int=0):void {
-			_playerName=playerName;
+		public function loadPlayer(path:String,graphicName:String,layer:int=0):void {
+			_graphicName=graphicName;
 			_render_layerId=layer;
 			var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 			dispatcher.addEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
-			_ressourceManager.loadXml(path,playerName);
+			_ressourceManager.loadXml(path,graphicName);
 		}
 		//------ Set Player ------------------------------------
-		public function setPlayer(playerName:String):void {
-			var graphic:* =getGraphic(playerName);
+		public function setPlayer(graphicName:String):void {
+			var graphic:* =getGraphic(graphicName);
 			if (graphic==null) {
-				throw new Error("The graphic "+playerName+" doesn't exist !!");
+				throw new Error("The graphic "+graphicName+" doesn't exist !!");
 			}
-			setGraphic(playerName,graphic);
+			setGraphic(graphicName,graphic);
 		}
 		//------ On Xml Loading Successfull ------------------------------------
 		protected function onXmlLoadingSuccessful(evt:Event):void {
-			_playerXml=_ressourceManager.getXml(_playerName);
+			_playerXml=_ressourceManager.getXml(_graphicName);
 			if (_playerXml!=null) {
 				var dispatcher:EventDispatcher=_ressourceManager.getDispatcher();
 				dispatcher.removeEventListener(Event.COMPLETE,onXmlLoadingSuccessful);
 				serializeXml();
 				if (_playerXml.children().length()>1) {
-					loadGraphicsFromXml(_playerXml,_playerName);
+					loadGraphicsFromXml(_playerXml,_graphicName);
 				} else {
 					loadGraphic(_playerTexture,_playerXml.children()[0].name(),_render_layerId);
 				}
@@ -150,7 +149,7 @@ package framework.core.architecture.component{
 			if (graphic!=null) {
 				_graphicName=graphicName;
 				_graphic=graphic;
-				createPlayer();
+				//createPlayer();
 			}
 		}
 		//------ Set Animation ------------------------------------

@@ -55,15 +55,15 @@ package framework.core.architecture.component{
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
-			var graphic: MovieClip =getGraphic("Body") as MovieClip;
-			var SourceClass:Class = graphic.constructor;
+			trace(_graphicName);
+			_graphic=_graphicManager.getGraphic(_graphicName);
+			var SourceClass:Class = _graphic.constructor;
 			_source = new SourceClass();
 			initSource();
-			customizeSource();
+			//customizeSource();
 			_swf = new MovieClip(); 
 			_swf.addChild(_source[_name+"1"]);
-			setGraphic(_playerName,_swf);
-				
+			setGraphic(_graphicName,_swf);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
