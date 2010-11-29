@@ -165,7 +165,7 @@ package framework.core.architecture.component{
 			return graphic_frame;
 		}
 		//------ Set Mode  ------------------------------------
-		private function setMode(mode:String):void {
+		public function setMode(mode:String):void {
 			if (! (mode=="2Dir" || mode=="4Dir"||mode=="4DirIso") ) {
 				throw new Error("Error KeyboardMoveComponent: direction must be 2Dir, 4Dir or 4dirIso");
 			}

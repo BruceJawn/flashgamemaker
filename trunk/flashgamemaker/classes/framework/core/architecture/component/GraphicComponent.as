@@ -107,8 +107,8 @@ package framework.core.architecture.component{
 			if (_graphicName!=null) {
 				_graphic=_graphicManager.getGraphic(_graphicName);
 				addChild(_graphic);
-				dispatchEvent(evt);
 			}
+			dispatchEvent(evt);
 		}
 		//------ On Graphic Loading Progress ------------------------------------
 		protected function onGraphicLoadingProgress( evt:ProgressEvent ):void {

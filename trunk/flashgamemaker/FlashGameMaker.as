@@ -24,8 +24,9 @@
 
 package {
 	import framework.Framework;
-	import flash.display.*;
-	import flash.events.*;
+	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.system.Security;
 	
 	/**
@@ -33,14 +34,14 @@ package {
 	* <p>Instanciate the core framework.</p>
 	* @see framework.Framework
 	*/
-	[SWF(width=400, height=345, backgroundColor=0xFFFFFF, frameRate=30)]
+	[SWF(width=800, height=600, backgroundColor=0xFFFFFF, frameRate=30)]
 	public class FlashGameMaker extends Sprite {
 
 		public static var CLIP:Sprite=null;
 		public static var STAGE:Stage=null;
 		public static var NUM_CHILDREN:Number=0;
-		public static var WIDTH:Number = 400;
-		public static var HEIGHT:Number=345;
+		public static var WIDTH:Number = 800;
+		public static var HEIGHT:Number=600;
 		
 		public function FlashGameMaker() {
 			if (stage) init();

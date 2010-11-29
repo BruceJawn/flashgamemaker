@@ -111,27 +111,27 @@ package script.game{
 			customizeScreen.center();
 			customizeScreen._graphic.nameText.addEventListener(MouseEvent.CLICK, onTextClick);
 			customizeScreen._graphic.nextBt.addEventListener(MouseEvent.CLICK, onNextClick);
-			customizeScreen._graphic.maleBt.addEventListener(MouseEvent.CLICK, onMaleClick);
-			customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
-			customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
-			var bebeCustomize:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBebeComponent");
-			bebeCustomize.setGraphicFromName("bebeCustomized",2);
-			bebeCustomize.addGraphic("bebeVisage", "clip.Head");
-			bebeCustomize.moveTo(200,140);
+			//customizeScreen._graphic.maleBt.addEventListener(MouseEvent.CLICK, onMaleClick);
+			//customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
+			//customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			//var bebeCustomize:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","myBebeComponent");
+			//bebeCustomize.setGraphicFromName("bebeCustomized",2);
+			//bebeCustomize.addGraphic("bebeVisage", "clip.Head");
+			//bebeCustomize.moveTo(200,140);
 		}
 		//------ On Male Click ------------------------------------
 		private function onMaleClick(evt:MouseEvent):void {
-			var bebeCustomize:GraphicComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
+			var bebeCustomize:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			bebeCustomize._graphic.clip.Head.gotoAndStop(1);
 		}
 		//------ On Female Click ------------------------------------
 		private function onFemaleClick(evt:MouseEvent):void {
-			var bebeCustomize:GraphicComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
+			var bebeCustomize:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			bebeCustomize._graphic.clip.Head.gotoAndStop(2);
 		}
 		//------ On Color Clip Click ------------------------------------
 		private function onColorClipClick(evt:MouseEvent):void {
-			var bebeCustomize:GraphicComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
+			var bebeCustomize:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
 			var colorClip:MovieClip = customizeScreen._graphic.customClip.colorClip;
 			var colorBitmapData:BitmapData =new BitmapData(colorClip.width,colorClip.height);
@@ -159,7 +159,7 @@ package script.game{
 		}
 		//------ On Next Click ------------------------------------
 		private function onNextClick(evt:MouseEvent):void {
-			_entityManager.removeComponent("GameEntity","myBebeComponent");
+			//_entityManager.removeComponent("GameEntity","myBebeComponent");
 			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
 			customizeScreen._graphic.nameText.removeEventListener(MouseEvent.CLICK, onTextClick);
 			customizeScreen._graphic.nextBt.removeEventListener(MouseEvent.CLICK, onNextClick);
@@ -178,15 +178,17 @@ package script.game{
 			//keyboardInputComponent.useWASD();//QWERTY
 			keyboardInputComponent.useOKLM();
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
+			keyboardMoveComponent.setMode("4DirIso");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer");
+			animationComponent.setMode("4DirIso");
+			/*var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
+			swfPlayerComponent.loadGraphic("texture/framework/game/charset/bladesquad/bebeClip.swf", "mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(100,150);
-			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
+			*/var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
-			tileMapComponent.moveTo(145,170);
+			tileMapComponent.moveTo(55,70);
 			FlashGameMaker.Focus();
 		}
 		//------- ToString -------------------------------

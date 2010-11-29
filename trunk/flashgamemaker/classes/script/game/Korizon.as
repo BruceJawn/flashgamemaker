@@ -68,8 +68,8 @@ package script.game{
 			var statut:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","KorizonStatut");
 			statut.loadGraphic("texture/framework/game/interface/korizon/statutBar.png", "KorizonStatut");
 			statut.moveTo(0,101);
-			var box2D:Box2DComponent = _entityManager.addComponent("GameEntity", "Box2DComponent", "myBox2DComponent");
-			box2D.makeBox(0, 200, FlashGameMaker.WIDTH, 350);
+			//var box2D:Box2DComponent = _entityManager.addComponent("GameEntity", "Box2DComponent", "myBox2DComponent");
+			//box2D.makeBox(0, 200, FlashGameMaker.WIDTH, 350);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

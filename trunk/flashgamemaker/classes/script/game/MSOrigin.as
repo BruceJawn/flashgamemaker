@@ -118,8 +118,8 @@ package script.game{
 			gamePadComponent.moveTo(100,100);
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.getComponent("GameEntity","myBitmapPlayerComponent");
 			var backgroundObjectComponent:GraphicComponent=_entityManager.getComponent("GameEntity","myBackgroundObjectComponent");
-			var shapeCollisionComponent:ShapeCollisionComponent=_entityManager.addComponent("GameEntity","ShapeCollisionComponent","myShapeCollisionComponent");
-			shapeCollisionComponent.setClip(bitmapPlayerComponent,backgroundObjectComponent);
+			//var shapeCollisionComponent:ShapeCollisionComponent=_entityManager.addComponent("GameEntity","ShapeCollisionComponent","myShapeCollisionComponent");
+			//shapeCollisionComponent.setClip(bitmapPlayerComponent,backgroundObjectComponent);
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onChronoComplete(evt:Event):void {
