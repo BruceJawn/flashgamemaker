@@ -24,6 +24,7 @@
 package script.game{
 	import framework.core.architecture.entity.*;
 	import framework.core.architecture.component.*;
+	import framework.add.architecture.component.*;
 
 	import flash.events.*;
 	import flash.display.*;
@@ -185,10 +186,18 @@ package script.game{
 			swfPlayerComponent.loadGraphic("texture/framework/game/charset/bladesquad/bebeClip.swf", "mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(100,150);
-			*/var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
+			*/
+			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
 			tileMapComponent.loadMap("xml/framework/game/map.xml", "TileMap");
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
-			tileMapComponent.moveTo(55,70);
+			tileMapComponent.setPropertyReference("tileMapCamera",tileMapComponent._componentName);
+			tileMapComponent.setMask(60,80,490,335);
+			tileMapComponent.moveTo(60,150);
+			var tileMapCameraComponent:TileMapCameraComponent=_entityManager.addComponent("GameEntity","TileMapCameraComponent","myTileMapCameraComponent");
+			var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
+			tileMapEditorComponent.moveTool(15,30);
+			tileMapEditorComponent.moveOption(100,260);
+			tileMapEditorComponent.movePanel(200,60);
 			FlashGameMaker.Focus();
 		}
 		//------- ToString -------------------------------

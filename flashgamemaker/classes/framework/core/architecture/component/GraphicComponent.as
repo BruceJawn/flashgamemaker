@@ -43,7 +43,7 @@ package framework.core.architecture.component{
 		protected var _graphicManager:IGraphicManager=null;
 		protected var _graphicName:String=null;
 		public var _graphic:* =null;
-
+		public var _mask:Sprite;
 		//Render properties
 		public var _render_layerId:int=0;
 		public var _render_alpha:Number=1;
@@ -198,6 +198,14 @@ package framework.core.architecture.component{
 			_tweener=true;
 			_tweener_properties.shape=true;
 			setPropertyReference("tween",_componentName);
+		}
+		//------ SetMask  ------------------------------------
+		public function setMask(x:int,y:int,width:int,height:int):void {
+			_mask = new Sprite();
+			_mask.graphics.beginFill(0x0000FF);
+			_mask.graphics.drawRect(x,y,width,height);
+			_mask.graphics.endFill();
+			this.mask=_mask;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
