@@ -42,7 +42,6 @@ package framework.add.architecture.component{
 	import fl.controls.ButtonLabelPlacement;
 	import fl.data.DataProvider;
 
-
 	/**
 	* TileMapEditor Component
 	*/
@@ -54,8 +53,11 @@ package framework.add.architecture.component{
 		private var _panelScrollPane:ScrollPane;
 		private var _panelSelectedTile:MovieClip=null;
 		private var _tileMap:TileMapComponent=null;
+		private var _toolPosition:Point= null;
+		private var _optionPosition:Point= null;
+		private var _panelPosition:Point= null;
 		//KeyboardInput properties
-		public var _keyboard_key:Object=null;
+		public var _keyboard_gamePad:Object=null;
 
 		public function TileMapEditorComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -63,41 +65,45 @@ package framework.add.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
-
+			_toolPosition = new Point(15,50);
+			_optionPosition = new Point(0,150);
+			_panelPosition = new Point(120,80);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
 			registerProperty("tileMapEditor", _componentName);
-		}
-		//------ Load Texture  ------------------------------------
-		public function loadTexture(path:String, name:String):void {
-			loadGraphicsFromPath(path,name);
-		}
-		//------ On Graphic Loading Successful ------------------------------------
-		protected override function onGraphicLoadingSuccessful(evt:Event):void {
-			var dispatcher:EventDispatcher=_graphicManager.getDispatcher();
-			dispatcher.removeEventListener(Event.COMPLETE,onGraphicLoadingSuccessful);
-			dispatcher.removeEventListener(ProgressEvent.PROGRESS,onGraphicLoadingProgress);
-			initPanel();
-			initTool();
-			initOption();
+			//setPropertyReference("keyboardInput",_componentName);
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
-			if (! component.hasEventListener(MouseEvent.MOUSE_DOWN)) {
+			if (_tileMap==null&&component.constructor==TileMapComponent) {
+				_tileMap=component;
+				component.addEventListener(Event.COMPLETE, onTileMapComplete);
 				component.addEventListener(MouseEvent.MOUSE_DOWN, onTileMouseDown);
 				component.addEventListener(MouseEvent.MOUSE_UP, onTileMouseUp);
 				component.addEventListener(MouseEvent.MOUSE_OVER, onTileMouseRollOver);
 				component.addEventListener(MouseEvent.MOUSE_OUT, onTileMouseRollOut);
-				_tileMap=component;
+			} else if (_tileMap!=null && component._keyboard_gamePad!=null) {
+				//trace("Bouton pressed");
 			}
+		}
+		//------ Load Texture  ------------------------------------
+		private function loadTexture(path:String, name:String):void {
+			loadGraphicsFromPath(path,name);
+		}
+		//------ On Tile Map Complete ------------------------------------
+		private function onTileMapComplete(evt:Event):void {
+			evt.target.removeEventListener(Event.COMPLETE,onTileMapComplete);
+			initPanel();
+			initTool();
+			initOption();
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onTileMouseDown(evt:MouseEvent):void {
 			//trace(evt);
 			if (_panelSelectedTile!=null) {
-				swapTile(evt.target as MovieClip,_tool.tileLayer.value, _panelSelectedTile.tileFrame, NumberTo.Bool(_tool.tileFlipFrame.value), _tool.tileLevel);
+				_tileMap.swapTile(evt.target as MovieClip,_tool.tileLayer.value, _panelSelectedTile.tileFrame, NumberTo.Bool(_tool.tileFlipFrame.value), _tool.tileLevel.value);
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
@@ -120,40 +126,11 @@ package framework.add.architecture.component{
 				tile.transform.colorTransform=new ColorTransform(R,G,B,A,OR,OG,OB,OA);
 			}
 		}
-		//----- Swap Tile  -----------------------------------
-		private function swapTile(tile:MovieClip, layerIndex:int, frame:Number, flip:Boolean, level:int):void {
-			if (tile!=null) {
-				var layer:Object=_tileMap._tileMap_layer[layerIndex];
-				var x:int=Math.floor((frame-1)/(layer.X));
-				var y:int=(frame-1)% layer.X;
-				var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
-				tile.bitmap.bitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
-				tile.bitmap.bitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
-				if (flip) {
-					tile.flip = true;
-					//_tileMap._tileMap_tiles[tile.tileName+"_"+level].flip=true;
-					flipBitmapData(tile.bitmap.bitmapData);
-				}
-				tile.bitmap.x=-layer.tileWidth/2-_tileMap._tileMap_tileWidth;
-				tile.bitmap.y=-layer.tileHeight-_tileMap._tileMap_tileHeight;
-			}
-		}
-		//----- Flip BitmapData  -----------------------------------
-		private function flipBitmapData(myBitmapData:BitmapData):void {
-			var flipHorizontalMatrix:Matrix = new Matrix();
-			flipHorizontalMatrix.scale(-1,1);
-			flipHorizontalMatrix.translate(myBitmapData.width,0);
-			var flippedBitmapData:BitmapData=new BitmapData(myBitmapData.width,myBitmapData.height,true,0);
-			flippedBitmapData.draw(myBitmapData,flipHorizontalMatrix);
-			myBitmapData.fillRect(myBitmapData.rect,0);
-			myBitmapData.draw(flippedBitmapData);
-		}
 		//-----Init Tile Editor Tool  -----------------------------------
 		private function initTool():void {
-			_tool.x=15;
-			_tool.y=50;
+			_tool.x=_toolPosition.x;
+			_tool.y=_toolPosition.y;
 			addChild(_tool);
-
 			_tool.inside = new CheckBox();
 			_tool.inside.x=-280;
 			_tool.inside.y=-248;
@@ -319,6 +296,13 @@ package framework.add.architecture.component{
 			_tool.addChild(_tool.tileZoom);
 			_tool.addChild(_tool.tileFlipFrame);
 		}
+		//-----Move Tile Editor Tool  -----------------------------------
+		public function moveTool(x:Number,y:Number):void {
+			_tool.x=x;
+			_tool.y=y;
+			_toolPosition.x=x;
+			_toolPosition.y=y;
+		}
 		//----- On Tile Editor Layer Change -----------------------------------
 		private function onTileEditorLayerChange(evt:SliderEvent):void {
 			removeChild(_panel);
@@ -327,8 +311,8 @@ package framework.add.architecture.component{
 		}
 		//-----Init Tile Editor Option  -----------------------------------
 		private function initOption():void {
-			_option.x=0;
-			_option.y=150;
+			_option.x=_optionPosition.x;
+			_option.y=_optionPosition.y;
 			addChild(_option);
 
 			_option.buttonNew = new Button();
@@ -367,14 +351,21 @@ package framework.add.architecture.component{
 			_option.addChild(_option.buttonProperties);
 			_option.addChild(_option.buttonExport);
 		}
+		//-----Move Tile Editor Option  -----------------------------------
+		public function moveOption(x:Number,y:Number):void {
+			_option.x=x;
+			_option.y=y;
+			_optionPosition.x=x;
+			_optionPosition.y=y;
+		}
 		//----- On Button Export Click  -----------------------------------
 		public function onButtonExportClick(event:MouseEvent):void {
 			Export.ExportJPG(_tileMap,"TileMap");
 		}
 		//-----Init Tile Editor Panel  -----------------------------------
 		private function initPanel(layerIndex:int=0):void {
-			_panel.x=120;
-			_panel.y=80;
+			_panel.x=_panelPosition.x;
+			_panel.y=_panelPosition.y;
 			addChild(_panel);
 
 			var layer:Object=_tileMap._tileMap_layer[layerIndex];
@@ -400,6 +391,13 @@ package framework.add.architecture.component{
 				tile.addEventListener(MouseEvent.MOUSE_OUT, onPanelMouseRollOut);
 				_panel.addChild(tile);				
 			}
+		}
+		//-----Move Tile Editor Panel  -----------------------------------
+		public function movePanel(x:Number,y:Number):void {
+			_panel.x=x;
+			_panel.y=y;
+			_panelPosition.x=x;
+			_panelPosition.y=y;
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onPanelMouseDown(evt:MouseEvent):void {
