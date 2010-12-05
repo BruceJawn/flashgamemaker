@@ -9,9 +9,6 @@
 	<customizeScreen>
 		<path>texture/framework/game/interface/bladesquad/customizeScreen.swf</path>
 	</customizeScreen>
-<bebeCustomized>
-		<path>texture/framework/game/charset/bladesquad/bebeClip2.swf</path>
-	</bebeCustomized>
 	<fx>
 		<path>texture/framework/game/fx/element.png</path>
 	</fx>
