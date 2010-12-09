@@ -142,10 +142,10 @@ package framework.core.architecture.component{
 			for (var m:int=0; m<offset; m++) {
 				for (var j:int=_tileMap._tileMap_visibility.beginY; j<_tileMap._tileMap_visibility.endY; j++) {
 					for (var k:int=_tileMap._tileMap_visibility.beginZ; k<_tileMap._tileMap_visibility.endZ; k++) {
+						if (_tileMap.onSight(_tileMap._tileMap_visibility.beginX,j)) {
+							_tileMap.removeTile(k,j,_tileMap._tileMap_visibility.beginX);
+						}
 						for (var l:int=0; l<_tileMap._tileMap_layer.length; l++) {
-							if (_tileMap.onSight(_tileMap._tileMap_visibility.beginX,j)) {
-								_tileMap.removeTile(l,k,j,_tileMap._tileMap_visibility.beginX);
-							}
 							if (_tileMap.onSight(_tileMap._tileMap_visibility.endX,j,k)) {
 								var tileFrame:int=_tileMap.getFrame(l,k,j,_tileMap._tileMap_visibility.endX);
 								_tileMap.createTile(l,k,j,_tileMap._tileMap_visibility.endX,tileFrame);
@@ -162,10 +162,10 @@ package framework.core.architecture.component{
 			for (var m:int=0; m<offset; m++) {
 				for (var j:int=_tileMap._tileMap_visibility.beginY; j<_tileMap._tileMap_visibility.endY; j++) {
 					for (var k:int=_tileMap._tileMap_visibility.beginZ; k<_tileMap._tileMap_visibility.endZ; k++) {
+						if (_tileMap.onSight(_tileMap._tileMap_visibility.endX-1,j)) {
+							_tileMap.removeTile(k,j,_tileMap._tileMap_visibility.endX-1);
+						}
 						for (var l:int=0; l<_tileMap._tileMap_layer.length; l++) {
-							if (_tileMap.onSight(_tileMap._tileMap_visibility.endX-1,j)) {
-								_tileMap.removeTile(l,k,j,_tileMap._tileMap_visibility.endX-1);
-							}
 							if (_tileMap.onSight(_tileMap._tileMap_visibility.beginX-1,j,k)) {
 								var tileFrame:int=_tileMap.getFrame(l,k,j,_tileMap._tileMap_visibility.beginX-1);
 								_tileMap.createTile(l,k,j,_tileMap._tileMap_visibility.beginX-1,tileFrame);
@@ -182,10 +182,10 @@ package framework.core.architecture.component{
 			for (var m:int=0; m<offset; m++) {
 				for (var i:int=_tileMap._tileMap_visibility.beginX; i<_tileMap._tileMap_visibility.endX; i++) {
 					for (var k:int=_tileMap._tileMap_visibility.beginZ; k<_tileMap._tileMap_visibility.endZ; k++) {
+						if (_tileMap.onSight(i,_tileMap._tileMap_visibility.beginY)) {
+							_tileMap.removeTile(k,_tileMap._tileMap_visibility.beginY,i);
+						}
 						for (var l:int=0; l<_tileMap._tileMap_layer.length; l++) {
-							if (_tileMap.onSight(i,_tileMap._tileMap_visibility.beginY)) {
-								_tileMap.removeTile(l,k,_tileMap._tileMap_visibility.beginY,i);
-							}
 							if (_tileMap.onSight(i,_tileMap._tileMap_visibility.endY,k)) {
 								var tileFrame:int=_tileMap.getFrame(l,k,_tileMap._tileMap_visibility.endY,i);
 								_tileMap.createTile(l,k,_tileMap._tileMap_visibility.endY,i,tileFrame);
@@ -202,10 +202,10 @@ package framework.core.architecture.component{
 			for (var m:int=0; m<offset; m++) {
 				for (var i:int=_tileMap._tileMap_visibility.beginX; i<_tileMap._tileMap_visibility.endX; i++) {
 					for (var k:int=_tileMap._tileMap_visibility.beginZ; k<_tileMap._tileMap_visibility.endZ; k++) {
+						if (_tileMap.onSight(i,_tileMap._tileMap_visibility.endY-1)) {
+							_tileMap.removeTile(k,_tileMap._tileMap_visibility.endY-1,i);
+						}
 						for (var l:int=0; l<_tileMap._tileMap_layer.length; l++) {
-							if (_tileMap.onSight(i,_tileMap._tileMap_visibility.endY-1)) {
-								_tileMap.removeTile(l,k,_tileMap._tileMap_visibility.endY-1,i);
-							}
 							if (_tileMap.onSight(i,_tileMap._tileMap_visibility.beginY-1,k)) {
 								var tileFrame:int=_tileMap.getFrame(l,k,_tileMap._tileMap_visibility.beginY-1,i);
 								_tileMap.createTile(l,k,_tileMap._tileMap_visibility.beginY-1,i,tileFrame);
