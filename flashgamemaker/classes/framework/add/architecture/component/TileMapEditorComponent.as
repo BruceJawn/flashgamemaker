@@ -101,9 +101,13 @@ package framework.add.architecture.component{
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onTileMouseDown(evt:MouseEvent):void {
-			//trace(evt);
 			if (_panelSelectedTile!=null) {
-				_tileMap.swapTile(evt.target as MovieClip,_tool.tileLayer.value, _panelSelectedTile.tileFrame, NumberTo.Bool(_tool.tileFlipFrame.value), _tool.tileLevel.value);
+				var clip:MovieClip = evt.target as MovieClip;
+				var tileFrame:int = _panelSelectedTile.tileFrame;
+				if(NumberTo.Bool(_tool.tileFlipFrame.value)){
+					tileFrame*=-1;
+				}
+				_tileMap.swapTile(_tool.tileLayer.value,_tool.tileLevel.value,clip.ytile,clip.xtile, tileFrame);
 			}
 		}
 		//----- On Mouse Event  -----------------------------------

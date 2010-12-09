@@ -219,6 +219,9 @@ package framework.core.architecture.component{
 				var clip:MovieClip = new MovieClip();
 				clip.tileName=tileName;
 				clip.tileFrame=tile.tileFrame;
+				clip.ztile=tile.ztile;
+				clip.ytile=tile.ytile;
+				clip.xtile=tile.xtile;
 				clip.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 				clip.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 				clip.addEventListener(MouseEvent.MOUSE_OVER, onMouseEvent);
@@ -226,6 +229,9 @@ package framework.core.architecture.component{
 				_tileMap_world[tileName]=Clip.AddChild(this,clip);
 			} else {
 				clip=_tileMap_world[tileName];
+				if (tile.layer==0) {
+					clip.graphics.clear();
+				}
 			}
 			if (tile.tileFrame!=0) {
 				if (tile.tileFrame<0) {
@@ -252,54 +258,49 @@ package framework.core.architecture.component{
 					flipBitmapData(myBitmapData);
 				}
 				clip.bitmapData=myBitmapData;
-				clip.graphics.clear();
 				clip.graphics.beginBitmapFill(myBitmapData);
 				clip.graphics.drawRect(0,-tile.tileHeight,tile.tileWidth,tile.tileHeight);
 				clip.graphics.endFill();
 			}
 		}
 		//----- Swap Tile  -----------------------------------
-		public function swapTile(tile:MovieClip, layerIndex:int, tileFrame:Number, flip:Boolean, level:int):void {
-			if (tile!=null) {
-				var t:Object=_tileMap_tiles[tile.tileName];
-				var tileName:String="tile_"+layerIndex+"_"+level+"_"+t.ytile+"_"+t.xtile;
-				var tt:Object=_tileMap_tiles[tileName];
-				var layer:Object=_tileMap_layer[layerIndex];
-				if (tt!=null) {
-					tt.tileFrame=tileFrame;
-					tt.flip=flip;
-					tt.textureName=layer.texture;
-					tt.tileWidth=layer.tileWidth;
-					tt.tileHeight=layer.tileHeight;
-					tt.tileHigh=layer.tileHigh;
-					tt.X=layer.X;
-					tt.Y=layer.Y;
-				}
-				refreshTile(level,t.ytile,t.xtile);
-			}
-		}
-		//----- Refresh Tile  -----------------------------------
-		public function refreshTile(k:int,j:int,i:int):void {
-			//if(!_tileMap_world[tile.tileName]){
-			/*if(tile.layer == 0){
+		public function swapTile(l:int,k:int,j:int,i:int, tileFrame:Number):void {
+			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
+			_tileMap_tiles[tileName].tileFrame=tileFrame;
+			var tile:Object=_tileMap_tiles[tileName];
+			tileName="tile_"+tile.ztile+"_"+tile.ytile+"_"+tile.xtile;
+			var clip:MovieClip=_tileMap_world[tileName];
 			clip.graphics.clear();
-			}*/
+			var myBitmapData:BitmapData=new BitmapData(clip.bitmapData.width,clip.bitmapData.height,true,0);
 			for (var l:int = 0; l<_tileMap_layer.length; l++) {
-				var layer:Object=_tileMap_layer[l];
-				var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
-				displayTile(_tileMap_tiles[tileName]);
-				/*var x:int=Math.floor((frame-1)/(layer.X));
-				var y:int=(frame-1)% layer.X;
-				var texture:Bitmap=getGraphic(layer.texture) as Bitmap;
-				tile.bitmap.bitmapData=new BitmapData(layer.tileWidth,layer.tileHeight,true,0);
-				tile.bitmap.bitmapData.copyPixels(texture.bitmapData, new Rectangle(x * layer.tileWidth,y *layer.tileHeight,layer.tileWidth,layer.tileHeight), new Point(0, 0),null,null,true);
-				if (flip) {
-				tile.flip = true;
-				//_tileMap._tileMap_tiles[tile.tileName+"_"+level].flip=true;
-				_tileMap.flipBitmapData(tile.bitmap.bitmapData);
+				tileName="tile_"+l+"_"+k+"_"+j+"_"+i;
+				tile=_tileMap_tiles[tileName];
+				if (tile!=null) {
+					if (tile.tileFrame!=0) {
+						if (tile.tileFrame<0) {
+							tile.flip=true;
+							tile.tileFrame*=-1;
+						}
+						var x:int=(tile.tileFrame-1)% tile.X;
+						var y:int=Math.floor((tile.tileFrame-1)/(tile.X));
+						var bitmap:Bitmap=getGraphic(tile.textureName) as Bitmap;
+						/*if (tile.tileWidth>clip.bitmapData.width||tile.tileHeight>clip.bitmapData.height) {
+						var tmp:BitmapData=new BitmapData(tile.tileWidth,tile.tileHeight,true,0);
+						tmp.copyPixels(clip.bitmapData, clip.bitmapData.rect, new Point(0, tile.tileHeight-clip.bitmapData.height),null,null,true);
+						clip.bitmapData=tmp;
+						}*/
+						myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
+						/*if (tile.flip) {
+							clip.flip=true;
+							tile.flip=true;
+							flipBitmapData(myBitmapData);
+						}*/
+						//clip.bitmapData=myBitmapData;
+						clip.graphics.beginBitmapFill(myBitmapData);
+						clip.graphics.drawRect(0,-tile.tileHeight,tile.tileWidth,tile.tileHeight);
+						clip.graphics.endFill();
+					}
 				}
-				tile.bitmap.x=-layer.tileWidth/2-_tileMap._tileMap_tileWidth;
-				tile.bitmap.y=-layer.tileHeight-_tileMap._tileMap_tileHeight;*/
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
@@ -369,11 +370,15 @@ package framework.core.architecture.component{
 			trace("Destroy");
 		}
 		//------ Remove Tile ------------------------------------
-		public function removeTile(l:int,k:int,j:int,i:int):void {
-			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
+		public function removeTile(k:int,j:int,i:int):void {
+			var tileName:String="tile_"+k+"_"+j+"_"+i;
 			if (_tileMap_world[tileName]) {
-				removeChild(_tileMap_world[tileName]);
+				Clip.RemoveChild(this,_tileMap_world[tileName]);
 				delete _tileMap_world[tileName];
+				for (var l:int =0; l<_tileMap_layer.length; l++) {
+					tileName="tile_"+l+"_"+k+"_"+j+"_"+i;
+					delete _tileMap_tiles[tileName];
+				}
 			}
 		}
 		//------ Set Visibility ------------------------------------
