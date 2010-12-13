@@ -1,27 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Texture>
 	<bg>
-		<path>texture/framework/game/backGround/bladesquad/bg.png</path>
+	<path>texture/framework/game/backGround/bladesquad/bg.png</path>
 	</bg>
 	<loginScreen>
-		<path>texture/framework/game/interface/bladesquad/loginScreen.swf</path>
+	<path>texture/framework/game/interface/bladesquad/loginScreen.swf</path>
 	</loginScreen>
 	<customizeScreen>
-		<path>texture/framework/game/interface/bladesquad/customizeScreen.swf</path>
+	<path>texture/framework/game/interface/bladesquad/customizeScreen.swf</path>
 	</customizeScreen>
 	<fx>
-		<path>texture/framework/game/fx/element.png</path>
+	<path>texture/framework/game/fx/element.png</path>
 	</fx>
-	<loginScreen >
-		<path>texture/framework/game/interface/bladesquad/loginScreen.swf</path>
-	</loginScreen >
 	<statutClip >
-		<path>texture/framework/game/interface/bladesquad/statutClip2.swf</path>
+	<path>texture/framework/game/interface/bladesquad/statutClip2.swf</path>
 	</statutClip >
 	<messageClip >
-		<path>texture/framework/game/interface/bladesquad/messageClip.swf</path>
+	<path>texture/framework/game/interface/bladesquad/messageClip.swf</path>
 	</messageClip >
 	<canvas >
-		<path>texture/framework/game/background/bladesquad/canvas.png</path>
+	<path>texture/framework/game/background/bladesquad/canvas.png</path>
 	</canvas >
+	<bebeClip>
+	<path>texture/framework/game/charset/bladesquad/bebeClip.swf</path>
+	</bebeClip>
+<bebeVisage>
+	<path>texture/framework/game/charset/bladesquad/visageClip.swf</path>
+	</bebeVisage>
+
 </Texture >

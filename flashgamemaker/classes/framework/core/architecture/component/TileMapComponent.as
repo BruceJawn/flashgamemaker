@@ -464,30 +464,20 @@ package framework.core.architecture.component{
 						var res:String = frame.toString();
 						var pos:Number = k*_tileMap_height*_tileMap_width+j*_tileMap_width+i;
 						if(sum-pos>2){
-							trace("test1",sum-pos,sum,pos);
 							res =res+","+(sum-pos-1)+"*"+tileFrame;
 						}else if (sum-pos>1){
-							trace("test2",sum-pos,sum,pos);
 							res =res+ ","+tileFrame;
-						}else{
-							trace("Error", num-pos, num,pos);
 						}
 						if(pos-sum+num>1){
-							trace("test3",num,pos,pos-sum+num);
 							 res= pos-sum+num+"*"+tileFrame+","+res;
 						}else if (pos-sum+num==1){
-							trace("test4",num,pos);
 							 res= tileFrame+","+res;
-						}else{
-							trace("Error", pos-sum+num, pos,sum,num);
 						}
 						tileTable[index] = res;
 					}else{
-						trace("test6");
 						tileTable[index] = frame;
 					}
 					_tileMap_layer[l].tileTable = tileTable.toString();
-					trace(_tileMap_layer[l].tileTable);
 					return;
 				}
 				index++;

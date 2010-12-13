@@ -149,7 +149,7 @@ package framework.core.architecture.component{
 			if (graphic!=null) {
 				_graphicName=graphicName;
 				_graphic=graphic;
-				//createPlayer();
+				createPlayer();
 			}
 		}
 		//------ Set Animation ------------------------------------

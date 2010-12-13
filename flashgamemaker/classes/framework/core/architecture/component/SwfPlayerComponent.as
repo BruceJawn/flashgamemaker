@@ -33,8 +33,8 @@ package framework.core.architecture.component{
 	*/
 	public class SwfPlayerComponent extends PlayerComponent {
 
-		private var _source:MovieClip = null; //Swf Source
-		private var _swf:MovieClip = null;//container of player
+		public var _source:MovieClip = null; //Swf Source
+		public var _swf:MovieClip = null;//container of player
 		private var _name:String ="clip";
 		
 		public function SwfPlayerComponent(componentName:String, componentOwner:IEntity) {
@@ -55,7 +55,6 @@ package framework.core.architecture.component{
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
-			trace(_graphicName);
 			_graphic=_graphicManager.getGraphic(_graphicName);
 			var SourceClass:Class = _graphic.constructor;
 			_source = new SourceClass();
@@ -138,6 +137,13 @@ package framework.core.architecture.component{
 					}
 				}
 				i++;
+			}
+		}
+		//------ Add Graphic ------------------------------------
+		public function addGraphic(graphicName:String, clipName:String):void {
+			var graphic:*=_graphicManager.getGraphic(graphicName);
+			if(_graphic!=null && contains(_graphic) && graphic!=null && _graphic[clipName]){
+				_graphic[clipName].addChild(graphic);
 			}
 		}
 		//------ Rotate Graphic  ------------------------------------
