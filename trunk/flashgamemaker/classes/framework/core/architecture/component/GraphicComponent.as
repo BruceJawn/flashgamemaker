@@ -141,13 +141,6 @@ package framework.core.architecture.component{
 				addChild(_graphic);
 			}
 		}
-		//------ Add Graphic ------------------------------------
-		public function addGraphic(graphicName:String, clipName:String):void {
-			var graphic:*=_graphicManager.getGraphic(graphicName);
-			if(_graphic!=null && contains(_graphic) && graphic!=null){
-				//_graphic[clipName].addChild(graphic);
-			}
-		}
 		//------ Set Layer  ------------------------------------
 		public function setLayer(graphicName:String, layerId:int):void {
 			_render_layerId=layerId;
@@ -167,6 +160,11 @@ package framework.core.architecture.component{
 			_spatial_position.x=x;
 			_spatial_position.y=y;
 			//update("spatial");
+		}
+		//------ Move Graphic  ------------------------------------
+		public function scale(scaleX:Number,scaleY:Number):void {
+			this.scaleX=scaleX;
+			this.scaleY=scaleY;
 		}
 		//------ Center  ------------------------------------
 		public function center():void {
