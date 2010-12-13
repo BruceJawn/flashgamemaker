@@ -48,7 +48,7 @@ package framework.core.architecture.component{
 
 		private var _ressourceManager:IRessourceManager=null;
 		private var _physicManager:IPhysicManager=null;
-		private var _mapXml:XML=null;
+		public var _mapXml:XML=null;
 		private var _mapName:String=null;
 		private var _mapTexture:String=null;
 		private var _tileMap_iso:Boolean=true;
@@ -155,6 +155,7 @@ package framework.core.architecture.component{
 		private function createLayer(l:int):void {
 			var layer:String=_tileMap_layer[l].tileTable;
 			var tileTable:Array=layer.split(",");
+			var sum:Number=0;
 			for each (var cell:String in tileTable) {
 				var content:Array=cell.split("*");
 				if (content.length==2) {
@@ -166,14 +167,15 @@ package framework.core.architecture.component{
 				}
 				if (tileFrame!=0) {
 					for (var i:Number=0; i<num; i++) {
-						var z:int = Math.floor(i/(_tileMap_height*_tileMap_width));
-						var y:int=Math.floor(i/_tileMap_width);
-						var x:int=i%_tileMap_width;
+						var z:int = Math.floor((i+sum)/(_tileMap_height*_tileMap_width));
+						var y:int=Math.floor((i+sum)/_tileMap_width);
+						var x:int=(i+sum)%_tileMap_width;
 						if (onSight(x,y)&&isVisible(x,y,z)) {
 							createTile(l,z,y,x,tileFrame);
 						}
 					}
 				}
+				sum+=num;
 			}
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
@@ -266,39 +268,44 @@ package framework.core.architecture.component{
 		//----- Swap Tile  -----------------------------------
 		public function swapTile(l:int,k:int,j:int,i:int, tileFrame:Number):void {
 			var tileName:String="tile_"+l+"_"+k+"_"+j+"_"+i;
-			_tileMap_tiles[tileName].tileFrame=tileFrame;
-			var tile:Object=_tileMap_tiles[tileName];
-			tileName="tile_"+tile.ztile+"_"+tile.ytile+"_"+tile.xtile;
-			var clip:MovieClip=_tileMap_world[tileName];
-			clip.graphics.clear();
-			var myBitmapData:BitmapData=new BitmapData(clip.bitmapData.width,clip.bitmapData.height,true,0);
-			for (var l:int = 0; l<_tileMap_layer.length; l++) {
-				tileName="tile_"+l+"_"+k+"_"+j+"_"+i;
-				tile=_tileMap_tiles[tileName];
-				if (tile!=null) {
-					if (tile.tileFrame!=0) {
-						if (tile.tileFrame<0) {
-							tile.flip=true;
-							tile.tileFrame*=-1;
+			if (! _tileMap_tiles[tileName]) {
+				createTile(l,k,j,i,tileFrame);
+			} else {
+				_tileMap_tiles[tileName].tileFrame=tileFrame;
+				var tile:Object=_tileMap_tiles[tileName];
+				tileName="tile_"+tile.ztile+"_"+tile.ytile+"_"+tile.xtile;
+				var clip:MovieClip=_tileMap_world[tileName];
+				clip.graphics.clear();
+				var myBitmapData:BitmapData=new BitmapData(clip.bitmapData.width,clip.bitmapData.height,true,0);
+				for (var l:int = 0; l<_tileMap_layer.length; l++) {
+					tileName="tile_"+l+"_"+k+"_"+j+"_"+i;
+					tile=_tileMap_tiles[tileName];
+					if (tile!=null) {
+						if (tile.tileFrame!=0) {
+							if (tile.tileFrame<0) {
+								tile.flip=true;
+								tile.tileFrame*=-1;
+							}
+							var x:int=(tile.tileFrame-1)% tile.X;
+							var y:int=Math.floor((tile.tileFrame-1)/(tile.X));
+							var bitmap:Bitmap=getGraphic(tile.textureName) as Bitmap;
+							if (tile.tileWidth>clip.bitmapData.width||tile.tileHeight>clip.bitmapData.height) {
+								var tmp:BitmapData=new BitmapData(tile.tileWidth,tile.tileHeight,true,0);
+								tmp.copyPixels(clip.bitmapData, clip.bitmapData.rect, new Point(0, tile.tileHeight-clip.bitmapData.height),null,null,true);
+								clip.bitmapData=tmp;
+							}
+							myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
+							if (tile.flip) {
+								clip.flip=true;
+								tile.flip=true;
+								flipBitmapData(myBitmapData);
+							}
+							clip.bitmapData=myBitmapData;
+							clip.graphics.beginBitmapFill(myBitmapData);
+							clip.graphics.drawRect(0,0,tile.tileWidth,-tile.tileHeight);
+							clip.graphics.endFill();
+							setFrame(l,k,j,i,tile.tileFrame);
 						}
-						var x:int=(tile.tileFrame-1)% tile.X;
-						var y:int=Math.floor((tile.tileFrame-1)/(tile.X));
-						var bitmap:Bitmap=getGraphic(tile.textureName) as Bitmap;
-						/*if (tile.tileWidth>clip.bitmapData.width||tile.tileHeight>clip.bitmapData.height) {
-						var tmp:BitmapData=new BitmapData(tile.tileWidth,tile.tileHeight,true,0);
-						tmp.copyPixels(clip.bitmapData, clip.bitmapData.rect, new Point(0, tile.tileHeight-clip.bitmapData.height),null,null,true);
-						clip.bitmapData=tmp;
-						}*/
-						myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
-						/*if (tile.flip) {
-							clip.flip=true;
-							tile.flip=true;
-							flipBitmapData(myBitmapData);
-						}*/
-						//clip.bitmapData=myBitmapData;
-						clip.graphics.beginBitmapFill(myBitmapData);
-						clip.graphics.drawRect(0,-tile.tileHeight,tile.tileWidth,tile.tileHeight);
-						clip.graphics.endFill();
 					}
 				}
 			}
@@ -434,6 +441,57 @@ package framework.core.architecture.component{
 				index++;
 			}
 			return 0;
+		}
+		//------ Set Frame ------------------------------------
+		public function setFrame(l:int,k:int, j:int, i:int, frame:int):void {
+			var layer:String=_tileMap_layer[l].tileTable;
+			var tileTable:Array=layer.split(",");
+			var index:Number=0;
+			var sum:Number=0;
+			while (index<tileTable.length) {
+				var cell:String=tileTable[index];
+				var content:Array=cell.split("*");
+				if (content.length==2) {
+					var num:Number=content[0];
+					var tileFrame:Number=content[1];
+				} else {
+					num=1;
+					tileFrame=content[0];
+				}
+				sum+=num;
+				if (k*_tileMap_height*_tileMap_width+j*_tileMap_width+i<sum) {
+					if (content.length==2) {
+						var pos:Number = k*_tileMap_height*_tileMap_width+j*_tileMap_width+i;
+						if(sum-num+1<pos  && (num-pos-1)>1){
+							trace("test1",index,pos,num,sum);
+							tileTable[index] = pos+"*"+tileFrame+","+frame+","+(num-pos-1)+"*"+tileFrame;
+						}else if(sum-num+1<pos && (num-pos-1)==1){
+							trace("test2",index,pos,num,sum);
+							tileTable[index] = pos+"*"+tileFrame+","+frame;
+						}else if(sum-num<pos  && (num-pos-1)>1){
+							trace("test3",index,pos,num,sum);
+							tileTable[index] = tileFrame+","+frame+","+(num-2)+"*"+tileFrame;
+						}else if(sum-num<pos && (num-pos-1)==1){
+							trace("test4",index,pos,num,sum);
+							tileTable[index] = tileFrame+","+frame;
+						}else if(sum-num==pos && (num-pos-1)>1){
+							trace("test5",index,pos,num,sum);
+							tileTable[index] = frame+","+(num-1)+"*"+tileFrame;
+						}else{
+							trace("test6",frame);
+							tileTable[index] = frame;
+						}
+					}else{
+						trace("test7");
+						tileTable[index] = frame;
+					}
+					_tileMap_layer[l].tileTable = tileTable.toString();
+					trace(_tileMap_layer[l].tileTable);
+					return;
+				}
+				index++;
+			}
+			return ;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

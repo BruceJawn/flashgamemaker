@@ -41,6 +41,7 @@ package framework.add.architecture.component{
 	import fl.controls.NumericStepper;
 	import fl.controls.ButtonLabelPlacement;
 	import fl.data.DataProvider;
+	import flash.system.System;
 
 	/**
 	* TileMapEditor Component
@@ -104,6 +105,7 @@ package framework.add.architecture.component{
 			if (_panelSelectedTile!=null) {
 				var clip:MovieClip = evt.target as MovieClip;
 				var tileFrame:int = _panelSelectedTile.tileFrame;
+				tileFrame = (_tileMap._tileMap_layer[_tool.tileLayer.value].X)*(tileFrame-1)+1;
 				if(NumberTo.Bool(_tool.tileFlipFrame.value)){
 					tileFrame*=-1;
 				}
@@ -336,7 +338,7 @@ package framework.add.architecture.component{
 			_option.buttonSave.width=_option.buttonNew.width;
 			_option.buttonSave.y=_option.buttonNew.y;
 			_option.buttonSave.x=_option.buttonLoad.x+80;
-			//_option.buttonSave.addEventListener(MouseEvent.CLICK, onButtonSaveClick);
+			_option.buttonSave.addEventListener(MouseEvent.CLICK, onButtonSaveClick);
 			_option.buttonProperties = new Button();
 			_option.buttonProperties.label="Properties";
 			_option.buttonProperties.width=_option.buttonNew.width;
@@ -361,6 +363,13 @@ package framework.add.architecture.component{
 			_option.y=y;
 			_optionPosition.x=x;
 			_optionPosition.y=y;
+		}
+		//----- On Button Save Click  -----------------------------------
+		public function onButtonSaveClick(event:MouseEvent):void {
+			for (var i:Number=0; i<=_tileMap._tileMap_layer.length-1; i++) {
+				_tileMap._mapXml.MapTexture.layer[i]=_tileMap._tileMap_layer[i].tileTable;
+			}
+			System.setClipboard("<?xml version='1.0' encoding='UTF-8'?>"+"\n"+_tileMap._mapXml);
 		}
 		//----- On Button Export Click  -----------------------------------
 		public function onButtonExportClick(event:MouseEvent):void {

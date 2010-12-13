@@ -1,21 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Map mapHigh="2" mapHeight="50" mapWidth="50" tileHigh="10"  tileHeight="40" tileWidth="60" iso="false" rect="true" begin="0,0,0" end="8,16,2">
-	<MapTexture >
-		<path>xml/framework/game/mapTexture.xml</path>
-
-<layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">2500*1,2500*0</layer>
-<layer texture="KawaiiObjectSetMedium" tileHigh="10" tileHeight="80" tileWidth="60" X="10" Y="6">50*1,4950*0</layer>	
-<layer texture="KawaiiObjectSetLarge" tileHigh="10" tileHeight="80" tileWidth="120" X="10" Y="6">5000*0</layer>
-<layer texture="KawaiiObjectSetHuge" tileHigh="10" tileHeight="160" tileWidth="160" X="10" Y="6">5000*0</layer>		
-
-</MapTexture>
-	<MapProperties>
-		<walkable>2500*1</walkable>
-		<slopes>2500*0</slopes>
-		<ladder>2500*0</ladder>
-		<slide>2500*0</slide>
-		<bounce>2500*0</bounce>
-		<teleportation>2500*0</teleportation>
-		<elevation>2500*0</elevation>
-	</MapProperties>
+<Map mapHigh="2" mapHeight="50" mapWidth="50" tileHigh="10" tileHeight="40" tileWidth="60" iso="false" rect="true" begin="0,0,0" end="8,16,2">
+  <MapTexture>
+    <path>xml/framework/game/mapTexture.xml</path>
+    <layer texture="KawaiiTileSet" tileHigh="10" tileHeight="40" tileWidth="60" X="10" Y="6">2*1,11,11,11,2495*1,2500*0</layer>
+    <layer texture="KawaiiObjectSetMedium" tileHigh="10" tileHeight="80" tileWidth="60" X="10" Y="6">5000*0</layer>
+    <layer texture="KawaiiObjectSetLarge" tileHigh="10" tileHeight="80" tileWidth="120" X="10" Y="6">5000*0</layer>
+    <layer texture="KawaiiObjectSetHuge" tileHigh="10" tileHeight="160" tileWidth="160" X="10" Y="6">5000*0</layer>
+  </MapTexture>
+  <MapProperties>
+    <walkable>2500*1</walkable>
+    <slopes>2500*0</slopes>
+    <ladder>2500*0</ladder>
+    <slide>2500*0</slide>
+    <bounce>2500*0</bounce>
+    <teleportation>2500*0</teleportation>
+    <elevation>2500*0</elevation>
+  </MapProperties>
 </Map>
