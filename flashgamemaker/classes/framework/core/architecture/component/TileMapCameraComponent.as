@@ -112,12 +112,12 @@ package framework.core.architecture.component{
 		//----- Scroll Map  -----------------------------------
 		public function scrollMap():void {
 			//trace(_dir.x,"left: "+_tileMap._spatial_position.x," right: "+Math.abs(_tileMap._spatial_position.x),_tileMap._mask.width,_tileMap.width);
-			if (_tileMap._spatial_position.x<=0&&_dir.x<0||Math.abs(_tileMap._spatial_position.x)<_tileMap.width&&_dir.x>0) {
+			//if (_tileMap._spatial_position.x<=0&&_dir.x<0||Math.abs(_tileMap._spatial_position.x)<_tileMap.width&&_dir.x>0) {
 				_tileMap._spatial_position.x-=_dir.x*_speed.x;
-			}
-			if (_tileMap._spatial_position.y<=0&&_dir.y<0||Math.abs(_tileMap._spatial_position.y)<_tileMap.height&&_dir.y>0) {
+			//}
+			//if (_tileMap._spatial_position.y<=0&&_dir.y<0||Math.abs(_tileMap._spatial_position.y)<_tileMap.height&&_dir.y>0) {
 				_tileMap._spatial_position.y-=_dir.y*_speed.y;
-			}
+			//}
 		}
 		//----- Scroll Map  -----------------------------------
 		public function blitMap():void {
