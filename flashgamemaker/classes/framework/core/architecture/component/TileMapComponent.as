@@ -461,28 +461,29 @@ package framework.core.architecture.component{
 				sum+=num;
 				if (k*_tileMap_height*_tileMap_width+j*_tileMap_width+i<sum) {
 					if (content.length==2) {
+						var res:String = frame.toString();
 						var pos:Number = k*_tileMap_height*_tileMap_width+j*_tileMap_width+i;
-						if(sum-num+1<pos  && (num-pos-1)>1){
-							trace("test1",index,pos,num,sum);
-							tileTable[index] = pos+"*"+tileFrame+","+frame+","+(num-pos-1)+"*"+tileFrame;
-						}else if(sum-num+1<pos && (num-pos-1)==1){
-							trace("test2",index,pos,num,sum);
-							tileTable[index] = pos+"*"+tileFrame+","+frame;
-						}else if(sum-num<pos  && (num-pos-1)>1){
-							trace("test3",index,pos,num,sum);
-							tileTable[index] = tileFrame+","+frame+","+(num-2)+"*"+tileFrame;
-						}else if(sum-num<pos && (num-pos-1)==1){
-							trace("test4",index,pos,num,sum);
-							tileTable[index] = tileFrame+","+frame;
-						}else if(sum-num==pos && (num-pos-1)>1){
-							trace("test5",index,pos,num,sum);
-							tileTable[index] = frame+","+(num-1)+"*"+tileFrame;
+						if(sum-pos>2){
+							trace("test1",sum-pos,sum,pos);
+							res =res+","+(sum-pos-1)+"*"+tileFrame;
+						}else if (sum-pos>1){
+							trace("test2",sum-pos,sum,pos);
+							res =res+ ","+tileFrame;
 						}else{
-							trace("test6",frame);
-							tileTable[index] = frame;
+							trace("Error", num-pos, num,pos);
 						}
+						if(pos-sum+num>1){
+							trace("test3",num,pos,pos-sum+num);
+							 res= pos-sum+num+"*"+tileFrame+","+res;
+						}else if (pos-sum+num==1){
+							trace("test4",num,pos);
+							 res= tileFrame+","+res;
+						}else{
+							trace("Error", pos-sum+num, pos,sum,num);
+						}
+						tileTable[index] = res;
 					}else{
-						trace("test7");
+						trace("test6");
 						tileTable[index] = frame;
 					}
 					_tileMap_layer[l].tileTable = tileTable.toString();
