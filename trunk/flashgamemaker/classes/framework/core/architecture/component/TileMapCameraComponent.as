@@ -52,7 +52,7 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_dir=new IsoPoint(0,0);
-			_speed=new IsoPoint(60,20,10);
+			_speed=new IsoPoint(1,1,1);
 			_position=new IsoPoint(0,0);
 		}
 		//------ Init Property  ------------------------------------
@@ -102,12 +102,6 @@ package framework.core.architecture.component{
 				_dir.x=0;
 				_dir.y=0;
 			}
-			if (_tileMap._spatial_position.x<=0&&_dir.x<0||Math.abs(_tileMap._spatial_position.x)<_tileMap.width&&_dir.x>0) {
-				_position.x-=_dir.x*_speed.x;
-			}
-			if (_tileMap._spatial_position.y<=0&&_dir.y<0||Math.abs(_tileMap._spatial_position.y)<_tileMap.height&&_dir.y>0) {
-				_position.y-=_dir.y*_speed.y;
-			}
 		}
 		//----- Scroll Map  -----------------------------------
 		public function scrollMap():void {
@@ -116,26 +110,28 @@ package framework.core.architecture.component{
 				_tileMap._spatial_position.x-=_dir.x*_speed.x;
 			//}
 			//if (_tileMap._spatial_position.y<=0&&_dir.y<0||Math.abs(_tileMap._spatial_position.y)<_tileMap.height&&_dir.y>0) {
-				_tileMap._spatial_position.y-=_dir.y*_speed.y;
+				_tileMap._spatial_position.y -= _dir.y * _speed.y;
 			//}
 		}
 		//----- Scroll Map  -----------------------------------
 		public function blitMap():void {
 			if (_dir!=null&&_position!=null) {
-				if (_dir.x>0 /*&& Math.round(_position.x/(_tileMap._tileMap_tileWidth/2))+1>=_tileMap._tileMap_visibility.endX*/) {
+				if (_dir.x>0 && Math.round(_position.x/(_tileMap._tileMap_width))!=Math.round((_position.x+_dir.x*_speed.x)/_tileMap._tileMap_width)) {
 					//trace("Blitz Right");
 					blitRight();
-				} else if (_dir.x<0/* && Math.round(_position.x/(_tileMap._tileMap_tileWidth/2))+1<=_tileMap._tileMap_visibility.beginX*/) {
+				} else if (_dir.x<0 && Math.round(_position.x/_tileMap._tileMap_width)!=Math.round((_position.x+_dir.x*_speed.x)/_tileMap._tileMap_width)) {
 					//trace("Blitz Left");
 					blitLeft();
-				} else if (_dir.y>0 /*&& Math.round(_position.y/(_tileMap._tileMap_tileHeight/2))+1<=_tileMap._tileMap_visibility.endY*/) {
+				} else if (_dir.y>0 && Math.round(_position.y/_tileMap._tileMap_height)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height)) {
 					//trace("Blitz Down");
 					blitDown();
-				} else if (_dir.y<0 /*&& Math.round(_position.y/(_tileMap._tileMap_tileHeight/2))+1>=_tileMap._tileMap_visibility.beginY*/) {
+				} else if (_dir.y<0 && Math.round(_position.y/_tileMap._tileMap_height)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height)) {
 					//trace("Blitz Up");
 					blitUp();
 				}
 			}
+			_position.x+=_dir.x*_speed.x;
+			_position.y+=_dir.y*_speed.y;
 		}
 		//------ Blit Right ------------------------------------
 		private function blitRight(offset:int=1):void {
@@ -233,6 +229,12 @@ package framework.core.architecture.component{
 				offset = y-(_tileMap._tileMap_visibility.endY-_tileMap._tileMap_visibility.beginY)/2;
 				blitUp(offset);
 			}
+		}
+		//------ Set Speed  ------------------------------------
+		public function setSpeed(xSpeed:int, ySpeed:int, zSpeed:int):void {
+			_speed.x=xSpeed;
+			_speed.y=ySpeed;
+			_speed.z=zSpeed;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

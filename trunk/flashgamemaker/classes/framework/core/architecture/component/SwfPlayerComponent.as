@@ -25,6 +25,7 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	
 	import flash.display.*;
+	import flash.events.Event;
 	import flash.geom.ColorTransform;
 	/**
 	* Player Component
@@ -63,6 +64,7 @@ package framework.core.architecture.component{
 			_swf = new MovieClip(); 
 			_swf.addChild(_source[_name+"1"]);
 			setGraphic(_graphicName,_swf);
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
@@ -140,10 +142,20 @@ package framework.core.architecture.component{
 			}
 		}
 		//------ Add Graphic ------------------------------------
-		public function addGraphic(graphicName:String, clipName:String):void {
+		public function addGraphic(graphicName:String, clipName:String, offset:int=0):void {
 			var graphic:*=_graphicManager.getGraphic(graphicName);
-			if(_graphic!=null && contains(_graphic) && graphic!=null && _graphic[clipName]){
-				_graphic[clipName].addChild(graphic);
+			var i:int=0;
+			if(_graphic!=null && contains(_graphic) && graphic){
+				while(i<_source.numChildren){
+					if(_source[_name+i] is MovieClip && _source[_name+i][clipName]){
+						var SourceClass:Class = graphic.constructor;
+						var clip:MovieClip = new SourceClass();
+						if(offset==0 || (offset==2 && i%4<=2 && i%4!=0) || (offset==1 && i%4>2)){
+							_source[_name+i][clipName].addChild(clip);
+						}
+					}
+					i++;
+				}
 			}
 		}
 		//------ Rotate Graphic  ------------------------------------
