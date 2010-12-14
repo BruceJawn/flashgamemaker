@@ -192,7 +192,7 @@ package script.game{
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.setPropertyReference("tileMapCamera",tileMapComponent._componentName);
 			tileMapComponent.setMask(60,80,490,335);
-			tileMapComponent.moveTo(60,150);
+			tileMapComponent.moveTo(90,150);
 			var tileMapCameraComponent:TileMapCameraComponent=_entityManager.addComponent("GameEntity","TileMapCameraComponent","myTileMapCameraComponent");
 			var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
 			tileMapEditorComponent.moveTool(15,30);
