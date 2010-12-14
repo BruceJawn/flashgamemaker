@@ -115,11 +115,15 @@ package script.game{
 			//customizeScreen._graphic.maleBt.addEventListener(MouseEvent.CLICK, onMaleClick);
 			//customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
 			customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
-			var bebeCustomize:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","myBebeComponent");
-			bebeCustomize.setGraphicFromName("bebeClip",2);
-			//bebeCustomize.addGraphic("bebeVisage", "clip.Head");
-			bebeCustomize.moveTo(250,300);
-			bebeCustomize.scale(2,2);
+			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","myBebeComponent");
+			swfPlayerComponent.addEventListener(Event.COMPLETE, onBebeComplete);
+			swfPlayerComponent.setGraphicFromName("bebeClip",2);
+			swfPlayerComponent.moveTo(250,300);
+			swfPlayerComponent.scale(2,2);
+		}
+		//------ On Bebe Complete ------------------------------------
+		private function onBebeComplete(evt:Event):void {
+			evt.currentTarget.addGraphic("bebeVisage", "Head",2);
 		}
 		//------ On Male Click ------------------------------------
 		private function onMaleClick(evt:MouseEvent):void {
@@ -182,7 +186,7 @@ package script.game{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			//keyboardMoveComponent.setMode("4DirIso");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			//animationComponent.setMode("4DirIso");
+			animationComponent.setMode("4DirIso");
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(100,150);
@@ -192,8 +196,9 @@ package script.game{
 			tileMapComponent.setPropertyReference("tileMapEditor",tileMapComponent._componentName);
 			tileMapComponent.setPropertyReference("tileMapCamera",tileMapComponent._componentName);
 			tileMapComponent.setMask(60,80,490,335);
-			tileMapComponent.moveTo(90,150);
+			tileMapComponent.moveTo(0,150);
 			var tileMapCameraComponent:TileMapCameraComponent=_entityManager.addComponent("GameEntity","TileMapCameraComponent","myTileMapCameraComponent");
+			tileMapCameraComponent.setSpeed(4, 2, 1);
 			var tileMapEditorComponent:TileMapEditorComponent=_entityManager.addComponent("GameEntity","TileMapEditorComponent","myTileMapEditorComponent");
 			tileMapEditorComponent.moveTool(15,30);
 			tileMapEditorComponent.moveOption(100,260);

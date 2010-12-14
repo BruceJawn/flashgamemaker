@@ -254,7 +254,7 @@ package framework.core.architecture.component{
 					myBitmapData=clip.bitmapData;
 				}
 				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth/2,tile.tileHeight), new Point(tile.tileWidth/2, 0),null,null,true);
-				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth+tile.tileWidth/2, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
+				myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth+tile.tileWidth/2, y * tile.tileHeight,tile.tileWidth/2,tile.tileHeight), new Point(0, 0),null,null,true);
 				if (tile.flip) {
 					clip.flip=true;
 					tile.flip=true;
@@ -296,7 +296,7 @@ package framework.core.architecture.component{
 								clip.bitmapData=tmp;
 							}
 							myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth, y * tile.tileHeight,tile.tileWidth/2,tile.tileHeight), new Point(tile.tileWidth/2, 0),null,null,true);
-							myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth+tile.tileWidth/2, y * tile.tileHeight,tile.tileWidth,tile.tileHeight), new Point(0, 0),null,null,true);
+							myBitmapData.copyPixels(bitmap.bitmapData, new Rectangle(x * tile.tileWidth+tile.tileWidth/2, y * tile.tileHeight,tile.tileWidth/2,tile.tileHeight), new Point(0, 0),null,null,true);
 							if (tile.flip) {
 								clip.flip=true;
 								tile.flip=true;
@@ -304,7 +304,7 @@ package framework.core.architecture.component{
 							}
 							clip.bitmapData=myBitmapData;
 							clip.graphics.beginBitmapFill(myBitmapData);
-							clip.graphics.drawRect(0,0,tile.tileWidth,-tile.tileHeight);
+							clip.graphics.drawRect(-tile.tileWidth/2,-tile.tileHeight,tile.tileWidth,tile.tileHeight);
 							clip.graphics.endFill();
 							setFrame(l,k,j,i,tile.tileFrame);
 						}

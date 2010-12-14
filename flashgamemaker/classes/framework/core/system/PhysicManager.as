@@ -130,7 +130,7 @@ package framework.core.system{
 		}
 		//------- Jump Move -------------------------------
 		private function jumpMove(component:*):void {
-			trace("jump",component._spatial_position.y);
+			//trace("jump",component._spatial_position.y);
 			component._spatial_jump.z+=_spatial_gravity;
 			component.y+=component._spatial_jump.z;
 			component._spatial_position.y+=component._spatial_jump.z;
@@ -142,7 +142,7 @@ package framework.core.system{
 		}
 		//------- Fall Move -------------------------------
 		private function fallMove(component:*):void {
-			trace("fall",component._spatial_position.y);
+			//trace("fall",component._spatial_position.y);
 			component._spatial_jump.z+=_spatial_gravity;
 			component.y-=component._spatial_jumpStart.z-component._spatial_jump.z;
 			component._spatial_position.y-=component._spatial_jump.z;

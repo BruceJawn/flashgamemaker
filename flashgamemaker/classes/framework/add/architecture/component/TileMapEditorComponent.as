@@ -118,7 +118,7 @@ package framework.add.architecture.component{
 		}
 		//----- On Mouse Event  -----------------------------------
 		private function onTileMouseRollOver(evt:MouseEvent):void {
-			//trace(evt.target);
+			//trace(evt);
 			colorTile(evt.target as MovieClip, 1,0,0,1,0,0,0);
 		}
 		//----- On Mouse Event  -----------------------------------
