@@ -180,9 +180,9 @@ package script.game{
 			//keyboardInputComponent.useWASD();//QWERTY
 			keyboardInputComponent.useOKLM();
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
-			keyboardMoveComponent.setMode("4DirIso");
+			//keyboardMoveComponent.setMode("4DirIso");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			animationComponent.setMode("4DirIso");
+			//animationComponent.setMode("4DirIso");
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(100,150);
