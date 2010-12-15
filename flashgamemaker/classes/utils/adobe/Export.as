@@ -21,7 +21,7 @@
 *
 */
 package utils.adobe{
-
+	import flash.net.FileReference;
 	import flash.external.ExternalInterface;
 	import flash.display.DisplayObject;
 	import flash.display.BitmapData;
@@ -35,20 +35,8 @@ package utils.adobe{
 			jpgSource.draw(clip);
 			var jpgEncoder:JPGEncoder=new JPGEncoder(quality);
 			var jpgStream:ByteArray=jpgEncoder.encode(jpgSource);
-			var header:URLRequestHeader=new URLRequestHeader("Content-type","application/octet-stream");
-			//Make sure to use the correct path to jpg_encoder_download.php
-			try {
-				var domain:String=ExternalInterface.call("window.location.href.toString");
-				domain=domain.substring(0,domain.lastIndexOf("/",domain.length-1)+1);
-				var jpgURLRequest:URLRequest=new URLRequest(domain+"/php/jpg_encoder_download.php?name="+fileName+".jpg");
-				jpgURLRequest.requestHeaders.push(header);
-				jpgURLRequest.method=URLRequestMethod.POST;
-				jpgURLRequest.data=jpgStream;
-				var jpgURLLoader:URLLoader = new URLLoader();
-				navigateToURL(jpgURLRequest, "_blank");
-			} catch (e:Error) {
-				trace(e);
-			}
+			var file:FileReference = new FileReference();
+			file.save(jpgStream, fileName+".jpg");
 		}
 	}
 }
