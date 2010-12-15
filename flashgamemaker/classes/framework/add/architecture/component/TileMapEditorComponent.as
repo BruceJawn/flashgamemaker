@@ -110,6 +110,7 @@ package framework.add.architecture.component{
 					tileFrame*=-1;
 				}
 				_tileMap.swapTile(_tool.tileLayer.value,_tool.tileLevel.value,clip.ytile,clip.xtile, tileFrame);
+				FlashGameMaker.Focus();
 			}
 		}
 		//----- On Mouse Event  -----------------------------------
