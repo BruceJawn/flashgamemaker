@@ -38,7 +38,7 @@ package script{
 			//new HelloWorld2();
 			//new HelloWorld3();
 			//new Tuto2AGraphicComponent();
-			new Tuto2BGraphicComponent();
+			//new Tuto2BGraphicComponent();
 			//new Tuto3BackgroundColorComponent();
 			//new Factory();
 			//new Navigation("tutorial.HelloWorld");
@@ -47,7 +47,7 @@ package script{
 			//new Navigation("game.KawaiiOlympic");
 			//new Navigation("game.Korizon");
 			//new Navigation("game.MSOrigin");
-			//new KawaiiWorld();
+			new KawaiiWorld();
 		}
 	}
 }
