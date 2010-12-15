@@ -122,10 +122,10 @@ package framework.core.architecture.component{
 				} else if (_dir.x<0 && Math.round(_position.x/_tileMap._tileMap_width)!=Math.round((_position.x+_dir.x*_speed.x)/_tileMap._tileMap_width)) {
 					//trace("Blitz Left");
 					blitLeft();
-				} else if (_dir.y>0 && Math.round(_position.y/_tileMap._tileMap_height)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height)) {
+				} else if (_dir.y>0 && Math.round(_position.y/_tileMap._tileMap_height*2)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height*2)) {
 					//trace("Blitz Down");
 					blitDown();
-				} else if (_dir.y<0 && Math.round(_position.y/_tileMap._tileMap_height)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height)) {
+				} else if (_dir.y<0 && Math.round(_position.y/_tileMap._tileMap_height*2)!=Math.round((_position.y+_dir.y*_speed.y)/_tileMap._tileMap_height*2)) {
 					//trace("Blitz Up");
 					blitUp();
 				}
