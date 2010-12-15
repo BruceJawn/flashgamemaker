@@ -22,12 +22,10 @@
 */
 package utils.adobe{
 	import flash.net.FileReference;
-	import flash.external.ExternalInterface;
 	import flash.display.DisplayObject;
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
-	import flash.net.*;
-
+	
 	public class Export {
 
 		public static function ExportJPG(clip:DisplayObject, fileName:String, quality:Number=90):void{
