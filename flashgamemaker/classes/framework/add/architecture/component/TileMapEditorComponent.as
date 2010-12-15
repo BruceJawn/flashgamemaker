@@ -42,6 +42,7 @@ package framework.add.architecture.component{
 	import fl.controls.ButtonLabelPlacement;
 	import fl.data.DataProvider;
 	import flash.system.System;
+	import flash.net.FileReference;
 
 	/**
 	* TileMapEditor Component
@@ -371,10 +372,15 @@ package framework.add.architecture.component{
 				_tileMap._mapXml.MapTexture.layer[i]=_tileMap._tileMap_layer[i].tileTable;
 			}
 			System.setClipboard("<?xml version='1.0' encoding='UTF-8'?>"+"\n"+_tileMap._mapXml);
+			var file:FileReference = new FileReference();
+			file.save("<?xml version='1.0' encoding='UTF-8'?>"+"\n"+_tileMap._mapXml, "map.xml");
 		}
 		//----- On Button Export Click  -----------------------------------
 		public function onButtonExportClick(event:MouseEvent):void {
+			var mask: DisplayObject = _tileMap.mask;
+			_tileMap.mask = null;
 			Export.ExportJPG(_tileMap,"TileMap");
+			_tileMap.mask =mask;
 		}
 		//-----Init Tile Editor Panel  -----------------------------------
 		private function initPanel(layerIndex:int=0):void {
