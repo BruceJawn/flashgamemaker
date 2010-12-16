@@ -77,12 +77,13 @@ package script.game{
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
 			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backgroundComponent.setScrolling(30,5);
-			//backgroundComponent.setDirection(swfPlayerComponent.getDirection());
+			backgroundComponent.setPosition(bitmapPlayerComponent.getPosition());
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
 			backgroundComponent.moveTo(0,90);
-			var backgroundObjectComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBackgroundObjectComponent");
+			/*var backgroundObjectComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBackgroundObjectComponent");
 			backgroundObjectComponent.loadGraphic("texture/framework/game/background/ms/object.png", "MS_Object");
 			backgroundObjectComponent.moveTo(0,90);
+			*/
 			var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","mySTatutBarGraphicComponent");
 			statutBarComponent.loadGraphic("texture/framework/game/interface/MsOriginStatutBar.swf", "MsOriginStatutBar");
 			statutBarComponent.moveTo(0,310);
@@ -117,7 +118,6 @@ package script.game{
 			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
 			gamePadComponent.moveTo(100,100);
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.getComponent("GameEntity","myBitmapPlayerComponent");
-			var backgroundObjectComponent:GraphicComponent=_entityManager.getComponent("GameEntity","myBackgroundObjectComponent");
 			//var shapeCollisionComponent:ShapeCollisionComponent=_entityManager.addComponent("GameEntity","ShapeCollisionComponent","myShapeCollisionComponent");
 			//shapeCollisionComponent.setClip(bitmapPlayerComponent,backgroundObjectComponent);
 		}
