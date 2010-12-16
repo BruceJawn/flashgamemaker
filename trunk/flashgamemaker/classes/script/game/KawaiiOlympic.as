@@ -76,7 +76,7 @@ package script.game{
 			scrollingBitmapComponent.setLoop(true);
 			scrollingBitmapComponent2.setPropertyReference("keyboardInput",scrollingBitmapComponent2._componentName);
 			scrollingBitmapComponent2.moveTo(0,108);
-			scrollingBitmapComponent2.setDirection(swfPlayerComponent.getDirection());
+			scrollingBitmapComponent2.setPosition(swfPlayerComponent.getPosition());
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.isListening(false);
 			jaugeComponent.setDirection("vertical");

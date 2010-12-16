@@ -44,7 +44,6 @@ package framework.core.architecture.component{
 		private var _position:IsoPoint=new IsoPoint(0,0);
 		private var _initialPosition:IsoPoint=null;
 		private var _loop:Boolean=false;
-		private var _direction:IsoPoint=null;
 		private var _speed:Point=new Point(1,0);
 		//KeyboardInput properties
 		public var _keyboard_gamePad:Object=null;
@@ -91,35 +90,39 @@ package framework.core.architecture.component{
 		}
 		//----- Scroll Bitmap  -----------------------------------
 		public function scrollBitmap():void {
-			if ((_direction!= null && _direction.x>0) || (_loop &&  _speed.x>0)) {//RIGHT
-				if (_rectangle.x+_offset+_bitmap.width<=_source.width) {
+			trace(_position.x,_rectangle.x+_rectangle.width/5*3);
+			if ((_position.x>=_rectangle.x+_rectangle.width/5*2) || (_loop &&  _speed.x>0)) {//RIGHT
+				if (_rectangle.x+_offset+_rectangle.width<=_source.width) {
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
+					_rectangle.x+=_offset;
 				} else if (_loop) {
-					var dist:Number=_rectangle.x+_offset+_bitmap.width-_source.width;
+					var dist:Number=_rectangle.x+_offset+_rectangle.width-_source.width;
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width-dist,_bitmap.height), new Point(0, 0),null,null,true);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(0, 0,dist,_bitmap.height), new Point(_bitmap.width-dist, 0),null,null,true);
-				}
-				_rectangle.x+=_offset;
-				if (_rectangle.x>_source.width) {
+					_rectangle.x+=_offset;
+				if (_rectangle.x>_source.width ) {
 					_rectangle.x=_rectangle.x-_source.width;
 				}
-			} else if ((_direction!= null && _direction.x<0) || (_loop &&  _speed.x<0)) {//LEFT
+				}
+			} else if ((_position.x<=_rectangle.x+_rectangle.width/5*2 ) || (_loop &&  _speed.x<0)) {//LEFT
 				if (_rectangle.x-_offset>=0) {
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x-_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
+					_rectangle.x-=_offset;
 				} else if (_loop) {
 					dist=Math.abs(_rectangle.x-_offset);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x, 0,_bitmap.width-dist,_bitmap.height), new Point(dist, 0),null,null,true);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_source.width-dist, 0,dist,_bitmap.height), new Point(0, 0),null,null,true);
-				}
-				_rectangle.x-=_offset;
+					_rectangle.x-=_offset;
 				if (Math.abs(_rectangle.x)>_source.width) {
 					_rectangle.x=-(Math.abs(_rectangle.x)-_source.width);
 				}
+				}
+				
 			}
 		}
-		//----- Set Direction -----------------------------------
-		public function setDirection(direction:IsoPoint):void {
-			_direction=direction;
+		//----- Set Position -----------------------------------
+		public function setPosition(position:IsoPoint):void {
+			_position=position;
 		}
 		//----- Scroll  -----------------------------------
 		public function scroll(x:Number,y:Number):void {
@@ -128,17 +131,14 @@ package framework.core.architecture.component{
 		}
 		//----- Scroll Bitmap Keyboard  -----------------------------------
 		public function scrollBitmapKeyboard():void {
-			if (_keyboard_gamePad.right.isDown) {
-				_direction.x=1;
-			} else if (_keyboard_gamePad.left.isDown) {
-				_direction.x=-1;
-			}else if (_keyboard_gamePad.up.isDown) {
-				_direction.y=1;
-			}else if (_keyboard_gamePad.down.isDown) {
-				_direction.y=-1;
-			}else{
-				_direction.x=0;
-				_direction.y=0;
+			if (_keyboard_gamePad.right.isDown && _position.x+_offset+_rectangle.width<=_source.width) {
+				_position.x+=_offset;
+			} else if (_keyboard_gamePad.left.isDown && _position.x-_offset>=0) {
+				_position.x-=_offset;
+			}else if (_keyboard_gamePad.up.isDown && _position.y+_offset+_rectangle.height<=_source.height) {
+				_position.y+=_offset
+			}else if (_keyboard_gamePad.down.isDown && _position.y-_offset>=0) {
+				_position.y-=_offset;
 			}
 			scrollBitmap();
 		}
