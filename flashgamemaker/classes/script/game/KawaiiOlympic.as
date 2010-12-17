@@ -72,11 +72,10 @@ package script.game{
 			scrollingBitmapComponent.setPropertyReference("timer",scrollingBitmapComponent._componentName);
 			var scrollingBitmapComponent2:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myScrollingBitmapComponent2");
 			scrollingBitmapComponent2.loadGraphic("texture/framework/game/background/bladesquad/piste.jpg","Piste");
-			scrollingBitmapComponent2.setScrolling(30,1);
-			scrollingBitmapComponent.setLoop(true);
-			scrollingBitmapComponent2.setPropertyReference("keyboardInput",scrollingBitmapComponent2._componentName);
-			scrollingBitmapComponent2.moveTo(0,108);
+			scrollingBitmapComponent2.setPropertyReference("timer",scrollingBitmapComponent2._componentName);
+			scrollingBitmapComponent2.setScrolling(30,4);
 			scrollingBitmapComponent2.setScrollingTarget(swfPlayerComponent);
+			scrollingBitmapComponent2.moveTo(0,108);
 			var jaugeComponent:JaugeComponent=_entityManager.addComponent("GameEntity","JaugeComponent","myJaugeComponent");
 			jaugeComponent.isListening(false);
 			jaugeComponent.setDirection("vertical");
