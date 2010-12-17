@@ -41,7 +41,7 @@ package framework.core.architecture.component{
 		private var _bitmap:Bitmap=null;
 		private var _offset:Number=5;
 		private var _rectangle:Rectangle=null;
-		private var _position:IsoPoint=new IsoPoint(0,0);
+		private var _scrollingTarget:*=null;
 		private var _initialPosition:IsoPoint=null;
 		private var _loop:Boolean=false;
 		private var _speed:Point=new Point(1,0);
@@ -49,7 +49,7 @@ package framework.core.architecture.component{
 		public var _keyboard_gamePad:Object=null;
 		//Timer properties
 		public var _timer_on:Boolean=false;
-		public var _timer_delay:Number=30;
+		public var _timer_delay:Number=20;
 		public var _timer_count:Number=0;
 
 		public function ScrollingBitmapComponent(componentName:String, componentOwner:IEntity) {
@@ -81,7 +81,7 @@ package framework.core.architecture.component{
 			if (_timer_count>=_timer_delay && _timer_on && _bitmap!=null) {
 				scrollBitmap();
 			} else if (!_timer_on && _keyboard_gamePad!=null) {
-				//scrollBitmapKeyboard();
+				scrollBitmapKeyboard();
 			}
 		}
 		//----- Set Loop -----------------------------------
@@ -90,39 +90,35 @@ package framework.core.architecture.component{
 		}
 		//----- Scroll Bitmap  -----------------------------------
 		public function scrollBitmap():void {
-			trace(_position.x,_rectangle.x+_rectangle.width/5*3);
-			if ((_position.x>=_rectangle.x+_rectangle.width/5*2) || (_loop &&  _speed.x>0)) {//RIGHT
-				if (_rectangle.x+_offset+_rectangle.width<=_source.width) {
-					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
-					_rectangle.x+=_offset;
-				} else if (_loop) {
+			if(_loop){
+				if(_speed.x>0){//RIGHT
 					var dist:Number=_rectangle.x+_offset+_rectangle.width-_source.width;
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width-dist,_bitmap.height), new Point(0, 0),null,null,true);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(0, 0,dist,_bitmap.height), new Point(_bitmap.width-dist, 0),null,null,true);
 					_rectangle.x+=_offset;
-				if (_rectangle.x>_source.width ) {
-					_rectangle.x=_rectangle.x-_source.width;
-				}
-				}
-			} else if ((_position.x<=_rectangle.x+_rectangle.width/5*2 ) || (_loop &&  _speed.x<0)) {//LEFT
-				if (_rectangle.x-_offset>=0) {
-					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x-_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
-					_rectangle.x-=_offset;
-				} else if (_loop) {
+					if (_rectangle.x>_source.width ) {
+						_rectangle.x=_rectangle.x-_source.width;
+					}
+				}else if(_speed.x<0){//LEFT
 					dist=Math.abs(_rectangle.x-_offset);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x, 0,_bitmap.width-dist,_bitmap.height), new Point(dist, 0),null,null,true);
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_source.width-dist, 0,dist,_bitmap.height), new Point(0, 0),null,null,true);
 					_rectangle.x-=_offset;
-				if (Math.abs(_rectangle.x)>_source.width) {
-					_rectangle.x=-(Math.abs(_rectangle.x)-_source.width);
+					if (Math.abs(_rectangle.x)>_source.width) {
+						_rectangle.x=-(Math.abs(_rectangle.x)-_source.width);
+					}
 				}
+			}else if(_scrollingTarget!=null && _scrollingTarget.x+_scrollingTarget.width>=_rectangle.width/5*3) {//RIGHT
+				if (_rectangle.x+_offset+_rectangle.width<=_source.width) {
+					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
+					_rectangle.x+=_offset;
+				} 
+			} else if (_scrollingTarget!=null &&_scrollingTarget.x<=_rectangle.width/5*2) {//LEFT
+				if (_rectangle.x-_offset>=0) {
+					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x-_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
+					_rectangle.x-=_offset;
 				}
-				
 			}
-		}
-		//----- Set Position -----------------------------------
-		public function setPosition(position:IsoPoint):void {
-			_position=position;
 		}
 		//----- Scroll  -----------------------------------
 		public function scroll(x:Number,y:Number):void {
@@ -131,16 +127,16 @@ package framework.core.architecture.component{
 		}
 		//----- Scroll Bitmap Keyboard  -----------------------------------
 		public function scrollBitmapKeyboard():void {
-			if (_keyboard_gamePad.right.isDown && _position.x+_offset+_rectangle.width<=_source.width) {
-				_position.x+=_offset;
-			} else if (_keyboard_gamePad.left.isDown && _position.x-_offset>=0) {
-				_position.x-=_offset;
-			}else if (_keyboard_gamePad.up.isDown && _position.y+_offset+_rectangle.height<=_source.height) {
-				_position.y+=_offset
-			}else if (_keyboard_gamePad.down.isDown && _position.y-_offset>=0) {
-				_position.y-=_offset;
+			if (_keyboard_gamePad.right.isDown && _rectangle.x+_offset+_rectangle.width<=_source.width) {
+				_rectangle.x+=_offset;
+			} else if (_keyboard_gamePad.left.isDown &&_rectangle.x-_offset>=0) {
+				_rectangle.x-=_offset;
+			}else if (_keyboard_gamePad.up.isDown && _rectangle.y+_offset+_rectangle.height<=_source.height) {
+				_rectangle.y+=_offset
+			}else if (_keyboard_gamePad.down.isDown && _rectangle.y-_offset>=0) {
+				_rectangle.y-=_offset;
 			}
-			scrollBitmap();
+			_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
 		}
 		//----- Flip BitmapData  -----------------------------------
 		public function flipBitmapData(myBitmapData:BitmapData):void {
@@ -156,6 +152,10 @@ package framework.core.architecture.component{
 		public function setScrolling(delay:Number, offset:Number=5):void {
 			_timer_delay=delay;
 			_offset=offset;
+		}
+		//----- Set Position -----------------------------------
+		public function setScrollingTarget(component:*):void {
+			_scrollingTarget=component;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
