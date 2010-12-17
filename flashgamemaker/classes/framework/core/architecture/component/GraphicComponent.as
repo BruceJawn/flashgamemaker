@@ -172,6 +172,12 @@ package framework.core.architecture.component{
 			_spatial_position.y=(FlashGameMaker.HEIGHT-this.height)/2;
 			//update("spatial");
 		}
+		//------ SetSpeed  ------------------------------------
+		public function setSpeed(xSpeed:int,ySpeed:int,zSpeed:int=1):void {
+			_spatial_speed.x = xSpeed;
+			_spatial_speed.y = ySpeed;
+			_spatial_speed.z = zSpeed;
+		}
 		//------ Rotate Graphic  ------------------------------------
 		public function rotate():void {
 			if (_spatial_rotation!=0) {

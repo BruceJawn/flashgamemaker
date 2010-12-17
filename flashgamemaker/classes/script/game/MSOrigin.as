@@ -77,7 +77,7 @@ package script.game{
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
 			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backgroundComponent.setScrolling(30,5);
-			backgroundComponent.setPosition(bitmapPlayerComponent.getPosition());
+			backgroundComponent.setScrollingTarget(bitmapPlayerComponent);
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
 			backgroundComponent.moveTo(0,90);
 			/*var backgroundObjectComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBackgroundObjectComponent");
