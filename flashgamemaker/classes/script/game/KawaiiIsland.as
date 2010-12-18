@@ -75,13 +75,13 @@ package script.game{
 			groundSphereComponent.setRotation(2);
 			groundSphereComponent.moveTo(220,1050);
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
+			swfPlayerComponent.loadGraphic("texture/framework/game/charset/bladesquad/kidClip.swf","mySwfPlayer");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.setPropertyReference("keyboardAttack",swfPlayerComponent._componentName);
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.moveTo(120,300);
 			var swfEnnemyComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfEnnemyComponent");
-			swfEnnemyComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml","mySwfPlayer");
+			swfEnnemyComponent.loadGraphic("texture/framework/game/charset/bladesquad/kidClip.swf","mySwfPlayer");
 			swfEnnemyComponent.setPropertyReference("health",swfEnnemyComponent._componentName);
 			swfEnnemyComponent.moveTo(200,300);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");

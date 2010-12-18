@@ -26,6 +26,7 @@ package script.game{
 	import framework.core.architecture.component.*;
 	import framework.add.architecture.component.*;
 
+	import flash.events.Event;
 	/**
 	* Script Class
 	*
@@ -65,11 +66,16 @@ package script.game{
 			var statut:GraphicComponent= _entityManager.addComponent("GameEntity","GraphicComponent","myStatutGraphicComponent");
 			statut.loadGraphic("texture/framework/game/interface/bladesquad/statutClip.swf", "KawaiiStatut");
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "mySwfPlayer",2);
+			swfPlayerComponent.addEventListener(Event.COMPLETE, onBebeComplete);
+			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiFight.xml", "bebeClip",2);
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(150,300);
 			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
 			gamePadComponent.moveTo(60,290);
+		}
+		//------ On Bebe Complete ------------------------------------
+		private function onBebeComplete(evt:Event):void {
+			evt.currentTarget.addGraphicFromName("bebeVisage", "Head",2);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

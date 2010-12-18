@@ -56,14 +56,15 @@ package framework.core.architecture.component{
 		}
 		//------ Create Player ------------------------------------
 		protected override function createPlayer():void {
-			_graphic=_graphicManager.getGraphic(_graphicName);
-			var SourceClass:Class = _graphic.constructor;
-			_source = new SourceClass();
-			initSource();
-			//customizeSource();
-			_swf = new MovieClip(); 
-			_swf.addChild(_source[_name+"1"]);
-			setGraphic(_graphicName,_swf);
+			if(_swf==null){
+				_graphic=_graphicManager.getGraphic(_graphicName);
+				var SourceClass:Class = _graphic.constructor;
+				_source = new SourceClass();
+				initSource();
+				_swf = new MovieClip(); 
+				_swf.addChild(_source[_name+"1"]);
+				setGraphic(_graphicName,_swf);
+			}
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		//------ Actualize Components  ------------------------------------
@@ -86,30 +87,6 @@ package framework.core.architecture.component{
 				var clip:MovieClip = _source.getChildAt(i) as MovieClip;
 				clip.x=0;
 				clip.y=0;
-			}
-		}
-		//----- Customize Source -----------------------------------
-		private function customizeSource():void {
-			var xmlList:XMLList=_playerXml.children();
-			for each (var xmlChild:XML in xmlList) {
-				var clipName:String = xmlChild.name();
-				if(clipName!="Body"){
-					var graphic: MovieClip =getGraphic(clipName) as MovieClip;
-					var SourceClass:Class = graphic.constructor;
-					var i:int=1;
-					while(i<_source.numChildren){
-						var source:MovieClip = new SourceClass() as MovieClip;
-						for(var j:int=0;j<4;j++){
-							var clip:MovieClip = _source[_name+Number(i+j)] as MovieClip;
-							if(clip!= null && clip[clipName]!=null){
-								if(source[_name+Number(j+1)]!=null){
-									clip[clipName].addChild(source[_name+Number(j+1)]);
-								}
-							}
-						}
-						i+=4;
-					}
-				}
 			}
 		}
 		//------ Change Color ------------------------------------
@@ -143,6 +120,10 @@ package framework.core.architecture.component{
 		}
 		//------ Add Graphic ------------------------------------
 		public function addGraphic(graphicName:String, clipName:String, offset:int=0):void {
+			
+		}
+		//------ Add Graphic ------------------------------------
+		public function addGraphicFromName(graphicName:String, clipName:String, offset:int=0):void {
 			var graphic:*=_graphicManager.getGraphic(graphicName);
 			var i:int=0;
 			if(_graphic!=null && contains(_graphic) && graphic){

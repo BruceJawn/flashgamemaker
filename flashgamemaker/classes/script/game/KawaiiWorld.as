@@ -123,7 +123,7 @@ package script.game{
 		}
 		//------ On Bebe Complete ------------------------------------
 		private function onBebeComplete(evt:Event):void {
-			evt.currentTarget.addGraphic("bebeVisage", "Head",2);
+			evt.currentTarget.addGraphicFromName("bebeVisage", "Head",2);
 		}
 		//------ On Male Click ------------------------------------
 		private function onMaleClick(evt:MouseEvent):void {
