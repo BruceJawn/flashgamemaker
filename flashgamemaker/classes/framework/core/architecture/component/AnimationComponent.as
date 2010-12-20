@@ -23,8 +23,6 @@
 
 package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
-	import framework.core.system.PhysicManager;
-	import framework.core.system.IPhysicManager;
 	import utils.iso.IsoPoint;
 
 	import flash.events.EventDispatcher;
@@ -133,7 +131,7 @@ package framework.core.architecture.component{
 			} else if (isRunning && !isAttacking && !isJumping && !isDoubleJumping&& !isFalling && animation["RUN"]!=null && (graphic_frame<animation["RUN"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["RUN"]+1)*graphic_numFrame*graphic_numFrame)) {
 				//trace("RUN");
 				graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["RUN"]*graphic_numFrame*graphic_numFrame;
-			} else if (isMoving && !isRunning && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["WALK"]!= null && (graphic_frame<=animation["WALK"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["WALK"]+1)*graphic_numFrame*graphic_numFrame || (keyboard_gamePad.upRight.isDown || keyboard_gamePad.upLeft.isDown || keyboard_gamePad.downRight.isDown || keyboard_gamePad.downLeft.isDown) )) {
+			} else if (isMoving && !isRunning && !isAttacking && !isJumping && !isDoubleJumping && !isFalling && animation["WALK"]!= null && (graphic_frame<=animation["WALK"]*graphic_numFrame*graphic_numFrame || graphic_frame>Number(animation["WALK"]+1)*graphic_numFrame*graphic_numFrame )) {
 				//trace("WALK");
 				if (_mode=="2Dir"&& keyboard_gamePad!=null && (keyboard_gamePad.downRight.isDown || keyboard_gamePad.downLeft.isDown )  && animation["WALK_DOWN"]!= null) {
 					graphic_frame=graphic_frame%(graphic_numFrame*graphic_numFrame)+animation["WALK_DOWN"]*graphic_numFrame*graphic_numFrame;

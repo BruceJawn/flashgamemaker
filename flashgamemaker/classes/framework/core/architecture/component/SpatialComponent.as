@@ -45,6 +45,7 @@ package framework.core.architecture.component{
 		public var _spatial_dir:IsoPoint=null;// dirx, diry and dirz
 		public var _spatial_rotation:Number=0;// dirx, diry and dirz
 		public var _spatial_position:IsoPoint=null;// x, y and z
+		public var _spatial_destination:IsoPoint=null;// x, y and z
 		public var _spatial_properties:Object=null;
 		//Timer properties
 		public var _timer_on:Boolean=false;

@@ -55,16 +55,19 @@ package script.game{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			keyboardMoveComponent.setMode("2Dir");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
+			var mouseMoveComponent:MouseMoveComponent=_entityManager.addComponent("GameEntity","MouseMoveComponent","myMouseMoveComponent");
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var aiComponent:AIComponent=_entityManager.addComponent("GameEntity","AIComponent","myAIComponent");
 			var backgroundColorComponent:BackgroundColorComponent=_entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
 			backgroundColorComponent.changeColor("111111");
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
+			bitmapPlayerComponent.setPropertyReference("keyboardMove",bitmapPlayerComponent._componentName);
 			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
+			bitmapPlayerComponent.setPropertyReference("mouseMove",bitmapPlayerComponent._componentName);
 			bitmapPlayerComponent.setCollision(true);
-			bitmapPlayerComponent.moveTo(50,200);
+			bitmapPlayerComponent.moveTo(0,200);
 			bitmapPlayerComponent.setAnim("WALK",2);
 			bitmapPlayerComponent.setAnim("WALK_UP",13);
 			bitmapPlayerComponent.setAnim("WALK_DOWN",6);
@@ -74,10 +77,24 @@ package script.game{
 			bitmapPlayerComponent.setAnim("SIT",5);
 			bitmapPlayerComponent.setAnim("STATIC_DOWN",4);
 			bitmapPlayerComponent.setAnim("STATIC_UP",11);
+			var ennemyPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myEnnemyPlayerComponent");
+			ennemyPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
+			ennemyPlayerComponent.setPropertyReference("AI",ennemyPlayerComponent._componentName);
+			aiComponent.setAI(ennemyPlayerComponent,"follower",bitmapPlayerComponent);
+			ennemyPlayerComponent.moveTo(100,200);
+			ennemyPlayerComponent.setAnim("WALK",2);
+			ennemyPlayerComponent.setAnim("WALK_UP",13);
+			ennemyPlayerComponent.setAnim("WALK_DOWN",6);
+			ennemyPlayerComponent.setAnim("ATTACK",1);
+			ennemyPlayerComponent.setAnim("JUMP",8);
+			ennemyPlayerComponent.setAnim("JUMP_DOWN",10);
+			ennemyPlayerComponent.setAnim("SIT",5);
+			ennemyPlayerComponent.setAnim("STATIC_DOWN",4);
+			ennemyPlayerComponent.setAnim("STATIC_UP",11);
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
 			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
-			backgroundComponent.setScrolling(30,5);
+			backgroundComponent.setScrolling(30,3);
 			backgroundComponent.setScrollingTarget(bitmapPlayerComponent);
 			backgroundComponent.moveTo(0,90);
 			/*var backgroundObjectComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBackgroundObjectComponent");
@@ -110,6 +127,7 @@ package script.game{
 			keyboardInputComponent.useZQSD();//AZERTY
 			//keyboardInputComponent.useWASD();//QWERTY
 			keyboardInputComponent.useOKLM();
+			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
 			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
 			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
 			chronoComponent.restart(59);
@@ -117,7 +135,7 @@ package script.game{
 			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
 			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
 			gamePadComponent.moveTo(100,100);
-			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.getComponent("GameEntity","myBitmapPlayerComponent");
+			//var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.getComponent("GameEntity","myBitmapPlayerComponent");
 			//var shapeCollisionComponent:ShapeCollisionComponent=_entityManager.addComponent("GameEntity","ShapeCollisionComponent","myShapeCollisionComponent");
 			//shapeCollisionComponent.setClip(bitmapPlayerComponent,backgroundObjectComponent);
 		}
@@ -126,6 +144,7 @@ package script.game{
 			evt.target.removeEventListener(Event.COMPLETE,onChronoComplete);
 			_entityManager.removeComponent("GameEntity","myBackgroundComponent");
 			_entityManager.removeComponent("GameEntity","myBitmapPlayerComponent");
+			_entityManager.removeComponent("GameEntity","myEnnemyPlayerComponent");
 			_entityManager.removeComponent("GameEntity","myKeyInputComponent");
 			_entityManager.removeComponent("GameEntity","mySoundComponent");
 			try {

@@ -66,6 +66,7 @@ package framework.core.architecture.component{
 		}
 		//------ Update Dir  ------------------------------------
 		private function updateDir(keyboard_gamePad:Object,component:*):void {
+			component._spatial_destination=null;
 			if (_mode=="2Dir") {
 				twoDirMove(keyboard_gamePad,component);
 			} else if (_mode=="4Dir") {
@@ -81,7 +82,7 @@ package framework.core.architecture.component{
 			} else if (keyboard_gamePad.left.isDown) {
 				component._spatial_dir.x=-1;
 			}
-			if (! keyboard_gamePad.right.isDown&&! keyboard_gamePad.left.isDown) {
+			if (! keyboard_gamePad.right.isDown&&! keyboard_gamePad.left.isDown && component._spatial_destination==null ) {
 				component._spatial_dir.x=0;
 			}
 		}
@@ -107,7 +108,7 @@ package framework.core.architecture.component{
 				component._spatial_dir.y=-1;
 			} else if (keyboard_gamePad.down.isDown ) {
 				component._spatial_dir.y=1;
-			} else {
+			} else if(component._spatial_destination==null){
 				component._spatial_dir.x=0;
 				component._spatial_dir.y=0;
 			}
@@ -126,7 +127,7 @@ package framework.core.architecture.component{
 			} else if (keyboard_gamePad.down.isDown) {
 				component._spatial_dir.x=-1;
 				component._spatial_dir.y=1;
-			} else {
+			} else if(component._spatial_destination==null){
 				component._spatial_dir.x=0;
 				component._spatial_dir.y=0;
 			}

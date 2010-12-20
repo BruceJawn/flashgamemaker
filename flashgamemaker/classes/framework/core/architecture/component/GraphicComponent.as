@@ -49,6 +49,7 @@ package framework.core.architecture.component{
 		public var _render_alpha:Number=1;
 		//Spatial properties
 		public var _spatial_position:IsoPoint=null;
+		public var _spatial_destination:IsoPoint=null;
 		public var _spatial_dir:IsoPoint=null;
 		public var _spatial_speed:IsoPoint=null;// xSpeed, ySpeed and zSpeed
 		public var _spatial_rotation:Number=0;

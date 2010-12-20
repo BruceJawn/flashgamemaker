@@ -65,6 +65,9 @@ package framework.core.architecture.component{
 		public var _health_life:Number=10;
 		public var _health_lifeMax:Number=10;
 		public var _health_hit:Number=0;
+		//AI properties
+		public var _ai_behaviour:String= null;
+		public var _ai_target:*= null;
 
 		public function PlayerComponent(componentName:String,componentOwner:IEntity) {
 			super(componentName,componentOwner);
