@@ -25,6 +25,8 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.*;
 	import framework.core.system.MouseManager;
 	import framework.core.system.IMouseManager;
+	import framework.core.system.SoundManager;
+	import framework.core.system.ISoundManager;
 
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
@@ -33,10 +35,12 @@ package framework.core.architecture.component{
 	* @ purpose: An entity is an object wich represents something in the game such as player or map. 
 	* In FGM an entity is an empty container manager by the EntityManager.
 	*/
-	public class MouseInputComponent extends Component {
+	public class MouseInputComponent extends GraphicComponent {
 
 		private var _mouseManager:IMouseManager=null;
 		private var _mouse_object:Object = null;
+		private var _soundManager:ISoundManager=null;
+		
 
 		public function MouseInputComponent(componentName:String, componentOwner:IEntity) {
 			super(componentName,componentOwner);
@@ -47,33 +51,36 @@ package framework.core.architecture.component{
 		private function initVar():void {
 			_mouseManager=MouseManager.getInstance();
 			_mouseManager.register(this);
+			_soundManager=SoundManager.getInstance();
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
+			super.initProperty();
 			registerProperty("mouseInput", _componentName);
 		}
 		//------ Init Listener ------------------------------------
 		private function initListener():void {
 			var dispatcher:EventDispatcher=_mouseManager.getDispatcher();
-			dispatcher.addEventListener(MouseEvent.CLICK, onMouseFire);
-			//dispatcher.addEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
+			//dispatcher.addEventListener(MouseEvent.CLICK, onMouseFire);
+			dispatcher.addEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
 			//dispatcher.addEventListener(MouseEvent.MOUSE_UP, onMouseFire);
-			dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
-			dispatcher.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
+			//dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
+			//dispatcher.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
 		}
 		//------ Remove Listener ------------------------------------
 		public function removeListener():void {
 			var dispatcher:EventDispatcher=_mouseManager.getDispatcher();
-			dispatcher.removeEventListener(MouseEvent.CLICK, onMouseFire);
+			//dispatcher.removeEventListener(MouseEvent.CLICK, onMouseFire);
 			dispatcher.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
-			dispatcher.removeEventListener(MouseEvent.MOUSE_UP, onMouseFire);
-			dispatcher.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
-			dispatcher.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
+			//dispatcher.removeEventListener(MouseEvent.MOUSE_UP, onMouseFire);
+			//dispatcher.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
+			//dispatcher.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
 		}
 		//------ On Mouse Change ------------------------------------
 		private function onMouseFire(evt:MouseEvent):void {
 			getMouse();
 			update("mouseInput");
+			_soundManager.play("click","sound/click.mp3",0.1);
 		}
 		//------ Get Mouse ------------------------------------
 		private function getMouse():void {

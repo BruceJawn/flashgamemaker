@@ -82,6 +82,7 @@ package framework.core.system{
 			}
 			horizontalMove(component,component._spatial_dir.x*speedX);
 			verticalMove(component,component._spatial_dir.y*speedY);
+			checkDestination(component);
 			component.x=spatial_position.x+component._spatial_position.x;//Position of the entity + position of the component
 			component.y=spatial_position.y+component._spatial_position.y;//Position of the entity + position of the component
 			/*if (component._spatial_properties.iso) {
@@ -95,14 +96,26 @@ package framework.core.system{
 		}
 		//------- Horizontal Move -------------------------------
 		private function horizontalMove(component:*, value:Number):void {
-			if (! component._spatial_properties.collision||(component._spatial_position.x+value>_boundaries.x || component._spatial_dir.x>=0 )&& (component._spatial_position.x+component.width<_boundaries.x+_boundaries.width || component._spatial_dir.x<=0)) {
+			if (! component._spatial_properties.collision||(component.x+value>_boundaries.x || component._spatial_dir.x>=0 )&& (component.x+component.width<_boundaries.x+_boundaries.width || component._spatial_dir.x<=0)) {
 				component._spatial_position.x+=value;
 			}
 		}
 		//------- Vertical Move -------------------------------
 		private function verticalMove(component:*, value:Number):void {
-			if (! component._spatial_properties.collision||(component._spatial_position.y+value>_boundaries.y ||component._spatial_dir.y>=0 ) && (component._spatial_position.y+component.height<_boundaries.y+_boundaries.height || component._spatial_dir.y<=0)) {
+			if (! component._spatial_properties.collision||(component.y+value>_boundaries.y ||component._spatial_dir.y>=0 ) && (component.y+component.height<_boundaries.y+_boundaries.height || component._spatial_dir.y<=0)) {
 				component._spatial_position.y+=value;
+			}
+		}
+		//------- Check Destination -------------------------------
+		private function checkDestination(component:*):void {
+			if (component._spatial_destination){
+				if (Math.abs(component._spatial_position.x+component.width/2-component._spatial_destination.x)<10) {
+					component._spatial_dir.x=0;
+				}
+				if (Math.abs(component._spatial_position.y-component._spatial_destination.y)<10) {
+					component._spatial_dir.y=0;
+				}
+				isMoving(component);
 			}
 		}
 		//------- Iso Move -------------------------------
@@ -114,11 +127,12 @@ package framework.core.system{
 		}
 		//------ Is Moved  ------------------------------------
 		private function isMoving(component:*):Boolean {
-			if (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0||component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0) {
+			if (component.hasOwnProperty("_spatial_dir") && (component._spatial_dir.x!=0||component._spatial_dir.y!=0||component._spatial_dir.z!=0) || component.hasOwnProperty("_spatial_jump") && (component._spatial_jump.x!=0||component._spatial_jump.y!=0||component._spatial_jump.z!=0)) {
 				component._spatial_properties.isMoving=true;
 				return true;
 			}
 			component._spatial_properties.isMoving=false;
+			component._spatial_destination = null;
 			return false;
 		}
 		//------ Has Moved  ------------------------------------

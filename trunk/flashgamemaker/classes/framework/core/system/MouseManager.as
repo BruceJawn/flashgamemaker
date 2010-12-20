@@ -124,7 +124,7 @@ package framework.core.system{
 		//------ Update Mouse ------------------------------------
 		private function updateMouse(evt:MouseEvent):void {
 			_targetName= evt.target.name;
-			_target = evt.currentTarget;
+			_target = evt.target;
 			_type = evt.type;
 			_stageX = evt.stageX;
 			_stageY = evt.stageY;

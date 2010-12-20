@@ -108,17 +108,18 @@ package framework.core.architecture.component{
 						_rectangle.x=-(Math.abs(_rectangle.x)-_source.width);
 					}
 				}
-			}else if(_scrollingTarget!=null && _scrollingTarget.x+_scrollingTarget.width>=_rectangle.width/5*3) {//RIGHT
+			}else if(_scrollingTarget!=null && _scrollingTarget.x+_scrollingTarget.width/2+_offset>=_rectangle.width/5*3 && _scrollingTarget._spatial_dir.x>0) {//RIGHT
 				if (_rectangle.x+_offset+_rectangle.width<=_source.width) {
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x+_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
 					_rectangle.x+=_offset;
 				} 
-			} else if (_scrollingTarget!=null &&_scrollingTarget.x<=_rectangle.width/5*2) {//LEFT
+			} else if (_scrollingTarget!=null &&_scrollingTarget.x+_scrollingTarget.width/2-_offset<=_rectangle.width/5*2 && _scrollingTarget._spatial_dir.x<0) {//LEFT
 				if (_rectangle.x-_offset>=0) {
 					_bitmap.bitmapData.copyPixels(_source.bitmapData, new Rectangle(_rectangle.x-_offset, 0,_bitmap.width,_bitmap.height), new Point(0, 0),null,null,true);
 					_rectangle.x-=_offset;
 				}
 			}
+			
 		}
 		//----- Scroll  -----------------------------------
 		public function scroll(x:Number,y:Number):void {

@@ -40,6 +40,7 @@ package framework.core.architecture.component{
 			var keyboardInputComponent:KeyboardInputComponent;
 			var keyboardMoveComponent:KeyboardMoveComponent;
 			var mouseInputComponent:MouseInputComponent;
+			var mouseMoveComponent:MouseMoveComponent;
 			var serverInputComponent:ServerInputComponent;
 			var systemInfoComponent:SystemInfoComponent;
 			var renderComponent:RenderComponent;
