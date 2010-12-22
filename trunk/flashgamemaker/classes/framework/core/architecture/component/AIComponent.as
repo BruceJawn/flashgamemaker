@@ -64,32 +64,75 @@ package framework.core.architecture.component{
 		}
 		//-- Update Frame ---------------------------------------------------
 		private function updateAI(component:*):void {
-			if(component._ai_behaviour=="follower"&&  component._ai_target!=null){
-				follow(component);
+			if(_mode =="2Dir"){
+				if (component._ai_behaviour=="follow"&&component._ai_target!=null) {
+					follow2D(component);
+				} else if (component._ai_behaviour=="look"&&  component._ai_target!=null) {
+					look2D(component);
+				}else if (component._ai_behaviour=="attack"&&  component._ai_target!=null) {
+					attack2D(component);
+				}else if (component._ai_behaviour=="pursuit"&&  component._ai_target!=null) {
+					pursuit2D(component);
+				}
 			}
 		}
-		//-- Follow ---------------------------------------------------
-		private function look(component:*):void {
-			if(Math.abs(component.x-component._ai_target.x)>10){
-				if(component.x<component._ai_target.x){
-					component._spatial_dir.x=1;
-				}else if(component.x>component._ai_target.x){
-					component._spatial_dir.x=-1;
+		//-- Look ---------------------------------------------------
+		private function look2D(component:*):void {
+			if (! component._spatial_properties.isMoving) {
+				if (Math.abs(component.x-component._ai_target.x)>10) {
+					if (component.x<component._ai_target.x) {
+						component._spatial_dir.x=1;
+					} else if (component.x>component._ai_target.x) {
+						component._spatial_dir.x=-1;
+					}
 				}
 			}
 		}
 		//-- Follow ---------------------------------------------------
-		private function follow(component:*):void {
-			if(Math.abs(component.x-component._ai_target.x)>component.width/2){
-				if(component.x<component._ai_target.x){
+		private function follow2D(component:*):void {
+			if (Math.abs(component.x-component._ai_target.x)>component.width/2 && !component._selected) {
+				if (component.x<component._ai_target.x) {
 					component._spatial_dir.x=1;
-					component._spatial_properties.isMoving = true;
-				}else if(component.x>component._ai_target.x){
+					component._spatial_properties.isMoving=true;
+				} else if (component.x>component._ai_target.x) {
 					component._spatial_dir.x=-1;
-					component._spatial_properties.isMoving = true;
+					component._spatial_properties.isMoving=true;
 				}
-			}else{
-				component._spatial_properties.isMoving = false;
+			} else {
+				component._spatial_properties.isMoving=false;
+				component._spatial_dir.x=0;
+			}
+		}
+		//-- Attack ---------------------------------------------------
+		private function attack2D(component:*):void {
+			if (Math.abs(component.x-component._ai_target.x)<=component._range) {
+				if (component.x<component._ai_target.x) {
+					component._spatial_dir.x=1;
+				} else if (component.x>component._ai_target.x) {
+					component._spatial_dir.x=-1;
+				}
+				component._spatial_properties.isAttacking =true;
+			} else if(component._spatial_properties.isAttacking){
+				component._spatial_properties.isAttacking=false;
+			}
+		}
+		//-- Pursuit ---------------------------------------------------
+		private function pursuit2D(component:*):void {
+			if (Math.abs(component.x-component._ai_target.x)>component._range) {
+				if (component.x<component._ai_target.x) {
+					component._spatial_dir.x=1;
+					component._spatial_properties.isMoving=true;
+				} else if (component.x>component._ai_target.x) {
+					component._spatial_dir.x=-1;
+					component._spatial_properties.isMoving=true;
+				}
+				if(component._spatial_properties.isAttacking){
+					component._spatial_properties.isAttacking=false;
+				}
+			} else if (Math.abs(component.x-component._ai_target.x)<=component._range){
+					component._spatial_properties.isAttacking =true;
+					component._spatial_properties.isMoving=false;
+					component._spatial_dir.x=0;
 			}
 		}
 		//-- Set AI ---------------------------------------------------
@@ -99,7 +142,7 @@ package framework.core.architecture.component{
 		}
 		//-- Set Direction ---------------------------------------------------
 		public function setDirection(component:*):void {
-			
+
 		}
 
 		//------ Set Mode  ------------------------------------

@@ -62,6 +62,7 @@ package framework.core.architecture.component{
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
+				super.actualizeComponent(componentName,componentOwner,component);
 				swapFrame();
 		}
 		//----- Swap Frame -----------------------------------
