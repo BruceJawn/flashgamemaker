@@ -98,7 +98,7 @@ package framework.core.architecture.component{
 					component._spatial_dir.x=-1;
 					component._spatial_properties.isMoving=true;
 				}
-			} else {
+			} else if(!component._selected) {
 				component._spatial_properties.isMoving=false;
 				component._spatial_dir.x=0;
 			}
