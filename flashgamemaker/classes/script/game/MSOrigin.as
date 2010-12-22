@@ -65,9 +65,8 @@ package script.game{
 			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			bitmapPlayerComponent.setPropertyReference("keyboardMove",bitmapPlayerComponent._componentName);
 			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
-			bitmapPlayerComponent.setPropertyReference("mouseMove",bitmapPlayerComponent._componentName);
 			bitmapPlayerComponent.setCollision(true);
-			bitmapPlayerComponent.moveTo(0,200);
+			bitmapPlayerComponent.moveTo(50,200);
 			bitmapPlayerComponent.setAnim("WALK",2);
 			bitmapPlayerComponent.setAnim("WALK_UP",13);
 			bitmapPlayerComponent.setAnim("WALK_DOWN",6);
@@ -80,8 +79,9 @@ package script.game{
 			var ennemyPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myEnnemyPlayerComponent");
 			ennemyPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			ennemyPlayerComponent.setPropertyReference("AI",ennemyPlayerComponent._componentName);
-			aiComponent.setAI(ennemyPlayerComponent,"follower",bitmapPlayerComponent);
-			ennemyPlayerComponent.moveTo(100,200);
+			ennemyPlayerComponent.setPropertyReference("mouseMove",ennemyPlayerComponent._componentName);
+			aiComponent.setAI(ennemyPlayerComponent,"follow",bitmapPlayerComponent);
+			ennemyPlayerComponent.moveTo(-40,200);
 			ennemyPlayerComponent.setAnim("WALK",2);
 			ennemyPlayerComponent.setAnim("WALK_UP",13);
 			ennemyPlayerComponent.setAnim("WALK_DOWN",6);

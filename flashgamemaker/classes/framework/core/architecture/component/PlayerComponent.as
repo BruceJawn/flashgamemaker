@@ -33,6 +33,7 @@ package framework.core.architecture.component{
 	import flash.display.*;
 	import flash.utils.Dictionary;
 	import fl.controls.ColorPicker;
+	import flash.geom.Point;
 
 	/**
 	* Player Component
@@ -56,11 +57,16 @@ package framework.core.architecture.component{
 		public var _animation:Dictionary=null;
 		//Keyboard properties
 		public var _keyboard_gamePad:Object=null;
+		//MouseInput properties
+		public var _mouse_object:Object = null;
+		//MouseMouse properties
+		public var _selected:Boolean=false;
 		//Spatial properties
 		public var _spatial_jump:IsoPoint=null;
 		public var _spatial_jumpStart:IsoPoint=null;
 		//Attack properties
 		public var _attack:Number=1;
+		public var _range:Number=150;
 		//Health properties
 		public var _health_life:Number=10;
 		public var _health_lifeMax:Number=10;

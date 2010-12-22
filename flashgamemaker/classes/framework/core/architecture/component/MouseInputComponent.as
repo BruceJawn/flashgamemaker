@@ -64,7 +64,7 @@ package framework.core.architecture.component{
 			//dispatcher.addEventListener(MouseEvent.CLICK, onMouseFire);
 			dispatcher.addEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
 			//dispatcher.addEventListener(MouseEvent.MOUSE_UP, onMouseFire);
-			//dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
+			dispatcher.addEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
 			//dispatcher.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
 		}
 		//------ Remove Listener ------------------------------------
@@ -73,14 +73,16 @@ package framework.core.architecture.component{
 			//dispatcher.removeEventListener(MouseEvent.CLICK, onMouseFire);
 			dispatcher.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseFire);
 			//dispatcher.removeEventListener(MouseEvent.MOUSE_UP, onMouseFire);
-			//dispatcher.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
+			dispatcher.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseFire);
 			//dispatcher.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseFire);
 		}
 		//------ On Mouse Change ------------------------------------
 		private function onMouseFire(evt:MouseEvent):void {
 			getMouse();
 			update("mouseInput");
-			_soundManager.play("click","sound/click.mp3",0.1);
+			if(evt.type=="mouseDown"){
+				_soundManager.play("click","sound/click.mp3",0.1);
+			}
 		}
 		//------ Get Mouse ------------------------------------
 		private function getMouse():void {

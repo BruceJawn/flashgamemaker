@@ -96,13 +96,13 @@ package framework.core.system{
 		}
 		//------- Horizontal Move -------------------------------
 		private function horizontalMove(component:*, value:Number):void {
-			if (! component._spatial_properties.collision||(component.x+value>_boundaries.x || component._spatial_dir.x>=0 )&& (component.x+component.width<_boundaries.x+_boundaries.width || component._spatial_dir.x<=0)) {
+			if (! component._spatial_properties.collision||(component._spatial_position.x+value>_boundaries.x || component._spatial_dir.x>=0 )&& (component._spatial_position.x+component.width<_boundaries.x+_boundaries.width || component._spatial_dir.x<=0)) {
 				component._spatial_position.x+=value;
 			}
 		}
 		//------- Vertical Move -------------------------------
 		private function verticalMove(component:*, value:Number):void {
-			if (! component._spatial_properties.collision||(component.y+value>_boundaries.y ||component._spatial_dir.y>=0 ) && (component.y+component.height<_boundaries.y+_boundaries.height || component._spatial_dir.y<=0)) {
+			if (! component._spatial_properties.collision||(component._spatial_position.y+value>_boundaries.y ||component._spatial_dir.y>=0 ) && (component._spatial_position.y+component.height<_boundaries.y+_boundaries.height || component._spatial_dir.y<=0)) {
 				component._spatial_position.y+=value;
 			}
 		}
