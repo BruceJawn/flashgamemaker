@@ -81,17 +81,17 @@ package framework.core.architecture.component{
 				component._graphic.filters=[glow];
 			} else if (_mouse_object.type=="mouseMove" && !component._selected && component._graphic.filters.length>0 && !component._graphic.hitTestPoint(_mouse_object.stageX,_mouse_object.stageY)) {
 				component._graphic.filters=[];
-			} else if (_mouse_object.type=="mouseDown" && component._graphic.hitTestPoint(_mouse_object.stageX,_mouse_object.stageY)) {
+			} else if (_mouse_object.type=="mouseDown" && component._selected && component._graphic.hitTestPoint(_mouse_object.stageX,_mouse_object.stageY)) {
+				component._graphic.filters=[];
+				component._selected=false;
+			}else if (_mouse_object.type=="mouseDown" && component._graphic.hitTestPoint(_mouse_object.stageX,_mouse_object.stageY)) {
 				glow.color=0x990000;
 				glow.alpha=1;
 				glow.blurX=10;
 				glow.blurY=10;
 				component._selected=true;
 				component._graphic.filters=[glow];
-			} else if (_mouse_object.type=="click" && component._selected && !component._graphic.hitTestPoint(_mouse_object.stageX,_mouse_object.stageY)) {
-				component._graphic.filters=[];
-				component._selected=false;
-			}
+			} 
 		}
 		//------ 2 Direction Move ------------------------------------
 		private function twoDirMove(component:*):void {

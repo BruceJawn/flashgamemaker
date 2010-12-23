@@ -147,10 +147,6 @@ package script.game{
 			_entityManager.removeComponent("GameEntity","myEnnemyPlayerComponent");
 			_entityManager.removeComponent("GameEntity","myKeyInputComponent");
 			_entityManager.removeComponent("GameEntity","mySoundComponent");
-			try {
-				_entityManager.removeComponent("GameEntity","myRPGTextComponent");
-			} catch (e:Error) {
-			}
 			var gameOver:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myGOGraphicComponent");
 			gameOver.loadGraphic("texture/framework/game/interface/MSGameOver.swf", "GameOver");
 			gameOver.addEventListener(Event.COMPLETE,onGameOverComplete);
