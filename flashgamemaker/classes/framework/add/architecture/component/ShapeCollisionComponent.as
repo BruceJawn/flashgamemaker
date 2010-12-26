@@ -74,7 +74,6 @@ package framework.add.architecture.component{
 			if (_clip1!=null&&_clip2!=null) {
 				_drawin.graphics.clear();
 				_collisionRect=CollisionDetection.CheckCollision(_clip1,_clip2);
-				//trace(collisionRect);
 				if (_collisionRect) {
 					_drawin.graphics.beginFill(0x00FF00,20);
 					_drawin.graphics.lineStyle(0,0x00FF00,40);

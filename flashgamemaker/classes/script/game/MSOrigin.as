@@ -27,6 +27,7 @@ package script.game{
 	import framework.add.architecture.component.*;
 
 	import flash.events.*;
+	import flash.geom.Point;
 	/**
 	* Script Class
 	*
@@ -111,6 +112,9 @@ package script.game{
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
 			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
 			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");
+			keyboardFireComponent.loadGraphic("texture/framework/game/fx/bullet.png", "Bullet");
+			keyboardFireComponent.setBullets(60,20,10,20,new Point(10,10),60);
+			keyboardFireComponent.addPlayer(ennemyPlayerComponent);
 			var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
 			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);
 			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");

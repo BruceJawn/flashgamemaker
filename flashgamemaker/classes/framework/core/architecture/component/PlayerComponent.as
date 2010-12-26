@@ -179,11 +179,12 @@ package framework.core.architecture.component{
 		}
 		//------ Get Facing Direction ------------------------------------
 		public function getFacingDirection():String {
-			if (Math.round(_graphic_frame/_graphic_numFrame)==1) {
+			var dir:int=Math.floor((_graphic_frame%(_graphic_numFrame*_graphic_numFrame)-1)/_graphic_numFrame)+1;
+			if (dir==1) {
 				return "RIGHT";
-			} else if (Math.round(_graphic_frame/_graphic_numFrame)==2) {
+			} else if (dir==2) {
 				return "DOWN";
-			} else if (Math.round(_graphic_frame/_graphic_numFrame)==3) {
+			} else if (dir==3) {
 				return "LEFT";
 			}
 			return "UP";

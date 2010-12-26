@@ -48,7 +48,7 @@ package utils.skinner{
 			var bounds2:Object=p_clip2.getBounds(p_clip2.stage);
 			// rule out anything that we know can't collide:
 			if (((bounds1.right < bounds2.left) || (bounds2.right < bounds1.left)) || ((bounds1.bottom < bounds2.top) || (bounds2.bottom < bounds1.top)) ) {
-				trace("Error");
+				//trace("Error");
 				return null;
 			}
 
@@ -60,9 +60,12 @@ package utils.skinner{
 			bounds.top=Math.max(bounds1.top,bounds2.top);
 			bounds.bottom=Math.min(bounds1.bottom,bounds2.bottom);
 			
-			// set up the image to use:
-			var img:BitmapData=new BitmapData(bounds.right-bounds.left,bounds.bottom-bounds.top,false);
-
+			try{
+				// set up the image to use:
+				var img:BitmapData=new BitmapData(bounds.right-bounds.left,bounds.bottom-bounds.top,false);
+			}catch(e:Error){
+				return null;
+			}
 			// draw in the first image:
 			var mat:Matrix=p_clip1.transform.concatenatedMatrix;
 			mat.tx-=bounds.left;
