@@ -56,6 +56,7 @@ package script.game{
 			//keyboardInputComponent.useWASD();//QWERTY
 			keyboardInputComponent.useOKLM();
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
+			keyboardMoveComponent.setMode("2Dir");
 			var keyboardRotationComponent:KeyboardRotationComponent=_entityManager.addComponent("GameEntity","KeyboardRotationComponent","myKeyboardRotationComponent");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
 			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");

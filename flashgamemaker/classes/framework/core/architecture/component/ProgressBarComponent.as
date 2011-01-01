@@ -58,14 +58,14 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizeComponent(componentName:String,componentOwner:String,component:*):void {
 			if (_listeners[component]==null) {
-				component.addEventListener(ProgressEvent.PROGRESS, onGraphicProgressProgress);
+				component.addEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
 				var progressBar:ProgressBar=createProgressBar(100,16,0,0,0);
 				_listeners[component]=progressBar;
 				component.addChild(progressBar);
 			}
 		}
 		//------ On Graphic Progress Progress ------------------------------------
-		private function onGraphicProgressProgress( evt:ProgressEvent ):void {
+		private function onGraphicLoadingProgress( evt:ProgressEvent ):void {
 			var bytesLoaded:Number=evt.bytesLoaded;
 			var bytesTotal:Number=evt.bytesTotal;
 			var component:* =evt.target;
@@ -73,8 +73,8 @@ package framework.core.architecture.component{
 			progressBar.maximum = bytesTotal;
 			progressBar.setProgress(bytesLoaded,bytesTotal);
 			if(bytesLoaded==bytesTotal){
-				component.removeEventListener(ProgressEvent.PROGRESS, onGraphicProgressProgress);
-				component.removeChild(progressBar);
+				evt.target.removeEventListener(ProgressEvent.PROGRESS, onGraphicLoadingProgress);
+				evt.target.removeChild(progressBar);
 			}
 		}
 		//------ createProgressBar ------------------------------------

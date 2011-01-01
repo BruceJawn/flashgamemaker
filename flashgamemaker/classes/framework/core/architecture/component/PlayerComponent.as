@@ -55,6 +55,7 @@ package framework.core.architecture.component{
 		public var _graphic_numFrame:int=4;
 		//Animation properties
 		public var _animation:Dictionary=null;
+		public var _mode:String="8Dir";
 		//Keyboard properties
 		public var _keyboard_gamePad:Object=null;
 		//MouseInput properties
@@ -206,6 +207,10 @@ package framework.core.architecture.component{
 		//------ Set Collision  ------------------------------------
 		public function setCollision(collision:Boolean):void {
 			_spatial_properties.collision=collision;
+		}
+		//------ Set Num Frame ------------------------------------
+		public function setNumFrame(numFrame:int):void {
+			_graphic_numFrame=numFrame;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

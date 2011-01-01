@@ -27,5 +27,12 @@
 <bebeVisage>
 	<path>texture/framework/game/charset/bladesquad/visageClip.swf</path>
 	</bebeVisage>
+<bebeHair>
+	<path>texture/framework/game/charset/bladesquad/hairClip.swf</path>
+	</bebeHair>
+<bebeAccessory>
+	<path>texture/framework/game/charset/bladesquad/accessoryClip.swf</path>
+	</bebeAccessory>
+
 
 </Texture >

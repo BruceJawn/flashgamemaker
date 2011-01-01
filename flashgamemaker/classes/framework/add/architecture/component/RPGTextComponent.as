@@ -54,6 +54,7 @@ package framework.add.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
+			setPropertyReference("progressBar",_componentName);
 		}
 		//------Set Sequence -------------------------------------
 		public function setSequence(sequence:String):void {

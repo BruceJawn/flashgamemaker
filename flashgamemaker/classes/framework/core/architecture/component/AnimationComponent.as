@@ -81,14 +81,35 @@ package framework.core.architecture.component{
 			if (_mode=="2Dir"&&spatial_dir.x==0&&spatial_dir.y!=0) {
 				return graphic_frame;
 			}
-			if ((spatial_dir.x>0 && spatial_dir.y==0 || spatial_dir.x>0 && spatial_dir.y>0) && graphic_frame%totalFrame>graphic_numFrame) {//Right
-				graphic_frame=1;
-			} else if ((spatial_dir.x<0 && spatial_dir.y==0 || spatial_dir.x<0 && spatial_dir.y<0)&& (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3 )) {//Left
-				graphic_frame=graphic_numFrame*2+1;
-			} else if ((spatial_dir.y>0 && spatial_dir.x==0 || spatial_dir.x<0 && spatial_dir.y>0) && (graphic_frame%totalFrame<=graphic_numFrame||graphic_frame%totalFrame>graphic_numFrame*2)) {//Down
-				graphic_frame=graphic_numFrame+1;
-			} else if ((spatial_dir.y<0 && spatial_dir.x==0 || spatial_dir.x>0 && spatial_dir.y<0)  && graphic_frame%totalFrame<=graphic_numFrame*3) {//Up
-				graphic_frame=graphic_numFrame*3+1;
+			if (_mode=="8Dir"){
+				if (spatial_dir.x>0 && spatial_dir.y==0  && (graphic_frame%totalFrame<=graphic_numFrame*4 || graphic_frame%totalFrame>graphic_numFrame*5)) {//Right
+					graphic_frame=graphic_numFrame*4+1;
+				} else if (spatial_dir.x<0 && spatial_dir.y==0 && (graphic_frame%totalFrame<=graphic_numFrame*6||graphic_frame%totalFrame>graphic_numFrame*7 )) {//Left
+					graphic_frame=graphic_numFrame*6+1;
+				} else if (spatial_dir.y>0 && spatial_dir.x==0 && (graphic_frame%totalFrame<=graphic_numFrame*5||graphic_frame%totalFrame>graphic_numFrame*6)) {//Down
+					graphic_frame=graphic_numFrame*5+1;
+				} else if (spatial_dir.y<0 && spatial_dir.x==0  && graphic_frame%totalFrame<=graphic_numFrame*7) {//Up
+					graphic_frame=graphic_numFrame*7+1;
+				}else if (spatial_dir.x>0 && spatial_dir.y>0 && graphic_frame%totalFrame>graphic_numFrame) {//Right
+					graphic_frame=1;
+				} else if (spatial_dir.x<0 && spatial_dir.y<0 && (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3 )) {//Left
+					graphic_frame=graphic_numFrame*2+1;
+				} else if (spatial_dir.x<0 && spatial_dir.y>0 && (graphic_frame%totalFrame<=graphic_numFrame||graphic_frame%totalFrame>graphic_numFrame*2)) {//Down
+					graphic_frame=graphic_numFrame+1;
+				} else if (spatial_dir.x>0 && spatial_dir.y<0 && (graphic_frame%totalFrame<=graphic_numFrame*3 || graphic_frame%totalFrame>graphic_numFrame*4)) {//Up
+					graphic_frame=graphic_numFrame*3+1;
+				}
+				trace("dirx "+spatial_dir.x,"diry "+spatial_dir.y,graphic_frame,graphic_frame%totalFrame);
+			}else{
+				if ((spatial_dir.x>0 && spatial_dir.y==0 || spatial_dir.x>0 && spatial_dir.y>0) && graphic_frame%totalFrame>graphic_numFrame) {//Right
+					graphic_frame=1;
+				} else if ((spatial_dir.x<0 && spatial_dir.y==0 || spatial_dir.x<0 && spatial_dir.y<0)&& (graphic_frame%totalFrame<=graphic_numFrame*2||graphic_frame%totalFrame>graphic_numFrame*3 )) {//Left
+					graphic_frame=graphic_numFrame*2+1;
+				} else if ((spatial_dir.y>0 && spatial_dir.x==0 || spatial_dir.x<0 && spatial_dir.y>0) && (graphic_frame%totalFrame<=graphic_numFrame||graphic_frame%totalFrame>graphic_numFrame*2)) {//Down
+					graphic_frame=graphic_numFrame+1;
+				} else if ((spatial_dir.y<0 && spatial_dir.x==0 || spatial_dir.x>0 && spatial_dir.y<0)  && graphic_frame%totalFrame<=graphic_numFrame*3) {//Up
+					graphic_frame=graphic_numFrame*3+1;
+				}
 			}
 			return graphic_frame;
 		}
@@ -164,7 +185,7 @@ package framework.core.architecture.component{
 		}
 		//------ Set Mode  ------------------------------------
 		public function setMode(mode:String):void {
-			if (! (mode=="2Dir" || mode=="4Dir"||mode=="4DirIso") ) {
+			if (! (mode=="2Dir" || mode=="4Dir"||mode=="4DirIso"||mode=="8Dir") ) {
 				throw new Error("Error KeyboardMoveComponent: direction must be 2Dir, 4Dir or 4dirIso");
 			}
 			_mode=mode;
