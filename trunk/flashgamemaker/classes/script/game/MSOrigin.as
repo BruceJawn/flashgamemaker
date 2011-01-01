@@ -63,9 +63,9 @@ package script.game{
 			var backgroundColorComponent:BackgroundColorComponent=_entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
 			backgroundColorComponent.changeColor("111111");
 			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
-			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			bitmapPlayerComponent.setPropertyReference("keyboardMove",bitmapPlayerComponent._componentName);
 			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
+			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			bitmapPlayerComponent.setCollision(true);
 			bitmapPlayerComponent.moveTo(50,200);
 			bitmapPlayerComponent.setAnim("WALK",2);
@@ -78,9 +78,9 @@ package script.game{
 			bitmapPlayerComponent.setAnim("STATIC_DOWN",4);
 			bitmapPlayerComponent.setAnim("STATIC_UP",11);
 			var ennemyPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myEnnemyPlayerComponent");
-			ennemyPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			ennemyPlayerComponent.setPropertyReference("AI",ennemyPlayerComponent._componentName);
 			ennemyPlayerComponent.setPropertyReference("mouseMove",ennemyPlayerComponent._componentName);
+			ennemyPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
 			aiComponent.setAI(ennemyPlayerComponent,"follow",bitmapPlayerComponent);
 			ennemyPlayerComponent.moveTo(-40,200);
 			ennemyPlayerComponent.setAnim("WALK",2);
@@ -93,8 +93,9 @@ package script.game{
 			ennemyPlayerComponent.setAnim("STATIC_DOWN",4);
 			ennemyPlayerComponent.setAnim("STATIC_UP",11);
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
-			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
+			backgroundComponent.setPropertyReference("progressBar",backgroundComponent._componentName);
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
+			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
 			backgroundComponent.setScrolling(30,3);
 			backgroundComponent.setScrollingTarget(bitmapPlayerComponent);
 			backgroundComponent.moveTo(0,90);
@@ -103,10 +104,11 @@ package script.game{
 			backgroundObjectComponent.moveTo(0,90);
 			*/
 			var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","mySTatutBarGraphicComponent");
+			statutBarComponent.setPropertyReference("progressBar",statutBarComponent._componentName);
 			statutBarComponent.loadGraphic("texture/framework/game/interface/MsOriginStatutBar.swf", "MsOriginStatutBar");
 			statutBarComponent.moveTo(0,310);
 			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
-			soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
+			//soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
 			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
 			soundComponent.moveTo(300,5);
 			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");

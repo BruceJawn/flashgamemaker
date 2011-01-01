@@ -91,28 +91,21 @@ package framework.core.architecture.component{
 		}
 		//------ Change Color ------------------------------------
 		public override function changeColor(hexColor:String):void {
-			var i:int=1;
-			while(i<_source.numChildren+1){
-				var source:MovieClip = _source[_name+i];
-				if(source!=null){
-					colorSourceSkin(source,hexColor);
-				}
-				i++;
-			}
+			changeClipColor(_source,hexColor,"skin");
 		}
-		//----- Color Source Skin -----------------------------------
-		private function colorSourceSkin(source:MovieClip, hexColor:String):void {
+		//----- Change Clip Color -----------------------------------
+		public function changeClipColor(source:MovieClip, hexColor:String,clipName:String="skin"):void {
 			var i:int=0;
 			while(i<source.numChildren){
 				if(source.getChildAt(i) is MovieClip){
 					var clip:MovieClip = source.getChildAt(i) as MovieClip;
-					if(clip.name.indexOf("skin")!=-1){
+					if(clip.name.indexOf(clipName)!=-1){
 						var colorTransform:ColorTransform =new ColorTransform();
 						colorTransform.color = uint("0x"+hexColor);
 						clip.transform.colorTransform=colorTransform;
 					}
-					if(clip.numChildren>1){
-						colorSourceSkin(clip,hexColor);
+					if(clip.numChildren>0){
+						changeClipColor(clip,hexColor,clipName);
 					}
 				}
 				i++;
@@ -132,7 +125,38 @@ package framework.core.architecture.component{
 						var SourceClass:Class = graphic.constructor;
 						var clip:MovieClip = new SourceClass();
 						if(offset==0 || (offset==2 && i%4<=2 && i%4!=0) || (offset==1 && i%4>2)){
+							clip.name = graphicName;
 							_source[_name+i][clipName].addChild(clip);
+						}
+					}
+					i++;
+				}
+			}
+		}
+		//------ Remove Graphic ------------------------------------
+		public function removeGraphicFromName(graphicName:String, clipName:String):void {
+			var i:int=0;
+			if(_graphic!=null && contains(_graphic)){
+				while(i<_source.numChildren){
+					if(_source[_name+i] is MovieClip && _source[_name+i][clipName]){
+						var clip:MovieClip = _source[_name+i][clipName].getChildByName(graphicName);
+						if(clip){
+							_source[_name+i][clipName].removeChild(clip);
+						}
+					}
+					i++;
+				}
+			}
+		}
+		//------ Clip With Name Go To And Stop ------------------------------------
+		public function clipWithNameGoTo(graphicName:String, clipName:String, frame:int):void {
+			var i:int=0;
+			if(_graphic!=null && contains(_graphic)){
+				while(i<_source.numChildren){
+					if(_source[_name+i] is MovieClip && _source[_name+i][clipName]){
+						var clip:MovieClip = _source[_name+i][clipName].getChildByName(graphicName);
+						if(clip){
+							clip.gotoAndStop(frame);
 						}
 					}
 					i++;

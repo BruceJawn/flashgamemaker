@@ -58,6 +58,11 @@ package framework.core.architecture.component{
 			addChild(_score);
 			updateText();
 		}
+		//------ Init Property  ------------------------------------
+		public override function initProperty():void {
+			super.initProperty();
+			setPropertyReference("progressBar",_componentName);
+		}
 		//------Set Format -------------------------------------
 		private function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
 			var textFormat:TextFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);

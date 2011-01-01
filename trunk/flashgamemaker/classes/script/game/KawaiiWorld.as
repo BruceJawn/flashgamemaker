@@ -29,6 +29,9 @@ package script.game{
 	import flash.events.*;
 	import flash.display.*;
 	import flash.geom.ColorTransform;
+	import flash.filters.GlowFilter;
+	import flash.filters.BitmapFilterQuality;
+
 	/**
 	* Script Class
 	*
@@ -112,57 +115,108 @@ package script.game{
 			customizeScreen.center();
 			customizeScreen._graphic.nameText.addEventListener(MouseEvent.CLICK, onTextClick);
 			customizeScreen._graphic.nextBt.addEventListener(MouseEvent.CLICK, onNextClick);
-			//customizeScreen._graphic.maleBt.addEventListener(MouseEvent.CLICK, onMaleClick);
-			//customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
+			customizeScreen._graphic.maleBt.addEventListener(MouseEvent.CLICK, onMaleClick);
+			customizeScreen._graphic.femaleBt.addEventListener(MouseEvent.CLICK, onFemaleClick);
 			customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			customizeScreen._graphic.customClip.skinButton.addEventListener(MouseEvent.CLICK, onSkinButtonClick);
+			customizeScreen._graphic.customClip.nappyButton.addEventListener(MouseEvent.CLICK, onNappyButtonClick);
+			customizeScreen._graphic.customClip.glovesButton.addEventListener(MouseEvent.CLICK, onGlovesButtonClick);
+			customizeScreen._graphic.customClip.shoesButton.addEventListener(MouseEvent.CLICK, onShoesButtonClick);
+			customizeScreen._graphic.customClip.hairButton.addEventListener(MouseEvent.CLICK, onHairButtonClick);
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","myBebeComponent");
 			swfPlayerComponent.addEventListener(Event.COMPLETE, onBebeComplete);
 			swfPlayerComponent.setGraphicFromName("bebeClip",2);
 			swfPlayerComponent.moveTo(250,300);
 			swfPlayerComponent.scale(2,2);
+			swfPlayerComponent.filters = [new GlowFilter(0, .75, 2, 2, 2, BitmapFilterQuality.LOW, false, false)];
+
 		}
 		//------ On Bebe Complete ------------------------------------
 		private function onBebeComplete(evt:Event):void {
 			evt.currentTarget.addGraphicFromName("bebeVisage", "Head",2);
+			evt.currentTarget.addGraphicFromName("bebeHair", "Head");
 		}
 		//------ On Male Click ------------------------------------
 		private function onMaleClick(evt:MouseEvent):void {
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
-			swfPlayerComponent._graphic.clip.Head.gotoAndStop(1);
+			swfPlayerComponent.clipWithNameGoTo("bebeVisage","Head",1);
 		}
 		//------ On Female Click ------------------------------------
 		private function onFemaleClick(evt:MouseEvent):void {
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
-			swfPlayerComponent._graphic.clip.Head.gotoAndStop(2);
+			swfPlayerComponent.clipWithNameGoTo("bebeVisage","Head",2);
 		}
 		//------ On Color Clip Click ------------------------------------
 		private function onColorClipClick(evt:MouseEvent):void {
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
-			var colorClip:MovieClip = customizeScreen._graphic.customClip.colorClip;
-			var colorBitmapData:BitmapData =new BitmapData(colorClip.width,colorClip.height);
-			colorBitmapData.draw(colorClip);
-			var hexColor:String=colorBitmapData.getPixel(colorClip.mouseX,colorClip.mouseY).toString(16);
-			colorSourceSkin(swfPlayerComponent._source,hexColor);
-			colorSourceSkin(swfPlayerComponent._graphic,hexColor);
-		}
-		//----- Color Source Skin -----------------------------------
-		private function colorSourceSkin(source:MovieClip, hexColor:String):void {
-			var i:int=0;
-			while(i<source.numChildren){
-				if(source.getChildAt(i) is MovieClip){
-					var clip:MovieClip = source.getChildAt(i) as MovieClip;
-					if(clip.name.indexOf("skin")!=-1){
-						var colorTransform:ColorTransform =new ColorTransform();
-						colorTransform.color = uint("0x"+hexColor);
-						clip.transform.colorTransform=colorTransform;
-					}
-					if(clip.numChildren>1){
-						colorSourceSkin(clip,hexColor);
-					}
+			if(customizeScreen._graphic.customClip.currentFrame==1){
+				var colorClip:MovieClip = customizeScreen._graphic.customClip.colorClip;
+				var colorBitmapData:BitmapData =new BitmapData(colorClip.width,colorClip.height);
+				colorBitmapData.draw(colorClip);
+				var hexColor:String=colorBitmapData.getPixel(colorClip.mouseX,colorClip.mouseY).toString(16);
+				swfPlayerComponent.changeClipColor(swfPlayerComponent._source,hexColor,"skin");
+				swfPlayerComponent.changeClipColor(swfPlayerComponent._graphic,hexColor,"skin");
+			}else{
+				colorClip=customizeScreen._graphic.customClip.colorPickerClip;
+				colorBitmapData=new BitmapData(colorClip.width,colorClip.height);
+				colorBitmapData.draw(colorClip);
+				hexColor=colorBitmapData.getPixel(colorClip.mouseX,colorClip.mouseY).toString(16);
+				if(customizeScreen._graphic.customClip.currentFrame==2){
+					var clipName:String="couche";
+				}else if(customizeScreen._graphic.customClip.currentFrame==3){
+					clipName="gant";
+				}else if(customizeScreen._graphic.customClip.currentFrame==4){
+					clipName="pied";
+				}else if(customizeScreen._graphic.customClip.currentFrame==5){
+					clipName="cheveux";
 				}
-				i++;
+				swfPlayerComponent.changeClipColor(swfPlayerComponent._source,hexColor,clipName);
+				swfPlayerComponent.changeClipColor(swfPlayerComponent._graphic,hexColor,clipName);
 			}
+		}
+		//------ On Skin Button Click ------------------------------------
+		private function onSkinButtonClick(evt:MouseEvent):void {
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.customClip.gotoAndStop(1);
+			if(!customizeScreen._graphic.customClip.colorClip.hasEventListener(MouseEvent.CLICK)){
+			   customizeScreen._graphic.customClip.colorClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			}
+		}
+		//------ On Skin Button Click ------------------------------------
+		private function onNappyButtonClick(evt:MouseEvent):void {
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.customClip.gotoAndStop(2);
+			if(!customizeScreen._graphic.customClip.colorPickerClip.hasEventListener(MouseEvent.CLICK)){
+			   customizeScreen._graphic.customClip.colorPickerClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			}
+		}
+		//------ On Skin Button Click ------------------------------------
+		private function onGlovesButtonClick(evt:MouseEvent):void {
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.customClip.gotoAndStop(3);
+			if(!customizeScreen._graphic.customClip.colorPickerClip.hasEventListener(MouseEvent.CLICK)){
+			   customizeScreen._graphic.customClip.colorPickerClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			}
+		}
+		//------ On Skin Button Click ------------------------------------
+		private function onShoesButtonClick(evt:MouseEvent):void {
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.customClip.gotoAndStop(4);
+			if(!customizeScreen._graphic.customClip.colorPickerClip.hasEventListener(MouseEvent.CLICK)){
+			   customizeScreen._graphic.customClip.colorPickerClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			  }
+		}
+		//------ On Skin Button Click ------------------------------------
+		private function onHairButtonClick(evt:MouseEvent):void {
+			var customizeScreen:GraphicComponent =_entityManager.getComponent("GameEntity","myCustomizeScreen");
+			customizeScreen._graphic.customClip.gotoAndStop(5);
+			if(!customizeScreen._graphic.customClip.colorPickerClip.hasEventListener(MouseEvent.CLICK)){
+			   customizeScreen._graphic.customClip.colorPickerClip.addEventListener(MouseEvent.CLICK, onColorClipClick);
+			  }
+			 customizeScreen._graphic.customClip.nextButton.addEventListener(MouseEvent.CLICK, onHairButtonNextClick);
+			 customizeScreen._graphic.customClip.prevButton.addEventListener(MouseEvent.CLICK, onHairButtonPrevClick);
+			
 		}
 		//------ On Next Click ------------------------------------
 		private function onNextClick(evt:MouseEvent):void {
@@ -186,7 +240,7 @@ package script.game{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
 			//keyboardMoveComponent.setMode("4DirIso");
 			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			animationComponent.setMode("4DirIso");
+			animationComponent.setMode("4Dir");
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(100,150);
@@ -204,6 +258,25 @@ package script.game{
 			tileMapEditorComponent.moveOption(100,260);
 			tileMapEditorComponent.movePanel(200,60);
 			FlashGameMaker.Focus();
+		}
+		//------ On Next Click ------------------------------------
+		private function onHairButtonNextClick(evt:MouseEvent):void {
+			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
+			var frame:int=swfPlayerComponent._source.clip1.Head.getChildByName("bebeHair").currentFrame;
+			var totalFrame:int=swfPlayerComponent._source.clip1.Head.getChildByName("bebeHair").totalFrames;
+			if(frame<totalFrame){
+				frame++;
+			}
+			swfPlayerComponent.clipWithNameGoTo("bebeHair","Head",frame);
+		}
+		//------ On Prev Click ------------------------------------
+		private function onHairButtonPrevClick(evt:MouseEvent):void {
+			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
+			var frame:int=swfPlayerComponent._source.clip1.Head.getChildByName("bebeHair").currentFrame;
+			if(frame>0){
+				frame--;
+			}
+			swfPlayerComponent.clipWithNameGoTo("bebeHair","Head",frame);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

@@ -80,9 +80,9 @@ package framework.core.architecture.component{
 		private function onMouseFire(evt:MouseEvent):void {
 			getMouse();
 			update("mouseInput");
-			if(evt.type=="mouseDown"){
+			/*if(evt.type=="mouseDown"){
 				_soundManager.play("click","sound/click.mp3",0.1);
-			}
+			}*/
 		}
 		//------ Get Mouse ------------------------------------
 		private function getMouse():void {

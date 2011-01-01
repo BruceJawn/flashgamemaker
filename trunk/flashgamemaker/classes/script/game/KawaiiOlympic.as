@@ -60,7 +60,7 @@ package script.game{
 			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
 			var swfPlayerComponent:SwfPlayerComponent=_entityManager.addComponent("GameEntity","SwfPlayerComponent","mySwfPlayerComponent");
-			swfPlayerComponent.loadPlayer("xml/framework/game/swfPlayerKawaiiIsland.xml", "mySwfPlayer", 2);
+			swfPlayerComponent.loadGraphic("texture/framework/game/charset/bladesquad/kidClip.swf","mySwfPlayer");
 			swfPlayerComponent.setCollision(true);
 			swfPlayerComponent.setPropertyReference("jaugeMove",swfPlayerComponent._componentName);
 			swfPlayerComponent.moveTo(50,300);
