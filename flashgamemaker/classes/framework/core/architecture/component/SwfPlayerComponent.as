@@ -124,9 +124,11 @@ package framework.core.architecture.component{
 					if(_source[_name+i] is MovieClip && _source[_name+i][clipName]){
 						var SourceClass:Class = graphic.constructor;
 						var clip:MovieClip = new SourceClass();
+						clip.name = graphicName;
 						if(offset==0 || (offset==2 && i%4<=2 && i%4!=0) || (offset==1 && i%4>2)){
-							clip.name = graphicName;
 							_source[_name+i][clipName].addChild(clip);
+						}else{
+							_source[_name+i][clipName].addChildAt(clip,1);
 						}
 					}
 					i++;
