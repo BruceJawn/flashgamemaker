@@ -243,6 +243,7 @@ package script.game{
 			animationComponent.setMode("4Dir");
 			var swfPlayerComponent:SwfPlayerComponent =_entityManager.getComponent("GameEntity","myBebeComponent");
 			swfPlayerComponent.setPropertyReference("keyboardMove",swfPlayerComponent._componentName);
+			swfPlayerComponent.setMask(60,80,490,335);
 			swfPlayerComponent.moveTo(100,150);
 			swfPlayerComponent.scale(1,1);
 			var tileMapComponent:TileMapComponent=_entityManager.addComponent("GameEntity","TileMapComponent","myTileMapComponent");
