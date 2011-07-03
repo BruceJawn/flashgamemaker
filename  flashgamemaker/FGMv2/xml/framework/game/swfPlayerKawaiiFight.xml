@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SwfPlayerTexture playerWidth="80" playerHeight="100">
+	<bebeClip>
+		<path>
+		../texture/framework/game/charset/bladesquad/bebeClip.swf
+		</path>
+	</bebeClip>
+	<bebeVisage>
+		<path>
+		../texture/framework/game/charset/bladesquad/visageClip.swf
+		</path>
+	</bebeVisage>
+</SwfPlayerTexture>
