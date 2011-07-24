@@ -40,6 +40,7 @@ package framework.core.architecture.component{
 			var animationComponent:AnimationComponent;
 			var bitmapAnimComponent:BitmapAnimComponent;
 			var cursorComponent:CursorComponent;
+			var chronoComponent:ChronoComponent;
 			var graphicComponent:GraphicComponent;
 			var gamePadComponent:GamePadComponent;
 			var groundSphereComponent:GroundSphereComponent;

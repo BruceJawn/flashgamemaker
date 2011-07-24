@@ -22,8 +22,10 @@
 */
 
 package framework.core.architecture.component{
-	import flash.utils.Dictionary;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Dictionary;
+	import flash.utils.Timer;
 	
 	import framework.core.architecture.entity.IEntity;
 	
@@ -36,123 +38,58 @@ package framework.core.architecture.component{
 	*/
 	public class TimerComponent extends Component {
 		
-		private var _currentCount:Number = 0;
-		private var _counterMax:Number = 10;
-		private var _timeline:Dictionary;
-		private var _isRunning:Boolean = false;
+		private var _timer:Timer;
+		private var _delay:Number = 100;
+		private var _timeline:Array;
 		
 		public function TimerComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
 			initVar($prop);
-			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar($prop:Object):void {
-			_timeline = new Dictionary();
+			if ($prop.delay )	_delay = $prop.delay;
+			_timer = new Timer(_delay,1);
+			_timeline = new Array();
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			registerProperty("timer");
 		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-			addEventListener(Event.ENTER_FRAME, onTimer);
-		}
-		//------ Remove Listener ------------------------------------
-		private function removeListener():void {
-			removeEventListener(Event.ENTER_FRAME, onTimer);
-		}
-		//------ Actualize Components  ------------------------------------
-		public override function actualizeProperty($propertyName:String):void {
-			var components:Vector.<Object> = _properties[$propertyName];
-			if ($propertyName == "timer" && components) {
-				for each (var object:Object in components){
-					actualizePropertyComponent($propertyName, object.component);
-				}
-			}
-		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
 			if ($propertyName == "timer") {
-				super.actualizePropertyComponent($propertyName,$component, $param);
 				addToTimeline($component, $param);
+				if(!_timer.running){
+					_timer.start();
+					_timer.addEventListener(TimerEvent.TIMER, onTick);
+				}
 			}
 		}
 		//------ Add To Timeline  ------------------------------------
 		private function addToTimeline($component:Component, $param:Object):void {
-			if(!_isRunning){
-				start();
+			if(!($param && $param.delay && $param.callback)) {
+				throw new Error("To be registered to TimerComponent you need a delay and callback parameter");
 			}
-			if (!$param || !($param.delay && $param.callback)) {
-				throw new Error("A delay and callback function are required as parameters to be registered by TimerComponent!!");
+			var delay:Number = Math.ceil($param.delay/_delay); // need to adjust
+			if(!_timeline[delay]){
+				_timeline[delay] = new Array();
 			}
-			if($param.delay==1){
-				throw new Error("A delay 1 will result in infinite loop!!");
-			}
-			if($param.delay > _counterMax){
-				_counterMax = $param.delay;
-			}
-			var minFactor:Number = minFactor($param.delay);
-			if(!_timeline[minFactor]){
-				_timeline[minFactor]= new Dictionary();
-			}
-			if(!_timeline[minFactor][$param.delay]){
-				_timeline[minFactor][$param.delay]= [$param.delay];
-			}
-			_timeline[minFactor][$param.delay].push({component:$component,callback:$param.callback});
+			_timeline.push({delay:delay,callback:$param.callback});
 		}
 		//------ On Tick ------------------------------------
-		private function onTimer($evt:Event):void {
-			_currentCount++;
-			if(_currentCount>1){
-				var minFactor:Number = minFactor(_currentCount);
-				if(_timeline[minFactor]){
-					for each (var array:Array in _timeline[minFactor]){
-						if(array[0]<=_currentCount && _currentCount%array[0]==0){
-							for each (var object:Object in array){
-								if(object.hasOwnProperty("callback")){
-									object.callback();
-								}
-							}
-						}
+		private function onTick($evt:TimerEvent):void {
+			/*for(var i:int = 0; i<_timeline.length;i++){
+				if(_timer.currentCount%i==0){
+					for each (var callback:Function in _timeline[_timer.currentCount]){
+						callback();
+					}
+					if(_timer.currentCount == _timeline.length){
+						_timer.reset();
+						_timer.start();
 					}
 				}
-				if(_currentCount>=_counterMax){
-					_currentCount=0;
-				}
-			}
-		}
-		//------ Min Factor ------------------------------------
-		private function minFactor(num:Number):Number {
-			var i:Number = 2;
-			while (num%i !=0){
-				i++
-			}
-			return i;
-		}
-		//------Stop ------------------------------------
-		public function start():void {
-			if(!_isRunning){
-				initListener();
-				_isRunning = true;
-			}
-		}
-		//------Stop ------------------------------------
-		public function stop():void {
-			if(!_isRunning){
-				removeListener();
-				_isRunning = false;
-			}
-		}
-		//------Reset ------------------------------------
-		public function reset():void {
-			stop()
-			_currentCount = 0;
-			start();
-		}
-		//------ On Timer Complete ------------------------------------
-		private function onTimerComplete():void {
-			trace("Timer Complete");
+			}*/
 		}
 	}
 }

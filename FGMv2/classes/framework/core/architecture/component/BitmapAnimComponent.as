@@ -30,7 +30,7 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.IEntity;
 	
 	import utils.bitmap.BitmapCell;
-	import utils.bitmap.BitmapCharSet;
+	import utils.bitmap.BitmapSet;
 	import utils.bitmap.BitmapGraph;
 	import utils.keyboard.KeyPad;
 	
@@ -61,7 +61,7 @@ package framework.core.architecture.component{
 		protected function updateComponent($component:Component):void {
 			//Check properties
 			if($component.hasOwnProperty("graphic") && $component.graphic is Bitmap) {
-				if($component.hasOwnProperty("bitmapCharSet") && $component.bitmapCharSet){
+				if($component.hasOwnProperty("bitmapSet") && $component.bitmapSet){
 					if($component.hasOwnProperty("keyPad") && $component.keyPad){
 						updateGraph($component)
 						updateFrame($component);
@@ -70,7 +70,7 @@ package framework.core.architecture.component{
 			}
 		}//------ Update Graph------------------------------------
 		protected function updateGraph($component:Component):void {
-			var charSet:BitmapCharSet = $component.bitmapCharSet;
+			var charSet:BitmapSet = $component.bitmapSet;
 			var graph:BitmapGraph = charSet.graph;
 			var keyPad:KeyPad = $component.keyPad as KeyPad;
 			if(keyPad.right.isDown){
@@ -85,7 +85,7 @@ package framework.core.architecture.component{
 		}
 		//------ Update Component------------------------------------
 		protected function updateFrame($component:Component):void {
-			var charSet:BitmapCharSet = $component.bitmapCharSet;
+			var charSet:BitmapSet = $component.bitmapSet;
 			var position:BitmapCell = charSet.position;
 			var source:Bitmap = charSet.bitmap;
 			var myBitmapData:BitmapData=new BitmapData(position.width,position.height,true,0);

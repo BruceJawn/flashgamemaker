@@ -44,7 +44,6 @@ package framework.core.architecture.component{
 		private var _longClickLatence:Number = 575;
 		private var _timer:Number = 0;
 		private var _interval:Number = 0;
-		private var _mouseListeners:Array = new Array();
 		
 		public function MouseInputComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true, $prop:Object = null) {
 			super($componentName, $entity, $singleton);
@@ -82,18 +81,10 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
 			if ($propertyName == "mouseInput") {
-				isListeningMouse($component, $param);
 				if(!_isListening){
 					_isListening=true;
 					initListener();
 				}
-			}
-		}
-		//------ On Dispatch ------------------------------------
-		private function isListeningMouse($component:Component, $param:Object):void {
-			var object:Object = {component:$component,param:$param};
-			if($param.isListeningMouse && _mouseListeners.indexOf(object)==-1){
-				_mouseListeners.push(object);
 			}
 		}
 		//------ On Dispatch ------------------------------------
