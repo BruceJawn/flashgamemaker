@@ -77,12 +77,20 @@ package framework.core.architecture.entity{
 			cursorComponent.loadGraphic($path);
 		}
 		//------- Create Time -------------------------------
-		public static function createTime($entityName:String,$delay:uint, $count:uint, $x:Number, $y:Number):void{
+		public static function createTime($entityName:String,$timerDelay:uint, $timeDelay:uint, $x:Number, $y:Number):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var renderComponent:RenderComponent=entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
-			var timerComponent:TimerComponent=entityManager.addComponentFromName($entityName,"TimerComponent","myTimerComponent", {delay:$delay}) as TimerComponent;
-			var timeComponent:TimeComponent=entityManager.addComponentFromName($entityName,"TimeComponent","myTimeComponent", {delay:$count}) as TimeComponent;
+			var timerComponent:TimerComponent=entityManager.addComponentFromName($entityName,"TimerComponent","myTimerComponent", {delay:$timerDelay}) as TimerComponent;
+			var timeComponent:TimeComponent=entityManager.addComponentFromName($entityName,"TimeComponent","myTimeComponent", {delay:$timeDelay}) as TimeComponent;
 			timeComponent.moveTo($x,$y);
+		}
+		//------- Create Chrono -------------------------------
+		public static function createChrono($entityName:String,$timerDelay:uint, $chronoDelay:uint, $x:Number, $y:Number):void{
+			var entity:IEntity=entityManager.createEntity($entityName);
+			var renderComponent:RenderComponent=entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
+			var timerComponent:TimerComponent=entityManager.addComponentFromName($entityName,"TimerComponent","myTimerComponent", {delay:$timerDelay}) as TimerComponent;
+			var chronoComponent:ChronoComponent=entityManager.addComponentFromName($entityName,"ChronoComponent","myChronoComponent",{delay:$chronoDelay}) as ChronoComponent;
+			chronoComponent.moveTo($x,$y);
 		}
 		//------- Create 2D Player -------------------------------
 		public static function create2DPlayer($entityName:String, $path:String,  $x:Number, $y:Number,  $speed:Point = null, $iso:Boolean=false, $horizontal:Boolean=true, $vertical:Boolean=true, $diagonal:Boolean=false):void{

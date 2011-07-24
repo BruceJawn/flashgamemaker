@@ -34,7 +34,7 @@ package framework.core.architecture.component{
 	
 	import framework.core.architecture.entity.IEntity;
 	
-	import utils.bitmap.BitmapCharSet;
+	import utils.bitmap.BitmapSet;
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
 	import utils.mouse.MousePad;
@@ -46,7 +46,7 @@ package framework.core.architecture.component{
 
 		protected var _keyPad:KeyPad=null;		//KeyboardInput property
 		protected var _mousePad:MousePad=null;	//MouseInput property
-		protected var _bitmapCharSet:BitmapCharSet = null	//BitmapAnim property
+		protected var _bitmapSet:BitmapSet = null	//BitmapAnim property
 		//AiInput properties
 		//ServerInput properties
 		//Player properties
@@ -82,7 +82,8 @@ package framework.core.architecture.component{
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		override protected function onGraphicLoadingComplete($graphic:DisplayObject):void {
-			_bitmapCharSet = new BitmapCharSet($graphic as Bitmap);
+			_bitmapSet = new BitmapSet($graphic as Bitmap);
+			_bitmapSet.graph.createSimpleGraph();
 			_graphic = new Bitmap;
 			FlashGameMaker.AddChild(_graphic,this);
 		}
@@ -105,9 +106,9 @@ package framework.core.architecture.component{
 		public function get mousePad():MousePad {
 			return _mousePad;
 		}
-		//------ Get BitmapCharSet ------------------------------------
-		public function get bitmapCharSet():BitmapCharSet {
-			return _bitmapCharSet;
+		//------ Get BitmapSet ------------------------------------
+		public function get bitmapSet():BitmapSet {
+			return _bitmapSet;
 		}
 		//------ Getter ------------------------------------
 		public function get speed():Point {

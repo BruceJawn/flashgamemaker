@@ -23,19 +23,18 @@
 package utils.bitmap{
 	import flash.display.Bitmap;
 
-	public class BitmapCharSet{
+	public class BitmapSet{
 		
 		public var bitmap:Bitmap = null;
 		public var graph:BitmapGraph;
 		
-		public function BitmapCharSet($bitmap:Bitmap){
+		public function BitmapSet($bitmap:Bitmap){
 			_initVar($bitmap);
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($bitmap:Bitmap):void {
 			bitmap = $bitmap;
 			graph = new BitmapGraph;
-			graph.createSimpleGraph();
 		}
 		//------ Get Cell ------------------------------------
 		public function get position():BitmapCell {

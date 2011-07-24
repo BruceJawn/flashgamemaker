@@ -56,7 +56,6 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar($prop:Object):void {
 			if($prop && $prop.delay)	_delay = $prop.delay;
-			
 			_virtualTime = new Object();
 			_realTime = new Object();
 			_virtualTimeTF = new TextField();
