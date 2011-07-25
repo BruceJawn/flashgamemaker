@@ -29,12 +29,16 @@ package utils.bitmap{
 		public var y:Number;
 		public var width:Number;
 		public var height:Number;
+		public var offsetX:Number;
+		public var offsetY:Number;
 		
-		public function BitmapCell($x:Number,$y:Number,$width:Number,$height:Number){
+		public function BitmapCell($x:Number,$y:Number,$width:Number,$height:Number, $offsetX:Number=0, $offsetY:Number=0){
 			x 		= $x;
 			y 		= $y;
 			width 	= $width;
 			height	= $height;
+			offsetX = $offsetX;
+			offsetY = $offsetY;
 		}
 	}
 }

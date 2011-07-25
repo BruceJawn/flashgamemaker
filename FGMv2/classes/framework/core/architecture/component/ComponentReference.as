@@ -41,6 +41,7 @@ package framework.core.architecture.component{
 			var bitmapAnimComponent:BitmapAnimComponent;
 			var cursorComponent:CursorComponent;
 			var chronoComponent:ChronoComponent;
+			var enterFrameComponent:EnterFrameComponent;
 			var graphicComponent:GraphicComponent;
 			var gamePadComponent:GamePadComponent;
 			var groundSphereComponent:GroundSphereComponent;

@@ -42,7 +42,7 @@ package framework.core.architecture.component{
 		public static var PRESS:int = 1;
 		//MouseInput properties
 		protected var _mousePad:MousePad = null;
-		protected var _type:int = PRESS;//PRESS or CLICK
+		protected var _type:int = CLICK;//PRESS or CLICK
 		
 		public function MouseMoveComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);

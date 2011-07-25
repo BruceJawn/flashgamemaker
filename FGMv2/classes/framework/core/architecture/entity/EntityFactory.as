@@ -85,11 +85,13 @@ package framework.core.architecture.entity{
 			timeComponent.moveTo($x,$y);
 		}
 		//------- Create Chrono -------------------------------
-		public static function createChrono($entityName:String,$timerDelay:uint, $chronoDelay:uint, $x:Number, $y:Number):void{
+		public static function createChrono($entityName:String, $path:String, $timerDelay:uint, $chronoDelay:uint, $x:Number, $y:Number):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var renderComponent:RenderComponent=entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
 			var timerComponent:TimerComponent=entityManager.addComponentFromName($entityName,"TimerComponent","myTimerComponent", {delay:$timerDelay}) as TimerComponent;
+			var bitmapAnimComponent:BitmapAnimComponent=entityManager.addComponentFromName($entityName,"BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var chronoComponent:ChronoComponent=entityManager.addComponentFromName($entityName,"ChronoComponent","myChronoComponent",{delay:$chronoDelay}) as ChronoComponent;
+			chronoComponent.loadGraphic($path);
 			chronoComponent.moveTo($x,$y);
 		}
 		//------- Create 2D Player -------------------------------
@@ -125,7 +127,7 @@ package framework.core.architecture.entity{
 		public static function createScrollingBitmap($entityName:String, $path:String,  $x:Number, $y:Number, $speed:Point=null, $autoScroll:Boolean=true, $loop:Boolean=true):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var renderComponent:RenderComponent=entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
-			var timerComponent:TimerComponent=entityManager.addComponentFromName($entityName,"TimerComponent","myTimerComponent") as TimerComponent;
+			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
 			var scrollingBitmapComponent:ScrollingBitmapComponent=entityManager.addComponentFromName($entityName,"ScrollingBitmapComponent","myScrollingBitmapComponent", {speed:$speed, autoScroll:$autoScroll, loop:$loop}) as ScrollingBitmapComponent;
 			scrollingBitmapComponent.loadGraphic($path);
 			scrollingBitmapComponent.moveTo($x,$y);

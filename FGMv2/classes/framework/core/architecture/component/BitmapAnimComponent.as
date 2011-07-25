@@ -30,8 +30,8 @@ package framework.core.architecture.component{
 	import framework.core.architecture.entity.IEntity;
 	
 	import utils.bitmap.BitmapCell;
-	import utils.bitmap.BitmapSet;
 	import utils.bitmap.BitmapGraph;
+	import utils.bitmap.BitmapSet;
 	import utils.keyboard.KeyPad;
 	
 	
@@ -60,27 +60,10 @@ package framework.core.architecture.component{
 		//------ Update Component------------------------------------
 		protected function updateComponent($component:Component):void {
 			//Check properties
-			if($component.hasOwnProperty("graphic") && $component.graphic is Bitmap) {
-				if($component.hasOwnProperty("bitmapSet") && $component.bitmapSet){
-					if($component.hasOwnProperty("keyPad") && $component.keyPad){
-						updateGraph($component)
-						updateFrame($component);
-					}
-				}
-			}
-		}//------ Update Graph------------------------------------
-		protected function updateGraph($component:Component):void {
-			var charSet:BitmapSet = $component.bitmapSet;
-			var graph:BitmapGraph = charSet.graph;
-			var keyPad:KeyPad = $component.keyPad as KeyPad;
-			if(keyPad.right.isDown){
-				graph.anim("RIGHT");
-			}else if(keyPad.left.isDown){
-				graph.anim("LEFT");
-			}else if(keyPad.up.isDown){
-				graph.anim("UP");
-			}else if(keyPad.down.isDown){
-				graph.anim("DOWN");
+			if($component.hasOwnProperty("graphic") && $component.graphic is Bitmap && $component.hasOwnProperty("bitmapSet") && $component.bitmapSet) {
+				updateFrame($component);
+			}else{
+				throw new Error("A bitmapSet and graphic must exist to be registered by BitmapAnimComponent");
 			}
 		}
 		//------ Update Component------------------------------------

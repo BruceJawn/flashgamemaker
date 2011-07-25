@@ -24,6 +24,7 @@
 
 package framework.core.system{
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -71,10 +72,10 @@ package framework.core.system{
 		//------ Load Graphic ------------------------------------
 		public function loadGraphic($path:String, $callBack:Object):void {
 			var loadedClass:Class = _graphics[$path];
-			/*if ( loadedClass && $callBack.hasOwnProperty("onComplete")) {
-				$callBack.onComplete(new loadedClass());
-			}
-			else */if (_graphicLoader && _graphicLoader.isLoading) {
+			if ( loadedClass && loadedClass is Bitmap && $callBack.hasOwnProperty("onComplete")) {
+				var clone:Bitmap = cloneBitmap(loadedClass as Bitmap) as Bitmap;
+				$callBack.onComplete(clone);
+			}else if (_graphicLoader && _graphicLoader.isLoading) {
 				_pool.push({path:$path, callBack:$callBack});
 			}else{
 				_loader = {path:$path, callBack:$callBack};
@@ -89,12 +90,9 @@ package framework.core.system{
 		private function onGraphicLoadingComplete( evt:Event ):void {
 			var callBack:Object = _loader.callBack;
 			var source:DisplayObject = evt.target.loader.content;
-			var loadedClass:Class = Object(source).constructor;
-			var clone:DisplayObject = new loadedClass() as DisplayObject;
 			if(callBack.hasOwnProperty("onComplete")){
-				callBack.onComplete(source);//Should be clone but not working
+				callBack.onComplete(source);
 			}
-			_graphics[_loader.path]= loadedClass;
 			if(_pool.length>0){
 				var loader:Object = _pool.pop();
 				loadGraphic(loader.path, loader.callBack);
@@ -113,6 +111,11 @@ package framework.core.system{
 			if(callBack.hasOwnProperty("onProgress")){
 				callBack.onProgress(evt);
 			}
+		}
+		//------ Clone Bitmap ------------------------------------
+		private function cloneBitmap( $source:Bitmap ):Bitmap {
+			var clone:Bitmap = new Bitmap($source.bitmapData.clone());
+			return clone;
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

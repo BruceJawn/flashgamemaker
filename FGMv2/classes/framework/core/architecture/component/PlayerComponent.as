@@ -34,6 +34,8 @@ package framework.core.architecture.component{
 	
 	import framework.core.architecture.entity.IEntity;
 	
+	import utils.bitmap.BitmapAnim;
+	import utils.bitmap.BitmapGraph;
 	import utils.bitmap.BitmapSet;
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
@@ -86,17 +88,34 @@ package framework.core.architecture.component{
 			_bitmapSet.graph.createSimpleGraph();
 			_graphic = new Bitmap;
 			FlashGameMaker.AddChild(_graphic,this);
+			actualize("bitmapAnim");
 		}
 		//------ On Key Fire ------------------------------------
 		protected function onKeyFire($keyPad:KeyPad):void {
 			_keyPad = $keyPad;
 			actualize("keyboardMove");
+			updateGraph();
 			actualize("bitmapAnim");
 		}
 		//------ On Mouse Fire ------------------------------------
 		protected function onMouseFire($mousePad:MousePad):void {
 			_mousePad = $mousePad;
 			actualize("mouseMove");
+		}
+		//------ Update Graph------------------------------------
+		protected function updateGraph():void {
+			var graph:BitmapGraph = _bitmapSet.graph;
+			if(_keyPad.right.isDown){
+				graph.anim("RIGHT");
+			}else if(_keyPad.left.isDown){
+				graph.anim("LEFT");
+			}else if(_keyPad.up.isDown){
+				graph.anim("UP");
+			}else if(_keyPad.down.isDown){
+				graph.anim("DOWN");
+			}/*else{
+				graph.anim("STAND");
+			}*/
 		}
 		//------ Get KeyPad ------------------------------------
 		public function get keyPad():Object {

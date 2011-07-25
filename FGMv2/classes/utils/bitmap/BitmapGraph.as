@@ -28,6 +28,7 @@ package utils.bitmap{
 		
 		public var animations:Dictionary;
 		public var position:BitmapCell;
+		public var currentAnim:BitmapAnim;
 		
 		public function BitmapGraph(){
 			_initVar();
@@ -37,24 +38,25 @@ package utils.bitmap{
 			animations = new Dictionary;
 		}
 		//------ Create Graph ------------------------------------
-		public function createGraph($name:String,$column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int ):void {
+		public function createGraph($name:String,$column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int ,$position:int=0):void {
 			if(animations[$name]){
 				throw new Error(" An animation already exist with the name: "+$name);
 			}
-			animations[$name] = createAnim($name,$column,$row,$cellWidth,$cellHeight,$numFrame);
+			animations[$name] = createAnim($name,$column,$row,$cellWidth,$cellHeight,$numFrame, $position);
 			position = animations[$name].getCell();
 		}
 		//------ Create Classic Graph ------------------------------------
 		public function createSimpleGraph():void {
-			animations["RIGHT"] = createAnim("RIGHT",0,1,64,64,4);
-			animations["DOWN"] = createAnim("DOWN",4,1,64,64,4);
-			animations["LEFT"] = createAnim("LEFT",8,1,64,64,4);
-			animations["UP"] = createAnim("UP",12,1,64,64,4);
-			animations["DEFAULT"] = animations["RIGHT"];
-			position = animations["DEFAULT"].getCell();
+			animations["STAND"] = createAnim("STAND",0,0,64,64,4,0,10);
+			animations["RIGHT"] = createAnim("RIGHT",0,1,64,64,4,0,10);
+			animations["DOWN"] = createAnim("DOWN",4,1,64,64,4,0,10);
+			animations["LEFT"] = createAnim("LEFT",8,1,64,64,4,0,10);
+			animations["UP"] = createAnim("UP",12,1,64,64,4,0,10);
+			currentAnim = animations["STAND"];
+			position = animations["STAND"].getCell();
 		}
 		//------ Create Classic Graph ------------------------------------
-		public function createAnim($name:String,  $column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int):BitmapAnim {
+		public function createAnim($name:String,  $column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int,$position:int=0,$fps:int=0):BitmapAnim {
 			var list:Vector.<BitmapCell> = new Vector.<BitmapCell>;
 			var cell:BitmapCell;
 			var x:Number, y:Number;
@@ -64,12 +66,22 @@ package utils.bitmap{
 				cell = new BitmapCell(x , y, $cellWidth, $cellHeight);
 				list.push(cell);
 			}
-			return new BitmapAnim($name, list);
+			return new BitmapAnim($name, list, $position, $fps);
 		}
 		//------ Create Classic Graph ------------------------------------
-		public function anim($anim:String):void{
+		public function anim($anim:String, $inversed:Boolean = false, $reset:Boolean=false):void{
 			if(animations[$anim]){
-				position = animations[$anim].next();
+				if(currentAnim != animations[$anim]){
+					currentAnim.position = 0;
+				}
+				if($reset){
+					animations[$anim].position=0;
+					position =animations[$anim].getCell();
+				}else if($inversed){
+					position = animations[$anim].prev();
+				}else{
+					position = animations[$anim].next();
+				}
 			}
 		}
 	}
