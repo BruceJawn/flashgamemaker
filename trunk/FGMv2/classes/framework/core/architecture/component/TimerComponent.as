@@ -40,7 +40,7 @@ package framework.core.architecture.component{
 		
 		private var _timer:Timer;
 		private var _delay:Number = 100;
-		private var _timeline:Array;
+		private var _timeline:Dictionary;
 		
 		public function TimerComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -49,8 +49,8 @@ package framework.core.architecture.component{
 		//------ Init Var ------------------------------------
 		private function initVar($prop:Object):void {
 			if ($prop.delay )	_delay = $prop.delay;
-			_timer = new Timer(_delay,1);
-			_timeline = new Array();
+			_timer = new Timer(_delay);
+			_timeline = new Dictionary();
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -68,28 +68,26 @@ package framework.core.architecture.component{
 		}
 		//------ Add To Timeline  ------------------------------------
 		private function addToTimeline($component:Component, $param:Object):void {
-			if(!($param && $param.delay && $param.callback)) {
+			if(!($param && $param.delay && $param)) {
 				throw new Error("To be registered to TimerComponent you need a delay and callback parameter");
 			}
 			var delay:Number = Math.ceil($param.delay/_delay); // need to adjust
 			if(!_timeline[delay]){
-				_timeline[delay] = new Array();
+				_timeline[delay] = {delay:delay, count:0, callbacks:new Array};
 			}
-			_timeline.push({delay:delay,callback:$param.callback});
+			_timeline[delay].callbacks.push($param.callback);
 		}
 		//------ On Tick ------------------------------------
 		private function onTick($evt:TimerEvent):void {
-			/*for(var i:int = 0; i<_timeline.length;i++){
-				if(_timer.currentCount%i==0){
-					for each (var callback:Function in _timeline[_timer.currentCount]){
+			for each (var object:Object in _timeline){
+				object.count++;
+				if(object.count==object.delay){
+					for each (var callback:Function in object.callbacks){
 						callback();
 					}
-					if(_timer.currentCount == _timeline.length){
-						_timer.reset();
-						_timer.start();
-					}
+					object.count=0;
 				}
-			}*/
+			}
 		}
 	}
 }

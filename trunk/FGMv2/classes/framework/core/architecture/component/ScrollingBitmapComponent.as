@@ -46,7 +46,6 @@ package framework.core.architecture.component{
 		private var _loop:Boolean=true;
 		private var _autoScroll:Boolean = true;
 		private var _speed:Point=new Point(1,0);
-		private var _isRunning:Boolean = false;
 		
 		public function ScrollingBitmapComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity);
@@ -59,14 +58,6 @@ package framework.core.architecture.component{
 			if($prop && $prop.loop)			_loop 		= $prop.loop;
 			_rectangle=new Rectangle(0,0,FlashGameMaker.width,FlashGameMaker.height);
 		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-			addEventListener(Event.ENTER_FRAME, onTick);
-		}
-		//------ Remove Listener ------------------------------------
-		private function removeListener():void {
-			removeEventListener(Event.ENTER_FRAME, onTick);
-		}
 		//------ On Graphic Loading Complete ------------------------------------
 		protected override function onGraphicLoadingComplete($graphic:DisplayObject):void {
 			super.onGraphicLoadingComplete($graphic);
@@ -74,11 +65,11 @@ package framework.core.architecture.component{
 			_bitmap.bitmapData.copyPixels(_graphic.bitmapData,_graphic.bitmapData.rect , new Point(0, 0),null,null,true);
 			addChild(_bitmap);
 			if(_autoScroll){
-				start();
+				registerPropertyReference("enterFrame", {callback:onTick});
 			}
 		}
 		//------ On Tick ------------------------------------
-		private function onTick($evt:Event):void {
+		private function onTick():void {
 			scrollBitmap();
 		}
 		//----- Scroll Bitmap  -----------------------------------
@@ -150,20 +141,6 @@ package framework.core.architecture.component{
 		//----- Set Loop -----------------------------------
 		public function set loop(loop:Boolean):void {
 			_loop=loop;
-		}
-		//------Stop ------------------------------------
-		public function start():void {
-			if(!_isRunning){
-				initListener();
-				_isRunning = true;
-			}
-		}
-		//------Stop ------------------------------------
-		public function stop():void {
-			if(_isRunning){
-				removeListener();
-				_isRunning = false;
-			}
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

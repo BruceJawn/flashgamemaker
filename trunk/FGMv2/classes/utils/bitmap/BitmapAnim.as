@@ -22,33 +22,72 @@
 */
 package utils.bitmap{
 	import flash.display.Bitmap;
+	
+	import utils.time.Time;
 
 	public class BitmapAnim{
 		
 		public var name:String;
-		public var list:Vector.<BitmapCell>;
-		public var position:int=0;
+		private var _list:Vector.<BitmapCell>;
+		private var _position:int=0;
+		private var _fps:int = 0;
+		private var _lastAnim:Number=0;
+		private var _endAnim:Boolean = false; //If true finish the animation (jump, slide, attack...)
 		
-		public function BitmapAnim($name:String, $list:Vector.<BitmapCell>){
-			_initVar($name,$list);
+		public function BitmapAnim($name:String, $list:Vector.<BitmapCell> , $position:int, $fps:int=0){
+			_initVar($name,$list,$position, $fps);
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar($name:String, $list:Vector.<BitmapCell>):void {
-			name = $name
-			list = $list;
+		private function _initVar($name:String, $list:Vector.<BitmapCell>,  $position:int, $fps:int):void {
+			name 		= $name
+			_list 		= $list;
+			_position 	= $position;
+			_fps 		= $fps
 		}
 		//------ Get Cell ------------------------------------
 		public function getCell():BitmapCell {
-			return list[position];
+			return _list[_position];
 		}
-		//------ Get Cell ------------------------------------
+		//------ Next ------------------------------------
 		public function next():BitmapCell {
-			if(position<list.length-1){
-				position++;
-			}else{
-				position=0;	
+			if(readyToAnim()){
+				if(_position<_list.length-1){
+					_position++;
+				}else{
+					_position=0;	
+				}
 			}
 			return getCell();
+		}
+		//------ Prev ------------------------------------
+		public function prev():BitmapCell {
+			if(readyToAnim()){
+				if(_position==0){
+					_position = _list.length-1;
+				}else{
+					_position--;	
+				}
+			}
+			return getCell();
+		}
+		//------ Next ------------------------------------
+		public function readyToAnim():Boolean {
+			if(_fps==0){
+				return true;
+			}
+			var delay:Number = Math.round(1000 / _fps);
+			if(Time.GetTime()-_lastAnim< delay)
+				return false
+			_lastAnim = Time.GetTime();
+			return true;
+		}
+		//------ GETTER ------------------------------------
+		public function get position():int {
+			return _position;	
+		}
+		//------ Setter ------------------------------------
+		public function set position($position:int):void {
+			_position=$position;	
 		}
 	}
 }
