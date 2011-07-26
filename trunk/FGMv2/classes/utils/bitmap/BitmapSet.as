@@ -22,18 +22,19 @@
 */
 package utils.bitmap{
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 
 	public class BitmapSet{
 		
 		public var bitmap:Bitmap = null;
 		public var graph:BitmapGraph;
 		
-		public function BitmapSet($bitmap:Bitmap){
+		public function BitmapSet($bitmap:DisplayObject){
 			_initVar($bitmap);
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar($bitmap:Bitmap):void {
-			bitmap = $bitmap;
+		protected function _initVar($bitmap:DisplayObject):void {
+			bitmap = $bitmap as Bitmap;
 			graph = new BitmapGraph;
 		}
 		//------ Get Cell ------------------------------------

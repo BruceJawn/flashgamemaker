@@ -71,10 +71,16 @@ package framework.core.architecture.component{
 			var charSet:BitmapSet = $component.bitmapSet;
 			var position:BitmapCell = charSet.position;
 			var source:Bitmap = charSet.bitmap;
-			var myBitmapData:BitmapData=new BitmapData(position.width,position.height,true,0);
-			myBitmapData.copyPixels(source.bitmapData, new Rectangle(position.x, position.y,position.width,position.height), new Point(0, 0),null,null,true);
-			if($component.graphic.bitmapData)	$component.graphic.bitmapData.dispose();//Free memory
-			$component.graphic.bitmapData=myBitmapData;
+			//if($component.graphic.bitmapData)	$component.graphic.bitmapData.dispose();//Free memory
+			if(source){
+				var myBitmapData:BitmapData=new BitmapData(position.width,position.height,true,0);
+				myBitmapData.lock();
+				myBitmapData.copyPixels(source.bitmapData, new Rectangle(position.x, position.y,position.width,position.height), new Point(0, 0),null,null,true);
+				myBitmapData.unlock();
+				$component.graphic.bitmapData=myBitmapData;
+			}else if(position.bitmapData){
+				$component.graphic.bitmapData=position.bitmapData.clone();
+			}
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
