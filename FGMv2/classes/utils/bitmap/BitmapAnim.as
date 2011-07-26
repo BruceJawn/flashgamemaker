@@ -34,7 +34,7 @@ package utils.bitmap{
 		private var _lastAnim:Number=0;
 		private var _endAnim:Boolean = false; //If true finish the animation (jump, slide, attack...)
 		
-		public function BitmapAnim($name:String, $list:Vector.<BitmapCell> , $position:int, $fps:int=0){
+		public function BitmapAnim($name:String, $list:Vector.<BitmapCell> , $position:int=0, $fps:int=0){
 			_initVar($name,$list,$position, $fps);
 		}
 		//------ Init Var ------------------------------------

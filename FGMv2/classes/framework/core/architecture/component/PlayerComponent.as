@@ -25,6 +25,7 @@ package framework.core.architecture.component{
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.*;
 	import flash.geom.Point;
@@ -37,6 +38,7 @@ package framework.core.architecture.component{
 	import utils.bitmap.BitmapAnim;
 	import utils.bitmap.BitmapGraph;
 	import utils.bitmap.BitmapSet;
+	import utils.bitmap.SwfSet;
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
 	import utils.mouse.MousePad;
@@ -84,11 +86,25 @@ package framework.core.architecture.component{
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		override protected function onGraphicLoadingComplete($graphic:DisplayObject):void {
-			_bitmapSet = new BitmapSet($graphic as Bitmap);
-			_bitmapSet.graph.createSimpleGraph();
+			
+			if($graphic is Bitmap){
+				createBitmapPlayer($graphic as Bitmap)
+			}else if($graphic is MovieClip){
+				createSwfPlayer($graphic as MovieClip);
+			}
 			_graphic = new Bitmap;
 			FlashGameMaker.AddChild(_graphic,this);
 			actualize("bitmapAnim");
+		}
+		//------ Create Bitmap Player ------------------------------------
+		protected function createBitmapPlayer($graphic:Bitmap):void {
+			_bitmapSet = new BitmapSet($graphic);
+			_bitmapSet.graph.createSimpleGraph();
+		}
+		//------ Create Swf Player ------------------------------------
+		protected function createSwfPlayer($graphic:MovieClip):void {
+			_bitmapSet = new SwfSet($graphic);
+			_bitmapSet.graph.createSimpleGraph();
 		}
 		//------ On Key Fire ------------------------------------
 		protected function onKeyFire($keyPad:KeyPad):void {

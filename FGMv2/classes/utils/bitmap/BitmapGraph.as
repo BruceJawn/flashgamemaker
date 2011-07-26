@@ -53,7 +53,7 @@ package utils.bitmap{
 			animations["LEFT"] = createAnim("LEFT",8,1,64,64,4,0,10);
 			animations["UP"] = createAnim("UP",12,1,64,64,4,0,10);
 			currentAnim = animations["STAND"];
-			position = animations["STAND"].getCell();
+			position = currentAnim.getCell();
 		}
 		//------ Create Classic Graph ------------------------------------
 		public function createAnim($name:String,  $column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int,$position:int=0,$fps:int=0):BitmapAnim {
@@ -63,7 +63,7 @@ package utils.bitmap{
 			for(var i:int =0; i<$numFrame; i++){
 				x = $column*$cellWidth+$cellWidth*i;
 				y = $row*$cellHeight;
-				cell = new BitmapCell(x , y, $cellWidth, $cellHeight);
+				cell = new BitmapCell(null, x , y, $cellWidth, $cellHeight);
 				list.push(cell);
 			}
 			return new BitmapAnim($name, list, $position, $fps);

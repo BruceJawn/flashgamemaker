@@ -42,7 +42,6 @@ package framework.core.architecture.component{
 		public function CursorComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true,  $prop:Object = null) {
 			super($componentName, $entity, $singleton);
 			initVar();
-			//initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
