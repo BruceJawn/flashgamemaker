@@ -49,8 +49,8 @@ package framework.core.architecture.component{
 		private function initVar($componentName:String, $entity:IEntity,  $singleton:Boolean):void {
 			_componentName = $componentName;
 			_entity = $entity;
-			_properties = new Dictionary();	
-			_propertyReferences = new Dictionary();
+			_properties = new Dictionary(true);	
+			_propertyReferences = new Dictionary(true);
 			_singleton = $singleton;
 		}
 		//------ Init Property  ------------------------------------
@@ -177,6 +177,11 @@ package framework.core.architecture.component{
 		//------- ToString -------------------------------
 		public function ToString():void {
 			trace(_componentName, entityName);
+		}
+		//------ Clone  ------------------------------------
+		public function clone($name:String="clone"):Component {
+			//To be overwritted
+			return null;
 		}
 	}
 }

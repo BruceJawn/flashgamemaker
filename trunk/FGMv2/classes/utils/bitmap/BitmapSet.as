@@ -28,18 +28,29 @@ package utils.bitmap{
 		
 		public var bitmap:Bitmap = null;
 		public var graph:BitmapGraph;
+		public var autoAnim:Boolean = false;
 		
-		public function BitmapSet($bitmap:DisplayObject){
-			_initVar($bitmap);
+		public function BitmapSet($bitmap:DisplayObject, $graph:BitmapGraph = null, $autoAnim:Boolean = true){
+			_initVar($bitmap,$graph,$autoAnim);
 		}
 		//------ Init Var ------------------------------------
-		protected function _initVar($bitmap:DisplayObject):void {
+		protected function _initVar($bitmap:DisplayObject,$graph:BitmapGraph,$autoAnim:Boolean):void {
 			bitmap = $bitmap as Bitmap;
-			graph = new BitmapGraph;
+			if($graph){
+				graph = $graph;
+			}else{
+				graph = new BitmapGraph;
+			}
+			autoAnim = $autoAnim;
 		}
 		//------ Get Cell ------------------------------------
 		public function get position():BitmapCell {
-			return graph.position;
+			return graph.currentPosition;
+		}
+		//------ clone ------------------------------------
+		public function clone():BitmapSet {
+			var bitmapSet:BitmapSet = new BitmapSet(bitmap,graph, autoAnim);
+			return bitmapSet;
 		}
 	}
 }

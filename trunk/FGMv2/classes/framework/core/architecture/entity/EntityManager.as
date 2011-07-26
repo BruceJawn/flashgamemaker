@@ -242,6 +242,9 @@ package framework.core.architecture.entity{
 		//------ Unregister Property Reference ------------------------------------
 		public function actualizeComponent($propertyName:String,$component:Component, $param:Object=null):void {
 			var property:Object = _properties[$propertyName];
+			if(!$component.propertyReferences[$propertyName]){
+				throw new Error("Error:The component "+$component.componentName+" is not registered to the property "+$propertyName+". Please registerReference before actualize !!");
+			}
 			if(property && property.register){
 				property.register.actualizePropertyComponent($propertyName,$component,$param);
 			}

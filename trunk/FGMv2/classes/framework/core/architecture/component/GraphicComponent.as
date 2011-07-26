@@ -26,13 +26,12 @@ package framework.core.architecture.component{
 	import flash.events.*;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
-	import utils.adobe.Export;
-
 	
 	import framework.core.architecture.entity.*;
 	import framework.core.system.GraphicManager;
 	import framework.core.system.IGraphicManager;
 	
+	import utils.adobe.Export;
 	import utils.iso.IsoPoint;
 
 	/**
@@ -44,6 +43,7 @@ package framework.core.architecture.component{
 
 		protected var graphicManager:IGraphicManager=null;
 		protected var _graphic:*=null;
+		protected var _path:String;
 		
 		public function GraphicComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object=null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -61,6 +61,7 @@ package framework.core.architecture.component{
 		public function loadGraphic($path:String):void {
 			var callBack:Object = {onInit:onGraphicLoadingInit, onProgress:onGraphicLoadingProgress, onComplete:onGraphicLoadingComplete};
 			graphicManager.loadGraphic($path, callBack);
+			_path = $path;
 		}
 		//------ On Graphic Loading Init ------------------------------------
 		protected function onGraphicLoadingInit():void {
@@ -84,6 +85,12 @@ package framework.core.architecture.component{
 		//------ Set graphic ------------------------------------
 		public function set graphic($graphic:*):void {
 			_graphic = $graphic;
+		}
+		//------ Clone  ------------------------------------
+		override public function clone($name:String="clone"):Component {
+			var clone:GraphicComponent = _entity.entityManager.addComponentFromName(entityName,"GraphicComponent",$name) as GraphicComponent;
+			clone.loadGraphic(_path);
+			return clone;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

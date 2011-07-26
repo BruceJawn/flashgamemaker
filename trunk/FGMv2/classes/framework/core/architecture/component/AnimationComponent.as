@@ -22,16 +22,34 @@
 */
 
 package framework.core.architecture.component{
+	
+	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.*;
+	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	import framework.core.architecture.entity.IEntity;
 	
+	import utils.bitmap.BitmapAnim;
+	import utils.bitmap.BitmapGraph;
+	import utils.bitmap.BitmapSet;
+	import utils.bitmap.SwfSet;
+	import utils.iso.IsoPoint;
+	import utils.keyboard.KeyPad;
+	import utils.mouse.MousePad;
+	
 	/**
-	* AnimationComponent Class
+	* PlayerComponent Class
 	*/
-	public class AnimationComponent extends Component {
+	public class AnimationComponent extends GraphicComponent {
 
-		private var _isRunning:Boolean = false;
+		protected var _bitmapSet:* = null	//BitmapAnim property can be BitmapSet or extended to  SwfSet
+		protected var _clonePool:Array;
 		
 		public function AnimationComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -39,53 +57,65 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		protected function initVar($prop:Object):void {
-		
-		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-			addEventListener(Event.ENTER_FRAME, onTick);
-		}
-		//------ Remove Listener ------------------------------------
-		private function removeListener():void {
-			removeEventListener(Event.ENTER_FRAME, onTick);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
+			registerProperty("anim");
+			_clonePool = new Array;
 		}
-		//------ On Anim Change ------------------------------------
-		protected function onAnimChange($gamePad:Object):void {
-		}
-		//------ On Tick ------------------------------------
-		private function onTick($evt:Event):void {
-			
-		}
-		//------ Move Right ------------------------------------
-		protected function moveRight():void {
-		}
-		//------ Move Left ------------------------------------
-		protected function moveLeft():void {
-		}
-		//------ Move Up ------------------------------------
-		protected function moveUp():void {
-		}
-		//------ Move Down ------------------------------------
-		protected function moveDown():void {
-		}
-		//------ Move  ------------------------------------
-		protected function move():void {
-		}
-		//------Stop ------------------------------------
-		public function start():void {
-			if(!_isRunning){
-				initListener();
-				_isRunning = true;
+		//------ On Graphic Loading Complete ------------------------------------
+		override protected function onGraphicLoadingComplete($graphic:DisplayObject):void {
+			if($graphic is Bitmap){
+				_bitmapSet = createBitmap($graphic as Bitmap)
+			}else if($graphic is MovieClip){
+				_bitmapSet = createSwf($graphic as MovieClip);
 			}
+			_graphic = new Bitmap;
+			registerPropertyReference("bitmapRender");
+			registerPropertyReference("bitmapAnim");
+			cloneFlush();
 		}
-		//------Stop ------------------------------------
-		public function stop():void {
-			if(_isRunning){
-				removeListener();
-				_isRunning = false;
+		//------ Create Player ------------------------------------
+		protected function createBitmap($graphic:Bitmap):BitmapSet {
+			var bitmapSet:BitmapSet = new BitmapSet($graphic,null, true);
+			bitmapSet.graph.createSimpleGraph();
+			return bitmapSet;
+		}
+		//------ Create Swf  ------------------------------------
+		protected function createSwf($graphic:MovieClip):BitmapSet {
+			var frameRate:int = FlashGameMaker.stage.frameRate;
+			var swfSet:SwfSet = new SwfSet($graphic,null,true);
+			swfSet.createBitmapFrom("AssetDisplay",frameRate);
+			swfSet.graph.createSimpleSequence();
+			return swfSet;
+		}
+		//------ Get BitmapSet ------------------------------------
+		public function get bitmapSet():BitmapSet {
+			return _bitmapSet;
+		}
+		//------ Set BitmapSet ------------------------------------
+		public function set bitmapSet($bitmapSet:BitmapSet):void {
+			 _bitmapSet = $bitmapSet;
+		}
+		//------ Clone  ------------------------------------
+		override public function clone($name:String="clone"):Component {
+			var clone:AnimationComponent = _entity.entityManager.addComponentFromName(entityName,"AnimationComponent",$name) as AnimationComponent;
+			clone.graphic = new Bitmap();
+			if(_graphic){
+				clone.bitmapSet = _bitmapSet.clone();
+				clone.registerPropertyReference("bitmapRender");
+				clone.registerPropertyReference("bitmapAnim");
+			}else{
+				_clonePool.push(clone);
+			}
+			return clone;
+		}
+		//------ Clone Flush  ------------------------------------
+		private function cloneFlush():void {
+			for each(var clone:AnimationComponent in _clonePool){
+				clone.bitmapSet = _bitmapSet.clone();
+				clone.registerPropertyReference("bitmapRender");
+				clone.registerPropertyReference("bitmapAnim");
 			}
 		}
 		//------- ToString -------------------------------

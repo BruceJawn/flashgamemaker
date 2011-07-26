@@ -43,7 +43,6 @@ package framework.core.architecture.component{
 		public function SystemInfoComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity);
 			initVar();
-			initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
@@ -55,20 +54,17 @@ package framework.core.architecture.component{
 			_clip.selectable = false;
 			_Memory.x=50;
 			_clip.x=_Memory.x+85;
-			addChild(_Memory);
-			addChild(_FPS);
-			addChild(_clip);
+			FlashGameMaker.AddChild(_Memory);
+			FlashGameMaker.AddChild(_FPS);
+			FlashGameMaker.AddChild(_clip);
 		}
-		//------ Init Listener ------------------------------------
-		private function initListener():void {
-			addEventListener(Event.ENTER_FRAME, onEnterFrame);
-		}
-		//------ Remove Listener ------------------------------------
-		private function removeListener():void {
-			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+		//------ Init Property  ------------------------------------
+		public override function initProperty():void {
+			super.initProperty();
+			registerPropertyReference("enterFrame", {callback:onTick});
 		}
 		//------ On Enter Frame ------------------------------------
-		private function onEnterFrame(event:Event):void {
+		private function onTick():void {
 			updateMemory();
 			updateFPS();
 			updateTime();

@@ -107,6 +107,31 @@ package framework.core.architecture.entity{
 			playerComponent.loadGraphic($path);
 			playerComponent.moveTo($x,$y);
 		}
+		//------- Create Animation -------------------------------
+		public static function createAnimation($entityName:String, $path:String,  $x:Number, $y:Number,  $speed:Point = null, $iso:Boolean=false, $horizontal:Boolean=true, $vertical:Boolean=true, $diagonal:Boolean=false):void{
+			var entity:IEntity=entityManager.createEntity($entityName);
+			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var bitmapRenderComponent:BitmapRenderComponent=entityManager.addComponentFromName($entityName,"BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
+			var bitmapAnimComponent:BitmapAnimComponent=entityManager.addComponentFromName($entityName,"BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
+			var animationComponent:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myAnimationComponentt") as AnimationComponent;
+			animationComponent.loadGraphic($path);
+			animationComponent.moveTo($x,$y);
+		}
+		//------- Create Animations -------------------------------
+		public static function createAnimations($entityName:String, $path:String,  $x:Number, $y:Number,  $speed:Point = null, $iso:Boolean=false, $horizontal:Boolean=true, $vertical:Boolean=true, $diagonal:Boolean=false):void{
+			var entity:IEntity=entityManager.createEntity($entityName);
+			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var bitmapRenderComponent:BitmapRenderComponent=entityManager.addComponentFromName($entityName,"BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
+			var bitmapAnimComponent:BitmapAnimComponent=entityManager.addComponentFromName($entityName,"BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
+			var animationComponent:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myAnimationComponent") as AnimationComponent;
+			animationComponent.loadGraphic($path);
+			animationComponent.moveTo($x,$y);
+			for (var i:Number=0; i<100; i++){
+				var clone:AnimationComponent=animationComponent.clone("myClone"+i) as AnimationComponent;
+				clone.moveTo(Math.random()*FlashGameMaker.width,Math.random()*FlashGameMaker.height);
+			}
+			var systemInfoComponent:SystemInfoComponent=entityManager.addComponentFromName($entityName,"SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
+		}
 		//------- Create Background Color -------------------------------
 		public static function createBgColor($entityName:String, $color:uint, $alpha:Number=1):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
