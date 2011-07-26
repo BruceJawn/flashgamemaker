@@ -24,7 +24,8 @@
 			//EntityFactory.createTime("Time",200, 200, 0, 15);
 			//EntityFactory.createGamePad("GamePad", 10,450);
 			//EntityFactory.create2DPlayer("BitmapPlayer", "../assets/templeKnightSet.png", 90, 300, new Point(2,2),false, true,true,true);
-			EntityFactory.create2DPlayer("SwfPlayer", "../assets/Panda.swf", 90, 300, new Point(2,2),false, true,true,true);
+			//EntityFactory.createAnimation("Animation", "../assets/Panda.swf", 90, 300, new Point(2,2),false, true,true,true);
+			EntityFactory.createAnimations("Animation", "../assets/Panda.swf", 90, 300, new Point(2,2),false, true,true,true);
 			//EntityFactory.createCursor("Cursor", "../assets/cursor.swf");
 			//EntityFactory.createChrono("Chrono", "../assets/chrono.png", 250,500, 100,100);
 			

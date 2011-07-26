@@ -50,7 +50,7 @@ package framework.core.architecture.component{
 		private function initVar($prop:Object):void {
 			if ($prop.delay )	_delay = $prop.delay;
 			_timer = new Timer(_delay);
-			_timeline = new Dictionary();
+			_timeline = new Dictionary(true);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -68,7 +68,7 @@ package framework.core.architecture.component{
 		}
 		//------ Add To Timeline  ------------------------------------
 		private function addToTimeline($component:Component, $param:Object):void {
-			if(!($param && $param.delay && $param)) {
+			if(!($param && $param.delay && $param.callback)) {
 				throw new Error("To be registered to TimerComponent you need a delay and callback parameter");
 			}
 			var delay:Number = Math.ceil($param.delay/_delay); // need to adjust

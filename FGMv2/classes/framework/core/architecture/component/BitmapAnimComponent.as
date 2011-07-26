@@ -26,6 +26,7 @@ package framework.core.architecture.component{
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	
 	import framework.core.architecture.entity.IEntity;
 	
@@ -40,12 +41,16 @@ package framework.core.architecture.component{
 	*/
 	public class BitmapAnimComponent extends Component {
 		
+		private var _isRunning:Boolean = false;
+		private var _timeline:Dictionary;
+		
 		public function BitmapAnimComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
-			initVar($prop);
+			_initVar($prop);
 		}
 		//------ Init Var ------------------------------------
-		protected function initVar($prop:Object):void {
+		protected function _initVar($prop:Object):void {
+			_timeline = new Dictionary(true);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -61,17 +66,30 @@ package framework.core.architecture.component{
 		protected function updateComponent($component:Component):void {
 			//Check properties
 			if($component.hasOwnProperty("graphic") && $component.graphic is Bitmap && $component.hasOwnProperty("bitmapSet") && $component.bitmapSet) {
+				if($component.bitmapSet.autoAnim && !_timeline[$component]){
+					_timeline[$component] = $component;
+					if(!_isRunning){
+						_isRunning = true;
+						registerPropertyReference("enterFrame", {callback:onTick});
+					}
+				}
 				updateFrame($component);
 			}else{
 				throw new Error("A bitmapSet and graphic must exist to be registered by BitmapAnimComponent");
 			}
 		}
+		//------ On Tick ------------------------------------
+		private function onTick():void {
+			for each(var $component:Component in _timeline){
+				updateAnim($component);
+				updateFrame($component);
+			}
+		}
 		//------ Update Component------------------------------------
 		protected function updateFrame($component:Component):void {
-			var charSet:BitmapSet = $component.bitmapSet;
-			var position:BitmapCell = charSet.position;
-			var source:Bitmap = charSet.bitmap;
-			//if($component.graphic.bitmapData)	$component.graphic.bitmapData.dispose();//Free memory
+			var bitmapSet:BitmapSet = $component.bitmapSet;
+			var position:BitmapCell = bitmapSet.position;
+			var source:Bitmap = bitmapSet.bitmap;
 			if(source){
 				var myBitmapData:BitmapData=new BitmapData(position.width,position.height,true,0);
 				myBitmapData.lock();
@@ -81,6 +99,12 @@ package framework.core.architecture.component{
 			}else if(position.bitmapData){
 				$component.graphic.bitmapData=position.bitmapData.clone();
 			}
+		}
+		//------ Update Anim------------------------------------
+		protected function updateAnim($component:Component):void {
+			var bitmapSet:BitmapSet = $component.bitmapSet;
+			var graph:BitmapGraph = bitmapSet.graph;
+			graph.anim();
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

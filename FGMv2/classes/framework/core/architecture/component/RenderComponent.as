@@ -39,7 +39,6 @@ package framework.core.architecture.component{
 		public function RenderComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true, $param:Object = null) {
 			super($componentName, $entity, $singleton);
 			_initVar();
-			_initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar():void {
@@ -48,10 +47,6 @@ package framework.core.architecture.component{
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			registerProperty("render");
-		}
-		//------ Init Listener ------------------------------------
-		private function _initListener():void {
-
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {

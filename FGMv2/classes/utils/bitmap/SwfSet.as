@@ -34,64 +34,58 @@ package utils.bitmap{
 		
 		public var swf:MovieClip = null; 		//SWF Container
 		public var realDisp:MovieClip = null;	//MovieClip to display
+		public var dimension:Object;// width and height
 		
-		public function SwfSet($swf:DisplayObject){
-			super($swf);
+		public function SwfSet($swf:DisplayObject,$graph:BitmapGraph = null,$autoAnim:Boolean=false){
+			super($swf,$graph,$autoAnim);
 		}
 		//------ Init Var ------------------------------------
-		override protected function _initVar($swf:DisplayObject):void {
+		override protected function _initVar($swf:DisplayObject,$graph:BitmapGraph, $autoAnim:Boolean):void {
 			swf = $swf as MovieClip;
-			graph = new BitmapGraph;
-			var s:Sprite = new Sprite;
-			s.graphics.beginFill(0);
-			s.graphics.drawCircle(10,10,50);
-			s.graphics.endFill();
-			createBitmapFrom("AssetDisplay");
+			if($graph){
+				graph = $graph;
+			}else{
+				graph = new BitmapGraph;
+			}
+			autoAnim = $autoAnim;
 		}
 		//------ Create Bitmap ------------------------------------
-		public function createBitmapFrom($className:String):void {
+		public function createBitmapFrom($className:String,$fps:int=30):void {
 			realDisp = getAssetByClass($className);
+			realDisp.x =realDisp.y=0;
+			dimension = getDimension(realDisp);
 			if(!realDisp){
 				throw new Error("The MovieClip specified "+$className+" doesn't exist or is not exported"); 
 			}
 			var labels:Array = realDisp.currentLabels;
-			var bitmapData:BitmapData = new BitmapData(realDisp.width, realDisp.height, true,0);
+			var bitmapData:BitmapData = new BitmapData(dimension.width, dimension.height, true,0);
 			var y:int =0;
 			for each(var label:FrameLabel in labels){
-				graph.animations[label.name] = createBitmapAnim(label, y);
+				graph.animations[label.name] = createBitmapAnim(label, y, $fps);
 				y++;
 			}
 			graph.currentAnim = graph.animations[labels[0].name];
-			graph.position = graph.currentAnim.getCell();
+			graph.currentPosition = graph.currentAnim.getCell();
 		}
 		//------ Create Bitmap Anim------------------------------------
-		public function createBitmapAnim($label:FrameLabel, $y:int):BitmapAnim {
+		public function createBitmapAnim($label:FrameLabel, $y:int, $fps:int):BitmapAnim {
 			var list:Vector.<BitmapCell> = new Vector.<BitmapCell>;
 			realDisp.gotoAndStop($label.name);
 			var bitmapCell:BitmapCell;
 			var x:int =0;
-			var bitmapData:BitmapData = new BitmapData(realDisp.width, realDisp.height, true,0);
+			var bitmapData:BitmapData = new BitmapData(dimension.width, dimension.height, true,0);;
 			while(realDisp.currentLabel == $label.name && realDisp.currentFrame<realDisp.totalFrames){
-				bitmapData.floodFill(0,0,0);
-				bitmapData.draw(realDisp);
-				//draw(bitmapData,realDisp);
-				bitmapCell = new BitmapCell(bitmapData.clone(),x,$y,realDisp.width,realDisp.height);
+				bitmapData.lock();
+				bitmapData.fillRect(bitmapData.rect, 0);
+				if(realDisp.width> dimension.width)	trace("Error: The dimension of the clip are wrong ", realDisp.width, dimension.width);
+				bitmapData.draw(realDisp,realDisp.transform.matrix);
+				bitmapData.unlock();
+				bitmapCell = new BitmapCell(bitmapData.clone(),x,$y,dimension.width,dimension.height);
 				list.push(bitmapCell);
 				x++;
 				realDisp.nextFrame();
 			}
-			bitmapData.dispose();
-			return new BitmapAnim($label.name, list);
-		}
-		//------ Create Bitmap Anim------------------------------------
-		public function draw($bitmapData:BitmapData, $realDisp:DisplayObject):void {
-			$bitmapData.draw($realDisp);
-			if(!($realDisp is MovieClip))	 return;
-			var newRealDisp:MovieClip = $realDisp as MovieClip;
-			for (var i:int = 0; i<newRealDisp.numChildren;i++){
-				var clip:DisplayObject = newRealDisp.getChildAt(i);
-				draw($bitmapData,clip);
-			}
+			return new BitmapAnim($label.name, list, 0, $fps);
 		}
 		/**
 		 * Retrieve an exported class from the asset SWF.
@@ -111,6 +105,23 @@ package utils.bitmap{
 				return new theClass();
 			}
 			return null;
+		}
+		/**
+		 * Retrieve the max width and height of the asset SWF.
+		 */
+		public function getDimension( $clip:MovieClip ):Object {
+			var width:Number = 0;
+			var height:Number = 0;
+			for(var i:int=1;  i<=$clip.totalFrames ; i++){
+				width = Math.max(width, $clip.width);
+				height = Math.max(height, $clip.height);
+				$clip.nextFrame();
+			}			
+			return {width:Math.ceil(width),height:Math.ceil(height)};
+		}
+		//------ clone ------------------------------------
+		override public function clone():BitmapSet {
+			return this;
 		}
 	}
 }

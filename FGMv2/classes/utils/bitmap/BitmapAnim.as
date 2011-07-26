@@ -31,18 +31,20 @@ package utils.bitmap{
 		private var _list:Vector.<BitmapCell>;
 		private var _position:int=0;
 		private var _fps:int = 0;
-		private var _lastAnim:Number=0;
-		private var _endAnim:Boolean = false; //If true finish the animation (jump, slide, attack...)
+		private var _lastAnim:Number=0;			//Time of the last animation
+		private var _endAnim:Boolean = false; 	//If true finish the animation (jump, slide, attack...)
+		private var _nextPose:String;
 		
-		public function BitmapAnim($name:String, $list:Vector.<BitmapCell> , $position:int=0, $fps:int=0){
-			_initVar($name,$list,$position, $fps);
+		public function BitmapAnim($name:String, $list:Vector.<BitmapCell> , $position:int=0, $fps:int=0, $nextPose:String =null){
+			_initVar($name,$list,$position, $fps, $nextPose);
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar($name:String, $list:Vector.<BitmapCell>,  $position:int, $fps:int):void {
+		private function _initVar($name:String, $list:Vector.<BitmapCell>,  $position:int, $fps:int, $nextPose:String):void {
 			name 		= $name
 			_list 		= $list;
 			_position 	= $position;
 			_fps 		= $fps
+			_nextPose	= $nextPose;
 		}
 		//------ Get Cell ------------------------------------
 		public function getCell():BitmapCell {
@@ -85,9 +87,18 @@ package utils.bitmap{
 		public function get position():int {
 			return _position;	
 		}
+		public function get nextPose():String {
+			return _nextPose;	
+		}
+		public function get lastPosition():int {
+			return _list.length-1;	
+		}
 		//------ Setter ------------------------------------
 		public function set position($position:int):void {
 			_position=$position;	
+		}
+		public function set nextPose($nextPose:String):void {
+			_nextPose=$nextPose;	
 		}
 	}
 }

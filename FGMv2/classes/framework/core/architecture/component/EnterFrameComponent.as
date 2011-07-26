@@ -38,8 +38,7 @@ package framework.core.architecture.component{
 	*/
 	public class EnterFrameComponent extends Component {
 		
-		private var _timer:Timer;
-		private var _delay:Number = 100;
+		private var _isRunning:Boolean = false;
 		private var _timeline:Dictionary;
 		
 		public function EnterFrameComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
@@ -48,45 +47,35 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar($prop:Object):void {
-			if ($prop.delay )	_delay = $prop.delay;
-			_timer = new Timer(_delay);
-			_timeline = new Dictionary();
+			_timeline = new Dictionary(true);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			registerProperty("timer");
+			registerProperty("enterFrame");
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
-			if ($propertyName == "timer") {
-				addToTimeline($component, $param);
-				if(!_timer.running){
-					_timer.start();
-					_timer.addEventListener(TimerEvent.TIMER, onTick);
+			if ($propertyName == "enterFrame") {
+				if(!_timeline[$component]){
+					addToTimeline($component, $param);
+					if(!_isRunning){
+						_isRunning = true;
+						addEventListener(Event.ENTER_FRAME, onTick,false,0,true);
+					}
 				}
 			}
 		}
 		//------ Add To Timeline  ------------------------------------
 		private function addToTimeline($component:Component, $param:Object):void {
-			if(!($param && $param.delay && $param)) {
-				throw new Error("To be registered to TimerComponent you need a delay and callback parameter");
+			if(!($param && $param.callback)) {
+				throw new Error("To be registered to EnterFrameComponent you need a callback parameter");
 			}
-			var delay:Number = Math.ceil($param.delay/_delay); // need to adjust
-			if(!_timeline[delay]){
-				_timeline[delay] = {delay:delay, count:0, callbacks:new Array};
-			}
-			_timeline[delay].callbacks.push($param.callback);
+			_timeline[$component] = $param.callback;
 		}
 		//------ On Tick ------------------------------------
-		private function onTick($evt:TimerEvent):void {
-			for each (var object:Object in _timeline){
-				object.count++;
-				if(object.count==object.delay){
-					for each (var callback:Function in object.callbacks){
-						callback();
-					}
-					object.count=0;
-				}
+		private function onTick($evt:Event):void {
+			for each (var callback:Function in _timeline){
+				callback();
 			}
 		}
 	}

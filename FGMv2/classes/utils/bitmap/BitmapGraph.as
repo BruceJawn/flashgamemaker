@@ -27,15 +27,18 @@ package utils.bitmap{
 	public class BitmapGraph{
 		
 		public var animations:Dictionary;
-		public var position:BitmapCell;
+		public var poses:Dictionary; // Sequence of animation
+		public var currentPosition:BitmapCell;
 		public var currentAnim:BitmapAnim;
+		public var currentPose:String;
 		
 		public function BitmapGraph(){
 			_initVar();
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar():void {
-			animations = new Dictionary;
+			animations 	= new Dictionary;
+			poses 		= new Dictionary
 		}
 		//------ Create Graph ------------------------------------
 		public function createGraph($name:String,$column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int ,$position:int=0):void {
@@ -43,7 +46,7 @@ package utils.bitmap{
 				throw new Error(" An animation already exist with the name: "+$name);
 			}
 			animations[$name] = createAnim($name,$column,$row,$cellWidth,$cellHeight,$numFrame, $position);
-			position = animations[$name].getCell();
+			currentPosition = animations[$name].getCell();
 		}
 		//------ Create Classic Graph ------------------------------------
 		public function createSimpleGraph():void {
@@ -53,7 +56,7 @@ package utils.bitmap{
 			animations["LEFT"] = createAnim("LEFT",8,1,64,64,4,0,10);
 			animations["UP"] = createAnim("UP",12,1,64,64,4,0,10);
 			currentAnim = animations["STAND"];
-			position = currentAnim.getCell();
+			currentPosition = currentAnim.getCell();
 		}
 		//------ Create Classic Graph ------------------------------------
 		public function createAnim($name:String,  $column:int,$row:int, $cellWidth:Number, $cellHeight:Number, $numFrame:int,$position:int=0,$fps:int=0):BitmapAnim {
@@ -69,20 +72,42 @@ package utils.bitmap{
 			return new BitmapAnim($name, list, $position, $fps);
 		}
 		//------ Create Classic Graph ------------------------------------
-		public function anim($anim:String, $inversed:Boolean = false, $reset:Boolean=false):void{
-			if(animations[$anim]){
-				if(currentAnim != animations[$anim]){
-					currentAnim.position = 0;
-				}
-				if($reset){
-					animations[$anim].position=0;
-					position =animations[$anim].getCell();
-				}else if($inversed){
-					position = animations[$anim].prev();
-				}else{
-					position = animations[$anim].next();
-				}
+		public function anim($anim:String=null, $inversed:Boolean = false):void{
+			if(!$anim){
+				$anim = currentAnim.name;
 			}
+			if(currentAnim.position == currentAnim.lastPosition && currentAnim.nextPose){
+				currentAnim.position = 0;
+				currentPose = currentAnim.nextPose;
+				currentAnim = getAnimFromPose(currentPose);
+				currentPosition = currentAnim.getCell();
+				return
+			}else if(currentAnim != animations[$anim]){
+				currentAnim.position = 0;
+				currentAnim = animations[$anim]	
+			}
+			if($inversed){
+				currentPosition = currentAnim.prev();
+			}else{
+				currentPosition = currentAnim.next();
+			}
+		}
+		//------ Create Simple Sequence ------------------------------------
+		public function createSimpleSequence():void {
+			currentPose = "POSE_IDLE";
+			poses[currentPose] = new Array();
+			for each(var bitmapAnim:BitmapAnim in animations){
+				bitmapAnim.nextPose = "POSE_IDLE";
+				poses[currentPose].push(bitmapAnim);
+			}
+		}
+		//------ Get Anim From Pose ------------------------------------
+		public function getAnimFromPose($pose:String):BitmapAnim {
+			if(!poses || !poses[$pose]){
+				throw new Error("Poses are not initialized correctly!!");
+			}
+			var rdm:int = Math.random()*poses[$pose].length;
+			return poses[$pose][rdm];
 		}
 	}
 }
