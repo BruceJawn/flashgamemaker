@@ -118,6 +118,8 @@ package framework.core.architecture.component{
 			_entity.entityManager.registerPropertyReference($propertyName, this, $param);
 			if($param){
 				_propertyReferences[$propertyName] = $param;
+			}else{
+				_propertyReferences[$propertyName] = -1
 			}
 		}
 		//------ Unregister Property Reference ------------------------------------

@@ -95,7 +95,7 @@ package framework.core.architecture.component{
 		private function onKeyFire():void {
 			dispatch("onKeyFire");
 		}
-		//------ On Dispatch ------------------------------------
+		//------  Dispatch ------------------------------------
 		private function dispatch($callback:String):void {
 			var components:Vector.<Object> = _properties["keyboardInput"];
 			for each (var object:Object in components){

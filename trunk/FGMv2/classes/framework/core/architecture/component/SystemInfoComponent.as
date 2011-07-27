@@ -61,7 +61,7 @@ package framework.core.architecture.component{
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			registerPropertyReference("enterFrame", {callback:onTick});
+			registerPropertyReference("enterFrame", {onEnterFrame:onTick});
 		}
 		//------ On Enter Frame ------------------------------------
 		private function onTick():void {

@@ -26,6 +26,7 @@ package framework.core.architecture.component{
 	import flash.events.TimerEvent;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
+	import flash.utils.setInterval;
 	
 	import framework.core.architecture.entity.IEntity;
 	
@@ -39,7 +40,7 @@ package framework.core.architecture.component{
 	public class EnterFrameComponent extends Component {
 		
 		private var _isRunning:Boolean = false;
-		private var _timeline:Dictionary;
+		private var _frameRate:Number;
 		
 		public function EnterFrameComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -47,7 +48,8 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		private function initVar($prop:Object):void {
-			_timeline = new Dictionary(true);
+			if($prop && $prop.frameRate)	_frameRate = $prop.frameRate;
+			else							_frameRate = FlashGameMaker.stage.frameRate;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -56,26 +58,23 @@ package framework.core.architecture.component{
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
 			if ($propertyName == "enterFrame") {
-				if(!_timeline[$component]){
-					addToTimeline($component, $param);
-					if(!_isRunning){
-						_isRunning = true;
-						addEventListener(Event.ENTER_FRAME, onTick,false,0,true);
-					}
+				if(!_isRunning){
+					_isRunning = true;
+					setInterval(onTick,_frameRate);	//clearInterval(onTick) to stop;
 				}
 			}
 		}
-		//------ Add To Timeline  ------------------------------------
-		private function addToTimeline($component:Component, $param:Object):void {
-			if(!($param && $param.callback)) {
-				throw new Error("To be registered to EnterFrameComponent you need a callback parameter");
-			}
-			_timeline[$component] = $param.callback;
-		}
 		//------ On Tick ------------------------------------
-		private function onTick($evt:Event):void {
-			for each (var callback:Function in _timeline){
-				callback();
+		private function onTick(/*$evt:Event*/):void {
+			dispatch("onEnterFrame")
+		}
+		//------  Dispatch ------------------------------------
+		private function dispatch($callback:String):void {
+			var components:Vector.<Object> = _properties["enterFrame"];
+			for each (var object:Object in components){
+				if(object.param.hasOwnProperty($callback)){
+					object.param[$callback]();
+				}
 			}
 		}
 	}

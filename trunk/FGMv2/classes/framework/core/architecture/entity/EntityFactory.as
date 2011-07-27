@@ -47,8 +47,9 @@ package framework.core.architecture.entity{
 		public static function createSystemInfo($entityName:String, $x:Number, $y:Number):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var renderComponent:RenderComponent = entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
-			var systemInfo:SystemInfoComponent = entityManager.addComponentFromName($entityName,"SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
-			systemInfo.moveTo($x, $y);
+			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var systemInfoComponent:SystemInfoComponent=entityManager.addComponentFromName($entityName,"SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
+			systemInfoComponent.moveTo($x, $y);
 		}
 		//------- Create GamePad -------------------------------
 		public static function createGamePad($entityName:String, $x:Number, $y:Number):void{
@@ -108,9 +109,10 @@ package framework.core.architecture.entity{
 			playerComponent.moveTo($x,$y);
 		}
 		//------- Create Animation -------------------------------
-		public static function createAnimation($entityName:String, $path:String,  $x:Number, $y:Number,  $speed:Point = null, $iso:Boolean=false, $horizontal:Boolean=true, $vertical:Boolean=true, $diagonal:Boolean=false):void{
+		public static function createAnimation($entityName:String, $path:String,  $x:Number, $y:Number):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var mouseInput:MouseInputComponent=entityManager.addComponentFromName($entityName,"MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=entityManager.addComponentFromName($entityName,"BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			var bitmapAnimComponent:BitmapAnimComponent=entityManager.addComponentFromName($entityName,"BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var animationComponent:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myAnimationComponentt") as AnimationComponent;
@@ -118,17 +120,24 @@ package framework.core.architecture.entity{
 			animationComponent.moveTo($x,$y);
 		}
 		//------- Create Animations -------------------------------
-		public static function createAnimations($entityName:String, $path:String,  $x:Number, $y:Number,  $speed:Point = null, $iso:Boolean=false, $horizontal:Boolean=true, $vertical:Boolean=true, $diagonal:Boolean=false):void{
+		public static function createAnimations($entityName:String):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var mouseInput:MouseInputComponent=entityManager.addComponentFromName($entityName,"MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=entityManager.addComponentFromName($entityName,"BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			var bitmapAnimComponent:BitmapAnimComponent=entityManager.addComponentFromName($entityName,"BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
-			var animationComponent:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myAnimationComponent") as AnimationComponent;
-			animationComponent.loadGraphic($path);
-			animationComponent.moveTo($x,$y);
-			for (var i:Number=0; i<100; i++){
-				var clone:AnimationComponent=animationComponent.clone("myClone"+i) as AnimationComponent;
-				clone.moveTo(Math.random()*FlashGameMaker.width,Math.random()*FlashGameMaker.height);
+			var panda:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myPanda"/*, {bounds:new Rectangle(0,0,200,200)}*/) as AnimationComponent;
+			panda.loadGraphic("../assets/Panda.swf");
+			panda.moveTo(Math.random()*FlashGameMaker.width,Math.random()*FlashGameMaker.height);
+			var fox:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myFox"/*, {bounds:new Rectangle(0,0,100,80)}*/) as AnimationComponent;
+			fox.loadGraphic("../assets/Fox.swf");
+			fox.moveTo(Math.random()*FlashGameMaker.width,Math.random()*FlashGameMaker.height);
+			var clone:AnimationComponent;
+			for (var i:Number=0; i<200; i++){
+				clone=panda.clone("myPandaClone"+i) as AnimationComponent;
+				clone.moveTo(Math.random()*2000,Math.random()*1000);
+				clone=fox.clone("myFoxClone"+i) as AnimationComponent;
+				clone.moveTo(Math.random()*2000,Math.random()*1000);
 			}
 			var systemInfoComponent:SystemInfoComponent=entityManager.addComponentFromName($entityName,"SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
 		}
@@ -149,10 +158,10 @@ package framework.core.architecture.entity{
 			var simpleGraphicComponent:SimpleGraphicComponent=entityManager.addComponentFromName($entityName,"SimpleGraphicComponent","mySimpleGraphicComponent", {type:$type, colors:$colors, alphas:$alphas, ratios:$ratios, rectangle:$rectangle, matrix:$matrix}) as SimpleGraphicComponent;
 		}
 		//------- Create Scrolling Bitmap -------------------------------
-		public static function createScrollingBitmap($entityName:String, $path:String,  $x:Number, $y:Number, $speed:Point=null, $autoScroll:Boolean=true, $loop:Boolean=true):void{
+		public static function createScrollingBitmap($entityName:String, $path:String,  $x:Number, $y:Number, $frameRate:Number, $speed:Point=null, $autoScroll:Boolean=true, $loop:Boolean=true):void{
 			var entity:IEntity=entityManager.createEntity($entityName);
 			var renderComponent:RenderComponent=entityManager.addComponentFromName($entityName,"RenderComponent","myRenderComponent") as RenderComponent;
-			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var enterFrameComponent:EnterFrameComponent=entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent",{frameRate:$frameRate}) as EnterFrameComponent;
 			var scrollingBitmapComponent:ScrollingBitmapComponent=entityManager.addComponentFromName($entityName,"ScrollingBitmapComponent","myScrollingBitmapComponent", {speed:$speed, autoScroll:$autoScroll, loop:$loop}) as ScrollingBitmapComponent;
 			scrollingBitmapComponent.loadGraphic($path);
 			scrollingBitmapComponent.moveTo($x,$y);

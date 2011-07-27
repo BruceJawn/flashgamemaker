@@ -70,7 +70,7 @@ package framework.core.architecture.component{
 					_timeline[$component] = $component;
 					if(!_isRunning){
 						_isRunning = true;
-						registerPropertyReference("enterFrame", {callback:onTick});
+						registerPropertyReference("enterFrame", {onEnterFrame:onTick});
 					}
 				}
 				updateFrame($component);

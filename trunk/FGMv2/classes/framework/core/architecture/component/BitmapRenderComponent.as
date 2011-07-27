@@ -27,9 +27,12 @@
 
 package framework.core.architecture.component{
 	import flash.display.*;
+	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
 	import framework.core.architecture.entity.*;
+	
+	import utils.mouse.MousePad;
 
 	/**
 	* Bitmap Render Component: Manage the graphical rendering
@@ -41,6 +44,8 @@ package framework.core.architecture.component{
 		private var _isRunning:Boolean = false;
 		private var _timeline:Vector.<Component>;
 		private var _drawableComponent:Vector.<Component>;
+		private var _lastClick:Point = null;
+		private var _position:Point = null;
 		
 		public function BitmapRenderComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true, $param:Object = null) {
 			super($componentName, $entity, $singleton);
@@ -51,7 +56,9 @@ package framework.core.architecture.component{
 			_bitmapData = new BitmapData(FlashGameMaker.width, FlashGameMaker.height,true,0);
 			_bitmap = new Bitmap(_bitmapData);
 			_timeline = new Vector.<Component>;
-			FlashGameMaker.AddChild(_bitmap);
+			FlashGameMaker.AddChild(_bitmap,this);//Properties of BitmapRender will influe Display
+			FlashGameMaker.AddChild(this);
+			_position = new Point(0,0);
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
@@ -71,7 +78,9 @@ package framework.core.architecture.component{
 					_timeline.push($component);
 					if(!_isRunning){
 						_isRunning = true;
-						registerPropertyReference("enterFrame", {callback:onTick});
+						registerPropertyReference("enterFrame", {onEnterFrame:onTick});
+						registerPropertyReference("mouseInput",{onMouseDown:onMouseDown, onMouseUp:onMouseUp});
+						
 					}
 				}
 			}else{
@@ -80,12 +89,15 @@ package framework.core.architecture.component{
 		}
 		//------ On Tick ------------------------------------
 		private function onTick():void {
+			updateView();
 			_bitmapData.lock();
 			_bitmapData.fillRect(_bitmapData.rect, 0);
 			_drawableComponent = new Vector.<Component>;
 			for each(var component:Component in _timeline){
-				if (component.x >=0 && component.x <FlashGameMaker.width){
-					if (component.y >=0 && component.y <FlashGameMaker.height){
+				component.x-=_position.x;
+				component.y-=_position.y;
+				if (component.x+component.width >_bitmap.x && component.x <_bitmap.x+FlashGameMaker.width){
+					if (component.y+component.height>_bitmap.y && component.y <_bitmap.y+FlashGameMaker.height){
 						_drawableComponent.push(component);
 					}
 				}
@@ -96,6 +108,17 @@ package framework.core.architecture.component{
 			}
 			_bitmapData.unlock();
 		}
+		//------ Update View ------------------------------------
+		private function updateView():void {
+			if(_lastClick){
+				/*_bitmap.x-=_lastClick.x - mouseX;
+				_bitmap.y-= _lastClick.y - mouseY;*/
+				_position.x= _lastClick.x - mouseX;
+				_position.y= _lastClick.y - mouseY;
+				_lastClick.x = mouseX;
+				_lastClick.y = mouseY;
+			}
+		}
 		//------ Sort Depths ------------------------------------
 		private function sortDepths($component1:Component, $component2:Component):int{
 			if ($component1.y < $component2.y ) return -1;
@@ -105,6 +128,17 @@ package framework.core.architecture.component{
 		//------ Remove Graphic ------------------------------------
 		public function removeComponent($component:Component):void {
 			
+		}
+		//------ On Mouse Down  ------------------------------------
+		public function onMouseDown($mousePad:MousePad ,$hitTest:Boolean, $isClicked:Boolean):void {
+			if(!_lastClick && !$isClicked){
+				_lastClick = new Point($mousePad.mouseEvent.stageX,$mousePad.mouseEvent.stageY);
+			}
+		}
+		//------ On Mouse UP  ------------------------------------
+		public function onMouseUp($mousePad:MousePad ,$hitTest:Boolean, $isClicked:Boolean):void {
+			_lastClick = null;
+			_position = new Point(0,0)
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
