@@ -79,14 +79,11 @@ package framework.core.architecture.component{
 			registerPropertyReference("keyboardMove");
 			registerPropertyReference("mouseInput",{isListeningMouse:true, onMouseFire:onMouseFire});
 			registerPropertyReference("mouseMove");
-			registerPropertyReference("bitmapAnimComponent");
 //			registerPropertyReference("aiInput");
 //			registerPropertyReference("serverInput");
-//			registerPropertyReference("animation");
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		override protected function onGraphicLoadingComplete($graphic:DisplayObject):void {
-			
 			if($graphic is Bitmap){
 				createBitmapPlayer($graphic as Bitmap)
 			}else if($graphic is MovieClip){
@@ -94,6 +91,7 @@ package framework.core.architecture.component{
 			}
 			_graphic = new Bitmap;
 			FlashGameMaker.AddChild(_graphic,this);
+			registerPropertyReference("bitmapAnim");
 			actualize("bitmapAnim");
 		}
 		//------ Create Bitmap Player ------------------------------------

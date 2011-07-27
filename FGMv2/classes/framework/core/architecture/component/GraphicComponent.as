@@ -26,6 +26,7 @@ package framework.core.architecture.component{
 	import flash.events.*;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import framework.core.architecture.entity.*;
 	import framework.core.system.GraphicManager;

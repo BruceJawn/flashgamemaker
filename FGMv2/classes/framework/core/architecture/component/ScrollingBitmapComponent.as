@@ -65,7 +65,7 @@ package framework.core.architecture.component{
 			_bitmap.bitmapData.copyPixels(_graphic.bitmapData,_graphic.bitmapData.rect , new Point(0, 0),null,null,true);
 			addChild(_bitmap);
 			if(_autoScroll){
-				registerPropertyReference("enterFrame", {callback:onTick});
+				registerPropertyReference("enterFrame", {onEnterFrame:onTick});
 			}
 		}
 		//------ On Tick ------------------------------------

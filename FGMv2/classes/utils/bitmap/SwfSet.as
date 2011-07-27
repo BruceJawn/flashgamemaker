@@ -27,6 +27,7 @@ package utils.bitmap{
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -34,7 +35,7 @@ package utils.bitmap{
 		
 		public var swf:MovieClip = null; 		//SWF Container
 		public var realDisp:MovieClip = null;	//MovieClip to display
-		public var dimension:Object;// width and height
+		public var bounds:Rectangle = null;// width and height
 		
 		public function SwfSet($swf:DisplayObject,$graph:BitmapGraph = null,$autoAnim:Boolean=false){
 			super($swf,$graph,$autoAnim);
@@ -53,12 +54,12 @@ package utils.bitmap{
 		public function createBitmapFrom($className:String,$fps:int=30):void {
 			realDisp = getAssetByClass($className);
 			realDisp.x =realDisp.y=0;
-			dimension = getDimension(realDisp);
+			if(!bounds)	bounds = getDimension(realDisp);
 			if(!realDisp){
 				throw new Error("The MovieClip specified "+$className+" doesn't exist or is not exported"); 
 			}
 			var labels:Array = realDisp.currentLabels;
-			var bitmapData:BitmapData = new BitmapData(dimension.width, dimension.height, true,0);
+			var bitmapData:BitmapData = new BitmapData(bounds.width, bounds.height, true,0);
 			var y:int =0;
 			for each(var label:FrameLabel in labels){
 				graph.animations[label.name] = createBitmapAnim(label, y, $fps);
@@ -73,14 +74,18 @@ package utils.bitmap{
 			realDisp.gotoAndStop($label.name);
 			var bitmapCell:BitmapCell;
 			var x:int =0;
-			var bitmapData:BitmapData = new BitmapData(dimension.width, dimension.height, true,0);;
+			var bitmapData:BitmapData = new BitmapData(bounds.width, bounds.height, true,0);
 			while(realDisp.currentLabel == $label.name && realDisp.currentFrame<realDisp.totalFrames){
 				bitmapData.lock();
 				bitmapData.fillRect(bitmapData.rect, 0);
-				if(realDisp.width> dimension.width)	trace("Error: The dimension of the clip are wrong ", realDisp.width, dimension.width);
+				if(realDisp.width> bounds.width || realDisp.height> bounds.height)	
+					trace("Error: The dimension of the clip are wrong ", realDisp.width, bounds.width , realDisp.height, bounds.height);
+				var matrix:Matrix = new Matrix()
+				matrix.tx = -bounds.x;
+				matrix.ty = -bounds.y;
 				bitmapData.draw(realDisp,realDisp.transform.matrix);
 				bitmapData.unlock();
-				bitmapCell = new BitmapCell(bitmapData.clone(),x,$y,dimension.width,dimension.height);
+				bitmapCell = new BitmapCell(bitmapData.clone(),x,$y,bounds.width,bounds.height);
 				list.push(bitmapCell);
 				x++;
 				realDisp.nextFrame();
@@ -109,15 +114,21 @@ package utils.bitmap{
 		/**
 		 * Retrieve the max width and height of the asset SWF.
 		 */
-		public function getDimension( $clip:MovieClip ):Object {
+		public function getDimension( $clip:MovieClip ):Rectangle {
 			var width:Number = 0;
 			var height:Number = 0;
+			var x:Number = 0;
+			var y:Number = 0;
+			var bounds:Rectangle = $clip.getBounds(null);
 			for(var i:int=1;  i<=$clip.totalFrames ; i++){
-				width = Math.max(width, $clip.width);
-				height = Math.max(height, $clip.height);
+				bounds = $clip.getBounds(null);
+				width = Math.max(width, bounds.width);
+				height = Math.max(height, bounds.height);
+				x = Math.max(x, bounds.x);
+				y = Math.max(y, bounds.y);
 				$clip.nextFrame();
-			}			
-			return {width:Math.ceil(width),height:Math.ceil(height)};
+			}
+			return new Rectangle(x,y,width+x,height+y);
 		}
 		//------ clone ------------------------------------
 		override public function clone():BitmapSet {

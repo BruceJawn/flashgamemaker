@@ -28,7 +28,11 @@ package framework.core.architecture.component{
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.*;
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -49,7 +53,9 @@ package framework.core.architecture.component{
 	public class AnimationComponent extends GraphicComponent {
 
 		protected var _bitmapSet:* = null	//BitmapAnim property can be BitmapSet or extended to  SwfSet
-		protected var _clonePool:Array;
+		protected var _clonePool:Array = null;
+		protected var  _bounds:Rectangle = null;// width and height
+		protected var _isDrag:Boolean = false;
 		
 		public function AnimationComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -57,6 +63,9 @@ package framework.core.architecture.component{
 		}
 		//------ Init Var ------------------------------------
 		protected function initVar($prop:Object):void {
+			if ($prop && $prop.bounds )	{	
+				_bounds = $prop.bounds;
+			}
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -73,6 +82,7 @@ package framework.core.architecture.component{
 			_graphic = new Bitmap;
 			registerPropertyReference("bitmapRender");
 			registerPropertyReference("bitmapAnim");
+			registerPropertyReference("mouseInput",{onMouseRollOver:onMouseRollOver, onMouseRollOut:onMouseRollOut,onMouseDown:onMouseDown, onMouseUp:onMouseUp});
 			cloneFlush();
 		}
 		//------ Create Player ------------------------------------
@@ -85,6 +95,7 @@ package framework.core.architecture.component{
 		protected function createSwf($graphic:MovieClip):BitmapSet {
 			var frameRate:int = FlashGameMaker.stage.frameRate;
 			var swfSet:SwfSet = new SwfSet($graphic,null,true);
+			if(_bounds)	swfSet.bounds = _bounds;
 			swfSet.createBitmapFrom("AssetDisplay",frameRate);
 			swfSet.graph.createSimpleSequence();
 			return swfSet;
@@ -105,6 +116,7 @@ package framework.core.architecture.component{
 				clone.bitmapSet = _bitmapSet.clone();
 				clone.registerPropertyReference("bitmapRender");
 				clone.registerPropertyReference("bitmapAnim");
+				clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut, onMouseDown:clone.onMouseDown, onMouseUp:clone.onMouseUp});
 			}else{
 				_clonePool.push(clone);
 			}
@@ -116,7 +128,30 @@ package framework.core.architecture.component{
 				clone.bitmapSet = _bitmapSet.clone();
 				clone.registerPropertyReference("bitmapRender");
 				clone.registerPropertyReference("bitmapAnim");
+				clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut, onMouseDown:clone.onMouseDown, onMouseUp:clone.onMouseUp});
 			}
+		}
+		//------ On Mouse Down  ------------------------------------
+		public function onMouseDown($mousePad:MousePad ,$hitTest:Boolean, $isClicked:Boolean):void {
+			if($hitTest && !$isClicked && !_isDrag){
+				this.startDrag();
+				_isDrag = true;
+			}
+		}
+		//------ On Mouse UP  ------------------------------------
+		public function onMouseUp($mousePad:MousePad ,$hitTest:Boolean, $isClicked:Boolean):void {
+			if(_isDrag){
+				this.stopDrag();
+				_isDrag = false;
+			}
+		}
+		//------ On Mouse Roll Over  ------------------------------------
+		public function onMouseRollOver($mousePad:MousePad):void {
+			_graphic.filters = [new GlowFilter(0xFFFFFF,1,2.5,2.5,8,BitmapFilterQuality.MEDIUM),new DropShadowFilter(2,90,0xFF0000,0.5,2,2,3, BitmapFilterQuality.HIGH)];
+		}
+		//------ On Mouse Roll Out  ------------------------------------
+		public function onMouseRollOut($mousePad:MousePad):void {
+			_graphic.filters =[];
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
