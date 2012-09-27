@@ -1,0 +1,76 @@
+{
+	"name":"WoodenBox",
+	"fps":8,
+	"w":59,
+	"h":59,
+	"d":35, 
+	"row":1,
+	"col":6,
+	"life":200,
+	"stand":12,
+	"inTheSky":0,
+	"onHand":12,
+	"thrown":20,
+	"strengthList":
+		{
+			"normal":{"dvx":2, "fall":40, "vrest":10,"bdefend":16, "injury":40},
+			"jump":{"dvx":7, "fall":70, "vrest":10,"bdefend":16, "injury":40},
+			"run":{"dvx":10, "fall":70, "vrest":10,"bdefend":16, "injury":50},
+			"dash":{"dvx":12, "fall":70, "vrest":20,"bdefend":60, "injury":50}
+		},
+	"frames":[
+		{
+			"id":0, "frame":0, "name":"InTheSky", "state":"InTheSky", "endAnim":true, "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":1, "frame":1, "name":"InTheSky", "state":"InTheSky", "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":2, "frame":2, "name":"InTheSky", "state":"InTheSky",  "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":3, "frame":3, "name":"InTheSky", "state":"InTheSky",  "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":4, "frame":4, "name":"InTheSky", "state":"InTheSky",  "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":5, "frame":5, "name":"InTheSky", "state":"InTheSky",  "next":6,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		},
+		{
+			"id":6, "frame":4, "name":"JustOnGround","endAnim":true, "state":"Stand", "fps":18, "wait":5
+		},
+		{
+			"id":7, "frame":5, "name":"JustOnGround",  "state":"Stand", "next":12,"wait":5
+		},
+		{
+			"id":8, "frame":0, "name":"Thrown", "state":"Thrown","endAnim":true, "wait":5, "next":6,"dvx":15,
+			"itr":{ "kind":0,  "x":5,  "y":5, "w": 50, "h":35,"dvx":2, "vrest":1,"fall":70}
+		},
+		{
+			"id":9, "frame":1, "name":"Thrown", "state":"Thrown", "wait":5,"next":6,"dvx":15,
+			"itr":{ "kind":0,  "x":5,  "y":5, "w": 50, "h":35,"dvx":2, "vrest":1,"fall":70}
+		},
+		{
+			"id":10, "frame":2, "name":"Thrown", "state":"Thrown", "wait":5,"next":6,"dvx":10,
+			"itr":{ "kind":0,  "x":5,  "y":5, "w": 50, "h":35,"dvx":2, "vrest":1,"fall":70}
+		},
+		{
+			"id":11, "frame":3, "name":"Thrown", "state":"Thrown", "wait":5,"next":6,"dvx":10,
+			"itr":{ "kind":0,  "x":5,  "y":5, "w": 50, "h":35,"dvx":2, "vrest":1,"fall":70}
+		},
+		{
+			"id":12, "frame":5, "name":"OnHand","autoAnim":false,"flip":true,"state":"Stand", "wait":5
+		},
+		{
+			"id":13, "frame":5, "name":"OnGround","autoAnim":false,"state":"Stand", "wait":5,
+			"bdy": {"kind":0, "x":8, "y":21, "w":39, "h":39}
+		}
+	]
+}
