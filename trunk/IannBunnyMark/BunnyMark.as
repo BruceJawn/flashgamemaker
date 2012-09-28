@@ -61,8 +61,8 @@ package {
 			var renderComponent:RenderComponent = _entityManager.addComponentFromName("Entity","RenderComponent","myRenderComponent") as RenderComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("Entity","BitmapRenderComponent","myBitmapRenderComponent",{sortDepth:false}) as BitmapRenderComponent;
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("Entity","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
-			var systemInfoComponent:SystemInfoComponent=_entityManager.addComponentFromName("Entity","SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
-			systemInfoComponent.moveTo(0, 30);
+			//var systemInfoComponent:SystemInfoComponent=_entityManager.addComponentFromName("Entity","SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
+			//systemInfoComponent.moveTo(0, 30);
 		}
 		//------ Create Bunnies ------------------------------------
 		private function _createBunnies():void {
