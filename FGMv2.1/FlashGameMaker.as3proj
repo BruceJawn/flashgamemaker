@@ -46,7 +46,7 @@
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
-    <element path="lib\" />
+    <element path="" />
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
