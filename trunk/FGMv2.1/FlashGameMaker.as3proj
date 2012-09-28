@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project>
+<project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie disabled="False" />
+    <movie outputType="Application" />
     <movie input="" />
-    <movie path="swf\FlashGameMakerFD.swf" />
+    <movie path="swf\FlashGameMaker.swf" />
     <movie fps="30" />
     <movie width="400" />
     <movie height="345" />
     <movie version="10" />
+    <movie minorVersion="0" />
+    <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -24,8 +26,10 @@
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
+    <option omitTraces="True" />
     <option showActionScriptWarnings="False" />
     <option showBindingWarnings="False" />
+    <option showInvalidCSS="True" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="True" />
@@ -38,7 +42,7 @@
     <option staticLinkRSL="True" />
     <option additional="" />
     <option compilerConstants="" />
-    <option customSDK="" />
+    <option minorVersion="" />
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
@@ -47,6 +51,13 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="" />
+    <element path="lib\as3corelib.swc" />
+    <element path="lib\FlashGameMaker.swc" />
+    <element path="lib\fl_controls.swc" />
+    <element path="lib\flash.swc" />
+    <element path="lib\greensock_TweenLite.swc" />
+    <element path="lib\shareElements.swc" />
+    <element path="lib\TheMiner_en.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -81,4 +92,6 @@
     <option showHiddenPaths="False" />
     <option testMovie="Default" />
   </options>
+  <!-- Plugin storage -->
+  <storage />
 </project>
