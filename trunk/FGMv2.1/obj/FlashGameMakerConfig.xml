@@ -26,14 +26,7 @@
       <path-element>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\classes</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
-    <include-libraries>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\as3corelib.swc</library>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\flash.swc</library>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\fl_controls.swc</library>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\greensock_TweenLite.swc</library>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\shareElements.swc</library>
-      <library>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\TheMiner_en.swc</library>
-    </include-libraries>
+    <include-libraries />
     <library-path append="true">
       <path-element>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\as3corelib.swc</path-element>
       <path-element>C:\Documents and Settings\jndoye\Bureau\FGM\FGMv2.1\lib\fl_controls.swc</path-element>
