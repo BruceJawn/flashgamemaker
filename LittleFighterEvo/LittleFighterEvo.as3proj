@@ -54,6 +54,7 @@
     <element path="lib\as3corelib.swc" />
     <element path="lib\FlashGameMaker.swc" />
     <element path="lib\TheMiner_en.swc" />
+    <element path="lib\LittleFighterEvoInterface.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
