@@ -97,7 +97,7 @@ package screens{
 			//player1.setTimeMultiplicator(10);
 			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad1);
 			
-			/*var keyPad2:KeyPad = new KeyPad(true);
+			var keyPad2:KeyPad = new KeyPad(true);
 			keyPad2.useArrows();
 			keyPad2.mapFireButtons(KeyCode.M,KeyCode.PERCENT,KeyCode.STAR,KeyCode.ENTER);
 			var player2:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad2);
@@ -105,15 +105,14 @@ package screens{
 			//player2.setAI(true);
 			player2.moveTo(360,340);
 			var gamePad2:GamePadComponent = EntityFactory.CreateGamePad("GamePad2", 400,520,keyPad2);
-			*/
+			
 			
 			var player:LFE_ObjectComponent;
-			for (var i:int =3; i<=10;i++){
+			for (var i:int =3; i<=15;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
-				//player.setAI(true);
+				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
 			}
-			
 			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));

@@ -62,7 +62,7 @@ package {
 		}
 		private function _onLoadingComplete():void {
 			_initFramework();
-			_initProfiler();
+			//_initProfiler();
 			_initGame();
 		}
 		//------ Init Framework ------------------------------------

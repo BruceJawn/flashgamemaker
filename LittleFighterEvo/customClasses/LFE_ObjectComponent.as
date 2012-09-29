@@ -105,7 +105,7 @@ package customClasses{
 			super.initProperty();
 			registerPropertyReference("spatialMove");
 			registerPropertyReference("bitmapAnim");
-			registerPropertyReference("enterFrame", {onEnterFrame:onTick});
+			pushFunction({executeOnlyIfDisplayed:true,callback:onTick});
 		}
 		//------ Init Player Finite StateMachine ------------------------------------
 		private function _initPlayerStateMachine():void {
