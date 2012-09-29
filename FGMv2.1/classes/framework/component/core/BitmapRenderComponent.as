@@ -184,15 +184,15 @@ package framework.component.core{
 				if(!_drawOnlyVisible){
 					iteration++;
 					drawableComponent.push(component);
-				}else if(component.hasOwnProperty("alwaysDisplay") && component.alwaysDisplay){
+				}else if(component.hasOwnProperty("alwaysDisplay") && component.alwaysDisplay && component.graphic){
 					if(component.hasOwnProperty("isDisplayed")){
 						component.isDisplayed = true;
 					}
 					iteration++;
 					drawableComponent.push(component);
 				}else if (component.x+dimension.x >=_bitmap.x+_bitmap.x && component.x <_bitmap.x+_bitmap.width){
-					if (component.y+dimension.y>=_bitmap.y+_bitmap.y && component.y <_bitmap.y+_bitmap.height){
-						if(component.hasOwnProperty("isDisplayed")){
+					if (component.y+dimension.y>=_bitmap.y+_bitmap.y && component.y <_bitmap.y+_bitmap.height && component.graphic){
+						if(component.hasOwnProperty("isDisplayed") && component.graphic){
 							component.isDisplayed = true;
 						}
 						iteration++;
@@ -270,8 +270,8 @@ package framework.component.core{
 			}else if($component.hasOwnProperty("bitmapData") && $component.bitmapData){
 				$bitmapData = $component.bitmapData;
 				_copyPixels($component,$bitmapData);
-			}else if($component.graphic.width!=0 && $component.graphic.height!=0){
-				trace("[WARNING] BitmapRenderComponent cannot display this component "+$component);
+			}else{
+				//trace("[WARNING] BitmapRenderComponent cannot display this component "+$component);
 			}
 		}
 		//------ CopyPixels ------------------------------------
@@ -343,7 +343,9 @@ package framework.component.core{
 			}
 		}
 		//------ Sort Depths ------------------------------------
-		private function sortDepths($component1:Component, $component2:Component):int{
+		private function sortDepths($component1:Component, $component2:Component):Number{
+			if(!$component1.graphic)		return -1;
+			else if(!$component2.graphic)	return 1;
 			var layer1:int = SimpleGraphicComponent($component1).layer;
 			var layer2:int = SimpleGraphicComponent($component2).layer;
 			if (layer1>layer2 || $component1.hasOwnProperty("alwaysOnTop") && $component1.alwaysOnTop){
