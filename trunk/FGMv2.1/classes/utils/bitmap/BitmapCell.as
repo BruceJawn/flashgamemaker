@@ -35,6 +35,7 @@ package utils.bitmap{
 		public var wait:int=0;
 		public var next:BitmapCell=null;
 		public var prev:BitmapCell=null;
+		public var flip:Boolean = false;
 		
 		public function BitmapCell($bitmapData:BitmapData,$x:Number,$y:Number,$width:Number,$height:Number, $offsetX:Number=0, $offsetY:Number=0, $wait:int=0, $next:BitmapCell=null,$prev:BitmapCell=null){
 			bitmapData 	= $bitmapData

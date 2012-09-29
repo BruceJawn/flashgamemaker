@@ -25,16 +25,18 @@ package framework.component.core{
 	
 	import com.greensock.TweenLite;
 	
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.*;
 	import flash.geom.Rectangle;
 	
+	import framework.component.Component;
 	import framework.entity.IEntity;
 	
+	import utils.bitmap.BitmapCell;
 	import utils.bitmap.SwfSet;
 	import utils.iso.IsoPoint;
 	import utils.physic.SpatialMove;
-	import framework.component.Component;
 	
 	/**
 	* MovingAnimationComponent Class
@@ -42,7 +44,6 @@ package framework.component.core{
 	public class MovingAnimationComponent extends AnimationComponent {
 
 		protected var _spatialMove:SpatialMove	= new SpatialMove;
-		protected var _facingDirection:Number = 1; // Right == 1 / LEFT == -1
 		protected var _bound:Rectangle;		//Max Distance
 		
 		public function MovingAnimationComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
@@ -62,11 +63,11 @@ package framework.component.core{
 		//------- On Anim -------------------------------
 		public override function onAnim():void {
 			if(currentAnimName.lastIndexOf("WALK_CYCLE")!=-1){
-				_spatialMove.movingDir.x=_facingDirection;
+				_spatialMove.movingDir.x=_spatialMove.facingDir.x;
 				_spatialMove.move(_spatialMove.WALK);
 				actualize("spatialMove");
 			}else if(currentAnimName.lastIndexOf("RUN_CYCLE")!=-1){
-				_spatialMove.movingDir.x=_facingDirection;
+				_spatialMove.movingDir.x=_spatialMove.facingDir.x;
 				_spatialMove.move(_spatialMove.RUN);
 				actualize("spatialMove");
 			}else if(_spatialMove.isJumping() || _spatialMove.isFalling()){
@@ -80,14 +81,9 @@ package framework.component.core{
 		}
 		//------- Turn if at end of path -------------------------------
 		private function turnIfAtEndOfPath():void {
-			if ((x<=_bound.x ||Math.round(Math.random()*5)==1) && _facingDirection==-1){
-				scaleX *= -1; 
-				x-=graphic.width;
-				_facingDirection = 1;
-			}else if ((x>_bound.x+_bound.width || Math.round(Math.random()*5)==1) && _facingDirection==1){
-				scaleX *= -1; 
-				x+=graphic.width;
-				_facingDirection = -1;
+			if (x<=_bound.x || x>_bound.x+_bound.width || Math.round(Math.random()*5)==1){
+				_spatialMove.facingDir.x*=-1;
+				bitmapSet.flip=!bitmapSet.flip;
 			}
 		}
 		//------- Get Spatial Move -------------------------------

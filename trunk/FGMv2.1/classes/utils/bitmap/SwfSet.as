@@ -135,9 +135,6 @@ package utils.bitmap{
 			bitmapData.fillRect(bitmapData.rect, 0);
 //			if(realDisp.width> bounds.width || realDisp.height> bounds.height)	
 //				trace("Error: The dimension of the clip are wrong ", realDisp.width, bounds.width , realDisp.height, bounds.height);
-			var bounds:Rectangle = $clip.getBounds($clip);
-			var matrix:Matrix = $clip.transform.matrix;
-			matrix.translate(-bounds.x,-bounds.y);
 			bitmapData.draw($clip,null);//matrix cause issues !!!
 			bitmapData.unlock();
 			return bitmapData;

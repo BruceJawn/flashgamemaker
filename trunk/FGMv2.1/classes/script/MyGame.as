@@ -38,8 +38,8 @@ package script{
 			//new Tuto2_SimpleGraphicComponent();
 			//new Tuto3_BackgroundColorComponent();
 			//new Navigation("Demo");
-			new Demo();
-			//new BunnyMark();
+			//new Demo();
+			new BunnyMark();
 		}
 	}
 }

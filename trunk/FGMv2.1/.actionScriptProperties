@@ -3,7 +3,6 @@
   <compiler additionalCompilerArguments="-locale en_US -allow-source-path-overlap=true -as3=true -creator &quot;AngelStreet&quot; -title &quot;FlashGameMaker&quot; -description  &quot;http://code.google.com/p/flashgamemaker&quot;" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="swf" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="classes"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="lib"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -28,7 +27,6 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="lib"/>
-      <libraryPathEntry kind="1" linkType="1" path="assets/embedded"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -38,4 +36,3 @@
   <modules/>
   <buildCSSFiles/>
 </actionScriptProperties>
-

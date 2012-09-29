@@ -25,24 +25,35 @@ package utils.stuv{
 	import com.adobe.serialization.json.JSON;
 	
 	import flash.display.LoaderInfo;
+	
+	import framework.Framework;
 
 	public class Params {
 
 		private static var flashVars:Object;
-
+		public static var URL:String;
+		public static var LOADER_URL:String;
+		public static var HEIGHT:Number;
+		public static var WIDTH:Number;
+		public static var SWF_VERSION:Number;
+		public static var FRAME_RATE:Number;
 		protected static var loaderInfo:LoaderInfo;
 		
 		public static function Init($loaderInfo:LoaderInfo):void {
 			loaderInfo = $loaderInfo;
-			var loaderParameters:Object;
-			loaderParameters = loaderInfo.parameters;
-			Params.ParseFlashVars( loaderParameters );
+			ParseFlashVars( loaderInfo );
 		}
 		/**
 		 * Parse flashVars
 		 */
 		public static function ParseFlashVars( $flashVars:Object ):void {
-			flashVars = $flashVars;
+			flashVars 	= $flashVars;
+			URL 		= flashVars['url'];
+			LOADER_URL 	= flashVars['loaderURL'];
+			WIDTH 		= flashVars['width'];
+			HEIGHT 		= flashVars['height'];
+			SWF_VERSION = flashVars['swfVersion'];
+			FRAME_RATE  = flashVars['frameRate'];
 		}
 		/**
 		 * Get FlashVar

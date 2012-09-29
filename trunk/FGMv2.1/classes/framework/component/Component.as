@@ -24,6 +24,8 @@
 package framework.component{
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
 	
 	import framework.Framework;
@@ -41,6 +43,7 @@ package framework.component{
 		protected var _propertyReferences:Dictionary = null;
 		protected var _singleton:Boolean = false; //If Yes only 1 component can be instanciated within an Entity
 		protected var _prop:Object = {};
+		protected var _functions:Array;//Prototype: {executeOnlyIfDisplayed:true,callback:functionToExecute,parameters:[]}
 		public function Component($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object=null) {
 			if ($entity == null) {
 				throw new Error("Error: Component must have a non null Entity !!!");
@@ -187,6 +190,14 @@ package framework.component{
 		protected function get debugMode():Boolean {
 			return _debugMode;
 		}
+		//------- Get Matrix -------------------------------
+		public function get matrix():Matrix{
+			return transform.matrix;
+		}
+		//------- Get Color Transform -------------------------------
+		public function get colorTransform():ColorTransform{
+			return transform.colorTransform;
+		}
 		//------ Clone  ------------------------------------
 		public function clone():Component {
 			//To be overwritted
@@ -212,6 +223,20 @@ package framework.component{
 		//------ Get Prop  ------------------------------------
 		public function get prop():Object {
 			return _prop;
+		}
+		//------- Get Functions -------------------------------
+		public function get functions():Array{
+			return _functions
+		}
+		//------- Push Function -------------------------------
+		public function pushFunction($function:Object):void{
+			if(!_functions)	_functions = new Array;
+			_functions.push($function);
+		}
+		//------- Unshift Function -------------------------------
+		public function unshiftFunction($function:Object):void{
+			if(!_functions)	_functions = new Array;
+			_functions.unshift($function);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {
