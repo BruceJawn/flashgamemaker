@@ -34,8 +34,12 @@ package utils.transform{
 			flipHorizontalMatrix.translate($bitmapData.width,0);
 			var flippedBitmapData:BitmapData=new BitmapData($bitmapData.width,$bitmapData.height,true,0);
 			flippedBitmapData.draw($bitmapData,flipHorizontalMatrix);
+			$bitmapData.lock();
 			$bitmapData.fillRect($bitmapData.rect,0);
-			$bitmapData.draw(flippedBitmapData);
+			$bitmapData.copyPixels(flippedBitmapData,flippedBitmapData.rect, new Point(0,0));
+			$bitmapData.unlock();
+			flippedBitmapData.dispose();
+			flippedBitmapData = null;
 		}
 		//----- Swap Color  -----------------------------------
 		public static function SwapColor($bitmapData:BitmapData, $color:uint, $newColor:uint=0):void {

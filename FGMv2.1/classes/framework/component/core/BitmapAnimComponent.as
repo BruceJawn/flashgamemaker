@@ -134,9 +134,16 @@ package framework.component.core{
 					myBitmapData = null;
 				}
 			}else if(SwfSet(bitmapSet).swf && position.bitmapData){ //BitmapMode
+				if(bitmapSet.flip && !position.flip){
+					position.flip=true;
+					BitmapDataTransform.FlipBitmapData(position.bitmapData);
+				}else if(!bitmapSet.flip && position.flip){
+					position.flip=false;
+					BitmapDataTransform.FlipBitmapData(position.bitmapData);
+				}
 				$component.graphic.bitmapData=position.bitmapData;
 			}else if(SwfSet(bitmapSet).swf){
-				$component.graphic.bitmapData=SwfSet(bitmapSet).screenFrame();
+				$component.graphic.bitmapData=SwfSet(bitmapSet).screenFrame(null);
 			}
 			if($component.cacheAsBitmap && !_cacheList[bitmapCache]){
 				_cacheList[bitmapCache] = $component.graphic.bitmapData;

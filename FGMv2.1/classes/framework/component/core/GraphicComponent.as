@@ -38,7 +38,6 @@ package framework.component.core{
 	
 	import utils.adobe.Export;
 	import utils.iso.IsoPoint;
-	import utils.senocular.PassParameters;
 	import utils.text.StyleManager;
 
 	/**
@@ -95,7 +94,6 @@ package framework.component.core{
 			}
 			_collision = new Array;
 			_collisionParam = new Object;
-			
 			_point1 = new Point;
 			_point2 = new Point;
 			_ressourceManager = RessourceManager.getInstance();

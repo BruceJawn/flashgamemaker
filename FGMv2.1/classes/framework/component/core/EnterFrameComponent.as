@@ -43,7 +43,7 @@ package framework.component.core{
 	*/
 	public class EnterFrameComponent extends Component {
 		
-		private var _testPerformance:Boolean = true;
+		private var _testPerformance:Boolean = false;
 		private var _isRunning:Boolean = false;
 		private var _frameRate:Number;
 		
@@ -79,20 +79,23 @@ package framework.component.core{
 		//------  Dispatch ------------------------------------
 		private function dispatch($callback:String):void {
 			var components:Vector.<Object> = _properties["enterFrame"].components;
-			var time2:Number = Time.GetTime();
+			if(_testPerformance){
+				var time:Number;
+				var time2:Number = Time.GetTime();
+			}
 			for each (var object:Object in components){
-				var time:Number = Time.GetTime();
+				if(_testPerformance)	time = Time.GetTime();
 				if(object.param.hasOwnProperty($callback)){
 					object.param[$callback]();
 				}else if(object.component.hasOwnProperty($callback)){
 					object.component[$callback]();
 				}
 				if(_testPerformance){
-					//trace("EnterFrameComponent: "+object.component.componentName, Time.GetTime()-time);
+					trace("EnterFrameComponent: "+object.component.componentName, Time.GetTime()-time);
 				}
 			}
 			if(_testPerformance){
-				//trace("EnterFrameComponent - Final:", Time.GetTime()-time2);
+				trace("EnterFrameComponent - Final:", Time.GetTime()-time2);
 			}
 		}
 	}

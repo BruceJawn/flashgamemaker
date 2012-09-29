@@ -236,17 +236,17 @@ package framework.entity{
 			var spatialMoveComponent:SpatialMoveComponent=entityManager.addComponentFromName($entityName,"SpatialMoveComponent","mySpatialMoveComponent") as SpatialMoveComponent;
 			var panda:AnimationComponent=entityManager.addComponentFromName($entityName,"AnimationComponent","myPanda") as AnimationComponent;
 			panda.loadGraphic("../assets/Panda.swf");
-			panda.registerPropertyReference("mouseInput",{onMouseRollOver:panda.onMouseRollOver, onMouseRollOut:panda.onMouseRollOut/*, onMouseDown:panda.onMouseDown, onMouseUp:panda.onMouseUp*/});
+			//panda.registerPropertyReference("mouseInput",{onMouseRollOver:panda.onMouseRollOver, onMouseRollOut:panda.onMouseRollOut/*, onMouseDown:panda.onMouseDown, onMouseUp:panda.onMouseUp*/});
 			panda.moveTo(Math.random()*Framework.width,Math.random()*Framework.height,1);
 			var clone:AnimationComponent;
-			for (var i:Number=0; i<150; i++){
+			for (var i:Number=0; i<500; i++){
 				clone=panda.clone() as AnimationComponent;
 				clone.moveTo(Math.random()*3000,Math.random()*3000+100,1);
-				clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut/*, onMouseDown:clone.onMouseDown, onMouseUp:clone.onMouseUp*/});
+				//clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut/*, onMouseDown:clone.onMouseDown, onMouseUp:clone.onMouseUp*/});
 			}
 			var fox:MovingAnimationComponent=entityManager.addComponentFromName($entityName,"MovingAnimationComponent","myFox") as MovingAnimationComponent;
 			fox.loadGraphic("../assets/Fox.swf",OnFoxAnimComplete);
-			fox.registerPropertyReference("mouseInput",{onMouseRollOver:fox.onMouseRollOver, onMouseRollOut:fox.onMouseRollOut/*, onMouseDown:fox.onMouseDown, onMouseUp:fox.onMouseUp*/});
+			//fox.registerPropertyReference("mouseInput",{onMouseRollOver:fox.onMouseRollOver, onMouseRollOut:fox.onMouseRollOut/*, onMouseDown:fox.onMouseDown, onMouseUp:fox.onMouseUp*/});
 			
 			fox.moveTo(Math.random()*Framework.width,Math.random()*Framework.height,1);
 		}
@@ -279,10 +279,10 @@ package framework.entity{
 		public static function OnFoxAnimComplete($fox:AnimationComponent):void{
 			SetFoxAnim($fox);
 			var clone:MovingAnimationComponent;
-			for (var i:Number=0; i<150; i++){
+			for (var i:Number=0; i<500; i++){
 				clone=$fox.clone() as MovingAnimationComponent;
 				clone.moveTo(Math.random()*3000,Math.random()*3000+100,1);
-				clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut/*, onMouseDown:$animComponent.onMouseDown, onMouseUp:$animComponent.onMouseUp*/});
+				//clone.registerPropertyReference("mouseInput",{onMouseRollOver:clone.onMouseRollOver, onMouseRollOut:clone.onMouseRollOut/*, onMouseDown:$animComponent.onMouseDown, onMouseUp:$animComponent.onMouseUp*/});
 				SetFoxAnim(clone);
 			}
 		}

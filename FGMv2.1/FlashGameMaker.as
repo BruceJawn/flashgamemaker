@@ -36,16 +36,33 @@ package {
 	* Main Class of the document.
 	 * FrameRate =30 -> 30fps === 33ms (processing a routine should not exceed 33ms to preserve fps)
 	*/
-	[SWF(width=815, height=600, backgroundColor=0xFFFFFF, frameRate=30, scriptTimeLimit=15)]
+	[SWF(width=800, height=600, backgroundColor=0xFFFFFF, frameRate=30, scriptTimeLimit=15)]
 	public class FlashGameMaker extends Sprite {
 		
 		public function FlashGameMaker() {
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init,false,0,true);
+			if (stage){
+				_init();
+			} 
+			else { 
+				addEventListener(Event.ADDED_TO_STAGE,_init, false, 0, true);
+			}
 		}
 		// Flash Develop Compatibility
-		private function init($e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
+		private function _init($e:Event = null):void {
+			trace("Init...");
+			removeEventListener(Event.ADDED_TO_STAGE, _init);
+			addEventListener(Event.ENTER_FRAME,_onLoading,false,0,true);
+		}
+		private function _onLoading($e:Event = null):void {
+			var loaded:Number = stage.loaderInfo.bytesLoaded;
+			var total:Number = stage.loaderInfo.bytesTotal;
+			trace("Loading... "+ Math.floor((loaded/total)*100)+ "%");
+			if (loaded == total) {
+				removeEventListener(Event.ENTER_FRAME, _onLoading);
+				_onLoadingComplete();
+			}
+		}
+		private function _onLoadingComplete():void {
 			_initFramework();
 			//_initProfiler();
 			_initGame();

@@ -30,3 +30,6 @@ fdb -p [port]
 
 #Launch ADL
 adl "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2\swf\application.xml"
+
+#Compc SWC
+compc -source-path="C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\classes" -include-sources="C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\classes\utils,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\classes\framework" -output="C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\swf\FlashGameMaker.swc" -library-path="C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\as3corelib.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\fl_controls.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\flash.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\greensock_tweenlite.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\shareelements.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\theminer_en.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\textlayout.swc,C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2.1\lib\core.swc" 

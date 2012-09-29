@@ -45,20 +45,21 @@ package framework.component.core{
 	
 	import utils.iso.IsoPoint;
 	import utils.mouse.MousePad;
+	import utils.senocular.PassParameters;
+	import utils.text.StyleManager;
 	import utils.time.Time;
 	import utils.ui.LayoutUtil;
-
+	
 	/**
-	* Bitmap Render Component: Manage the graphical rendering
-	*/
+	 * Bitmap Render Component: Manage the graphical rendering
+	 */
 	public class BitmapRenderComponent extends Component {
-
+		
 		protected var _mouseManager:IMouseManager = null;
 		private var _bitmap:Bitmap;
 		private var _bitmapData:BitmapData;
 		private var _isRunning:Boolean = false;
 		private var _timeline:Dictionary;
-		private var _drawableComponent:Vector.<Component>;
 		private var _lastClick:Point = null;
 		private var _position:IsoPoint = null;
 		private var _zoom:Array;
@@ -67,10 +68,12 @@ package framework.component.core{
 		private var _scrollArea:Rectangle=null;
 		private var _scrollPosition:IsoPoint=null;
 		private var _scrollEnabled:Boolean = true;
-		private var _testPerformance:Boolean = true;
+		private var _testPerformance:Boolean = false;
 		private var _interval:Number=0;
 		private var _intervalMax:Number=30;
 		private var _sortDepth:Boolean = true;
+		private var _drawOnlyVisible:Boolean = true; //Slowdown CPU if you have a lot of Sprites visible but increase CPU perf if just a few are visible
+		private var _boost:Boolean = false; //Optimized render for increased performance ! Implies no sortDepth, no callback, no display management
 		
 		public function BitmapRenderComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity, true);
@@ -79,7 +82,7 @@ package framework.component.core{
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
 			_mouseManager = MouseManager.getInstance();
-			_bitmapData = new BitmapData(Framework.stage.fullScreenWidth, Framework.stage.fullScreenHeight,true,0);
+			_bitmapData = new BitmapData(Framework.width, Framework.height,true,0);
 			_bitmap = new Bitmap(_bitmapData);
 			_timeline = new Dictionary(true);
 			Framework.AddChild(_bitmap,this);//Properties of BitmapRender will influe Display
@@ -125,39 +128,37 @@ package framework.component.core{
 		}
 		//------ On Tick ------------------------------------
 		private function onTick():void {
-			if(Time.GetTime()-_interval>_intervalMax){
-				_interval = Time.GetTime();
-			}else{ 
-				return;
-			}
-			var time:Number = Time.GetTime(); 
-			var iteration:int =0;
-			if(this.mask!=null){
-				var area:Rectangle = this.mask.getBounds(this.mask);
-			}else{
-				area = Framework.clip.getBounds(Framework.clip);
-			}
-			scrollView();
-			updateView();
-			_bitmapData.lock();
-			_bitmapData.fillRect(_bitmapData.rect, 0);
-			_drawableComponent = new Vector.<Component>;
 			// -- Variable Declaration --
-			var onScrollCallBack:Array= new Array;
+			if(_testPerformance)	var time:Number = Time.GetTime(); 
+			var iteration:int =0;
 			var time2:Number;
 			var component:Component;
 			var param:Object;
 			var newScrollPosition:Point;
 			var dimension:Point;
-			var matrix:Matrix;
 			var offset:Point;
 			var rect:Rectangle;
 			var bounds:Rectangle;
 			var callback:Function;
-			// -- End Declaration --
+			var bitmapData:BitmapData = null;
+			var onScrollCallBack:Array= new Array;
+			var drawableComponent:Array=new Array;
+			// -- Methods --
+			_scrollView();
+			_updateView();
+			_bitmapData.lock();
+			_bitmapData.fillRect(_bitmapData.rect, 0);
+			
+			// -- Drawable Loop --
 			for each(var object:Object in _timeline){
-				if(_testPerformance)	time2 = Time.GetTime();
 				component = object.component;
+				// --  Direct drawing
+				if(_boost){
+					// --  Execute Functions
+					_executeComponentFunction(component); //Permit to execute function in a single loop for every component!!! Power Max !!!
+					_drawComponent(component,bitmapData)
+					continue;
+				}	
 				if(!component.graphic || !component.visible){	
 					if(component.hasOwnProperty("isDisplayed")){
 						component.isDisplayed = false;
@@ -178,70 +179,117 @@ package framework.component.core{
 						}
 					}
 				}
-				dimension = GraphicComponent(component).getDimension();
-				if(component.hasOwnProperty("alwaysDisplay") && component.alwaysDisplay){
+				// -- Drawable Component --
+				dimension = GraphicComponent(component).getDimension();//Width and Height
+				if(!_drawOnlyVisible){
+					iteration++;
+					drawableComponent.push(component);
+				}else if(component.hasOwnProperty("alwaysDisplay") && component.alwaysDisplay){
 					if(component.hasOwnProperty("isDisplayed")){
 						component.isDisplayed = true;
 					}
 					iteration++;
-					_drawableComponent.push(component);
-				}else if (component.x+dimension.x >=_bitmap.x+area.x && component.x <_bitmap.x+area.width){
-					if (component.y+dimension.y>=_bitmap.y+area.y && component.y <_bitmap.y+area.height){
+					drawableComponent.push(component);
+				}else if (component.x+dimension.x >=_bitmap.x+_bitmap.x && component.x <_bitmap.x+_bitmap.width){
+					if (component.y+dimension.y>=_bitmap.y+_bitmap.y && component.y <_bitmap.y+_bitmap.height){
 						if(component.hasOwnProperty("isDisplayed")){
 							component.isDisplayed = true;
 						}
 						iteration++;
-						_drawableComponent.push(component);
+						drawableComponent.push(component);
 					}else if(component.hasOwnProperty("isDisplayed")){
 						component.isDisplayed = false;
 					}
 				}else if(component.hasOwnProperty("isDisplayed")){
 					component.isDisplayed = false;
 				}
-				if(_testPerformance){
-					//trace(component,": ", Time.GetTime()-time+"ms, scroll: "+(Time.GetTime()-time2)+"ms, iteration: "+iteration);
-				}
+				// --  Execute Function -- DO NOT DELETE CONDITIONNAL
+				// --  Execute Functions
+				//Permit to execute function in a single loop for every component!!! Power Max !!!
+				_executeComponentFunction(component); 
 			}
-			if(_sortDepth)	_drawableComponent.sort(sortDepths);
-			if(_testPerformance){
-				//trace("BitmapRender Sort: ", Time.GetTime()-time+"ms");
+			// -- Drawable Loop End --
+			if(_testPerformance)	time2 = Time.GetTime();
+			if(_sortDepth)	drawableComponent.sort(sortDepths);
+			if(_testPerformance) trace("BitmapRender Sort: ", Time.GetTime()-time2+"ms");
+			for each(component in drawableComponent){
+				_drawComponent(component,bitmapData);
 			}
-			var bitmapData:BitmapData = null;
-			for each(component in _drawableComponent){
-				matrix = component.transform.matrix;
-				if(_zoom && _zoomPosition){
-					matrix.a*= _zoom[_zoomPosition]
-					matrix.d*=  _zoom[_zoomPosition];
-				}
-				if(component.hasOwnProperty("bitmapData") && component.bitmapData){
-					if(component.hasOwnProperty("cacheAsBitmap") && component.cacheAsBitmap && component.hasOwnProperty("bitmapCache") && component.bitmapCache){
-						bitmapData = component.bitmapCache.clone();
-					}else{
-						bitmapData = component.bitmapData.clone();
-					}
-					for each( var filter:BitmapFilter in component.graphic.filters){
-						bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point,filter);
-					}
-					bitmapData.colorTransform(bitmapData.rect,component.graphic.transform.colorTransform);
-					_bitmapData.copyPixels(bitmapData, bitmapData.rect,new Point(component.x,component.y),null,null,true); //rect permits to draw only the parts of the graphicComponent which are in the drawable area
-					
-				}else if(component.graphic.width!=0 && component.graphic.height!=0){
-					_bitmapData.draw(component.graphic, matrix,component.graphic.transform.colorTransform,null,null); //rect permits to draw only the parts of the graphicComponent which are in the drawable area
-				}
-				//if(_testPerformance)	trace("Draw: ", Time.GetTime()-time+"ms, "+component.componentName);
-			}
-			if(bitmapData){
-				bitmapData.dispose();
-				bitmapData=null;
-			} 		
 			_bitmapData.unlock();
+			
+			//-- Callback ---
 			for each(callback in onScrollCallBack){
 				callback(_position);
 			}
-			//if(_testPerformance)		trace("BitmapRender Final Draw: ", Time.GetTime()-time+"ms, "+_drawableComponent.length);
+			//-- Memory Clean ---
+			if(bitmapData){
+				bitmapData.dispose();
+				bitmapData=null;
+			} 	
+			drawableComponent = null;
+			onScrollCallBack = null;
+			if(_testPerformance && drawableComponent)trace("BitmapRender Draw: ", Time.GetTime()-time+"ms, "+drawableComponent.length+"/"+iteration);
+			else if(_testPerformance)trace("BitmapRender Draw: ", Time.GetTime()-time+"ms, "+iteration);
+		}
+		//------ Execute Function ------------------------------------
+		private function _executeComponentFunction($component:Component):void {
+			if($component.functions){
+				for each(var functions:Object in $component.functions){
+					//Prototype: {executeOnlyIfDisplayed:true,callback:functionToExecute,parameters:[]}
+					if(!_boost && functions.executeOnlyIfDisplayed && !$component.isDisplayed)	return;
+					if(functions.parameters && functions.parameters is Array){
+						//functions.callback(functions.parameters[0]);return; //For test only
+						//Apply is too slow!!! Same goes for switch
+						/*var callback:Function = PassParameters.ApplyArguments(functions.callback,functions.parameters);
+						callback();*/
+						var lenght:int = functions.parameters.length
+						if(length==0){	functions.callback();return;}
+						else if(length==1){	functions.callback(functions.parameters[0]);return;}
+						else if(length==2){ functions.callback(functions.parameters[0],functions.parameters[1]);return;}
+						else if(length==3){	functions.callback(functions.parameters[0],functions.parameters[1],functions.parameters[2]);return;}
+						else if(length==4){	functions.callback(functions.parameters[0],functions.parameters[1],functions.parameters[2],functions.parameters[3]);return;}
+						else if(length==5){	functions.callback(functions.parameters[0],functions.parameters[1],functions.parameters[2],functions.parameters[3],functions.parameters[4]);return;}
+						else throw new Error("BitmapRenderComponent: ApplyArguments only support 5 max parameters!!!");
+					}else{
+						functions.callback();
+					} 
+				}
+			}
+		}
+		//------ Draw Component ------------------------------------
+		private function _drawComponent($component:Component,$bitmapData:BitmapData):void {
+			if($component.hasOwnProperty("cacheAsBitmap") && $component.cacheAsBitmap && $component.hasOwnProperty("bitmapCache") && $component.bitmapCache){
+				$bitmapData = $component.bitmapCache;
+				_copyPixels($component,$bitmapData);
+			}else if($component.hasOwnProperty("bitmap") && $component.bitmap){
+				$bitmapData = $component.bitmap.bitmapData;
+				_copyPixels($component,$bitmapData);
+			}else if($component.graphic is Bitmap && $component.graphic.bitmapData){
+				$bitmapData = $component.graphic.bitmapData;
+				_copyPixels($component,$bitmapData);
+			}else if($component.hasOwnProperty("bitmapData") && $component.bitmapData){
+				$bitmapData = $component.bitmapData;
+				_copyPixels($component,$bitmapData);
+			}else if($component.graphic.width!=0 && $component.graphic.height!=0){
+				trace("[WARNING] BitmapRenderComponent cannot display this component "+$component);
+			}
+		}
+		//------ CopyPixels ------------------------------------
+		private function _copyPixels($component:Component,$bitmapData:BitmapData):void {
+			if(!_boost){
+				for each( var filter:BitmapFilter in $component.graphic.filters){
+					$bitmapData.applyFilter($bitmapData,$bitmapData.rect,new Point,filter);
+				}
+				if($component.graphic.transform.colorTransform!=StyleManager.BasicColorTransform){
+					$bitmapData.colorTransform($bitmapData.rect,$component.graphic.transform.colorTransform);
+				}else if($component.transform.colorTransform!=StyleManager.BasicColorTransform){
+					$bitmapData.colorTransform($bitmapData.rect,$component.transform.colorTransform);
+				}
+			}
+			_bitmapData.copyPixels($bitmapData, $bitmapData.rect,new Point($component.x,$component.y),null,null,true); //rect permits to draw only the parts of the graphic$component which are in the drawable area
 		}
 		//------ Update View ------------------------------------
-		private function updateView():void {
+		private function _updateView():void {
 			if(!_scrollEnabled)	return;
 			if(_mouseManager.drag)	return;
 			if(_mouseManager.lastClickPosition && !_lastClick){
@@ -276,7 +324,7 @@ package framework.component.core{
 			_scrollArea = $scrollArea;
 		}
 		//------ Scroll View ------------------------------------
-		private function scrollView():void {
+		private function _scrollView():void {
 			if(_scrollTarget){
 				if(_scrollTarget.x<10){
 					_position.x=-10;
@@ -310,8 +358,6 @@ package framework.component.core{
 			var width1:Number = dimension1.x;
 			var width2:Number = dimension2.x;
 			
-//			if ($component1.z < $component2.z ) return -1;
-//			if ($component1.z > $component2.z) return 1;
 			if ($component1.y+height1-$component1.z < $component2.y+height2-$component2.z ) return -1;
 			if ($component1.y+height1-$component1.z > $component2.y+height2-$component2.z) return 1;
 			if ($component1.x+width1 < $component2.x+width2 ) return 1;
@@ -343,6 +389,12 @@ package framework.component.core{
 		public function set scrollEnabled($scrollEnabled:Boolean):void{
 			_scrollEnabled = $scrollEnabled;
 		}
+		public function set boost($boost:Boolean):void{
+			_boost = $boost;
+		}
+		public function set drawOnlyVisible($drawOnlyVisible:Boolean):void{
+			_drawOnlyVisible=$drawOnlyVisible;
+		}
 		//------- Remove Property Component -------------------------------
 		public override function removePropertyComponent($propertyName:String, $component:Component):void {
 			if(_timeline[$component])	delete _timeline[$component];
@@ -350,7 +402,7 @@ package framework.component.core{
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
-
+			
 		}
 	}
 }

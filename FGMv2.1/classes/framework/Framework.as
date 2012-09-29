@@ -28,7 +28,6 @@ package framework{
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.external.ExternalInterface;
 	
 	import framework.component.ComponentReference;
 	

@@ -66,7 +66,7 @@ package framework.component.core{
 		public function PreloaderComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
 			_initVar($prop);
-			_initListener();
+			_loadAssets();
 		}
 		//------ Init Var ------------------------------------
 		private  function _initVar($prop:Object):void {
@@ -83,28 +83,10 @@ package framework.component.core{
 			_textField.selectable=false;
 			_soundManager = SoundManager.getInstance();
 		}
-		//------ Init Listener  ------------------------------------
-		private function _initListener():void {
-			Framework.stage.addEventListener(Event.ENTER_FRAME,onLoading,false,0,true);
-		}
 		//------ Register Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
 			registerProperty("preloader");
-		}
-		//------ On Progress  ------------------------------------
-		public function onLoading($evt:Event):void {
-			var loaded:Number = Framework.stage.loaderInfo.bytesLoaded;
-			var total:Number = Framework.stage.loaderInfo.bytesTotal;
-			_textField.text = "Loading... "+ Math.floor((loaded/total)*100)+ "%";
-			updateRootGraphic(loaded, total);
-			trace("*Preloader: "+_textField.text)
-			_progress = Math.floor((loaded/total)*100);
-			if(loaded == total){
-				onLoadingComplete();
-			}else if(_onLoadingProgress!=null){
-				_onLoadingProgress(_progress);
-			}
 		}
 		//------ Actualize Components  ------------------------------------
 		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
@@ -114,34 +96,8 @@ package framework.component.core{
 				}
 			}
 		}
-		//------ On Loading Complete ------------------------------------
-		private function onLoadingComplete():void {
-			Framework.stage.removeEventListener(Event.ENTER_FRAME,onLoading);
-			if(!_assetsToLoad || _assetsToLoad.length==0){
-				setTimeout(onComplete, 100);
-			}else{
-				onComplete();
-				loadAssets();
-			}
-		}
-		//------ On Complete ------------------------------------
-		private function onComplete():void {
-			_textField.text ="Loading Successfull";
-			if(_loadingBarRootTF){
-				_loadingBarRootTF.text = _textField.text;
-			}
-			trace("*Preloader: "+_textField.text);
-			var components:Vector.<Object> = _properties["preloader"].components;
-			for each(var object:Object in components){
-				setTimeout(object.param.onLoadingComplete,2000);
-			}
-			if(_onLoadingComplete is Function && _onLoadingComplete!=null){
-				setTimeout(_onLoadingComplete, 2000);
-			}
-		}
-		
 		//------ LoadAssets ------------------------------------
-		private function loadAssets():void {
+		private function _loadAssets():void {
 			_numAssetsToLoad = _assetsToLoad.length;
 			for each (var assetPath:String in _assetsToLoad){
 				var extension:String = SimpleLoader.GetFileExtension(assetPath).toLowerCase();

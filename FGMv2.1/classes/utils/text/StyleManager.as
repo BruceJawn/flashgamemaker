@@ -25,12 +25,13 @@ package utils.text{
 	import flash.filters.ColorMatrixFilter;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
+	import flash.geom.ColorTransform;
 	import flash.text.TextFormat;
 	
 	import flashx.textLayout.formats.TextAlign;
-
+	
 	public class StyleManager {
-
+		public static var BasicColorTransform:ColorTransform = new ColorTransform();
 		public static var BlackStroke:Array = [new GlowFilter(0,1,2,2,15,2)];
 		public static var LightBlackStroke:Array = [new GlowFilter(0,1,2,2,4,2)];
 		public static var RedStroke:Array = [new GlowFilter(0xFF0000,1,5,5,10,1,true)];
