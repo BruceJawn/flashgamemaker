@@ -89,7 +89,7 @@ package customClasses{
 				player.x=$position.x;
 				player.y=$position.y;
 			}
-			//player.registerPropertyReference("collisionDetection",player.collisionParam);
+			player.registerPropertyReference("collisionDetection",player.collisionParam);
 			return player;
 		}
 		//------- Create Special Move  -------------------------------
