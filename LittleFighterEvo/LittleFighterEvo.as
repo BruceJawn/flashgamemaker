@@ -38,12 +38,29 @@ package {
 	public class LittleFighterEvo extends Sprite {
 		
 		public function LittleFighterEvo() {
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			if (stage){
+				_init();
+			} 
+			else { 
+				addEventListener(Event.ADDED_TO_STAGE,_init, false, 0, true);
+			}
 		}
 		// Flash Develop Compatibility
-		private function init($e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
+		private function _init($e:Event = null):void {
+			trace("Init...");
+			removeEventListener(Event.ADDED_TO_STAGE, _init);
+			addEventListener(Event.ENTER_FRAME,_onLoading,false,0,true);
+		}
+		private function _onLoading($e:Event = null):void {
+			var loaded:Number = stage.loaderInfo.bytesLoaded;
+			var total:Number = stage.loaderInfo.bytesTotal;
+			trace("Loading... "+ Math.floor((loaded/total)*100)+ "%");
+			if (loaded == total) {
+				removeEventListener(Event.ENTER_FRAME, _onLoading);
+				_onLoadingComplete();
+			}
+		}
+		private function _onLoadingComplete():void {
 			_initFramework();
 			_initProfiler();
 			_initGame();
