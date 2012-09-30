@@ -50,7 +50,8 @@ package customClasses{
 		public static function CreateObject($oid:int, $caller:LFE_ObjectComponent=null, $keyPad:KeyPad=null, $position:IsoPoint=null):LFE_ObjectComponent {
 			var object:Object = Data.OBJECT[$oid];
 			var dataString:String = RessourceManager.getInstance().getFile(object.data);
-			var dataJSON:Object = JSON.decode(dataString);
+			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
+			var dataJSON:Object = JSON.decode(dataString);//Flash 10
 			var graphics:Array = object.graphics as Array;
 			var lfe_object:LFE_ObjectComponent = null;
 			switch(object.kind){

@@ -45,7 +45,6 @@ package screens{
 		
 		// Preloader load the main swf (FlashGameMaker.swf) and preload assets
 		public function Preloader(){
-			
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {

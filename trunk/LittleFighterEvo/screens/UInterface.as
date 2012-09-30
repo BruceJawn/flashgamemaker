@@ -26,6 +26,7 @@ package screens{
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	
+	import framework.Framework;
 	import framework.component.Component;
 	import framework.component.core.*;
 	import framework.entity.*;
@@ -49,6 +50,7 @@ package screens{
 		private var _entityManager:IEntityManager=null;
 		private var _menuComponent:GraphicComponent=null;
 		private var _soundManager:ISoundManager=null;
+		private var _mainMusic:String;
 		
 		public function UInterface(){
 		}
@@ -56,10 +58,15 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
+			_mainMusic = Framework.root+"assets/main.mp3"
 		}
 		//------ Start Music ------------------------------------
 		private function startMusic():void {
-			//_soundManager.play("../assets/LittleFighterEvo/main.mp3",0.5,true);
+			_soundManager.play(_mainMusic,0.01,true);
+		}
+		//------ Stop Music ------------------------------------
+		private function stopMusic():void {
+			_soundManager.stop(_mainMusic);
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -104,6 +111,10 @@ package screens{
 			initVar();
 			initComponent();
 			startMusic();
+		}
+		//------ Enter ------------------------------------
+		public override function exit($previousState:State):void {
+			stopMusic();
 		}
 	}
 }
