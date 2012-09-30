@@ -169,10 +169,10 @@ package framework.system{
 			_playingSoundChannel = _playingSound.play(_playingSoundPosition);
 		}
 		//------ Stop Music ------------------------------------
-		public function stop($soundChannel:SoundChannel=null):Number {
-			_playingSoundPosition = _playingSoundChannel.position;
-			_playingSoundChannel.stop();
-			return _playingSoundPosition;
+		public function stop($path:String):Number {
+			var soundChannel:SoundChannel = _sounds[$path].soundChannel;
+			soundChannel.stop();
+			return 0;
 		}
 		//------ Mute ------------------------------------
 		public function mute($soundChannel:SoundChannel=null):void {
@@ -192,7 +192,7 @@ package framework.system{
 		//------ Play Streaming Wav ------------------------------------
 		public function playWav($wavUrl:String, $volume:Number=0.5, $kill:Boolean=false):void {
 			if($kill && _playingSound){
-				stop();
+				stop($wavUrl);
 			}
 			if(_playingSounds[$wavUrl]){
 				trace("[WARNING] the sound "+$wavUrl+" has already been played");

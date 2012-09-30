@@ -44,7 +44,7 @@ package framework.system{
 		/**
 		 * Stop Sound
 		 */		
-		function stop(soundChannel:SoundChannel=null):Number;
+		function stop(path:String):Number;
 		/**
 		 * Resume Sound
 		 */		

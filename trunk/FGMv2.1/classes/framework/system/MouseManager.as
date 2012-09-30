@@ -89,17 +89,17 @@ package framework.system{
 			return MousePixelColor.toString(16);
 		}
 		//---- Is Caller Clicked ------------------------------------------------
-		public  function isClicked($caller:DisplayObject):Boolean{
+		public  function isClicked($caller:*):Boolean{
 			if($caller == _clicked)	return true;
 			return false;
 		}
 		//---- Is Caller Drag ------------------------------------------------
-		public  function isDrag($caller:DisplayObject):Boolean{
+		public  function isDrag($caller:*):Boolean{
 			if($caller == _drag)	return true;
 			return false;
 		}
 		//---- Is Caller RollOver ------------------------------------------------
-		public  function isRollOver($caller:DisplayObject):Boolean{
+		public  function isRollOver($caller:*):Boolean{
 			if($caller == _rollOver)	return true;
 			return false;
 		}
