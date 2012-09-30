@@ -228,6 +228,7 @@ package utils.keyboard{
 						}
 					}
 					keyPadInput.isDown=false;
+					keyPadInput.doubleClick=false;
 					keyPadInput.longClick = keyPadInput.getLongClick();
 					keyPadInput.isDownTime=-1;
 				}

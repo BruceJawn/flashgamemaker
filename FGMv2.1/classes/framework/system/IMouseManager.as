@@ -37,15 +37,15 @@ package framework.system{
 		/**
 		* Is the caller currently clicked
 		*/		
-		function isClicked($caller:DisplayObject):Boolean;
+		function isClicked($caller:*):Boolean;
 		/**
 		 * Is the caller currently drag
 		 */	
-		function isDrag($caller:DisplayObject):Boolean;
+		function isDrag($caller:*):Boolean;
 		/**
 		 * Is the caller currently rollOver
 		 */	
-		function isRollOver($caller:DisplayObject):Boolean
+		function isRollOver($caller:*):Boolean
 		 /**
 		 * To String
 		 */		

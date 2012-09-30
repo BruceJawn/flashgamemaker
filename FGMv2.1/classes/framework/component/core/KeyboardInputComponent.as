@@ -124,10 +124,10 @@ package framework.component.core{
 				_timer = Time.GetTime();
 				_nbClick++;
 				_clickKeyCode=$keyCode;
-			}else{
+			}else if(_nbClick == 2){
 				_interval = (Time.GetTime() - _timer);
 				//----Double Click  
-				if (_nbClick == 2 &&  _clickKeyCode==$keyCode && (_interval < _doubleClickLatence || _doubleClick) ) {
+				if ((_interval < _doubleClickLatence || _doubleClick) &&  _clickKeyCode==$keyCode ) {
 					_doubleClick = true;
 					return true;
 				}

@@ -32,9 +32,11 @@ package framework.component.add{
 	import flash.events.*;
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import framework.Framework;
 	import framework.component.core.*;
 	import framework.entity.*;
 	
@@ -55,6 +57,8 @@ package framework.component.add{
 		private var _isAligned:Boolean;
 		private var _background:Sprite;
 		private var _ball:Sprite;
+		private var _ballX:int=0;
+		private var _ballY:int=0;
 		private var _button1:Sprite;
 		private var _button1TF:TextField;
 		private var _button2:Sprite;
@@ -76,14 +80,21 @@ package framework.component.add{
 		private var _alpha:Number = 0.6;
 		private var _textFormat:TextFormat;
 		public var update:Boolean=true;
+		private var _colorTransform:ColorTransform = null;
+		private var _redColorTransform:ColorTransform = null;
+		private var _list:Array = null;
 		// THE "STICK"
 		private var _targetX:Number=0;
 		private var _targetY:Number=0;
 		private var _x:Number = 0;
 		private var _y:Number = 0;
+		private var _mouseActions:Boolean = true;//To use the GamePad with Mouse or Touch Events 
+		private var _stickDown:Boolean = false;
+		
 		public function GamePadComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object=null) {
 			super($componentName, $entity, $singleton, $prop);
 			_initVar($prop);
+			_initListener();
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
@@ -92,21 +103,33 @@ package framework.component.add{
 			}else{
 				throw new Error("A keyPad must be given as parameter to the GamePadComponent !!!");
 			}
+			if($prop && $prop.hasOwnProperty("mouseActions"))	_mouseActions = $prop.mouseActions;
 			graphic = new Sprite;
 			_isCircle=false;
 			_isAligned = true;
 			_colour=0x333333;
 			_textFormat = new TextFormat("Arial", 16, 0xFFFFFF, true);
+			_ballX=40;
+			_ballY=40;
+			_colorTransform = new ColorTransform(1,1,1,_alpha);
+			_redColorTransform =  new ColorTransform(1,0,0,1);
 			drawBackground();
 			createBall();
 			createButtons();
 			createKeypad();
+			Framework.AddChild(this);
+		}
+		//------ Init Listener ------------------------------------
+		private function _initListener():void {
+			if(_mouseActions){
+				_ball.addEventListener(MouseEvent.MOUSE_DOWN,onStickMouseDown,false,0,true);
+				Framework.clip.addEventListener(MouseEvent.MOUSE_UP,onStickMouseUp,false,0,true);
+				Framework.clip.addEventListener(MouseEvent.MOUSE_MOVE,onStickMouseMove,false,0,true);
+			}
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
-			super.initProperty();
 			registerPropertyReference("keyboardInput", {onKeyFire:onKeyFire});
-			//registerPropertyReference("mouseInput", {onMouseDown:onMouseDown, onMouseUp:onMouseUp, onMouseRollOver:onMouseRollOver, onMouseRollOut:onMouseRollOut});
 		}
 		//------ On Key Fire ------------------------------------
 		public function onKeyFire($keyPad:KeyPad):void {
@@ -142,7 +165,7 @@ package framework.component.add{
 		private function createBall():void {
 			_ball = new Sprite();
 			_ball.graphics.beginFill(_colour, 1);
-			_ball.graphics.drawCircle(40, 40, 20);
+			_ball.graphics.drawCircle(_ballX, _ballY, 20);
 			_ball.graphics.endFill();
 			graphic.addChild(_ball);
 		}
@@ -152,28 +175,28 @@ package framework.component.add{
 			_up.x=140;
 			_up.y=0;
 			_upTF = new TextField();
-			_upTF.selectable = false;
+			_upTF.autoSize = TextFieldAutoSize.CENTER;
 			_up.addChild(_upTF);
 
 			_down=createKey();
 			_down.x=140;
 			_down.y=_up.y+35;
 			_downTF = new TextField();
-			_downTF.selectable = false;
+			_downTF.autoSize = TextFieldAutoSize.CENTER;
 			_down.addChild(_downTF);
 
 			_left=createKey();
 			_left.x=105;
 			_left.y=_up.y+35;
 			_leftTF = new TextField();
-			_leftTF.selectable = false;
+			_leftTF.autoSize = TextFieldAutoSize.CENTER;
 			_left.addChild(_leftTF);
 
 			_right=createKey();
 			_right.x=175;
 			_right.y=_up.y+35;
 			_rightTF = new TextField();
-			_rightTF.selectable = false;
+			_rightTF.autoSize = TextFieldAutoSize.CENTER;
 			_right.addChild(_rightTF);
 			
 			setKeyTouch();
@@ -182,20 +205,28 @@ package framework.component.add{
 		private function createButtons():void {
 			_button1=createButton();
 			_button1TF = new TextField();
-			_button1TF.selectable = false;
+			_button1TF.autoSize = TextFieldAutoSize.CENTER;
 			_button1.addChild(_button1TF);
+			_button1.addEventListener(MouseEvent.MOUSE_DOWN,pressButton1,false,0,true);
+			_button1.addEventListener(MouseEvent.MOUSE_UP,releaseButton1,false,0,true);
 			_button2=createButton();
 			_button2TF = new TextField();
-			_button2TF.selectable = false;
+			_button2TF.autoSize = TextFieldAutoSize.CENTER;
 			_button2.addChild(_button2TF);
+			_button2.addEventListener(MouseEvent.MOUSE_DOWN,pressButton2,false,0,true);
+			_button2.addEventListener(MouseEvent.MOUSE_UP,releaseButton2,false,0,true);
 			_button3=createButton();
 			_button3TF = new TextField();
-			_button3TF.selectable = false;
+			_button3TF.autoSize = TextFieldAutoSize.CENTER;
 			_button3.addChild(_button3TF);
+			_button3.addEventListener(MouseEvent.MOUSE_DOWN,pressButton3,false,0,true);
+			_button3.addEventListener(MouseEvent.MOUSE_UP,releaseButton3,false,0,true);
 			_button4=createButton();
 			_button4TF = new TextField();
-			_button4TF.selectable = false;
+			_button4TF.autoSize = TextFieldAutoSize.CENTER;
 			_button4.addChild(_button4TF);
+			_button4.addEventListener(MouseEvent.MOUSE_DOWN,pressButton4,false,0,true);
+			_button4.addEventListener(MouseEvent.MOUSE_UP,releaseButton4,false,0,true);
 			if(_isAligned){
 				_button1.x=245;
 				_button1.y=45;
@@ -224,8 +255,10 @@ package framework.component.add{
 			button.graphics.endFill();
 			button.alpha=_alpha;
 			button.buttonMode =true;
-			button.useHandCursor = true;
+			button.mouseChildren =false;
+			button.useHandCursor = false;
 			button.tabEnabled = false;
+			button.transform.colorTransform = _colorTransform;
 			graphic.addChild(button);
 			return button;
 		}
@@ -237,70 +270,204 @@ package framework.component.add{
 			key.graphics.endFill();
 			key.alpha=_alpha;
 			key.buttonMode =true;
-			key.useHandCursor = true;
+			key.mouseChildren =false;
+			key.useHandCursor = false;
 			key.tabEnabled = false;
+			key.transform.colorTransform = _colorTransform;
 			graphic.addChild(key);
 			return key;
 		}
 		//------ On Mouse Down ------------------------------------
-		public function onMouseDown($mousePad:MousePad):void {
-			if(_mouseManager.isClicked(graphic)){
-				if ($mousePad.mouseEvent.currentTarget.alpha!=0) {
-					$mousePad.mouseEvent.currentTarget.alpha=1;
-				}
-			}
+		public function onStickMouseDown($mouseEvent:MouseEvent):void {
+			//trace("Stick press");
+			_stickDown = true;
+			_ball.transform.colorTransform = _redColorTransform;
+			step();
+			updateStick();
 		}
 		//------ On Mouse Up ------------------------------------
-		public function onMouseUp($mousePad:MousePad):void {
-			/*if ($mousePad.mouseEvent.currentTarget.alpha!=0) {
-				$mousePad.mouseEvent.currentTarget.alpha=_alpha;
-			}*/
-		}
-		//------ On Mouse RollOver ------------------------------------
-		public function onMouseRollOver($mousePad:MousePad):void {
-			if(_mouseManager.isClicked(graphic)){
+		public function onStickMouseUp($mouseEvent:MouseEvent):void {
+			if(_stickDown){
+				//trace("Stick release");
+				_stickDown = false;
+				_ball.transform.colorTransform = _colorTransform;
+				_targetX=0;
+				_targetY=0;
+				updateMouse();
+				step();
+				updateStick();
 			}
 		}
-		//------ On Mouse RollOvut ------------------------------------
-		public function onMouseRollOut($mousePad:MousePad):void {
-			/*if ($mousePad.mouseEvent.currentTarget.alpha!=0) {
-			$mousePad.mouseEvent.currentTarget.alpha=_alpha;
-			}*/
+		//------ On Mouse Move ------------------------------------
+		public function onStickMouseMove($mouseEvent:MouseEvent):void {
+			if(_stickDown){
+				var dirX:Number = $mouseEvent.stageX-x;
+				var dirY:Number = $mouseEvent.stageY-y;
+				if(dirX < _ballX/2){
+					_targetX = -1;
+				}else if(dirX > 3*_ballX/2){
+					_targetX = 1;
+				}else{
+					_targetX = 0;
+				}
+				if(dirY < _ballY/2){
+					_targetY = -1;
+				}else if(dirY > 3*_ballY/2){
+					_targetY = 1;
+				}else{
+					_targetY = 0;
+				}
+				updateMouse();
+				step();
+				updateStick();
+			}
 		}
 		//------ UpdateGamePad ------------------------------------
 		private function updateGamePad():void {
+			updateStick();
+			updateKeys();
+		}
+		//------ Update Stick ------------------------------------
+		private function updateStick():void {
 			var targetAngle:Number=Math.atan2(_targetX,_targetY);
-			//trace(_keyPad,_keyPad.targetX,_keyPad.targetY);
+			//trace(_targetX,_targetY,targetAngle);
 			if (_isCircle&&_keyPad.anyDirection.isDown) {
 				_targetX=Math.sin(targetAngle);
 				_targetY=Math.cos(targetAngle);
 			}
 			_ball.x=_x*_ballStep;
 			_ball.y=_y*_ballStep;
-			if (_button1.alpha!=0) {
-				_button1.alpha=_keyPad.fire1.isDown?1:_alpha;
+		}
+		//------ Update Mouse ------------------------------------
+		private function updateMouse():void {
+			if(_keyPad.anyDirection.isDown && _targetX==0 && _targetY==0){
+				_keyPad.releaseLeftKey();
+				_keyPad.releaseRightKey();
+				_keyPad.releaseUpKey();
+				_keyPad.releaseDownKey();
+			}else if(_targetX==1 && _targetY==0){
+				if(!_keyPad.right.isDown)	_keyPad.pressRightKey();
+				if(_keyPad.left.isDown)		_keyPad.releaseLeftKey();
+				if(_keyPad.up.isDown)		_keyPad.releaseUpKey();
+				if(_keyPad.down.isDown)		_keyPad.releaseDownKey();
+			}else if(_targetX==-1 && _targetY==0){
+				if(!_keyPad.left.isDown)	_keyPad.pressLeftKey();
+				if(_keyPad.right.isDown)	_keyPad.releaseRightKey();
+				if(_keyPad.up.isDown)		_keyPad.releaseUpKey();
+				if(_keyPad.down.isDown)		_keyPad.releaseDownKey();
+			}else if(_targetX==0 && _targetY==1){
+				if(!_keyPad.down.isDown)	_keyPad.pressDownKey();
+				if(_keyPad.right.isDown)	_keyPad.releaseRightKey();
+				if(_keyPad.left.isDown)		_keyPad.releaseLeftKey();
+				if(_keyPad.up.isDown)		_keyPad.releaseUpKey();
+			}else if(_targetX==0 && _targetY==-1){
+				if(!_keyPad.up.isDown)		_keyPad.pressUpKey();
+				if(_keyPad.right.isDown)	_keyPad.releaseRightKey();
+				if(_keyPad.left.isDown)		_keyPad.releaseLeftKey();
+				if(_keyPad.down.isDown)		_keyPad.releaseDownKey();
+			}else if(_targetX==1 && _targetY==1){
+				if(!_keyPad.right.isDown)	_keyPad.pressRightKey();
+				if(!_keyPad.down.isDown)	_keyPad.pressDownKey();
+				if(_keyPad.left.isDown)		_keyPad.releaseLeftKey();
+				if(_keyPad.up.isDown)		_keyPad.releaseUpKey();
+			}else if(_targetX==1 && _targetY==-1){
+				if(!_keyPad.right.isDown)	_keyPad.pressRightKey();
+				if(!_keyPad.up.isDown)		_keyPad.pressUpKey();
+				if(_keyPad.left.isDown)		_keyPad.releaseLeftKey();
+				if(_keyPad.down.isDown)		_keyPad.releaseDownKey();
+			}else if(_targetX==-1 && _targetY==1){
+				if(!_keyPad.left.isDown)	_keyPad.pressLeftKey();
+				if(!_keyPad.down.isDown)	_keyPad.pressDownKey();
+				if(_keyPad.right.isDown)	_keyPad.releaseRightKey();
+				if(_keyPad.up.isDown)		_keyPad.releaseUpKey();
+			}else if(_targetX==-1 && _targetY==-1){
+				if(!_keyPad.left.isDown)	_keyPad.pressLeftKey();
+				if(!_keyPad.up.isDown)		_keyPad.pressUpKey();
+				if(_keyPad.right.isDown)	_keyPad.releaseRightKey();
+				if(_keyPad.down.isDown)		_keyPad.releaseDownKey();
 			}
-			if (_button2.alpha!=0) {
-				_button2.alpha=_keyPad.fire2.isDown?1:_alpha;
+			
+		}
+		//------ Update Keys ------------------------------------
+		private function updateKeys():void {
+			if(_keyPad.fire1.isDown && _button1.transform.colorTransform.alphaMultiplier != 1){
+				_button1.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.fire1.isDown && _button1.transform.colorTransform.alphaMultiplier == 1){
+				_button1.transform.colorTransform=_colorTransform;
 			}
-			if (_button3.alpha!=0) {
-				_button3.alpha=_keyPad.fire3.isDown?1:_alpha;
+			if(_keyPad.fire2.isDown && _button2.transform.colorTransform.alphaMultiplier != 1){
+				_button2.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.fire2.isDown && _button2.transform.colorTransform.alphaMultiplier == 1){
+				_button2.transform.colorTransform=_colorTransform;
 			}
-			if (_button4.alpha!=0) {
-				_button4.alpha=_keyPad.fire4.isDown?1:_alpha;
+			if(_keyPad.fire3.isDown && _button3.transform.colorTransform.alphaMultiplier != 1){
+				_button3.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.fire3.isDown && _button3.transform.colorTransform.alphaMultiplier == 1){
+				_button3.transform.colorTransform=_colorTransform;
 			}
-			if (_up.alpha!=0) {
-				_up.alpha=_keyPad.up.isDown?1:_alpha;
+			if(_keyPad.fire4.isDown && _button4.transform.colorTransform.alphaMultiplier != 1){
+				_button4.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.fire4.isDown && _button4.transform.colorTransform.alphaMultiplier == 1){
+				_button4.transform.colorTransform=_colorTransform;
 			}
-			if (_down.alpha!=0) {
-				_down.alpha=_keyPad.down.isDown?1:_alpha;
+			if(_keyPad.down.isDown && _down.transform.colorTransform.alphaMultiplier != 1){
+				_down.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.down.isDown && _down.transform.colorTransform.alphaMultiplier == 1){
+				_down.transform.colorTransform=_colorTransform;
 			}
-			if (_left.alpha!=0) {
-				_left.alpha=_keyPad.left.isDown?1:_alpha;
+			if(_keyPad.up.isDown && _up.transform.colorTransform.alphaMultiplier != 1){
+				_up.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.up.isDown && _up.transform.colorTransform.alphaMultiplier == 1){
+				_up.transform.colorTransform=_colorTransform;
 			}
-			if (_right.alpha!=0) {
-				_right.alpha=_keyPad.right.isDown?1:_alpha;
+			if(_keyPad.left.isDown && _left.transform.colorTransform.alphaMultiplier != 1){
+				_left.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.left.isDown && _left.transform.colorTransform.alphaMultiplier == 1){
+				_left.transform.colorTransform=_colorTransform;
 			}
+			if(_keyPad.right.isDown && _right.transform.colorTransform.alphaMultiplier != 1){
+				_right.transform.colorTransform=_redColorTransform;
+			}else if(!_keyPad.right.isDown && _right.transform.colorTransform.alphaMultiplier == 1){
+				_right.transform.colorTransform=_colorTransform;
+			}
+		}
+		//------ Press Buttons ------------------------------------
+		private function pressButton1($mouseEvent:MouseEvent):void {
+			_button1.transform.colorTransform = _redColorTransform;
+			_keyPad.pressFire1Key();
+		}
+		private function pressButton2($mouseEvent:MouseEvent):void {
+			_button2.transform.colorTransform = _redColorTransform;
+			_keyPad.pressFire2Key();
+		}
+		private function pressButton3($mouseEvent:MouseEvent):void {
+			_button3.transform.colorTransform = _redColorTransform;
+			_keyPad.pressFire3Key();
+		}
+		private function pressButton4($mouseEvent:MouseEvent):void {
+			_button4.transform.colorTransform = _redColorTransform;
+			_keyPad.pressFire4Key();
+		}
+		//------ Release Buttons ------------------------------------
+		private function releaseButton1($mouseEvent:MouseEvent):void {
+			$mouseEvent.stopPropagation();
+			_button1.transform.colorTransform = _colorTransform;
+			_keyPad.releaseFire1Key();
+		}
+		private function releaseButton2($mouseEvent:MouseEvent):void {
+			$mouseEvent.stopPropagation();
+			_button2.transform.colorTransform = _colorTransform;
+			_keyPad.releaseFire2Key();
+		}
+		private function releaseButton3($mouseEvent:MouseEvent):void {
+			$mouseEvent.stopPropagation();
+			_button3.transform.colorTransform = _colorTransform;
+			_keyPad.releaseFire3Key();
+		}
+		private function releaseButton4($mouseEvent:MouseEvent):void {
+			$mouseEvent.stopPropagation();
+			_button4.transform.colorTransform = _colorTransform;
+			_keyPad.releaseFire4Key();
 		}
 		//------ DisplayButton ------------------------------------
 		public function showButton(buttonName:String):void {
@@ -371,7 +538,7 @@ package framework.component.add{
 		}
 		//------ Step ------------------------------------
 		public function step():void {
-			if(_keyPad.anyDirection.isDown){
+			if(_stickDown || _keyPad.anyDirection.isDown){
 				_x += (_targetX - _x);
 				_y += (_targetY - _y);
 			}else{
