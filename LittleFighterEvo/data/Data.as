@@ -21,7 +21,6 @@
 *
 */
 package data{
-	import com.adobe.serialization.json.JSON;
 	
 	public class Data{
 		public static const OBJECT_KIND_CHARACTER:int 		= 0; // (Bandit)

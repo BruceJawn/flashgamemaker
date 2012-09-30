@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <actionScriptProperties mainApplicationPath="LittleFighterEvo.as" projectUUID="92ad0742-a837-4dfe-aad7-c49c58175e4a" version="6">
-  <compiler additionalCompilerArguments="-locale en_US -allow-source-path-overlap=true -as3=true -creator &quot;AngelStreet&quot; -title &quot;LittleFighterEvo&quot; -description  &quot;http://code.google.com/p/flashgamemaker&quot;" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="swf" strict="true" targetPlayerVersion="10.1.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
-    <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/FGMv2.1/classes"/>
-    </compilerSourcePath>
+  <compiler additionalCompilerArguments="-locale en_US -allow-source-path-overlap=true -as3=true -creator &quot;AngelStreet&quot; -title &quot;LittleFighterEvo&quot; -description  &quot;http://code.google.com/p/flashgamemaker&quot;" autoRSLOrdering="true" copyDependentFiles="false" flexSDK="Air3.4" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="swf" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
         <excludedEntries>
@@ -26,8 +24,7 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="lib/LittleFighterEvoInterface.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="1" linkType="1" path="${DOCUMENTS}/FGMv2.1/lib"/>
+      <libraryPathEntry kind="1" linkType="1" path="lib"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

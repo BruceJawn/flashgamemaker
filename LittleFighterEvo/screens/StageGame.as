@@ -106,9 +106,8 @@ package screens{
 			player2.moveTo(360,340);
 			var gamePad2:GamePadComponent = EntityFactory.CreateGamePad("GamePad2", 400,520,keyPad2);
 			
-			
 			var player:LFE_ObjectComponent;
-			for (var i:int =3; i<=15;i++){
+			for (var i:int =0; i<10;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
@@ -118,7 +117,7 @@ package screens{
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
 			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
 			
-			EntityFactory.CreateSystemInfo("SystemInfo",30,580);
+			EntityFactory.CreateSystemInfo("SystemInfo",100,582);
 		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {

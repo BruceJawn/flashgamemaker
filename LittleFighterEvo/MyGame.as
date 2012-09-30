@@ -57,7 +57,7 @@ package {
 			stateList["UInterface"]=new UInterface();
 			stateList["StageGame"]=new StageGame();
 			_finiteStateMachine.setStateList(stateList);
-			_finiteStateMachine.setNextStateByName("StageGame"); 
+			_finiteStateMachine.setNextStateByName("UInterface"); 
 			_finiteStateMachine.changeStateByName("Preloader");
 		}
 	}

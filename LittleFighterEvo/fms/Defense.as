@@ -56,7 +56,7 @@ package fms{
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var readyToAnim:Boolean = _object.bitmapSet.readyToAnim;
 			updateSpeed();
-			if (readyToAnim){
+			if ((_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed) && readyToAnim){
 				if(keyPad.anyDirection.isDown){
 					updateAnim(frame.walk);
 					updateState();

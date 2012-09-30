@@ -61,6 +61,7 @@ package fms{
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
 			_dvz = frame.dvz;
+			checkFlip();
 			update();
 			updateWeapon();
 		}
@@ -116,7 +117,7 @@ package fms{
 			}
 			//Update Anim
 			if(spatialMove.movingDir.z==0){
-				if(!_bool || (_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1)){
+				if(!_bool || (_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1 || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 					if(_hit_a && frame.hasOwnProperty("hit_a")){
 						updateAnim(frame.hit_a);
 					}else if(_hit_j && frame.hasOwnProperty("hit_j")){

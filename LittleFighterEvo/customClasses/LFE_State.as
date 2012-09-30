@@ -98,13 +98,13 @@ package customClasses{
 				updateAnim(frame.hit_Fj);
 			}else if(frame.hasOwnProperty("hit_Uj") && keyPad.up.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
 				updateAnim(frame.hit_Uj);
-			}else if(frame.hasOwnProperty("dbl_hit_up") && keyPad.up.doubleClick  && keyPad.up.isDown && !keyPad.up.getLongClick(20)){
+			}/*else if(frame.hasOwnProperty("dbl_hit_up") && keyPad.up.doubleClick  && keyPad.up.isDown && !keyPad.up.getLongClick(20)){
 				updateAnim(frame.dbl_hit_up);
 			}else if(frame.hasOwnProperty("dbl_hit_down")&& keyPad.down.doubleClick && keyPad.down.isDown && !keyPad.down.getLongClick(20)){
 				updateAnim(frame.dbl_hit_down);
-			}else if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick && keyPad.right.isDown && !keyPad.right.getLongClick(20)){
+			}*/else if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
 				updateAnim(frame.dbl_hit_right);
-			}else if(frame.hasOwnProperty("dbl_hit_left") && keyPad.left.doubleClick && keyPad.left.isDown && !keyPad.left.getLongClick(20)){
+			}else if(frame.hasOwnProperty("dbl_hit_left") && keyPad.left.doubleClick){
 				updateAnim(frame.dbl_hit_left);
 			}else if(frame.hasOwnProperty("hit_a") && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(30)){
 				if(_object.weapon == null){
@@ -132,7 +132,7 @@ package customClasses{
 				updateAnim(frame.hit_right);
 			}else if(frame.hasOwnProperty("hit_left") && keyPad.left.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_left){
 				updateAnim(frame.hit_left);
-			}else if(frame.hasOwnProperty("next") && _object.bitmapSet.endAnim && (_object.bitmapSet.currentPosition == 0 && _object.bitmapSet.reverse==-1 || _object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition )){
+			}else if(frame.hasOwnProperty("next") && _object.bitmapSet.endAnim && (_object.bitmapSet.currentPosition == 0 && _object.bitmapSet.reverse==-1 || _object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 				if(_object.bitmapSet.readyToAnim){
 					if(_object.weapon && (_object.kind == Data.OBJECT_KIND_THROWN_WEAPON || Data.OBJECT_KIND_HEAVY_WEAPON)){
 						_object.weapon.updateAnim(frame.wpoint.weaponact);

@@ -63,7 +63,7 @@ package fms{
 			if(!_object)	return
 			var duration:Number = lastUpdateTime-enterStateTime;
 			var hit:Boolean = _object.hurtEnemy();
-			if(_object.lfe_Frame.hasOwnProperty("max") && duration > _object.lfe_Frame.max || hit){
+			if(hit || _object.lfe_Frame.hasOwnProperty("max") && duration > _object.lfe_Frame.max || !_object.lfe_Frame.hasOwnProperty("max") && duration > _max){
 				explode();
 			}
 		}
@@ -78,7 +78,7 @@ package fms{
 			if(frame.next && frameName!=_name){
 				updateAnim(frame.next);
 				updateSpeed();
-			}else if(_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1){
+			}else if(_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1 ||  _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed){
 				_finiteStateMachine.destroy();
 				_object.destroy();
 				_object=null;

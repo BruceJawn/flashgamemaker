@@ -64,6 +64,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Slide");
+			checkFlip();
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

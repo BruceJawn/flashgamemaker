@@ -45,7 +45,7 @@ package fms{
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
-			trace("Enter Rowing");
+			//trace("Enter Rowing");
 			if (!_object.bitmapSet)	return;
 		}
 		//------ Enter ------------------------------------
@@ -55,7 +55,7 @@ package fms{
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var frame:Object = _object.getCurrentFrame();
 			updateSpeed();
-			if(_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition && _object.bitmapSet.readyToAnim){
+			if((_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition|| _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed) && _object.bitmapSet.readyToAnim){
 				if( keyPad.anyDirection.isDown){
 					updateAnim(frame.walk);
 					updateState();
@@ -68,7 +68,7 @@ package fms{
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
-			trace("Exit Rowing");
+			//trace("Exit Rowing");
 		}
 	}
 }

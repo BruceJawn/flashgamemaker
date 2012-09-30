@@ -5,7 +5,7 @@
 adl "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2\swf\application.xml"
 
 #Packaging SWF to AIR
-adt -package -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.air swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data
+adt -package -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.air swf/application.xml swf/LittleFighterEvo.swf swf/LittleFighterEvo.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" assets -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" data
 
 #Packaging SWF to APK Emulator
 adt -package -target apk-emulator -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.apk swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data  
@@ -14,7 +14,7 @@ adt -package -target apk-emulator -storetype pkcs12 -keystore "certificate.p12" 
 adt -package -target apk -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.apk swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data  
 
 #Packaging AIR to APK
-adt -target apk -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.apk swf/FlashGameMaker.air
+adt -package  -target apk -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.apk swf/LittleFighterEvo.air
 
 #Install de l'APK sur l'émulator AVD (Android Virtual Device)
 adb install FlashGameMaker.apk
@@ -24,6 +24,10 @@ adt -package -target ipa-app-store -storetype pkcs12 -keystore "certificate.p12"
 
 #Packaging SWF to Ipa Debug
 adt -package -target ipa-debug -storetype pkcs12 -keystore "certificate.p12" -provisioning-profile AppleDevelopment.mobileprofile -connect 192.168.0.12 | -listen swf/FlashGameMaker.ipa swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data  
+
+#Packaging AIR to IPA
+adt -package  -target ipa-test -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.ipa swf/LittleFighterEvo.air
+
 
 #Lauch FDB (Flash Debuger)
 fdb -p [port]

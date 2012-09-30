@@ -52,7 +52,7 @@ package fms{
 		public override function update():void {
 			//trace("Update Knee");
 			var frame:Object = _object.getCurrentFrame();
-			if(_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition && _object.bitmapSet.readyToAnim){
+			if((_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition|| _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed) && _object.bitmapSet.readyToAnim){
 				updateAnim(frame.next);
 				updateState();
 			}
