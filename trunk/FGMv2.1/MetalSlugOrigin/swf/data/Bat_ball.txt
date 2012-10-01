@@ -1,0 +1,93 @@
+{
+	"name":"BatBall",
+	"fps":8,
+	"w":49,
+	"h":48,
+	"d":5, 
+	"row":4,
+	"col":10,
+	"life":200,
+	"stand":19,
+	"inTheSky":0,
+	"strengthList":
+		{
+			"normal":{"dvx":2, "fall":40, "vrest":10,"bdefend":16, "injury":40},
+			"jump":{"dvx":7, "fall":70, "vrest":10,"bdefend":16, "injury":40},
+			"run":{"dvx":10, "fall":70, "vrest":10,"bdefend":16, "injury":50},
+			"dash":{"dvx":12, "fall":70, "vrest":20,"bdefend":60, "injury":50}
+		},
+	"frames":[
+		{
+			"id":0, "frame":0, "name":"InTheSky", "state":"InTheSky", "endAnim":true, "next":16
+		},
+		{
+			"id":1, "frame":1, "name":"InTheSky", "state":"InTheSky", "next":16
+		},
+		{
+			"id":2, "frame":2, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":3, "frame":3, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":4, "frame":4, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":5, "frame":5, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":6, "frame":6, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":7, "frame":7, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":8, "frame":8, "name":"InTheSky", "state":"InTheSky", "next":16
+		},
+		{
+			"id":9, "frame":9, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":10, "frame":10, "name":"InTheSky", "state":"InTheSky", "next":16
+		},
+		{
+			"id":11, "frame":11, "name":"InTheSky", "state":"InTheSky",  "next":16
+		},
+		{
+			"id":12, "frame":12, "name":"InTheSky", "state":"InTheSky", "next":16
+		},
+		{
+			"id":13, "frame":13, "name":"InTheSky", "state":"InTheSky", "next":16
+		},
+		{
+			"id":14, "frame":14, "name":"InTheSky", "state":"InTheSky","next":16
+		},
+		{
+			"id":15, "frame":15, "name":"InTheSky", "state":"InTheSky", "next":16, "next":16
+		},
+		{
+			"id":16, "frame":2, "name":"JustOnGround","endAnim":true, "state":"Stand", "fps":18, "wait":5
+		},
+		{
+			"id":17, "frame":5, "name":"JustOnGround", "state":"Stand", "wait":5
+		},
+		{
+			"id":18, "frame":3, "name":"JustOnGround",  "state":"Stand", "next":19,"wait":5
+		},
+		{
+			"id":19, "frame":4, "name":"OnGround", "state":"Stand","endAnim":true, "wait":5
+		},
+		{
+			"id":20, "frame":5, "name":"Thrown", "state":"Stand", "wait":5
+		},
+		{
+			"id":21, "frame":3, "name":"Thrown", "state":"Stand", "wait":5
+		},
+		{
+			"id":22, "frame":5, "name":"Thrown", "state":"Stand", "wait":5
+		},
+		{
+			"id":23, "frame":4, "name":"Thrown", "state":"Stand", "wait":5
+		}
+	]
+}
