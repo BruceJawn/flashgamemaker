@@ -29,7 +29,7 @@ package fms{
 	import utils.space.Space;
 	import utils.time.Time;
 
-	public class Melee extends LFE_AiState{
+	public class Melee extends MS_AiState{
 		
 		//Melee State
 		public function Melee(){
@@ -48,7 +48,7 @@ package fms{
 		public override function update():void {
 			//trace("Update Melee");
 			var dir:int = Space.GetDirection(_object.getBounds(null), _object.target.getBounds(null),true,true);
-			var target:LFE_ObjectComponent = _object.target;
+			var target:MS_ObjectComponent = _object.target;
 			if(dir==Space.CENTER){
 				var keyPad:KeyPad = _object.keyPad;
 				keyPad.releaseFire1Key();

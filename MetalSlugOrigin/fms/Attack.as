@@ -35,7 +35,7 @@ package fms{
 	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
-	public class Attack extends LFE_State{
+	public class Attack extends MS_State{
 		private var _hit_a:Boolean = false;
 		private var _hit:Boolean = false;
 		

@@ -34,7 +34,7 @@ package fms{
 	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
-	public class Power extends LFE_State{
+	public class Power extends MS_State{
 		private var _hit_a:Boolean = false;
 		private var _hit_j:Boolean = false;
 		private var _hit_d:Boolean = false;

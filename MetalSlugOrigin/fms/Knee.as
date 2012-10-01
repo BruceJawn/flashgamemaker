@@ -32,7 +32,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Knee extends LFE_State{
+	public class Knee extends MS_State{
 		
 		//Stand State
 		public function Knee(){

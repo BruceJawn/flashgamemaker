@@ -35,7 +35,7 @@ package fms{
 	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
-	public class Walk extends LFE_State{
+	public class Walk extends MS_State{
 		
 		//Walk State
 		public function Walk(){

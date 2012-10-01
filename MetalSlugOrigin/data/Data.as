@@ -35,20 +35,30 @@ package data{
 				'1':{
 					'name': 'Player','kind':0,'data':'data/Player.txt',
 					'graphics':['assets/MS.png']
-					},
-				'100':{
-					'name': 'Bullet',
-					'data':'data/Bullet.txt',
-					'graphics':['assets/bullet.png'],
-					'kind':3
-				}
+					}
 			}
 		public static const BACKGROUND:Object =
 			{
-				'0':{
-					'name': 'MSBg',
-					'path':'assets/MSbg.png',
-					'kind':2
+				'bg':{
+					'path':'assets/MSbg.png'
+				}
+			}
+		public static const OTHER:Object =
+			{
+				'chrono':{
+					'path':'assets/chrono.png'
+				},
+				'score':{
+					'path':'assets/score.png'
+				},
+				'rpgText':{
+					'path':'assets/rpgText.swf'
+				},
+				'statutBar':{
+					'path':'assets/statutBar.swf'
+				},
+				'gameOverScreen':{
+					'path':'assets/gameOverScreen.swf'
 				}
 			}
 	}

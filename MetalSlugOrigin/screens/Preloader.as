@@ -72,6 +72,10 @@ package screens{
 					assetsToLoad.push(Framework.root+graphic);
 				}
 			}
+			for each(var other:Object in Data.OTHER){
+				assetsToLoad.push(Framework.root+other.path);
+			}
+			
 			return assetsToLoad;
 		}
 		//------ On Loading Complete ------------------------------------

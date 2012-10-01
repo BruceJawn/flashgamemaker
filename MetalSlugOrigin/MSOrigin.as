@@ -34,7 +34,7 @@ package {
 	 * Main Class of the document.
 	 * FrameRate =30 -> 30fps === 33ms (processing a routine should not exceed 33ms to preserve fps)
 	 */
-	[SWF(width=800, height=600, backgroundColor=0x111111, frameRate=30, scriptTimeLimit=15)]
+	[SWF(width=480, height=320, backgroundColor=0x111111, frameRate=30, scriptTimeLimit=15)]
 	public class MSOrigin extends Sprite {
 		
 		public function MSOrigin() {

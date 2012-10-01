@@ -30,7 +30,7 @@ package fms{
 	import utils.richardlord.State;
 	import utils.space.Space;
 
-	public class Dodge extends LFE_AiState{
+	public class Dodge extends MS_AiState{
 		
 		private var _frameName:String = null;
 		private var _step:int=0;

@@ -35,7 +35,7 @@ package fms{
 	import utils.richardlord.State;
 	import utils.time.Time;
 
-	public class Slide extends LFE_State {
+	public class Slide extends MS_State {
 
 		//Slide State
 		public function Slide(){

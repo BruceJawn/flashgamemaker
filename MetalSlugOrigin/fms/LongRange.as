@@ -30,7 +30,7 @@ package fms{
 	import utils.richardlord.State;
 	import utils.space.Space;
 
-	public class LongRange extends LFE_AiState{
+	public class LongRange extends MS_AiState{
 		
 		private var _distMax:Number =5;
 		private var _isAttacking:Boolean = false;
@@ -75,21 +75,21 @@ package fms{
 		}
 		//------ Long Range Attack ------------------------------------
 		private function longRangeAttack():void {
-			var lfeFrame:Object = _object.lfe_Frame;
+			var msFrame:Object = _object.ms_Frame;
 			var frame:Object = _object.getCurrentFrame();
 			var currentState:* = _object.getCurrentState();
-			if(lfeFrame.hasOwnProperty("longRangeAttack")){
+			if(msFrame.hasOwnProperty("longRangeAttack")){
 				if(_isAttacking && currentState.hasOwnProperty("hit_a")){
 					var rand:Number = SimpleMath.RandomBetween(0,5);
 					if(rand<3)currentState.hit_a=true;
 					else _finiteStateMachine.changeStateByName("Seek");
 				}else{
 					releaseDirectionKeys();
-					if(lfeFrame.longRangeAttack is Array){
-						var frameId:int=lfeFrame.longRangeAttack[SimpleMath.RandomBetween(0,lfeFrame.longRangeAttack.length-1)];
+					if(msFrame.longRangeAttack is Array){
+						var frameId:int=msFrame.longRangeAttack[SimpleMath.RandomBetween(0,msFrame.longRangeAttack.length-1)];
 						updateAnim(frameId);
 					}else{
-						updateAnim(lfeFrame.longRangeAttack);
+						updateAnim(msFrame.longRangeAttack);
 					}
 					_isAttacking=true;
 					_object.updateState();

@@ -33,7 +33,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Defense extends LFE_State{
+	public class Defense extends MS_State{
 		
 		//Defense State
 		public function Defense(){

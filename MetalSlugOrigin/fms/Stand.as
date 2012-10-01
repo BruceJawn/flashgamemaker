@@ -33,7 +33,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Stand extends LFE_State{
+	public class Stand extends MS_State{
 		
 		//Stand State
 		public function Stand(){

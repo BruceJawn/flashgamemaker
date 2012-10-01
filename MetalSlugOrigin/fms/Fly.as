@@ -35,7 +35,7 @@ package fms{
 	import utils.richardlord.State;
 	import utils.time.Time;
 
-	public class Fly extends LFE_State{
+	public class Fly extends MS_State{
 		private var _max:Number = 2000;//Max flying time 
 		//Fly State
 		public function Fly(){
@@ -63,7 +63,7 @@ package fms{
 			if(!_object)	return
 			var duration:Number = lastUpdateTime-enterStateTime;
 			var hit:Boolean = _object.hurtEnemy();
-			if(hit || _object.lfe_Frame.hasOwnProperty("max") && duration > _object.lfe_Frame.max || !_object.lfe_Frame.hasOwnProperty("max") && duration > _max){
+			if(hit || _object.ms_Frame.hasOwnProperty("max") && duration > _object.ms_Frame.max || !_object.ms_Frame.hasOwnProperty("max") && duration > _max){
 				explode();
 			}
 		}
@@ -72,7 +72,7 @@ package fms{
 			stopMoving();
 			var frame:Object = _object.getCurrentFrame();
 			if(!frame)	return
-			var frameName:Object = _object.getLfeFrame(frame.next);
+			var frameName:Object = _object.getMsFrame(frame.next);
 			if(!frameName)	return
 				frameName = frameName.name;
 			if(frame.next && frameName!=_name){

@@ -33,7 +33,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Thrown extends LFE_State{
+	public class Thrown extends MS_State{
 		
 		//Thrown State
 		public function Thrown(){

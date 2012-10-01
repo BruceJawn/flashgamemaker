@@ -34,7 +34,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Jump extends LFE_State{
+	public class Jump extends MS_State{
 		private var _movingDir:IsoPoint = null;
 		private var _bool:Boolean = true;
 		private var _rowing:Boolean=false;

@@ -30,8 +30,8 @@ package fms{
 	import utils.richardlord.State;
 	import utils.space.Space;
 
-	public class Flee extends LFE_AiState{
-		private var _target:LFE_ObjectComponent = null;
+	public class Flee extends MS_AiState{
+		private var _target:MS_ObjectComponent = null;
 		private var _runningDistance:Number = 200; 
 		//Flee State
 		public function Flee(){

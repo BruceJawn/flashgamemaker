@@ -33,7 +33,7 @@ package fms{
 	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
-	public class Rowing extends LFE_State{
+	public class Rowing extends MS_State{
 		
 		//Rowing State
 		public function Rowing(){
