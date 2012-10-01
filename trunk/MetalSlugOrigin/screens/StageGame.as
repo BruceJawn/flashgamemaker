@@ -22,26 +22,24 @@
 */
 package screens{
 	import com.adobe.serialization.json.JSON;
-	import data.Data;
+	import com.google.analytics.debug.Align;
 	
 	import customClasses.*;
+	
+	import data.Data;
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
+	import flash.geom.Point;
 	import flash.utils.setTimeout;
 	
 	import framework.Framework;
-	import framework.component.add.GamePadComponent;
+	import framework.component.add.*;
 	import framework.component.core.*;
 	import framework.entity.*;
-	import framework.system.GraphicManager;
-	import framework.system.IGraphicManager;
-	import framework.system.IRessourceManager;
-	import framework.system.ISoundManager;
-	import framework.system.RessourceManager;
-	import framework.system.SoundManager;
+	import framework.system.*;
 	
 	import utils.bitmap.BitmapTo;
 	import utils.iso.IsoPoint;
@@ -50,21 +48,18 @@ package screens{
 	import utils.loader.SimpleLoader;
 	import utils.popforge.WavURLPlayer;
 	import utils.richardlord.*;
+	import utils.ui.LayoutUtil;
 
 	/**
 	 * Game
 	 */
 	public class StageGame extends State implements IState{
 		
-		private var _entityManager:IEntityManager=null;
-		private var _player1:LFE_ObjectComponent=null;
-		private var _player2:LFE_ObjectComponent=null;
-		private var _graphicManager:IGraphicManager = null;
-		private var _battleField:ScrollingBitmapComponent = null;
-		private var _forests:GraphicComponent = null;
-		private var _forestm2:ScrollingBitmapComponent = null;
-		private var _forestm3:GraphicComponent = null
-		
+		private var _entityManager:IEntityManager	=null;
+		private var _graphicManager:IGraphicManager =null;
+		private var _player:MS_ObjectComponent		=null;
+		private var _bg:ScrollingBitmapComponent 	=null;
+		private var _statutBar:GraphicComponent 	=null;
 		public function StageGame(){
 		}
 		//------ Enter ------------------------------------
@@ -80,88 +75,68 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("MSOrigin","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var timerComponent:TimerComponent=_entityManager.addComponentFromName("MSOrigin","TimerComponent","myTimerComponent") as TimerComponent;
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("MSOrigin","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("MSOrigin","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;
 			Framework.SetChildIndex(bitmapRenderComponent, Framework.numChildren - 1);
+			
 			var keyPad:KeyPad = new KeyPad(true);
 			keyPad.useZQSD();
 			keyPad.useArrows();
 			keyPad.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
-			var player:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad);
-			player.registerPropertyReference("keyboardInput");
-			player.moveTo(0,300);
-			//player1.setTimeMultiplicator(10);
-			var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad);
+			_player = MS_Object.CreateObject(1,null,keyPad);
+			_player.registerPropertyReference("keyboardInput");
+			_player.moveTo(10,160);
 			
-			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
+			var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad", 20,30,keyPad);
+			gamePad.hideDirectionKeys();
+			gamePad.button4.visible=false;
+			gamePad.button2.x+=5;
+			gamePad.button3.x+=5;
+			gamePad.hideBg();
+			gamePad.moveFireKeys(120,10);
+			LayoutUtil.Align(gamePad,LayoutUtil.ALIGN_BOTTOM_LEFT,null,null,new Point(10,-20));
 			
-			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
-			backgroundComponent.setPropertyReference("progressBar",backgroundComponent._componentName);
-			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
-			//backgroundComponent.graphic = _graphicManager.getGraphic(Data.BACKGROUND[0].path);
-			backgroundComponent.setScrolling(30,3);
-			backgroundComponent.setScrollingTarget(bitmapPlayerComponent);
-			backgroundComponent.moveTo(0,90);
+			_bg =_entityManager.addComponentFromName("MSOrigin","ScrollingBitmapComponent","myBackgroundComponent") as ScrollingBitmapComponent;
+			//_bg.registerPropertyReference("timer");
+			_bg.graphic = _graphicManager.getGraphic(Data.BACKGROUND.bg.path);
+			//_bg.setScrolling(30,3);
+			//_bg.setScrollingTarget(_player);
+			LayoutUtil.Align(_bg,LayoutUtil.ALIGN_BOTTOM_LEFT);
 			
-			/*var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myStatutBarGraphicComponent");
-			statutBarComponent.setPropertyReference("progressBar",statutBarComponent._componentName);
-			statutBarComponent.loadGraphic("texture/framework/game/interface/MsOriginStatutBar.swf", "MsOriginStatutBar");
-			statutBarComponent.moveTo(0,310);*/
+			_statutBar=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myStatutBarGraphicComponent") as GraphicComponent;
+			_statutBar.graphic = _graphicManager.getGraphic(Data.OTHER.statutBar.path);
+			LayoutUtil.Align(_statutBar,LayoutUtil.ALIGN_BOTTOM_LEFT);
+			_bg.y-=_statutBar.height-12;
 			
-			/*var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
-			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);*/
+			var scoreComponent:ScoreComponent=_entityManager.addComponentFromName("MSOrigin","ScoreComponent","myScoreComponent") as ScoreComponent;
+			scoreComponent.graphic = _graphicManager.getGraphic(Data.OTHER.score.path);
+			LayoutUtil.Align(scoreComponent,LayoutUtil.ALIGN_TOP_LEFT,null,null,new Point(5,5));
 			
-			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");
-			rpgTextComponent.loadGraphic(Framework+"assets/rpgText.swf", "RPGText");
-			var sequence:String="<rpgText><sequence title='???' icon='unknown?' graphic=''>...Roger...RAS</sequence><sequence title='Squad' icon='Squad' graphic=''>1,2,3,...GO!</sequence></rpgText>";
-			rpgTextComponent.setSequence(sequence);
-			rpgTextComponent.moveTo(60,50);
-			rpgTextComponent.addEventListener("_RPGTextCOMPLETE",onRPGTextComplete);
-		}
-		//------ On RPG Text Complete ------------------------------------
-		private function onRPGTextComplete(evt:Event):void {
-			/*evt.target.removeEventListener(Event.COMPLETE,onRPGTextComplete);
-			var keyboardInputComponent:KeyboardInputComponent=_entityManager.addComponent("GameEntity","KeyboardInputComponent","myKeyInputComponent");
-			keyboardInputComponent.useZQSD();//AZERTY
-			//keyboardInputComponent.useWASD();//QWERTY
-			keyboardInputComponent.useOKLM();
-			var mouseInputComponent:MouseInputComponent=_entityManager.addComponent("GameEntity","MouseInputComponent","myMouseInputComponent");
-			var chronoComponent:ChronoComponent=_entityManager.addComponent("GameEntity","ChronoComponent","myChronoComponent");
-			chronoComponent.setChrono("texture/framework/game/interface/chrono.png","Chrono");
-			chronoComponent.restart(59);
-			chronoComponent.moveTo(180,20);
-			chronoComponent.addEventListener(Event.COMPLETE,onChronoComplete);
-			var gamePadComponent:GamePadComponent=_entityManager.addComponent("GameEntity","GamePadComponent","myGamePadComponent");
-			gamePadComponent.moveTo(100,100);
-			//var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.getComponent("GameEntity","myBitmapPlayerComponent");
-			//var shapeCollisionComponent:ShapeCollisionComponent=_entityManager.addComponent("GameEntity","ShapeCollisionComponent","myShapeCollisionComponent");
-			//shapeCollisionComponent.setClip(bitmapPlayerComponent,backgroundObjectComponent);
-			*/
+			var rpgTextComponent:RPGTextComponent=_entityManager.addComponentFromName("MSOrigin","RPGTextComponent","myRPGTextComponent",{onRPGTextComplete:onRPGTextComplete}) as RPGTextComponent;
+			rpgTextComponent.graphic = _graphicManager.getGraphic(Data.OTHER.rpgText.path);
+			var sequence:Array=[{title:"???", content:"You have 24H to accomplish your mission", icon:null, delay:5000},{title:"Squad", content:"...Roger that", icon:null, delay:5000},{title:"Squad", content:"1, 2, 3, ..., Go! Go!!!", icon:null, delay:5000}]
+			rpgTextComponent.setSequences(sequence);
+			rpgTextComponent.moveTo(80,35);
 		}
 		//------ On Chrono Complete ------------------------------------
-		private function onChronoComplete(evt:Event):void {
-			/*evt.target.removeEventListener(Event.COMPLETE,onChronoComplete);
-			_entityManager.removeComponent("GameEntity","myBackgroundComponent");
-			_entityManager.removeComponent("GameEntity","myBitmapPlayerComponent");
-			_entityManager.removeComponent("GameEntity","myEnnemyPlayerComponent");
-			_entityManager.removeComponent("GameEntity","myKeyInputComponent");
-			_entityManager.removeComponent("GameEntity","mySoundComponent");
-			var gameOver:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myGOGraphicComponent");
-			gameOver.loadGraphic("texture/framework/game/interface/MSGameOver.swf", "GameOver");
-			gameOver.addEventListener(Event.COMPLETE,onGameOverComplete);
-			gameOver.moveTo(0,30);
-			var scoreComponent:ScoreComponent=_entityManager.getComponent("GameEntity","myScoreComponent");
-			*/
+		private function onRPGTextComplete($rpgTextComponent:RPGTextComponent):void {
+			var endChronoComponent:ChronoComponent=_entityManager.addComponentFromName("MSOrigin","ChronoComponent","myChronoComponent",{onChronoComplete:onChronoComplete}) as ChronoComponent;
+			endChronoComponent.graphic = _graphicManager.getGraphic(Data.OTHER.chrono.path);
+			endChronoComponent.start(60, true);
+			LayoutUtil.Align(endChronoComponent,LayoutUtil.ALIGN_TOP_CENTER,null,null,new Point(45,5));
+		}
+		//------ On Chrono Complete ------------------------------------
+		private function onChronoComplete($chronoComponent:ChronoComponent):void {
+			var gameOver:GraphicComponent=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myGameOverGraphicComponent") as GraphicComponent;
+			gameOver.graphic = _graphicManager.getGraphic(Data.OTHER.gameOverScreen.path);
+			LayoutUtil.Align(gameOver,LayoutUtil.ALIGN_CENTER_CENTER);
+			_bg.visible=false;
 		}
 		//------ On Game Over Complete ------------------------------------
 		private function onGameOverComplete(evt:Event):void {
-			evt.target.removeEventListener(Event.COMPLETE,onGameOverComplete);
-			evt.target._graphic.playBt.addEventListener(MouseEvent.CLICK,onGameOverPlayClick);
-		}
-		//------ On Game Over Play Click ------------------------------------
-		private function onGameOverPlayClick(evt:Event):void {
-			evt.target.removeEventListener(MouseEvent.CLICK,onGameOverPlayClick);
+		
 		}
 	}
 }

@@ -33,7 +33,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class InTheSky extends LFE_State{
+	public class InTheSky extends MS_State{
 		private var _dvz:Number=0;
 		
 		//InTheSky State

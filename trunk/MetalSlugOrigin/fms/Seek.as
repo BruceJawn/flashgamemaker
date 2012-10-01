@@ -30,8 +30,8 @@ package fms{
 	import utils.richardlord.State;
 	import utils.space.Space;
 
-	public class Seek extends LFE_AiState{
-		private var _target:LFE_ObjectComponent = null;
+	public class Seek extends MS_AiState{
+		private var _target:MS_ObjectComponent = null;
 		private var _runningDistance:Number = 160; 
 		//Seek State
 		public function Seek(){

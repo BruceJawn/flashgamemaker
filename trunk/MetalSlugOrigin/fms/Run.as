@@ -33,7 +33,7 @@ package fms{
 	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
-	public class Run extends LFE_State{
+	public class Run extends MS_State{
 		
 		//Run State
 		public function Run(){

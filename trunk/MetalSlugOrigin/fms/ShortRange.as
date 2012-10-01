@@ -30,7 +30,7 @@ package fms{
 	import utils.richardlord.State;
 	import utils.space.Space;
 
-	public class ShortRange extends LFE_AiState{
+	public class ShortRange extends MS_AiState{
 		
 		private var _frameName:String = null;
 		private var _step:int=0;
@@ -62,19 +62,19 @@ package fms{
 		}
 		//------ Short Range Attack ------------------------------------
 		private function shortRangeAttack():void {
-			var lfeFrame:Object = _object.lfe_Frame;
+			var msFrame:Object = _object.ms_Frame;
 			var frame:Object = _object.getCurrentFrame();
 			var currentState:* = _object.getCurrentState();
 			if(_step==1 && frame.name==_frameName)	_step++;
 			else if(_step==1 && frame.name=="Stand" && _object.bitmapSet.readyToAnim)	_step++;
 			else if(_step==2 && frame.name!=_frameName)_step++;
-			if(_step==0 && lfeFrame.hasOwnProperty("shortRangeAttack")){
-				if(lfeFrame.shortRangeAttack is Array){
-					var frameId:int=lfeFrame.shortRangeAttack[SimpleMath.RandomBetween(0,lfeFrame.shortRangeAttack.length-1)];
-					_frameName = lfeFrame.frames[frameId].name;
+			if(_step==0 && msFrame.hasOwnProperty("shortRangeAttack")){
+				if(msFrame.shortRangeAttack is Array){
+					var frameId:int=msFrame.shortRangeAttack[SimpleMath.RandomBetween(0,msFrame.shortRangeAttack.length-1)];
+					_frameName = msFrame.frames[frameId].name;
 					updateAnim(frameId);
 				}else{
-					updateAnim(lfeFrame.shortRangeAttack);
+					updateAnim(msFrame.shortRangeAttack);
 				}
 				_object.updateState();
 				_step = 1;

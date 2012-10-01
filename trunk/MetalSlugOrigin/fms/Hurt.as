@@ -32,7 +32,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Hurt extends LFE_State{
+	public class Hurt extends MS_State{
 		
 		//Hurt State
 		public function Hurt(){

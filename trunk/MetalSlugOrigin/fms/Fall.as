@@ -33,7 +33,7 @@ package fms{
 	import utils.physic.SpatialMove;
 	import utils.richardlord.*;
 
-	public class Fall extends LFE_State{
+	public class Fall extends MS_State{
 		
 		//Fall_Down State
 		public function Fall(){

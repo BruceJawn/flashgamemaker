@@ -29,7 +29,7 @@ package fms{
 	import utils.math.SimpleMath;
 	import utils.richardlord.State;
 
-	public class Target extends LFE_AiState{
+	public class Target extends MS_AiState{
 		private var _longRangeDist:Number = 220; 
 		//Target State
 		public function Target(){
@@ -54,7 +54,7 @@ package fms{
 			//trace("Update Target");
 			var anyDirection:Object = _object.collisionParam.anyDirection;
 			if(anyDirection.components.length>0){
-				for each(var target:LFE_ObjectComponent in  anyDirection.components){
+				for each(var target:MS_ObjectComponent in  anyDirection.components){
 					if (target.kind==Data.OBJECT_KIND_CHARACTER){
 						_object.target = target;
 						break
@@ -62,8 +62,8 @@ package fms{
 				}
 				anyDirection = null;
 				var dist:Number = _object.getDistance(_object,_object.target);
-				var lfeFrame:Object = _object.lfe_Frame;
-				if(dist>_longRangeDist && lfeFrame.hasOwnProperty("longRangeAttack")){
+				var msFrame:Object = _object.ms_Frame;
+				if(dist>_longRangeDist && msFrame.hasOwnProperty("longRangeAttack")){
 					_finiteStateMachine.changeStateByName("LongRange");
 				}else{
 					_finiteStateMachine.changeStateByName("Seek");
