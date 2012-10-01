@@ -41,6 +41,9 @@ package data{
 			{
 				'bg':{
 					'path':'assets/MSbg.png'
+				},
+				'mainMusic':{
+					'path':'assets/main.mp3'
 				}
 			}
 		public static const OTHER:Object =
@@ -56,6 +59,9 @@ package data{
 				},
 				'statutBar':{
 					'path':'assets/statutBar.swf'
+				},
+				'soundControl':{
+					'path':'assets/soundControl.swf'
 				},
 				'gameOverScreen':{
 					'path':'assets/gameOverScreen.swf'
