@@ -22,16 +22,17 @@
 */
 
 package framework.component.core{
-	import framework.entity.*;
-	import utils.time.Time;
-
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
-	import flash.utils.Timer;
-	import flash.utils.getTimer;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.utils.Timer;
+	import flash.utils.getTimer;
+	
+	import framework.entity.*;
+	
+	import utils.time.Time;
 	
 	/**
 	* Chrono Class
@@ -40,9 +41,10 @@ package framework.component.core{
 	public class ScoreComponent extends GraphicComponent {
 		private var _source:Bitmap=null;
 		private var _bitmap:Bitmap=null;
+		private var _bitmapData:BitmapData=null;
 		
 		private var _score:TextField=null;
-		private var _score_count:Number=0;
+		private var _score_count:Number=1;
 		private var _score_digit:Number=6;
 		
 		public function ScoreComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
@@ -53,13 +55,11 @@ package framework.component.core{
 		private function _initVar():void {
 			_score = new TextField();
 			setFormat("Arial",30,0xFF0000);
-			addChild(_score);
 			updateText();
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
-			registerPropertyReference("progressBar");
 		}
 		//------Set Format -------------------------------------
 		private function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
@@ -72,38 +72,44 @@ package framework.component.core{
 		public function restart():void {
 			_score_count = 0;
 		}
-		//------ Set Score ------------------------------------
-		public function setScore(path:String,name:String, layer:int=0):void {
-			loadGraphic(path);
-			if(contains(_score)){
-				removeChild(_score);
-			}
+		//------ Set graphic ------------------------------------
+		public override function set graphic($graphic:*):void {
+			createScore($graphic as Bitmap);
 		}
 		//------ On Graphic Loading Successful ------------------------------------
 		protected override function onGraphicLoadingComplete($graphic:DisplayObject, $callback:Function =null):void {
-			
+			createScore($graphic as Bitmap);
+			if($callback is Function)	$callback();
 		}
 		//------ Create Score ------------------------------------
-		private function createScore():void {
-			
+		private function createScore($graphic:Bitmap=null):void {
+			if(contains(_score))	removeChild(_score);
+			if(_bitmapData)			_bitmapData.dispose();
+			if($graphic)			_source = $graphic;	
+			_bitmapData = new BitmapData(_source.width/10*_score_digit,_source.height); // We suppose that the graphic is a line of 10 digits (0,1,2,3,4,5,6,7,8,9);
+			_bitmap = new Bitmap(_bitmapData);
+			if(!contains(_bitmap))	addChild(_bitmap);
+			actualizeScore();
 		}
 		//------ Get Time ------------------------------------
 		private function updateText():void {
 			_score.text=_score_count.toString();
 		}
-		//------ ActualizeChrono ------------------------------------
-		public function actualizeChrono():void {
-			if(_bitmap!=null){
-				var myBitmapData:BitmapData=_bitmap.bitmapData;
-				myBitmapData.fillRect(myBitmapData.rect,0);
+		//------ Actualize Score ------------------------------------
+		public function actualizeScore():void {
+			if(_bitmapData!=null){
+				_bitmapData.lock();
+				_bitmapData.fillRect(_bitmapData.rect,0);
 				var count:String = _score_count.toString();
 				for (var i:int=0;i<_score_digit;i++){
 					var X:int = Number(count.substr(count.length-i-1,1));
+					
 					if(i>=count.length){
 						X=0;
 					}
-					myBitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point((_score_digit-i-1)*_source.width/10, 0),null,null,true);
+					_bitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point((_score_digit-i-1)*_source.width/10, 0),null,null,true);
 				}
+				_bitmapData.unlock();
 			}
 		}
 	}

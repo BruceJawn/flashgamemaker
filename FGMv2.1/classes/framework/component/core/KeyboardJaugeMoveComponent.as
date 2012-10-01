@@ -31,6 +31,7 @@ package framework.component.core{
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	
+	import framework.component.Component;
 	import framework.entity.*;
 	
 	import utils.bitmap.BitmapGraph;
@@ -39,7 +40,6 @@ package framework.component.core{
 	import utils.keyboard.KeyPad;
 	import utils.keyboard.KeyPadInput;
 	import utils.physic.SpatialMove;
-	import framework.component.Component;
 
 	/**
 	* Jauge Class

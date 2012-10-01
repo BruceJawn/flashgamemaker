@@ -57,6 +57,7 @@ package framework.component.add{
 		private var _isAligned:Boolean;
 		private var _background:Sprite;
 		private var _ball:Sprite;
+		private var _ballOrigin:Sprite;
 		private var _ballX:int=0;
 		private var _ballY:int=0;
 		private var _button1:Sprite;
@@ -163,11 +164,19 @@ package framework.component.add{
 		}
 		//------ Create Ball ------------------------------------
 		private function createBall():void {
+			_ballOrigin = new Sprite();
+			_ballOrigin.graphics.beginFill(_colour, _alpha);
+			_ballOrigin.graphics.drawCircle(_ballX, _ballY, 5);
+			_ballOrigin.graphics.endFill();
+			graphic.addChild(_ballOrigin);
+			
 			_ball = new Sprite();
-			_ball.graphics.beginFill(_colour, 1);
+			_ball.graphics.beginFill(_colour, _alpha);
 			_ball.graphics.drawCircle(_ballX, _ballY, 20);
 			_ball.graphics.endFill();
 			graphic.addChild(_ball);
+			
+			
 		}
 		//------ Create Keypad ------------------------------------
 		private function createKeypad($keyPad:KeyPad=null):void {
@@ -282,6 +291,7 @@ package framework.component.add{
 			//trace("Stick press");
 			_stickDown = true;
 			_ball.transform.colorTransform = _redColorTransform;
+			_ballOrigin.transform.colorTransform = _redColorTransform;
 			step();
 			updateStick();
 		}
@@ -291,6 +301,7 @@ package framework.component.add{
 				//trace("Stick release");
 				_stickDown = false;
 				_ball.transform.colorTransform = _colorTransform;
+				_ballOrigin.transform.colorTransform = _colorTransform;
 				_targetX=0;
 				_targetY=0;
 				updateMouse();
@@ -469,13 +480,55 @@ package framework.component.add{
 			_button4.transform.colorTransform = _colorTransform;
 			_keyPad.releaseFire4Key();
 		}
-		//------ DisplayButton ------------------------------------
-		public function showButton(buttonName:String):void {
-			graphic[buttonName].alpha=_alpha;
+		//------ Move Direction keys  ------------------------------------
+		public function moveDirectionKeys($x:Number, $y:Number):void {
+			_right.x  +=$x;			_right.y  +=$y;
+			_left.x	  +=$x;			_left.y	  +=$y;
+			_up.x	  +=$x;			_up.y	  +=$y;
+			_down.x	  +=$x;			_down.y	  +=$y;
 		}
-		//------ HideButton ------------------------------------
-		public function hideButton(buttonName:String):void {
-			graphic[buttonName].alpha=0;
+		//------ Hide Direction keys  ------------------------------------
+		public function showDirectionKeys():void {
+			_right.visible	=true;
+			_left.visible	=true;
+			_up.visible		=true;
+			_down.visible	=true;
+		}
+		//------ Hide Direction Keys ------------------------------------
+		public function hideDirectionKeys():void {
+			_right.visible	=false;
+			_left.visible	=false;
+			_up.visible		=false;
+			_down.visible	=false;
+		}
+		//------ Move Fire keys  ------------------------------------
+		public function moveFireKeys($x:Number, $y:Number):void {
+			_button1.x	+=$x;		_button1.y	+=$y;
+			_button2.x	+=$x;		_button2.y	+=$y;
+			_button3.x	+=$x;		_button3.y	+=$y;
+			_button4.x	+=$x;		_button4.y	+=$y;
+		}
+		//------ Hide Fire keys  ------------------------------------
+		public function showFireKeys():void {
+			_button1.visible	=true;
+			_button2.visible	=true;
+			_button3.visible	=true;
+			_button4.visible	=true;
+		}
+		//------ Hide Fire Keys ------------------------------------
+		public function hideFireKeys():void {
+			_button1.visible	=false;
+			_button2.visible	=false;
+			_button3.visible	=false;
+			_button4.visible	=false;
+		}
+		//------ Show Bg ------------------------------------
+		public function showBg():void {
+			_background.visible=true;
+		}
+		//------ Hide Bg ------------------------------------
+		public function hideBg():void {
+			_background.visible=false;
 		}
 		//------ Show All ------------------------------------
 		public function showAll():void {
@@ -545,6 +598,31 @@ package framework.component.add{
 				_x=0;
 				_y=0;
 			}
+		}
+		//------ GET ------------------------------------
+		public function get button1():Sprite {
+			return _button1;
+		}
+		public function get button2():Sprite {
+			return _button2;
+		}
+		public function get button3():Sprite {
+			return _button3;
+		}
+		public function get button4():Sprite {
+			return _button4;
+		}
+		public function get right():Sprite {
+			return _right;
+		}
+		public function get left():Sprite {
+			return _left;
+		}
+		public function get down():Sprite {
+			return _down;
+		}
+		public function get up():Sprite {
+			return _up;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
