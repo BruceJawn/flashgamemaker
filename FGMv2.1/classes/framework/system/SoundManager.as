@@ -204,6 +204,15 @@ package framework.system{
 				WavURLPlayer.PlayWavFromURL($wavUrl);
 			}
 		}
+		//------ Get Sound ------------------------------------
+		public function getSound($path:String):Sound {
+			var sound:Sound = _sounds[$path].sound;
+			if(sound){
+				return sound;
+			}
+			throw new Error("*SoundManager: the sound requested ("+$path+") as not been fully loaded yet or doesn't exist!!!");	
+			return null;
+		}
 		//------- ToString -------------------------------
 		public function ToString():void {
 

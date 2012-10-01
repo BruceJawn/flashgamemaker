@@ -58,6 +58,10 @@ package framework.system{
 		 */		
 		function changeVolume(soundChannel:SoundChannel, volume:Number):void;
 		/**
+		 * Get Sound
+		 */		
+		function getSound($path:String):Sound;
+		/**
 		 * To String
 		 */		
 		function ToString():void ;
