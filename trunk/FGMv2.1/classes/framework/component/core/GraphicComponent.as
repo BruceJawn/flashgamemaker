@@ -74,7 +74,7 @@ package framework.component.core{
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
-			if(this.contains(graphic))	Framework.RemoveChild(graphic,this);
+			if(graphic && this.contains(graphic))	Framework.RemoveChild(graphic,this);
 			if($prop && $prop.componentParent){	
 				_componentParent = $prop.componentParent;
 				if(_componentParent.componentChildren.lastIndexOf(this)==-1){

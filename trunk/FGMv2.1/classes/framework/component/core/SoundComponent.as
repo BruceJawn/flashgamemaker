@@ -25,6 +25,8 @@ package framework.component.core{
 	import flash.display.DisplayObject;
 	import flash.events.*;
 	import flash.events.EventDispatcher;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
 	
 	import framework.entity.*;
 	import framework.system.ISoundManager;
@@ -38,13 +40,12 @@ package framework.component.core{
 	public class SoundComponent extends GraphicComponent {
 
 		private var _soundManager:ISoundManager=null;
-		//Sound properties
-		public var _sound_name:String;
-		public var _sound_path:String;
-		public var _sound_volume:Number=0.5;//Between 0 and 100
-		public var _sound_isPlaying:Boolean=false;
-		public var _sound_play:Boolean=false;
-		public var _sound_position:Number=0;
+		private var _soundPath:String	=null;
+		private var _volume:Number		=0.5;//Between 0 and 100
+		private var _isPlaying:Boolean	=false;
+		private var _soundChannel:SoundChannel= null;
+		private var _sound:Sound 		= null;
+		private var _position:Number 	= 0;
 
 		public function SoundComponent($componentName:String, $entity:IEntity, $singleton:Boolean=true, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -52,14 +53,47 @@ package framework.component.core{
 		}
 		//------ Init Var ------------------------------------
 		override protected function initVar($prop:Object):void {
-			super.initVar($prop);
 			_soundManager=SoundManager.getInstance();
-			_sound_name="MySound";
-			_sound_path="sound/sound.mp3";
+			if($prop && $prop.hasOwnProperty("volume")){
+				_volume = $prop.volume;
+			}
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
 			super.initProperty();
+		}
+		//------ Set Sound ------------------------------------
+		public function set sound($sound:Sound):void {
+			_sound = $sound;
+		}
+		//------ Set Sound ------------------------------------
+		public function loadSound($soundPath:String,$callback:Function=null):void {
+			_soundPath = $soundPath;
+			_soundManager.loadSound($soundPath,$callback);
+		}
+		//------ Play ------------------------------------
+		public function play($volume:Number=-1):void {
+			if($volume==-1)		$volume = _volume;
+			_isPlaying = true;
+			_soundChannel = _sound.play();
+			_soundChannel.soundTransform.volume = $volume;
+		}
+		//------ Resume ------------------------------------
+		public function resume($volume:Number=-1):void {
+			if($volume==-1)		$volume = _volume;
+			_isPlaying = true;
+			_soundChannel = _sound.play(_position);
+			_soundChannel.soundTransform.volume = $volume;
+		}
+		//------ Stop ------------------------------------
+		public function stop():void {
+			_isPlaying = false;
+			_position = _soundChannel.position;
+			_soundChannel.stop();
+		}
+		//------ Is Playing ------------------------------------
+		public function get isPlaying():Boolean {
+			return _isPlaying;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
