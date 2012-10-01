@@ -241,7 +241,7 @@ package customClasses{
 									object.spatialMove.facingDir.x = -spatialMove.facingDir.x;
 								}
 							}	
-							if(object.kind == Data.OBJECT_KIND_SPECIAL_MOVE){
+							if(object.kind == Data.OBJECT_KIND_PROJECTILE){
 								Fly(object.getCurrentState()).explode();
 								continue;
 							}

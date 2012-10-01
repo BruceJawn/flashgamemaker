@@ -278,16 +278,14 @@ package customClasses{
 					updateAnim(lfeFrame.lightWeaponAttackId);
 				}else if(weaponKind == Data.OBJECT_KIND_HEAVY_WEAPON){
 					updateAnim(frame.hit_a);
-				}else if(weaponKind == Data.OBJECT_KIND_BOTTLE){
-					updateAnim(lfeFrame.bottleDrinkId);
-				}	
+				}
 			}
 		}
 		//------ Drop Weapon ------------------------------------
 		public function dropWeapon():void {
 			if(_object.weapon){
 				var weaponLfeFrame:Object=_object.weapon.lfe_Frame;
-				if(_object.weapon.kind == Data.OBJECT_KIND_HEAVY_WEAPON || _object.weapon.kind == Data.OBJECT_KIND_BOTTLE){
+				if(_object.weapon.kind == Data.OBJECT_KIND_HEAVY_WEAPON ){
 					if(weaponLfeFrame.hasOwnProperty("inTheSky")){
 						object.weapon.source=null;
 						object.weapon.updateAnim(weaponLfeFrame.inTheSky);

@@ -22,6 +22,7 @@
 */
 package screens{
 	import com.adobe.serialization.json.JSON;
+	import data.Data;
 	
 	import customClasses.*;
 	
@@ -78,79 +79,45 @@ package screens{
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			/*var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponent("GameEntity","KeyboardMoveComponent","myKeyMoveComponent");
-			keyboardMoveComponent.setMode("2Dir");
-			var animationComponent:AnimationComponent=_entityManager.addComponent("GameEntity","AnimationComponent","myAnimationComponent");
-			var mouseMoveComponent:MouseMoveComponent=_entityManager.addComponent("GameEntity","MouseMoveComponent","myMouseMoveComponent");
-			var progressBarComponent:ProgressBarComponent=_entityManager.addComponent("GameEntity","ProgressBarComponent","myProgressBarComponent");
+			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("MSOrigin","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("MSOrigin","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
+			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("MSOrigin","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
+			bitmapRenderComponent.scrollEnabled = false;
+			Framework.SetChildIndex(bitmapRenderComponent, Framework.numChildren - 1);
+			var keyPad:KeyPad = new KeyPad(true);
+			keyPad.useZQSD();
+			keyPad.useArrows();
+			keyPad.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
+			var player:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad);
+			player.registerPropertyReference("keyboardInput");
+			player.moveTo(0,300);
+			//player1.setTimeMultiplicator(10);
+			var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad);
+			
 			var timerComponent:TimerComponent=_entityManager.addComponent("GameEntity","TimerComponent","myTimerComponent");
-			var aiComponent:AIComponent=_entityManager.addComponent("GameEntity","AIComponent","myAIComponent");
-			var backgroundColorComponent:BackgroundColorComponent=_entityManager.addComponent("GameEntity","BackgroundColorComponent","myBackgroundColorComponent");
-			backgroundColorComponent.changeColor("111111");
-			var bitmapPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myBitmapPlayerComponent");
-			bitmapPlayerComponent.setPropertyReference("keyboardMove",bitmapPlayerComponent._componentName);
-			bitmapPlayerComponent.setPropertyReference("keyboardFire",bitmapPlayerComponent._componentName);
-			bitmapPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
-			//bitmapPlayerComponent.setCollision(true);
-			bitmapPlayerComponent.moveTo(50,200);
-			bitmapPlayerComponent.setAnim("WALK",2);
-			bitmapPlayerComponent.setAnim("WALK_UP",13);
-			bitmapPlayerComponent.setAnim("WALK_DOWN",6);
-			bitmapPlayerComponent.setAnim("ATTACK",1);
-			bitmapPlayerComponent.setAnim("JUMP",8);
-			bitmapPlayerComponent.setAnim("JUMP_DOWN",10);
-			bitmapPlayerComponent.setAnim("SIT",5);
-			bitmapPlayerComponent.setAnim("STATIC_DOWN",4);
-			bitmapPlayerComponent.setAnim("STATIC_UP",11);
-			var ennemyPlayerComponent:BitmapPlayerComponent=_entityManager.addComponent("GameEntity","BitmapPlayerComponent","myEnnemyPlayerComponent");
-			ennemyPlayerComponent.setPropertyReference("AI",ennemyPlayerComponent._componentName);
-			ennemyPlayerComponent.setPropertyReference("mouseMove",ennemyPlayerComponent._componentName);
-			ennemyPlayerComponent.loadPlayer("xml/framework/game/bitmapPlayerMSOrigin.xml","MSOrigin");
-			aiComponent.setAI(ennemyPlayerComponent,"follow",bitmapPlayerComponent);
-			ennemyPlayerComponent.moveTo(-40,200);
-			ennemyPlayerComponent.setAnim("WALK",2);
-			ennemyPlayerComponent.setAnim("WALK_UP",13);
-			ennemyPlayerComponent.setAnim("WALK_DOWN",6);
-			ennemyPlayerComponent.setAnim("ATTACK",1);
-			ennemyPlayerComponent.setAnim("JUMP",8);
-			ennemyPlayerComponent.setAnim("JUMP_DOWN",10);
-			ennemyPlayerComponent.setAnim("SIT",5);
-			ennemyPlayerComponent.setAnim("STATIC_DOWN",4);
-			ennemyPlayerComponent.setAnim("STATIC_UP",11);
+			
 			var backgroundComponent:ScrollingBitmapComponent=_entityManager.addComponent("GameEntity","ScrollingBitmapComponent","myBackgroundComponent");
 			backgroundComponent.setPropertyReference("progressBar",backgroundComponent._componentName);
 			backgroundComponent.setPropertyReference("timer",backgroundComponent._componentName);
-			backgroundComponent.loadGraphic("texture/framework/game/background/ms/bg.png", "MS_BG");
+			//backgroundComponent.graphic = _graphicManager.getGraphic(Data.BACKGROUND[0].path);
 			backgroundComponent.setScrolling(30,3);
 			backgroundComponent.setScrollingTarget(bitmapPlayerComponent);
 			backgroundComponent.moveTo(0,90);
-			var backgroundObjectComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myBackgroundObjectComponent");
-			backgroundObjectComponent.loadGraphic("texture/framework/game/background/ms/object.png", "MS_Object");
-			backgroundObjectComponent.moveTo(0,90);
 			
-			var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","mySTatutBarGraphicComponent");
+			/*var statutBarComponent:GraphicComponent=_entityManager.addComponent("GameEntity","GraphicComponent","myStatutBarGraphicComponent");
 			statutBarComponent.setPropertyReference("progressBar",statutBarComponent._componentName);
 			statutBarComponent.loadGraphic("texture/framework/game/interface/MsOriginStatutBar.swf", "MsOriginStatutBar");
-			statutBarComponent.moveTo(0,310);
-			var soundComponent:SoundComponent=_entityManager.addComponent("GameEntity","SoundComponent","mySoundComponent");
-			//soundComponent.setController("texture/framework/game/interface/soundControl.swf","SoundControl");
-			//soundComponent.play("sound/ms/No_Need_to_Reload.mp3","NoNeedToReload", 0.1);
-			soundComponent.moveTo(300,5);
-			var tweenComponent:TweenComponent=_entityManager.addComponent("GameEntity","TweenComponent","myTweenComponent");
-			var healthComponent:HealthComponent=_entityManager.addComponent("GameEntity","HealthComponent","myHealthComponent");
-			var keyboardFireComponent:KeyboardFireComponent=_entityManager.addComponent("GameEntity","KeyboardFireComponent","myKeyboardFireComponent");
-			keyboardFireComponent.loadGraphic("texture/framework/game/fx/bullet.png", "Bullet");
-			keyboardFireComponent.setBullets(60,20,10,20,new Point(10,10),60);
-			keyboardFireComponent.addPlayer(ennemyPlayerComponent);
-			var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
-			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);
+			statutBarComponent.moveTo(0,310);*/
+			
+			/*var scoreComponent:ScoreComponent=_entityManager.addComponent("GameEntity","ScoreComponent","myScoreComponent");
+			scoreComponent.setScore("texture/framework/game/interface/score.png","Score",1);*/
+			
 			var rpgTextComponent:RPGTextComponent=_entityManager.addComponent("GameEntity","RPGTextComponent","myRPGTextComponent");
-			rpgTextComponent.loadGraphic("texture/framework/game/interface/rpgText.swf", "RPGText");
+			rpgTextComponent.loadGraphic(Framework+"assets/rpgText.swf", "RPGText");
 			var sequence:String="<rpgText><sequence title='???' icon='unknown?' graphic=''>...Roger...RAS</sequence><sequence title='Squad' icon='Squad' graphic=''>1,2,3,...GO!</sequence></rpgText>";
 			rpgTextComponent.setSequence(sequence);
 			rpgTextComponent.moveTo(60,50);
 			rpgTextComponent.addEventListener("_RPGTextCOMPLETE",onRPGTextComplete);
-			*/
 		}
 		//------ On RPG Text Complete ------------------------------------
 		private function onRPGTextComplete(evt:Event):void {

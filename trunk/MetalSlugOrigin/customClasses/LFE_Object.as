@@ -22,6 +22,7 @@
 */
 
 package customClasses{
+	import com.adobe.serialization.json.JSON;
 	
 	import data.Data;
 	
@@ -49,15 +50,14 @@ package customClasses{
 		public static function CreateObject($oid:int, $caller:LFE_ObjectComponent=null, $keyPad:KeyPad=null, $position:IsoPoint=null):LFE_ObjectComponent {
 			var object:Object = Data.OBJECT[$oid];
 			var dataString:String = RessourceManager.getInstance().getFile(object.data);
-			var dataJSON:Object = JSON.parse(dataString);//Flash 11
-			//var dataJSON:Object = JSON.decode(dataString);//Flash 10
+			var dataJSON:Object = JSON.decode(dataString);
 			var graphics:Array = object.graphics as Array;
 			var lfe_object:LFE_ObjectComponent = null;
 			switch(object.kind){
 				case Data.OBJECT_KIND_CHARACTER: 
 					lfe_object=CreatePlayer(object.kind,dataJSON,graphics,$keyPad,$position);
 					break;
-				case Data.OBJECT_KIND_SPECIAL_MOVE: 
+				case Data.OBJECT_KIND_PROJECTILE: 
 					lfe_object=CreateSpecialMove(object.kind,dataJSON,graphics,$caller);
 					break;
 				case Data.OBJECT_KIND_WEAPON: 
@@ -75,7 +75,7 @@ package customClasses{
 		//------- Create Player  -------------------------------
 		public static function CreatePlayer($kind:int,$data:Object,$graphics:Array,$keyPad:KeyPad=null, $position:IsoPoint=null):LFE_ObjectComponent {
 			var lfe_frame:LFE_Frame = new LFE_Frame($data);
-			var player:LFE_ObjectComponent= EntityManager.getInstance().addComponentFromName("LittleFighterEvo","LFE_ObjectComponent",null,{lfe_frame:lfe_frame,kind:$kind,keyPad:$keyPad}) as LFE_ObjectComponent;
+			var player:LFE_ObjectComponent= EntityManager.getInstance().addComponentFromName("MSOrigin","LFE_ObjectComponent",null,{lfe_frame:lfe_frame,kind:$kind,keyPad:$keyPad}) as LFE_ObjectComponent;
 			if(_list[$graphics]){
 				player.createBitmap(_list[$graphics]);
 			}else{
@@ -89,13 +89,13 @@ package customClasses{
 				player.x=$position.x;
 				player.y=$position.y;
 			}
-			player.registerPropertyReference("collisionDetection",player.collisionParam);
+			//player.registerPropertyReference("collisionDetection",player.collisionParam);
 			return player;
 		}
 		//------- Create Special Move  -------------------------------
 		public static function CreateSpecialMove($kind:int,$data:Object,$graphics:Array, $source:LFE_ObjectComponent):LFE_ObjectComponent {
 			var specialMoveframe:LFE_Frame = new LFE_Frame($data);
-			var specialMove:LFE_ObjectComponent=EntityManager.getInstance().addComponentFromName("LittleFighterEvo","LFE_ObjectComponent",null,{lfe_frame:specialMoveframe,kind:$kind, source:$source}) as LFE_ObjectComponent;
+			var specialMove:LFE_ObjectComponent=EntityManager.getInstance().addComponentFromName("MSOrigin","LFE_ObjectComponent",null,{lfe_frame:specialMoveframe,kind:$kind, source:$source}) as LFE_ObjectComponent;
 			if(_list[$graphics]){
 				specialMove.createBitmap(_list[$graphics]);
 			}else{
@@ -122,7 +122,7 @@ package customClasses{
 		//------- Create Weapon  -------------------------------
 		public static function CreateWeapon($kind:int,$data:Object,$graphics:Array, $source:LFE_ObjectComponent=null, $position:IsoPoint=null):LFE_ObjectComponent {
 			var weaponframe:LFE_Frame = new LFE_Frame($data);
-			var weapon:LFE_ObjectComponent=EntityManager.getInstance().addComponentFromName("LittleFighterEvo","LFE_ObjectComponent",null,{lfe_frame:weaponframe,kind:$kind, source:$source}) as LFE_ObjectComponent;
+			var weapon:LFE_ObjectComponent=EntityManager.getInstance().addComponentFromName("MSOrigin","LFE_ObjectComponent",null,{lfe_frame:weaponframe,kind:$kind, source:$source}) as LFE_ObjectComponent;
 			if(_list[$graphics]){
 				weapon.createBitmap(_list[$graphics]);
 			}else{
