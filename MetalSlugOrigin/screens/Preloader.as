@@ -63,9 +63,15 @@ package screens{
 		//------ Get Assets To Load ------------------------------------
 		private function getAssetsToLoad():Array {
 			var assetsToLoad:Array = new Array();
-			assetsToLoad.push(Framework.root+"assets/bullet.png");
-			assetsToLoad.push(Framework.root+"assets/MS.png");
-			assetsToLoad.push(Framework.root+"assets/MSbg.png");
+			for each(var bg:Object in Data.BACKGROUND){
+				assetsToLoad.push(Framework.root+bg.path);
+			}
+			for each(var object:Object in Data.OBJECT){
+				assetsToLoad.push(Framework.root+object.data);
+				for each(var graphic:String in object.graphics){
+					assetsToLoad.push(Framework.root+graphic);
+				}
+			}
 			return assetsToLoad;
 		}
 		//------ On Loading Complete ------------------------------------
