@@ -46,6 +46,7 @@ package screens{
 	import utils.keyboard.KeyCode;
 	import utils.keyboard.KeyPad;
 	import utils.loader.SimpleLoader;
+	import utils.mouse.MousePad;
 	import utils.popforge.WavURLPlayer;
 	import utils.richardlord.*;
 	import utils.ui.LayoutUtil;
@@ -57,6 +58,9 @@ package screens{
 		
 		private var _entityManager:IEntityManager	=null;
 		private var _graphicManager:IGraphicManager =null;
+		private var _soundManager:ISoundManager		=null;
+		private var _soundComponent:SoundComponent	=null;
+		private var _volume:Number					= 0.01;
 		private var _player:MS_ObjectComponent		=null;
 		private var _bg:ScrollingBitmapComponent 	=null;
 		private var _statutBar:GraphicComponent 	=null;
@@ -71,6 +75,7 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
+			_soundManager = SoundManager.getInstance();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -119,9 +124,29 @@ package screens{
 			var sequence:Array=[{title:"???", content:"You have 24H to accomplish your mission", icon:null, delay:5000},{title:"Squad", content:"...Roger that", icon:null, delay:5000},{title:"Squad", content:"1, 2, 3, ..., Go! Go!!!", icon:null, delay:5000}]
 			rpgTextComponent.setSequences(sequence);
 			rpgTextComponent.moveTo(80,35);
+			
+			_soundComponent=_entityManager.addComponentFromName("MSOrigin","SoundComponent","mySoundComponent") as SoundComponent;
+			_soundComponent.graphic = _graphicManager.getGraphic(Data.OTHER.soundControl.path);
+			_soundComponent.scaleX /=1.5;
+			_soundComponent.scaleY /=1.5;
+			_soundComponent.sound = _soundManager.getSound(Framework.root+Data.BACKGROUND.mainMusic.path);
+			_soundComponent.registerPropertyReference("mouseInput",{onMouseDown:onSoundClick});
+			LayoutUtil.Align(_soundComponent,LayoutUtil.ALIGN_TOP_RIGHT,null,null,new Point(-5,5));
+			
+		}
+		//------ On Chrono Complete ------------------------------------
+		private function onSoundClick($mousePad:MousePad):void {
+			if(_soundComponent.isPlaying){
+				_soundComponent.stop();
+				_soundComponent.graphic.nextFrame();
+			}else{
+				_soundComponent.resume(_volume);
+				_soundComponent.graphic.prevFrame();
+			}
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onRPGTextComplete($rpgTextComponent:RPGTextComponent):void {
+			_soundComponent.play(_volume);
 			var endChronoComponent:ChronoComponent=_entityManager.addComponentFromName("MSOrigin","ChronoComponent","myChronoComponent",{onChronoComplete:onChronoComplete}) as ChronoComponent;
 			endChronoComponent.graphic = _graphicManager.getGraphic(Data.OTHER.chrono.path);
 			endChronoComponent.start(60, true);
