@@ -22,6 +22,8 @@
 */
 
 package framework.component.core{
+	import com.sociodox.theminer.data.FrameStatistics;
+	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.Matrix;
@@ -72,6 +74,7 @@ package framework.component.core{
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
+			if(this.contains(graphic))	Framework.RemoveChild(graphic,this);
 			if($prop && $prop.componentParent){	
 				_componentParent = $prop.componentParent;
 				if(_componentParent.componentChildren.lastIndexOf(this)==-1){

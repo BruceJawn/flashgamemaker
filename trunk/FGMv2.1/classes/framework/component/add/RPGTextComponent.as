@@ -52,6 +52,7 @@ package framework.component.add{
 		private var _icon:MovieClip;
 		private var _prevBt:SimpleButton;
 		private var _nextBt:SimpleButton;
+		private var _callback:Function;
 
 		public function RPGTextComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object=null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -59,7 +60,7 @@ package framework.component.add{
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
-			
+			if($prop && $prop.hasOwnProperty("onRPGTextComplete"))	_callback = $prop.onRPGTextComplete;
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -75,9 +76,9 @@ package framework.component.add{
 			_icon = rpgText.icon as MovieClip;
 			_prevBt = rpgText.prevBt as SimpleButton;
 			_nextBt  = rpgText.nextBt as SimpleButton;
-			super.onGraphicLoadingComplete($graphic,$callback);
 			setButton(rpgText.nextBt, {onMouseClick:onNextClick});
 			setButton(rpgText.prevBt, {onMouseClick:onPrevClick});
+			super.onGraphicLoadingComplete($graphic,$callback);
 		}
 		//------Set Text -------------------------------------
 		public function setSequences($sequences:Array):void {
@@ -85,8 +86,17 @@ package framework.component.add{
 			_sequences=$sequences;
 			updateText();
 		}
+		//------Add Sequence -------------------------------------
+		public function addSequence($sequence:Object):void {
+			_sequences.push($sequence);
+			updateText();
+		}
 		//------ UpdateText ------------------------------------
 		private function updateText():void {
+			if(!_sequences){
+				trace("[WARNING] RPGTextComponent: You have to set a sequence first");
+				return;
+			}
 			var sequence:Object = _sequences[_position];
 			_titleTF.text = sequence.title;
 			_contentTF.text = String(sequence.content).charAt(0);
@@ -105,17 +115,19 @@ package framework.component.add{
 		}
 		//------ On Next Click ------------------------------------
 		private function onNextClick($mousePad:MousePad):void {
+			if(!_sequences){
+				trace("[WARNING] RPGTextComponent: You have to set a sequence first");
+				return;
+			}	
 			var sequence:Object = _sequences[_position];
 			var content:String=sequence.content;
 			if (_contentTF.text.length<content.length) {
 				_contentTF.text=sequence.content;
-			} else {
+			} else if(_position<_sequences.length-1) {
 				_position++;
-				if (_position>=_sequences.length) {
-					_position=_sequences.length-1;
-					return;
-				}
 				updateText();
+			}else{
+				stop();
 			}
 		}
 		//------ On Prev Click ------------------------------------
@@ -123,6 +135,15 @@ package framework.component.add{
 			if (_position>0) {
 				_position--;
 				updateText();
+			}
+		}
+		//------ Stop ------------------------------------
+		public function stop($destroy:Boolean=true):void {
+			dispatchEvent(new Event(Event.COMPLETE));
+			if(_callback is Function)	_callback(this);
+			if($destroy){
+				visible=false;
+				destroy();
 			}
 		}
 		//------ On Prev Click ------------------------------------

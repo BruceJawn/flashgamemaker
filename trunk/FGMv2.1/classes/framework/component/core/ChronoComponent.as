@@ -44,11 +44,16 @@ package framework.component.core{
 	 */
 	public class ChronoComponent extends GraphicComponent {
 		
-		protected var _bitmapSet:* = null			// BitmapAnim property can be BitmapSet or extended to  SwfSet
-		protected var _autoAnim:Boolean = true;
+		private var _source:Bitmap=null;
+		private var _bitmap:Bitmap=null;
+		private var _bitmapData:BitmapData=null;
+		private var _isRunning:Boolean = true;
+		private var _callback:Function;
+		
+		private var _autoAnim:Boolean = true;
 		private var _delay:Number=3500; 			//Timer properties
-		private var _timeline:Dictionary;
 		private var _count:Number=3;
+		private var _countMax:Number = 0;
 		public var _reversed:Boolean = true;
 		
 		public function ChronoComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
@@ -58,109 +63,69 @@ package framework.component.core{
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
 			if($prop && $prop.delay)		_delay = $prop.delay;
-			if($prop && $prop.bitmapSet)	_bitmapSet = $prop.bitmapSet;
-			_graphic = new Bitmap;
-			_autoAnim = false;
-			_timeline = new Dictionary(true);
+			if($prop && $prop.hasOwnProperty("onChronoComplete"))	_callback = $prop.onChronoComplete;
 		}
-		//------ Init Property Info ------------------------------------
-		public override function initProperty():void {
-			super.initProperty();
-			registerProperty("chrono");
+		//------ Create Chrono ------------------------------------
+		private function createChrono($graphic:Bitmap=null):void {
+			if(_bitmapData)			_bitmapData.dispose();
+			if($graphic)			_source = $graphic;	
+			_bitmapData = new BitmapData(_source.width/10*4,_source.height); // We suppose that the chrono doesn't exceed 9999 and that the source align the digits
+			_bitmap = new Bitmap(_bitmapData);
+			if(!contains(_bitmap))	addChild(_bitmap);
+			actualizeChrono();
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		override protected function onGraphicLoadingComplete($graphic:DisplayObject, $callback:Function=null):void {
-			bitmapSet = new BitmapSet($graphic,null);
+			createChrono($graphic as Bitmap)
 			if($callback is Function)	$callback(this);
-			start();
-			registerPropertyReference("bitmapAnim");
 		}
-		//------ Actualize Components  ------------------------------------
-		public override function actualizePropertyComponent($propertyName:String, $component:Component, $param:Object = null):void {
-			if ($propertyName == "chrono") {
-				updateComponent($component, $param);
-			}
+		//------ Set graphic ------------------------------------
+		public override function set graphic($graphic:*):void {
+			createChrono($graphic as Bitmap);
 		}
-		//------ Update Component ------------------------------------
-		public function updateComponent($component:Component, $param:Object = null):void {
-			//Check properties
-			if(!_timeline[$component]){
-				_timeline[$component] = {component:$component, param:$param};
+		//------ Actualize Score ------------------------------------
+		public function actualizeChrono():void {
+			if(_bitmapData!=null){
+				_bitmapData.lock();
+				_bitmapData.fillRect(_bitmapData.rect,0);
+				var count:String = _count.toString();
+				for (var i:int=0;i<count.length;i++){
+					var X:int = Number(count.substr(count.length-i-1,1));
+					_bitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point((count.length-i-1)*_source.width/10, 0),null,null,true);
+				}
+				_bitmapData.lock();
 			}
 		}
 		//------ On Tick ------------------------------------
 		private function onTick():void {
-			if(_reversed && _bitmapSet.graph.animations["CHRONO"].position > 0){
-				_bitmapSet.graph.anim("CHRONO",true);
-				actualize("bitmapAnim");
-			}else if(!_reversed && _bitmapSet.graph.animations["CHRONO"].position < _count){
-				_bitmapSet.graph.anim("CHRONO");
-				actualize("bitmapAnim");
-			}else{
-				stop();
+			if(_isRunning){
+				_reversed?_count--:_count++;
+				actualizeChrono();
+				if(_count==_countMax) 	stop();
 			}
 		}
 		//------ Start ------------------------------------
-		public function start():void {
-			if(_reversed){
-				_bitmapSet.graph.createGraph("CHRONO", 0,0,32,45,null, null,10,_count);
-			}else{
-				_bitmapSet.graph.createGraph("CHRONO", 0,0,32,45,null, null,10,1);
-			}
-			_bitmapSet.graph.currentAnim = 	_bitmapSet.graph.animations["CHRONO"];
+		public function start($count:Number, $show:Boolean=true):void {
+			if($count) 	_count = $count;
+			if(!contains(_bitmap))		addChild(_bitmap);
+			actualizeChrono();
+			_isRunning = true;
 			registerPropertyReference("timer",{callback:onTick, delay:_delay});
 		}
 		//------ Stop ------------------------------------
-		public function stop():void {
-			visible=false;
-			//destroy();
-			for each(var component:Object in _timeline){
-				if(component.param && component.param.hasOwnProperty("onChronoEnd")){
-					component.param.onChronoEnd();
-				}else if(component.component.hasOwnProperty("onChronoEnd")){
-					component.component.onChronoEnd();
-				}
+		public function stop($destroy:Boolean=true):void {
+			dispatchEvent(new Event(Event.COMPLETE));
+			if(_callback is Function)	_callback(this);
+			_isRunning = false;
+			unregisterPropertyReference("timer");
+			if($destroy){
+				visible=false;
+				destroy();
 			}
 		}
 		//------ Rest Chrono ------------------------------------
 		public function reset($count:Number):void {
 			_count = $count;
-		}
-		//------ Get BitmapSet ------------------------------------
-		public function get bitmapSet():BitmapSet {
-			return _bitmapSet;
-		}
-		//------ Set BitmapSet ------------------------------------
-		public function set bitmapSet($bitmapSet:BitmapSet):void {
-			_bitmapSet = $bitmapSet;
-		}
-		//------- Get AutoAnim -------------------------------
-		public function get autoAnim():Boolean {
-			return _autoAnim;
-		}
-		//------- Set AutoAnim -------------------------------
-		public function set autoAnim($autoAnim:Boolean):void {
-			_autoAnim = $autoAnim;
-		}
-		//------- Get CurrentAnim -------------------------------
-		public function get currentAnimName():String {
-			return bitmapSet.currentAnimName;
-		}
-		//------- Get PrevAnim -------------------------------
-		public function get previousAnimName():String {
-			return bitmapSet.previousAnimName;
-		}
-//		//------- Get AutoAnim -------------------------------
-//		public function get currentPoseName():String {
-//			return bitmapSet.currentPoseName;
-//		}
-		//------- Get CurrentFrame -------------------------------
-		public function get currentPosition():int {
-			return bitmapSet.currentPosition;
-		}
-		//------- Get LastFrame -------------------------------
-		public function get lastPosition():int {
-			return bitmapSet.lastPosition;
 		}
 	}
 }
