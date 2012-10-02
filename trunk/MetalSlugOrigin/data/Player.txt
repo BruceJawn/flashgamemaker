@@ -11,156 +11,155 @@
 	
 	"frames":[
 		{
-			"id":0, "frame":0, "name":"Stand", "state":"Stand", "wait":5, "reverse":1,"flip":true, "dvx":0, "dvy":0, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":8,"dbl_hit_left":8, "hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
-			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":14, "y":20, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":0, "frame":0, "name":"Stand", "state":"Stand", "wait":5, "reverse":1,"flip":true, "dvx":0, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":8,"dbl_hit_left":8, "hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"hit_a":[51,55], "hit_d":22, "hit_j":12,
+			"wpoint":{"kind":1, "x":14, "y":20, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":1,"frame":1, "name":"Stand", "state":"Stand", "wait":3, "flip":true,"dvx":0, "dvy":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":8,"dbl_hit_left":8, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":1,"frame":1, "name":"Stand", "state":"Stand", "wait":3, "flip":true,"dvx":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":8,"dbl_hit_left":8, "hit_a":[51,55], "hit_d":22, "hit_j":12,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":14, "y":19, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":14, "y":19, "weaponact":27, "attacking":0,  "dvx":0,  "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":2,"frame":2, "name":"Stand", "state":"Stand", "wait":5,"flip":true, "dvx":0, "dvy":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":2,"frame":2, "name":"Stand", "state":"Stand", "wait":5,"flip":true, "dvx":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":14, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":14, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":3,"frame":3, "name":"Stand", "state":"Stand", "wait":9,"flip":true, "dvx":0, "dvy":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":3,"frame":3, "name":"Stand", "state":"Stand", "wait":9,"flip":true, "dvx":0, "dvz":0, "offsetx":0, "offsety":0,"hit_up":4,"hit_down":4,"hit_right":4,"hit_left":4,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, 
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":14, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":14, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":4, "frame":8, "name":"Walk", "state":"Walk", "wait":5,"flip":true, "next":0,"reverse":1, "dvx":5, "dvy":2.5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":4, "frame":8, "name":"Walk", "state":"Walk", "wait":5,"flip":true, "next":0,"reverse":1, "dvx":5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, 
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":14, "y":18, "w":36, "h":62}
 			
 		},
 		{
-			"id":5,"frame":9, "name":"Walk", "state":"Walk", "wait":3, "next":0, "dvx":5, "dvy":2.5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":5,"frame":9, "name":"Walk", "state":"Walk", "wait":3, "next":0, "dvx":5,  "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, 
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":17, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":17, "y":18, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":14, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":6,"frame":10, "name":"Walk", "state":"Walk", "wait":5, "next":0, "dvx":5, "dvy":2.5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":6,"frame":10, "name":"Walk", "state":"Walk", "wait":5, "next":0, "dvx":5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":25, "y":16, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":25, "y":16, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":7,"frame":11, "name":"Walk", "state":"Walk", "wait":9, "next":0, "dvx":5, "dvy":2.5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12, "hit_Fa":24, "hit_Ua":90, "hit_Da":76, "hit_Uj":108,
+			"id":7,"frame":11, "name":"Walk", "state":"Walk", "wait":9, "next":0, "dvx":5, "dvz":0, "offsetx":0, "offsety":0,"dbl_hit_right":9,"dbl_hit_left":9, "hit_a":[51,55], "hit_d":22, "hit_j":12,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":27, "y":17, "weaponact":27, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":27, "y":17, "weaponact":27, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":19, "y":18, "w":36, "h":62}
 		},
 		{
-			"id":8,"frame":12, "name":"Run", "state":"Run", "reverse":1,"wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
+			"id":8,"frame":12, "name":"Run", "state":"Run", "reverse":1,"wait":3, "next":11, "dvx":10, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
 			"bpoint":{"x":67, "y":32},
-			"wpoint":{"kind":1, "x":41, "y":9, "weaponact":25, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":41, "y":9, "weaponact":25, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
 		},
 		{
-			"id":9,"frame":13, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
+			"id":9,"frame":13, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
 			"bpoint":{"x":45, "y":24},
-			"wpoint":{"kind":1, "x":24, "y":10, "weaponact":25, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":24, "y":10, "weaponact":25, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
 		},
 		{
-			"id":10,"frame":14, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15,
+			"id":10,"frame":14, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":17, "y":13, "weaponact":26, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":17, "y":13, "weaponact":26, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
 		},
 		{
 			"id":11,"frame":15, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15,
 			"bpoint":{"x":39, "y":34},
-			"wpoint":{"kind":1, "x":17, "y":13, "weaponact":26, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"wpoint":{"kind":1, "x":17, "y":13, "weaponact":26, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
 		},
 		{
-			"id":12,"frame":39, "name":"Jump", "state":"Jump", "wait":2, "next":0,"reverse":0,"endAnim":true, "offsetx":0, "offsety":0, "hit_a":102, "dbl_hit_j":0,"dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
-			"wpoint":{"kind":1, "x":24, "y":16, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":12,"frame":39, "name":"Jump", "state":"Jump", "wait":2, "next":0,"reverse":0,"endAnim":true, "offsetx":0, "offsety":0, "hit_a":102, "dbl_hit_j":0,
+			"wpoint":{"kind":1, "x":24, "y":16, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56}
 		},
 		{
-			"id":13,"frame":40, "name":"Jump", "state":"Jump", "wait":5, "next":0,"reverse":0,  "offsetx":0, "offsety":0,"hit_a":102, "dbl_hit_j":0, "dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
-			"wpoint":{"kind":1, "x":24, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":13,"frame":40, "name":"Jump", "state":"Jump", "wait":5, "next":0,"reverse":0,  "offsetx":0, "offsety":0,"hit_a":102,
+			"wpoint":{"kind":1, "x":24, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56}
 		},
 		{
-			"id":14,"frame":41, "name":"Jump", "state":"Jump", "wait":0, "next":0,"reverse":0,"flip":1, "offsetx":0,"dvz":14, "offsety":0, "hit_a":102, "dbl_hit_j":0,"dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
-			"wpoint":{"kind":1, "x":8, "y":-8, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":14,"frame":41, "name":"Jump", "state":"Jump", "wait":0, "next":0,"reverse":0,"flip":1, "offsetx":0,"dvz":14, "offsety":0, "hit_a":102,
+			"wpoint":{"kind":1, "x":8, "y":-8, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56}
 		},
 		{
-			"id":15,"frame":42, "name":"Jump", "state":"Jump", "wait":0, "next":0,"reverse":0,"flip":1, "offsetx":0,"dvz":14, "offsety":0, "hit_a":102, "dbl_hit_j":0,"dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
-			"wpoint":{"kind":1, "x":8, "y":-8, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":15,"frame":42, "name":"Jump", "state":"Jump", "wait":0, "next":0,"reverse":0,"flip":1, "offsetx":0,"dvz":14, "offsety":0, "hit_a":102,
+			"wpoint":{"kind":1, "x":8, "y":-8, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56}
 		},
 		{
-			"id":24,"frame":140, "name":"StandShoot", "state":"Power", "wait":0,"endAnim":true,"fps":18, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":16,"frame":140, "name":"StandShoot", "state":"Power", "wait":0,"endAnim":true,"fps":18, "next":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":25,"frame":141, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":17,"frame":141, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":26,"frame":142, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":18,"frame":142, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":27,"frame":143, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":19,"frame":143, "name":"StandShoot", "state":"Power", "wait":0, "next":0, "dvx":0,"offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":102,"frame":132, "name":"JumpShoot", "state":"Jump","endAnim":true, "fps":18,"wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
+			"id":20,"frame":132, "name":"JumpShoot", "state":"Jump","endAnim":true, "fps":18,"wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":103,"frame":133, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
+			"id":21,"frame":133, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":35, "h":56}
 		},
 		{
-			"id":104,"frame":134, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
+			"id":22,"frame":134, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":24, "y":6, "w":29, "h":60}
 		},
 		{
-			"id":105,"frame":135, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
+			"id":23,"frame":135, "name":"JumpShoot", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,
 			"itr":{ "kind":0,  "x":17,  "y":37, "w": 52, "h":17, "vrest":1, "dvx":4},  
 			"bdy": {"kind":0, "x":11, "y":2, "w":29, "h":63}
 		},
 		{
-			"id":112,"frame":120, "name":"Hurt", "state":"Hurt","endAnim":true,"reverse":1, "wait":60,"next":0,"dvx":0, "offsetx":0, "offsety":0,
-			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0, "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":24,"frame":120, "name":"Hurt", "state":"Hurt","endAnim":true,"reverse":1, "wait":60,"next":0,"dvx":0, "offsetx":0, "offsety":0,
+			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0, "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":113,"frame":121, "name":"Hurt", "state":"Hurt", "wait":60,"next":0,"dvx":0, "offsetx":0, "offsety":0,
-			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0, "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":25,"frame":121, "name":"Hurt", "state":"Hurt", "wait":60,"next":0,"dvx":0, "offsetx":0, "offsety":0,
+			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0, "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":114,"frame":122, "name":"Hurt", "state":"Hurt", "wait":120,"next":0,"dvx":0, "offsetx":0, "offsety":0,
-			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":26,"frame":122, "name":"Hurt", "state":"Hurt", "wait":120,"next":0,"dvx":0, "offsetx":0, "offsety":0,
+			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":114,"frame":122, "name":"Hurt", "state":"Hurt", "wait":120,"next":0,"dvx":0, "offsetx":0, "offsety":0,
-			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
+			"id":27,"frame":122, "name":"Hurt", "state":"Hurt", "wait":120,"next":0,"dvx":0, "offsetx":0, "offsety":0,
+			"wpoint":{"kind":1, "x":14, "y":17, "weaponact":24, "attacking":0,  "dvx":0, "dvz": 0}, 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		}
 	]

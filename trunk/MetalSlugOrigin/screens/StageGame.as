@@ -81,6 +81,7 @@ package screens{
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("MSOrigin","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
 			var timerComponent:TimerComponent=_entityManager.addComponentFromName("MSOrigin","TimerComponent","myTimerComponent") as TimerComponent;
+			var spatialMoveComponent:SpatialMoveComponent=_entityManager.addComponentFromName("MSOrigin","SpatialMoveComponent","mySpatialMoveComponent") as SpatialMoveComponent;
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("MSOrigin","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("MSOrigin","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;

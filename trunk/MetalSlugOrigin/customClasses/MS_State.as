@@ -82,27 +82,7 @@ package customClasses{
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
-			if(frame.hasOwnProperty("hit_Da") && keyPad.down.isDown && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Da);
-			}else if(frame.hasOwnProperty("hit_Fa") && keyPad.right.isDown && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(125) && (keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)||keyPad.isPreviousKeydPadInputAtIndex(1,keyPad.fire3))){
-				updateAnim(frame.hit_Fa);
-			}else if(frame.hasOwnProperty("hit_Fa") && keyPad.left.isDown && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Fa);
-			}else if(frame.hasOwnProperty("hit_Ua") && keyPad.up.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Ua);
-			}else if(frame.hasOwnProperty("hit_Dj") && keyPad.down.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Dj);
-			}else if(frame.hasOwnProperty("hit_Fj") && keyPad.right.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Fj);
-			}else if(frame.hasOwnProperty("hit_Fj") && keyPad.left.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Fj);
-			}else if(frame.hasOwnProperty("hit_Uj") && keyPad.up.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
-				updateAnim(frame.hit_Uj);
-			}/*else if(frame.hasOwnProperty("dbl_hit_up") && keyPad.up.doubleClick  && keyPad.up.isDown && !keyPad.up.getLongClick(20)){
-				updateAnim(frame.dbl_hit_up);
-			}else if(frame.hasOwnProperty("dbl_hit_down")&& keyPad.down.doubleClick && keyPad.down.isDown && !keyPad.down.getLongClick(20)){
-				updateAnim(frame.dbl_hit_down);
-			}*/else if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
+			if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
 				updateAnim(frame.dbl_hit_right);
 			}else if(frame.hasOwnProperty("dbl_hit_left") && keyPad.left.doubleClick){
 				updateAnim(frame.dbl_hit_left);
@@ -153,10 +133,6 @@ package customClasses{
 				spatialMove.speed.x = frame.dvx;
 				checkMovingDirX(frame.dvx);
 			}
-			if(frame.hasOwnProperty("dvy")){
-				spatialMove.speed.y = frame.dvy;
-				checkMovingDirY(frame.dvy);
-			}
 		}
 		//------ CheckMovingDirX ------------------------------------
 		public function checkMovingDirX($dvx:Number):void {
@@ -169,19 +145,6 @@ package customClasses{
 					spatialMove.movingDir.x = 1;
 				}else if($dvx<0){
 					spatialMove.movingDir.x = -1;
-				}
-			}
-		}
-		//------ CheckMovingDirY ------------------------------------
-		public function checkMovingDirY($dvy:Number):void {
-			var spatialMove:SpatialMove = _object.spatialMove;
-			if($dvy!=0  && spatialMove.movingDir.x==0 && spatialMove.movingDir.y==0){
-				if(spatialMove.facingDir.y!=0){
-					spatialMove.movingDir.y = spatialMove.facingDir.y;
-				}else if($dvy>0){
-					spatialMove.movingDir.y = 1;
-				}else if($dvy<0){
-					spatialMove.movingDir.y = -1;
 				}
 			}
 		}
@@ -200,7 +163,6 @@ package customClasses{
 		public function updateState():void {
 			var frame:Object = _object.getCurrentFrame();
 			if(_name!=frame.state){
-				//trace(_name,frame.state);
 				_finiteStateMachine.changeStateByName(frame.state);
 			}
 		}
@@ -324,7 +286,6 @@ package customClasses{
 			//Change moving direction
 			var spatialMove:SpatialMove = _object.spatialMove;
 			spatialMove.movingDir.x = $x;
-			spatialMove.movingDir.y = $y;
 			spatialMove.movingDir.z = $z;
 		}
 		//------ Move ------------------------------------
@@ -332,7 +293,6 @@ package customClasses{
 			//Change facing direction
 			var spatialMove:SpatialMove = _object.spatialMove;
 			spatialMove.facingDir.x = $x;
-			spatialMove.facingDir.y = $y;
 			spatialMove.facingDir.z = $z;
 			if(!_object.bitmapSet.flip && $x==-1 || _object.bitmapSet.flip && $x==1){
 				_object.bitmapSet.flip = !_object.bitmapSet.flip;
@@ -342,7 +302,6 @@ package customClasses{
 		protected function stopMoving():void {
 			var spatialMove:SpatialMove = _object.spatialMove;
 			spatialMove.movingDir.x = 0;
-			spatialMove.movingDir.y = 0;
 			spatialMove.movingDir.z = 0;
 		}
 		//------ CheckObject ------------------------------------

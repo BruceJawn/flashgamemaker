@@ -24,7 +24,7 @@
 package customClasses{
 	
 	import data.Data;
-	
+	import com.adobe.serialization.json.JSON;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -49,8 +49,8 @@ package customClasses{
 		public static function CreateObject($oid:int, $caller:MS_ObjectComponent=null, $keyPad:KeyPad=null, $position:IsoPoint=null):MS_ObjectComponent {
 			var object:Object = Data.OBJECT[$oid];
 			var dataString:String = RessourceManager.getInstance().getFile(object.data);
-			//var dataJSON:Object = JSON.decode(dataString);
-			var dataJSON:Object = JSON.parse(dataString);
+			var dataJSON:Object = JSON.decode(dataString);
+			//var dataJSON:Object = JSON.parse(dataString);
 			var graphics:Array = object.graphics as Array;
 			var ms_object:MS_ObjectComponent = null;
 			switch(object.kind){
