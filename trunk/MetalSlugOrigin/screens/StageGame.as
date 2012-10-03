@@ -33,6 +33,7 @@ package screens{
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.setTimeout;
 	
 	import framework.Framework;
@@ -155,10 +156,10 @@ package screens{
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onChronoComplete($chronoComponent:ChronoComponent):void {
+			var bg:SimpleGraphicComponent = _entityManager.addComponentFromName("MSOrigin","SimpleGraphicComponent","myGameOverBgSimpleGraphicComponent",{color:0x111111,rectangle:new Rectangle(0,0,Framework.width,Framework.height)}) as SimpleGraphicComponent;
 			var gameOver:GraphicComponent=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myGameOverGraphicComponent") as GraphicComponent;
 			gameOver.graphic = _graphicManager.getGraphic(Data.OTHER.gameOverScreen.path);
 			LayoutUtil.Align(gameOver,LayoutUtil.ALIGN_CENTER_CENTER);
-			_bg.visible=false;
 		}
 		//------ On Game Over Complete ------------------------------------
 		private function onGameOverComplete(evt:Event):void {

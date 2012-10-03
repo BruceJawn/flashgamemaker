@@ -55,7 +55,7 @@ package fms{
 		public override function enter($previousState:State):void {
 			//trace("Enter Attack");
 			if (!_object.bitmapSet)	return;
-			move(_object.spatialMove.facingDir.x,0,0);
+			move(_object.spatialMove.facingDir.x,0);
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {

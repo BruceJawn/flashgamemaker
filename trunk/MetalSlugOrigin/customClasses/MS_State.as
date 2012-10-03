@@ -282,7 +282,7 @@ package customClasses{
 			} 
 		}
 		//------ Move ------------------------------------
-		protected function move($x:Number, $y:Number,  $z:Number):void {
+		protected function move($x:Number, $z:Number):void {
 			//Change moving direction
 			var spatialMove:SpatialMove = _object.spatialMove;
 			spatialMove.movingDir.x = $x;

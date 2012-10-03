@@ -56,12 +56,31 @@ package fms{
 			//trace("Update Walk");
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
-			if(keyPad.right.isDown){
+			if(keyPad.upRight.isDown){
+				anim(1,-1,0);
+				move(1,0);
+			}else if(keyPad.upLeft.isDown){
+				anim(-1,-1,0);
+				move(-1,0);
+			}else if(keyPad.downRight.isDown){
+				anim(1,1,0);
+				move(1,0);
+			}else if(keyPad.downLeft.isDown){
+				anim(-1,1,0);
+				move(-1,0);
+			}else if(keyPad.down.isDown || keyPad.downRight.isDown || keyPad.downLeft.isDown){
+				updateAnim(frame.down);
+				updateState();
+			}else if(keyPad.right.isDown){
 				anim(1,0,0);
-				move(1,0,0);
+				move(1,0);
 			}else if(keyPad.left.isDown){
 				anim(-1,0,0);
-				move(-1,0,0);
+				move(-1,0);
+			}else if(keyPad.up.isDown){
+				move(0,0);
+				updateAnim(frame.next);
+				updateState();
 			}else{
 				updateAnim(frame.next);
 				updateState();

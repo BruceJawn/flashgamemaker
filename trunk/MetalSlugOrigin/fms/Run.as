@@ -61,11 +61,11 @@ package fms{
 			}
 			updateWeapon();
 			if(keyPad.up.isDown){
-				move(_object.spatialMove.facingDir.x,-1,0);
+				move(_object.spatialMove.facingDir.x,0);
 			}else if(keyPad.down.isDown){
-				move(_object.spatialMove.facingDir.x,1,0);
+				move(_object.spatialMove.facingDir.x,0);
 			}else{
-				move(_object.spatialMove.facingDir.x,0,0);
+				move(_object.spatialMove.facingDir.x,0);
 			}
 			var x:Number =_object.spatialMove.facingDir.x;
 			if(keyPad.right.isDown){
@@ -83,7 +83,7 @@ package fms{
 				updateAnim(frame.hit_d);
 				updateState();
 			}else if(_object.spatialMove.facingDir.x!=x){
-				updateAnim(frame.next);//Slide
+				updateAnim(frame.next);
 				updateState();
 			}
 		}
