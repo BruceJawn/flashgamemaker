@@ -34,7 +34,7 @@ package fms{
 	import utils.richardlord.*;
 
 	public class Stand extends MS_State{
-		
+		private var _stand:Number = 0;//0 stand, 1 stand up and -1 stand downs
 		//Stand State
 		public function Stand(){
 			_initVar();
@@ -56,11 +56,32 @@ package fms{
 		//------ Enter ------------------------------------
 		public override function update():void {
 			//trace("Update Stand");
-			super.update();
+			var keyPad:KeyPad = _object.keyPad;
+			var frame:Object = _object.getCurrentFrame();
+			trace(keyPad.up.isDown , _stand);
+			if(keyPad.upRight.isDown || keyPad.upLeft.isDown){
+				updateAnim(frame.hit_walk_up);
+				updateState();
+			}else if(keyPad.downRight.isDown || keyPad.downLeft.isDown){
+				updateAnim(frame.hit_walk_down);
+				updateState();
+			}else if (keyPad.down.isDown && _stand != -1) {
+				_stand=-1
+				updateAnim(frame.hit_stand_down);
+			}else if (keyPad.up.isDown && _stand != 1) {
+				_stand = 1;
+				updateAnim(frame.hit_stand_up);
+			}else if(keyPad.right.isDown || keyPad.left.isDown){
+				updateAnim(frame.hit_walk);
+				updateState();
+			}else if (!keyPad.anyDirection.isDown && _stand!=0) {
+				updateAnim(frame.next);
+			}
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Stand");
+			_stand = 0;
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

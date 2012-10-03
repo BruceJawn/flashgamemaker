@@ -57,18 +57,18 @@ package fms{
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
 			if(keyPad.upRight.isDown){
-				anim(1,-1,0);
-				move(1,0);
+				updateAnim(frame.walk_up);
+				updateState();
 			}else if(keyPad.upLeft.isDown){
-				anim(-1,-1,0);
-				move(-1,0);
+				updateAnim(frame.walk_up);
+				updateState();
 			}else if(keyPad.downRight.isDown){
-				anim(1,1,0);
-				move(1,0);
+				updateAnim(frame.walk_down);
+				updateState();
 			}else if(keyPad.downLeft.isDown){
-				anim(-1,1,0);
-				move(-1,0);
-			}else if(keyPad.down.isDown || keyPad.downRight.isDown || keyPad.downLeft.isDown){
+				updateAnim(frame.walk_down);
+				updateState();
+			}else if(keyPad.down.isDown){
 				updateAnim(frame.down);
 				updateState();
 			}else if(keyPad.right.isDown){

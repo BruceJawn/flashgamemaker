@@ -113,6 +113,8 @@ package customClasses{
 			stateList["Stand"] 		= _initState(new Stand());
 			stateList["Knee"] 		= _initState(new Knee());
 			stateList["Walk"] 		= _initState(new Walk());
+			stateList["WalkUp"] 		= _initState(new WalkUp());
+			stateList["WalkDown"] 		= _initState(new WalkDown());
 			stateList["Run"] 		= _initState(new Run());
 			stateList["Jump"] 		= _initState(new Jump());
 			stateList["Attack"]		= _initState(new Attack());

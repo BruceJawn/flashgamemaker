@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'02/10/2012'</value>
+      <value>'03/10/2012'</value>
     </define>
     <allow-source-path-overlap>true</allow-source-path-overlap>
     <show-actionscript-warnings>false</show-actionscript-warnings>
