@@ -37,6 +37,7 @@ package fms{
 	public class Jump extends MS_State{
 		private var _bool:Boolean = true;
 		private var _throw:Boolean=false;
+		private var _gravity:int =1;
 		
 		//Jump State
 		public function Jump(){
@@ -61,38 +62,30 @@ package fms{
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
 			var spatialMove:SpatialMove = _object.spatialMove;
-			updateWeapon();
-			//trace(frame.name, frame.id, frame.frame, frame.wpoint.x,frame.wpoint.y,frame.wpoint.weaponact);
-			if(spatialMove.movingDir.z==0 && _bool && (frame.hasOwnProperty("dvz")|| frame.name=="RunJump" )){
+			checkObject();
+			if(spatialMove.movingDir.z==0 && _bool && (frame.hasOwnProperty("dvz"))){
 				spatialMove.movingDir.z=1;
 				spatialMove.speed.z = frame.dvz;
 			}else if(spatialMove.movingDir.z==1){
 				//trace("Jump",spatialMove.speed.z,spatialMove.gravity );
 				if((keyPad.fire1.isDown) && (frame.hasOwnProperty("hit_a")|| frame.hasOwnProperty("hit_n_w_a")) && (frame.name == "Jump" || frame.name == "RunJump")){
-					if(_object.weapon && (keyPad.right.isDown || keyPad.left.isDown)){
-						updateAnim(frame.hit_t_w_a);
-						_object.weapon.updateAnim(_object.getCurrentFrame().wpoint.weaponact);
-						_throw=true;
-					}else if(_object.weapon){
-						updateAnim(frame.hit_n_w_a);
-					}else{
-						updateAnim(frame.hit_a);
-					}
+					updateAnim(frame.hit_a);
 				}
-				spatialMove.speed.z-= spatialMove.gravity;
+				spatialMove.speed.z-= _gravity;
 				if(spatialMove.speed.z<=0){
 					spatialMove.movingDir.z=-1;
 					spatialMove.speed.z =0;
 				}
 			}else if(spatialMove.movingDir.z==-1){
 				//trace("Fall",spatialMove.speed.z,spatialMove.gravity);
-				spatialMove.speed.z+= spatialMove.gravity;
+				spatialMove.speed.z+= _gravity;
 				if(_object.z>=0){
 					_bool = false;
 					_object.z=0;
 					stopMoving();
 				}
 			}else{
+				_bool = true;
 				updateAnim(frame.next);
 				updateState();
 			}

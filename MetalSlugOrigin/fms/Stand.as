@@ -51,6 +51,7 @@ package fms{
 				_initDebugMode();
 			}
 			stopMoving();
+			checkObject();
 			update();
 		}
 		//------ Enter ------------------------------------
@@ -58,13 +59,14 @@ package fms{
 			//trace("Update Stand");
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
-			trace(keyPad.up.isDown , _stand);
 			if(keyPad.upRight.isDown || keyPad.upLeft.isDown){
 				updateAnim(frame.hit_walk_up);
 				updateState();
+				return;
 			}else if(keyPad.downRight.isDown || keyPad.downLeft.isDown){
 				updateAnim(frame.hit_walk_down);
 				updateState();
+				return;
 			}else if (keyPad.down.isDown && _stand != -1) {
 				_stand=-1
 				updateAnim(frame.hit_stand_down);
@@ -74,9 +76,12 @@ package fms{
 			}else if(keyPad.right.isDown || keyPad.left.isDown){
 				updateAnim(frame.hit_walk);
 				updateState();
+				return;
 			}else if (!keyPad.anyDirection.isDown && _stand!=0) {
 				updateAnim(frame.next);
+				_stand=0;
 			}
+			super.update();
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {

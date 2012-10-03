@@ -24,18 +24,19 @@ package data{
 	import com.adobe.serialization.json.JSON;
 	
 	public class Data{
-		public static const OBJECT_KIND_CHARACTER:int 		= 0; // (Bandit)
-		public static const OBJECT_KIND_WEAPON:int 			= 1; // which can be used to slam enemies (Baseball Bat)
-		public static const OBJECT_KIND_HEAVY_WEAPON:int 	= 2; // which can be thrown to knock down enemies, it slows down you movement speed (Stone)
-		public static const OBJECT_KIND_PROJECTILE:int 		= 3; // of a character (Projectile)
-		public static const OBJECT_KIND_THROWN_WEAPON:int	= 4; // which can be thrown to hurt an enemy (Baseball)
+		public static const OBJECT_KIND_CHARACTER:int 		= 0; // Character
+		public static const OBJECT_KIND_PROJECTILE:int 		= 1; // Bullet
 		
 		public static const OBJECT:Object =
 			{
 				'1':{
 					'name': 'Player','kind':0,'data':'data/Player.txt',
 					'graphics':['assets/MS.png']
-					}
+					},
+				'100':{
+					'name': 'Bullet','kind':1,'data':'data/Bullet.txt',
+					'graphics':['assets/bullet.png']
+				}
 			}
 		public static const BACKGROUND:Object =
 			{

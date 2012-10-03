@@ -23,13 +23,16 @@
 
 package customClasses{
 	
-	import data.Data;
 	import com.adobe.serialization.json.JSON;
+	
+	import data.Data;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
+	import framework.Framework;
 	import framework.entity.EntityManager;
 	import framework.system.GraphicManager;
 	import framework.system.RessourceManager;
@@ -58,16 +61,7 @@ package customClasses{
 					ms_object=CreatePlayer(object.kind,dataJSON,graphics,$keyPad,$position);
 					break;
 				case Data.OBJECT_KIND_PROJECTILE: 
-					ms_object=CreateSpecialMove(object.kind,dataJSON,graphics,$caller);
-					break;
-				case Data.OBJECT_KIND_WEAPON: 
-					ms_object=CreateWeapon(object.kind,dataJSON,graphics,$caller,$position);
-					break;
-				case Data.OBJECT_KIND_THROWN_WEAPON: 
-					ms_object=CreateWeapon(object.kind,dataJSON,graphics,$caller,$position);
-					break;
-				case Data.OBJECT_KIND_HEAVY_WEAPON: 
-					ms_object=CreateWeapon(object.kind,dataJSON,graphics,$caller,$position);
+					ms_object=CreateProjectile(object.kind,dataJSON,graphics,$caller);
 					break;
 			}
 			return ms_object;
@@ -93,65 +87,33 @@ package customClasses{
 			return player;
 		}
 		//------- Create Special Move  -------------------------------
-		public static function CreateSpecialMove($kind:int,$data:Object,$graphics:Array, $source:MS_ObjectComponent):MS_ObjectComponent {
-			var specialMoveframe:MS_Frame = new MS_Frame($data);
-			var specialMove:MS_ObjectComponent=EntityManager.getInstance().addComponentFromName("MSOrigin","MS_ObjectComponent",null,{ms_frame:specialMoveframe,kind:$kind, source:$source}) as MS_ObjectComponent;
+		public static function CreateProjectile($kind:int,$data:Object,$graphics:Array, $source:MS_ObjectComponent=null):MS_ObjectComponent {
+			var projectileframe:MS_Frame = new MS_Frame($data);
+			var projectile:MS_ObjectComponent=EntityManager.getInstance().addComponentFromName("MSOrigin","MS_ObjectComponent",null,{ms_frame:projectileframe,kind:$kind, source:$source}) as MS_ObjectComponent;
 			if(_list[$graphics]){
-				specialMove.createBitmap(_list[$graphics]);
+				projectile.createBitmap(_list[$graphics]);
 			}else{
 				var bitmaps:Vector.<Bitmap> = Vector.<Bitmap>(GraphicManager.getInstance().getGraphics($graphics as Array));
 				var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"VERTICAL");
 				BitmapDataTransform.SwapColor(bitmap.bitmapData,0xFF000000,0);//Remove black to transparent
-				specialMove.createBitmap(bitmap);
+				projectile.createBitmap(bitmap);
 				_list[$graphics] = bitmap;
 			}
-			var opoint:Object = $source.getCurrentFrame().opoint;
-			if(opoint){
-				switch (opoint.facing){
-					case 0: specialMove.spatialMove.facingDir = $source.spatialMove.facingDir;//move in front of source
-						break;
-					case 1: specialMove.spatialMove.facingDir = $source.spatialMove.facingDir.toInverse();//move in front of source
-						break;
-				}
-				specialMove.x=$source.x+(opoint.x+opoint.dvx)*specialMove.spatialMove.facingDir.x;//dvx and dvy are the original propulsion
-				specialMove.y=$source.y+opoint.y+opoint.dvy;
-			}
-			specialMove.registerPropertyReference("collisionDetection");
-			return specialMove;
-		}
-		//------- Create Weapon  -------------------------------
-		public static function CreateWeapon($kind:int,$data:Object,$graphics:Array, $source:MS_ObjectComponent=null, $position:IsoPoint=null):MS_ObjectComponent {
-			var weaponframe:MS_Frame = new MS_Frame($data);
-			var weapon:MS_ObjectComponent=EntityManager.getInstance().addComponentFromName("MSOrigin","MS_ObjectComponent",null,{ms_frame:weaponframe,kind:$kind, source:$source}) as MS_ObjectComponent;
-			if(_list[$graphics]){
-				weapon.createBitmap(_list[$graphics]);
-			}else{
-				var bitmap:Bitmap = GraphicManager.getInstance().getGraphic($graphics[0]);
-				BitmapDataTransform.SwapColor(bitmap.bitmapData,0xFF000000,0);//Remove black to transparent
-				weapon.createBitmap(bitmap);	
-				_list[$graphics]=bitmap;
-			}
 			if($source){
-				var wpoint:Object = $source.getCurrentFrame().wpoint;
-				if(wpoint){
-					weapon.x=$source.x+wpoint.x*weapon.spatialMove.facingDir.x;
-					weapon.y=$source.y+wpoint.y;
+				var opoint:Object = $source.getCurrentFrame().opoint;
+				if(opoint){
+					switch (opoint.facing){
+						case 0: projectile.spatialMove.facingDir = $source.spatialMove.facingDir;//move in front of source
+							break;
+						case 1: projectile.spatialMove.facingDir = $source.spatialMove.facingDir.toInverse();//move in front of source
+							break;
+					}
+					projectile.x=$source.x+(opoint.x+opoint.dvx)*projectile.spatialMove.facingDir.x;//dvx and dvy are the original propulsion
+					projectile.y=$source.y+opoint.y+opoint.dvy;
 				}
-			}else if($position){
-				weapon.x = $position.x;
-				weapon.y = $position.y;
-				weapon.z= $position.z;
 			}
-			if($position.z>0){
-				weapon.updateAnim(weaponframe.data.inTheSky);
-				weapon.updateState();
-				weapon.spatialMove.speed.z = $position.z;
-			}else{
-				weapon.updateAnim(weaponframe.data.stand);
-				weapon.updateState();
-			}
-			weapon.registerPropertyReference("collisionDetection",{activeCollision:false});
-			return weapon;
+			//projectile.registerPropertyReference("collisionDetection");
+			return projectile;
 		}
 	}
 }

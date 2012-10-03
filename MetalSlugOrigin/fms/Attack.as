@@ -21,13 +21,14 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import data.Data;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
-	import data.Data;
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
@@ -66,10 +67,9 @@ package fms{
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var frame:Object = _object.getCurrentFrame();
 			updateSpeed();
-			updateWeapon();
 			if(!_hit)	_hit = object.hurtEnemy();
 			if(frame.hasOwnProperty("hit_a")){
-				if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick(30)){
+				if(keyPad.fire1.isDown){
 					_hit_a = true;
 				}
 			}
@@ -87,7 +87,6 @@ package fms{
 				_hit_a = false;
 				updateState();
 			}
-			updateWeapon();
 			object.hurtEnemy();
 		}
 		//------ UpdateDebugMode ------------------------------------
@@ -98,21 +97,11 @@ package fms{
 					_bitmapData.fillRect(_bitmapData.rect, 0);
 					_bitmapData.unlock();
 				}
-				if(_object.weapon){
-					if(_object.weapon.getCurrentFrame().itr is Array){
-						for each(var itr:Object in _object.weapon.getCurrentFrame().itr)
+				if(_object.getCurrentFrame().itr is Array){
+					for each(var itr:Object in _object.getCurrentFrame().itr)
 						_drawArea(_object,itr,0x5FFF0000);
-					}else{
-						_drawArea(_object,_object.weapon.getCurrentFrame().itr,0x5FFF0000);
-					}
-					
 				}else{
-					if(_object.getCurrentFrame().itr is Array){
-						for each(itr in _object.getCurrentFrame().itr)
-							_drawArea(_object,itr,0x5FFF0000);
-					}else{
-						_drawArea(_object,_object.getCurrentFrame().itr,0x5FFF0000);
-					}
+					_drawArea(_object,_object.getCurrentFrame().itr,0x5FFF0000);
 				}
 			}
 		}

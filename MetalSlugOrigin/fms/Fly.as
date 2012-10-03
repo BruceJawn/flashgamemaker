@@ -21,12 +21,14 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import flash.display.Bitmap;
 	import flash.events.Event;
 	
+	import framework.Framework;
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
@@ -71,19 +73,9 @@ package fms{
 		public function explode():void {
 			stopMoving();
 			var frame:Object = _object.getCurrentFrame();
-			if(!frame)	return
-			var frameName:Object = _object.getMsFrame(frame.next);
-			if(!frameName)	return
-				frameName = frameName.name;
-			if(frame.next && frameName!=_name){
-				updateAnim(frame.next);
-				updateSpeed();
-			}else if(_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1 ||  _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed){
-				_finiteStateMachine.destroy();
-				_object.destroy();
-				_object=null;
-				
-			}
+			_finiteStateMachine.destroy();
+			_object.destroy();
+			_object=null;
 		}
 		//------ UpdateDebugMode ------------------------------------
 		protected override function  _updateDebugMode():void {
