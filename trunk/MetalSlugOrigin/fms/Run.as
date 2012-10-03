@@ -56,10 +56,6 @@ package fms{
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
 			updateSpeed();
-			if(frame.hasOwnProperty("hit_a") && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(30)){
-				checkWeaponThrow();	
-			}
-			updateWeapon();
 			if(keyPad.up.isDown){
 				move(_object.spatialMove.facingDir.x,0);
 			}else if(keyPad.down.isDown){

@@ -36,7 +36,7 @@ package fms{
 	import utils.richardlord.State;
 
 	public class Walk extends MS_State{
-		
+		private var _walk:Number = 0;//0 walk, 1 walk up and -1 walk down
 		//Walk State
 		public function Walk(){
 			_initVar();
@@ -49,42 +49,44 @@ package fms{
 		public override function enter($previousState:State):void {
 			//trace("Enter Walk");
 			if (!_object.bitmapSet)	return;
+			var keyPad:KeyPad = _object.keyPad;
+			if(keyPad.upRight.isDown || keyPad.upLeft.isDown)			_walk=1;
+			else if(keyPad.downRight.isDown || keyPad.downLeft.isDown) 	_walk=-1;
+			checkObject();
+			updateSpeed();
 			update();
+			
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {
 			//trace("Update Walk");
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
-			if(keyPad.upRight.isDown){
-				updateAnim(frame.walk_up);
+			if(_walk!=0 && !(keyPad.upRight.isDown || keyPad.upLeft.isDown || keyPad.downRight.isDown || keyPad.downLeft.isDown) && frame.hit_walk){
+				_walk = 0;
+				updateAnim(frame.hit_walk);
+				updateSpeed();
+			}if((keyPad.upRight.isDown || keyPad.upLeft.isDown) && _walk!=1 && frame.hit_walk_up){
+				_walk = 1;
+				updateAnim(frame.hit_walk_up);
+				updateSpeed();
+			}else if((keyPad.downRight.isDown || keyPad.downLeft.isDown) && _walk!=-1 && frame.hit_walk_down){
+				_walk = -1;
+				updateAnim(frame.hit_walk_down);
+				updateSpeed();
+			}else if(!keyPad.right.isDown && !keyPad.left.isDown && _walk==0){
+				_walk = 0;
+				updateAnim(frame.next);
 				updateState();
-			}else if(keyPad.upLeft.isDown){
-				updateAnim(frame.walk_up);
-				updateState();
-			}else if(keyPad.downRight.isDown){
-				updateAnim(frame.walk_down);
-				updateState();
-			}else if(keyPad.downLeft.isDown){
-				updateAnim(frame.walk_down);
-				updateState();
-			}else if(keyPad.down.isDown){
-				updateAnim(frame.down);
-				updateState();
-			}else if(keyPad.right.isDown){
+				updateSpeed();
+				return;
+			}
+			if(keyPad.right.isDown){
 				anim(1,0,0);
 				move(1,0);
 			}else if(keyPad.left.isDown){
 				anim(-1,0,0);
 				move(-1,0);
-			}else if(keyPad.up.isDown){
-				move(0,0);
-				updateAnim(frame.next);
-				updateState();
-			}else{
-				updateAnim(frame.next);
-				updateState();
-				return;
 			}
 			super.update();
 			if(_finiteStateMachine.currentState.name!=_name)	return;
@@ -103,6 +105,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Walk");
+			_walk = 0;
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

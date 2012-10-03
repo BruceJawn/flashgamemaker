@@ -86,7 +86,12 @@ package screens{
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("MSOrigin","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("MSOrigin","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;
-			Framework.SetChildIndex(bitmapRenderComponent, Framework.numChildren - 1);
+		
+			_bg =_entityManager.addComponentFromName("MSOrigin","ScrollingBitmapComponent","myBackgroundComponent",{render:"bitmapRender"}) as ScrollingBitmapComponent;
+			//_bg.registerPropertyReference("timer");
+			_bg.graphic = _graphicManager.getGraphic(Data.BACKGROUND.bg.path);
+			_bg.pushFunction({executeOnlyIfDisplayed:true,callback:_bg.scrollBitmap});
+			LayoutUtil.Align(_bg,LayoutUtil.ALIGN_BOTTOM_LEFT);
 			
 			var keyPad:KeyPad = new KeyPad(true);
 			keyPad.useZQSD();
@@ -95,7 +100,7 @@ package screens{
 			_player = MS_Object.CreateObject(1,null,keyPad);
 			_player.registerPropertyReference("keyboardInput");
 			_player.moveTo(10,160);
-			
+			_player.layer=1;
 			var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad", 20,30,keyPad);
 			gamePad.hideDirectionKeys();
 			gamePad.button4.visible=false;
@@ -105,12 +110,7 @@ package screens{
 			gamePad.moveFireKeys(120,10);
 			LayoutUtil.Align(gamePad,LayoutUtil.ALIGN_BOTTOM_LEFT,null,null,new Point(10,-20));
 			
-			_bg =_entityManager.addComponentFromName("MSOrigin","ScrollingBitmapComponent","myBackgroundComponent") as ScrollingBitmapComponent;
-			//_bg.registerPropertyReference("timer");
-			_bg.graphic = _graphicManager.getGraphic(Data.BACKGROUND.bg.path);
-			//_bg.setScrolling(30,3);
-			//_bg.setScrollingTarget(_player);
-			LayoutUtil.Align(_bg,LayoutUtil.ALIGN_BOTTOM_LEFT);
+			
 			
 			_statutBar=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myStatutBarGraphicComponent") as GraphicComponent;
 			_statutBar.graphic = _graphicManager.getGraphic(Data.OTHER.statutBar.path);

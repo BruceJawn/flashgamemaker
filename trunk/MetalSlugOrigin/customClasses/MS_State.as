@@ -42,9 +42,8 @@ package customClasses{
 	/**
 	* LFE_State
 	*/
-	public class MS_State extends State implements MS_IState{
+	public class MS_State extends State{
 		protected var _object:MS_ObjectComponent = null;
-		private var _throw:Boolean = false;
 		private var _bitmap:Bitmap = null;
 		protected var _bitmapData:BitmapData = null;
 		protected var _debugMode:Boolean = false;
@@ -82,48 +81,38 @@ package customClasses{
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
-			if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
-				updateAnim(frame.dbl_hit_right);
-			}else if(frame.hasOwnProperty("dbl_hit_left") && keyPad.left.doubleClick){
-				updateAnim(frame.dbl_hit_left);
-			}else if(frame.hasOwnProperty("hit_a") && keyPad.fire1.isDown && !keyPad.fire1.getLongClick(30)){
-				if(_object.weapon == null){
-					if(_object.collision.length>0 && checkWeapon()){
-						return;
-					}else{
-						if(frame.hit_a is Array){
-							updateAnim(frame.hit_a[SimpleMath.RandomBetween(0,frame.hit_a.length-1)]);
-						}else{	
-							updateAnim(frame.hit_a);
-						}
-					}
-				}else{
-					checkWeaponThrow();
+			if(keyPad.fire1.isDown ){
+				if(keyPad.down.isDown && frame.hasOwnProperty("hit_a_down")){
+					updateAnim(frame.hit_a_down);
+				}else if(keyPad.up.isDown && frame.hasOwnProperty("hit_a_up")){
+					updateAnim(frame.hit_a_up);
+				}else if(frame.hasOwnProperty("hit_a")) {
+					updateAnim(frame.hit_a);
+				}
+				if(_object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition && _object.bitmapSet.readyToAnim){
+					_object.bitmapSet.currentPosition=0;
 				}
 			}else if(frame.hasOwnProperty("hit_j") && keyPad.fire2.isDown && !keyPad.fire2.getLongClick()){
 				updateAnim(frame.hit_j);
 			}else if(frame.hasOwnProperty("hit_d") && keyPad.fire3.isDown && !keyPad.fire3.getLongClick()){
 				updateAnim(frame.hit_d);
-			}else if(frame.hasOwnProperty("hit_up") && keyPad.up.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_up){
+			}else if(frame.hasOwnProperty("hit_up") && keyPad.up.isDown){
 				updateAnim(frame.hit_up);
-			}else if(frame.hasOwnProperty("hit_down")&& keyPad.down.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_down){
+			}else if(frame.hasOwnProperty("hit_down")&& keyPad.down.isDown){
 				updateAnim(frame.hit_down);
-			}else if(frame.hasOwnProperty("hit_right") && keyPad.right.isDown && _object.bitmapSet.currentAnimName!=frame.hit_right){
+			}else if(frame.hasOwnProperty("hit_right") && keyPad.right.isDown){
 				updateAnim(frame.hit_right);
-			}else if(frame.hasOwnProperty("hit_left") && keyPad.left.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_left){
+			}else if(frame.hasOwnProperty("hit_left") && keyPad.left.isDown){
 				updateAnim(frame.hit_left);
 			}else if(frame.hasOwnProperty("next") && _object.bitmapSet.endAnim && (_object.bitmapSet.currentPosition == 0 && _object.bitmapSet.reverse==-1 || _object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 				if(_object.bitmapSet.readyToAnim){
-					if(_object.weapon && (_object.kind == Data.OBJECT_KIND_THROWN_WEAPON || Data.OBJECT_KIND_HEAVY_WEAPON)){
-						_object.weapon.updateAnim(frame.wpoint.weaponact);
-					}
 					updateAnim(frame.next);
 				}
 		    }
 			updateSpeed();
-			updateWeapon();
 			checkFlip();
 			updateState();
+			checkObject();
 		}
 		//------ Update Speed ------------------------------------
 		public function updateSpeed():void {
@@ -166,97 +155,6 @@ package customClasses{
 				_finiteStateMachine.changeStateByName(frame.state);
 			}
 		}
-		//------ Check Weapon ------------------------------------
-		public function checkWeapon():Boolean {
-			var frame:Object = _object.getCurrentFrame();
-			if(! _object.weapon && frame && frame.hasOwnProperty("wpoint")){
-				var wpoint:Object = frame.wpoint;
-				for each(var weapon:MS_ObjectComponent in _object.collision){
-					if(_object.y<weapon.y+weapon.height+_object.ms_Frame.d/2 && _object.y>weapon.y-_object.ms_Frame.d/2)	continue;
-					if((weapon.kind == Data.OBJECT_KIND_WEAPON || weapon.kind == Data.OBJECT_KIND_THROWN_WEAPON) && weapon.getCurrentState().name=="Stand"){
-						updateAnim(_object.ms_Frame.knee);
-						updateState();
-						_object.weapon = weapon;
-						weapon.source = _object;
-						weapon.spatialMove.facingDir.x = _object.spatialMove.facingDir.x;
-						weapon.updateAnim(weapon.ms_Frame.onHand);
-						updateWeapon();
-						return true;
-					}else if(weapon.kind == Data.OBJECT_KIND_HEAVY_WEAPON  && weapon.getCurrentState().name=="Stand"){
-						updateAnim(_object.ms_Frame.heavyObjectStand);
-						updateState();
-						_object.weapon = weapon;
-						weapon.source = _object;
-						weapon.spatialMove.facingDir.x = _object.spatialMove.facingDir.x;
-						weapon.updateAnim(weapon.ms_Frame.onHand);
-						updateWeapon();
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-		//------ Update Weapon ------------------------------------
-		public function updateWeapon():void {
-			if(_object.weapon ){
-				var wpoint:Object = _object.getCurrentFrame().wpoint;
-				if(!wpoint){
-					_object.weapon.visible = false;
-					return;
-				}	
-				var weaponFrame:Object =_object.weapon.getCurrentFrame();
-				if(_object.spatialMove.facingDir.x==1){
-					_object.weapon.x = _object.x+wpoint.x;
-					if(weaponFrame.hasOwnProperty("offsetX"))	_object.weapon.x+=weaponFrame.offsetX;
-				}else{
-					_object.weapon.x = _object.x+_object.width-_object.weapon.width-wpoint.x;
-					if(weaponFrame.hasOwnProperty("offsetX"))	_object.weapon.x-=weaponFrame.offsetX;
-				}
-				if(_object.weapon.kind==Data.OBJECT_KIND_HEAVY_WEAPON){
-					_object.weapon.y=_object.y-_object.weapon.height+wpoint.y;
-					_object.weapon.z=_object.weapon.y-_object.y-_object.weapon.height;
-				}else {		
-					_object.weapon.y = _object.y+wpoint.y;
-					_object.weapon.z=-(_object.y+_object.height-_object.z)+_object.weapon.y+_object.weapon.height;
-				}
-				if(weaponFrame.hasOwnProperty("offsetY"))	_object.weapon.y+=weaponFrame.offsetY;
-				_object.weapon.updateAnimPosition(wpoint.weaponact);
-				_object.weapon.updateState();
-			}
-		}
-		//------ Check Weapon Throw ------------------------------------
-		public function checkWeaponThrow():void {
-			if(_object.weapon ){
-				var frame:Object = _object.getCurrentFrame();
-				var msFrame:Object = _object.ms_Frame;
-				var weaponKind:int = _object.weapon.kind
-				if(weaponKind == Data.OBJECT_KIND_WEAPON){
-					if(msFrame.normalWeaponAttackId is Array){
-						updateAnim(msFrame.normalWeaponAttackId[SimpleMath.RandomBetween(0,msFrame.normalWeaponAttackId.length-1)]);
-					}else{	
-						updateAnim(msFrame.normalWeaponAttackId);
-					}
-				}else if(weaponKind == Data.OBJECT_KIND_THROWN_WEAPON){
-					updateAnim(msFrame.lightWeaponAttackId);
-				}else if(weaponKind == Data.OBJECT_KIND_HEAVY_WEAPON){
-					updateAnim(frame.hit_a);
-				}
-			}
-		}
-		//------ Drop Weapon ------------------------------------
-		public function dropWeapon():void {
-			if(_object.weapon){
-				var weaponMsFrame:Object=_object.weapon.ms_Frame;
-				if(_object.weapon.kind == Data.OBJECT_KIND_HEAVY_WEAPON ){
-					if(weaponMsFrame.hasOwnProperty("inTheSky")){
-						object.weapon.source=null;
-						object.weapon.updateAnim(weaponMsFrame.inTheSky);
-						object.weapon.updateState();
-						object.weapon = null;
-					}
-				}
-			}
-		}
 		//------ Check Flip ------------------------------------
 		protected function checkFlip($force:Boolean=false):void {
 			var keyPad:KeyPad = _object.keyPad;
@@ -268,7 +166,6 @@ package customClasses{
 					checkFlipX(-1);
 				}
 			}
-			if(_object.weapon)	_object.weapon.spatialMove.facingDir.x = _object.spatialMove.facingDir.x;
 		}
 		//------ Check Flip x ------------------------------------
 		protected function checkFlipX($x:Number):void {

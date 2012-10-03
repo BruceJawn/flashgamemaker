@@ -47,7 +47,6 @@ package fms{
 		public override function enter($previousState:State):void {
 			//("Enter Fall");
 			if (!_object.bitmapSet)	return;
-			dropWeapon();
 			var frame:Object = _object.getCurrentFrame();
 			var spatialMove:SpatialMove = _object.spatialMove;
 			if(spatialMove.speed.z>0){

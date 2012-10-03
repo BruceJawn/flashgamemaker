@@ -47,7 +47,6 @@ package fms{
 			//trace("Enter Hurt");
 			if (!_object.bitmapSet)	return;
 			stopMoving();
-			dropWeapon();
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {

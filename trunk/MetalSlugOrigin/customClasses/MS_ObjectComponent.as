@@ -23,6 +23,8 @@
 
 package customClasses{
 	
+	import data.Data;
+	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -38,11 +40,10 @@ package customClasses{
 	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
 	
+	import fms.*;
+	
 	import framework.component.core.AnimationComponent;
 	import framework.entity.IEntity;
-	
-	import data.Data;
-	import fms.*;
 	
 	import utils.bitmap.BitmapAnim;
 	import utils.bitmap.BitmapCell;
@@ -111,18 +112,13 @@ package customClasses{
 		private function _initPlayerStateMachine():void {
 			var stateList:Dictionary = new Dictionary(true);
 			stateList["Stand"] 		= _initState(new Stand());
-			stateList["Knee"] 		= _initState(new Knee());
 			stateList["Walk"] 		= _initState(new Walk());
-			stateList["WalkUp"] 		= _initState(new WalkUp());
-			stateList["WalkDown"] 		= _initState(new WalkDown());
 			stateList["Run"] 		= _initState(new Run());
 			stateList["Jump"] 		= _initState(new Jump());
 			stateList["Attack"]		= _initState(new Attack());
-			stateList["Power"] 		= _initState(new Power());
 			stateList["Hurt"] 		= _initState(new Hurt());
 			stateList["Fall"] 		= _initState(new Fall());
 			stateList["Fly"] 		= _initState(new Fly());
-			stateList["Thrown"] 	= _initState(new Thrown());
 			_playerStateMachine 	= new FiniteStateMachine();
 			_playerStateMachine.setStateList(stateList);
 			_playerStateMachine.changeStateByName("Stand");
@@ -202,13 +198,8 @@ package customClasses{
 			var hit:Boolean =false;
 			var frame:Object = getCurrentFrame();
 			if(frame && frame.hasOwnProperty("itr")|| _weapon && _weapon.getCurrentFrame().hasOwnProperty("itr")){
-				if(weapon && weapon.getCurrentFrame().hasOwnProperty("itr")){
-					var itr:Object = _weapon.getCurrentFrame().itr;
-					var collisionArray:Array = _weapon.collision;
-				}else{
-					itr = getCurrentFrame().itr;
-					collisionArray = collision;
-				}
+				var itr:Object = getCurrentFrame().itr;
+				var collisionArray:Array = collision;
 				var collisionResult:Boolean;
 				var bdy:Object;
 				var objectCurrentFrame:Object;
@@ -217,16 +208,10 @@ package customClasses{
 				for each(var object:MS_ObjectComponent in collisionArray){
 					if(object==this)							continue;//To avoid autoCollision
 					if(_source && object==_source)				continue;//To avoid collision with special move
-					if(_weapon && object.weapon==_weapon)		continue;//To avoid collision with your weapon
 					depthAlignement =  Math.abs(object.y+object.height-object.z-y-height+z);
 					objectCurrentFrame = object.getCurrentFrame();
 					if(objectCurrentFrame.hasOwnProperty("bdy") && depthAlignement<=_depth && (!_lastHit || _lastHit[0]!=object || _lastHit[1]!=frame.id)){
-						if(_weapon && _weapon.getCurrentFrame().hasOwnProperty("itr")){
-							if(_weapon ==object.weapon)			return false;
-							collisionResult = checkCollision(_weapon,object);
-						}else{
-							collisionResult = checkCollision(this,object);
-						}
+						collisionResult = checkCollision(this,object);
 						if(collisionResult){
 							hit=true;
 							var target:MS_ObjectComponent=this;
@@ -433,14 +418,6 @@ package customClasses{
 		public function get kind():int {
 			return _kind;
 		}
-		//------ Get Weapon ------------------------------------
-		public function get weapon():MS_ObjectComponent {
-			return _weapon;
-		}
-		//------ Set Weapon ------------------------------------
-		public function set weapon($weapon:MS_ObjectComponent):void {
-			_weapon=$weapon;
-		}
 		//------ Get Target ------------------------------------
 		public function get target():MS_ObjectComponent {
 			return _target;
@@ -454,35 +431,12 @@ package customClasses{
 			_bitmapSet.graph.setTimeMultiplicator($timeMultiplicator);
 			_spatialMove.timeMultiplicator = $timeMultiplicator;
 		}
-		//------ Set Artificial Intelligence  ------------------------------------
-		public function set ai($ai:Object):void {
-			_ai=$ai;
-		}
 		//------ Destroy  ------------------------------------
 		public override function destroy():void {
 			_playerStateMachine = null;
 			//TODO: memory leak 
 			//BitmapSet(_bitmapSet).bitmap.bitmapData.dispose()
 			super.destroy();
-		}
-		//------ AI Finite StateMachine ------------------------------------
-		public function setAI($bool:Boolean):void {
-			if($bool && !_aiStateMachine){
-				_initAiStateMachine();
-			}
-		}
-		//------ AI Finite StateMachine ------------------------------------
-		private function _initAiStateMachine():void {
-			var stateList:Dictionary = new Dictionary(true);
-			stateList["Target"] = _initState(new Target());
-			stateList["Seek"] = _initState(new Seek());
-			stateList["Flee"] = _initState(new Flee());
-			stateList["Melee"] = _initState(new Melee());
-			stateList["ShortRange"] = _initState(new ShortRange());
-			stateList["LongRange"] = _initState(new LongRange());
-			_aiStateMachine = new FiniteStateMachine();
-			_aiStateMachine.setStateList(stateList);
-			_aiStateMachine.changeStateByName("Target");
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
