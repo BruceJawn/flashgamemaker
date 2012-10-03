@@ -82,6 +82,11 @@ package utils.bitmap{
 			if(!graph.currentAnim)	return 0;
 			return graph.currentAnim.position;
 		}
+		//------- Get Position -------------------------------
+		public function set currentPosition($position:int):void {
+			if(currentPosition>lastPosition)	return ;
+			graph.currentAnim.position=$position ;
+		}
 		//------- Get LastFrame -------------------------------
 		public function get lastPosition():int {
 			if(!graph.currentAnim)	return 0;

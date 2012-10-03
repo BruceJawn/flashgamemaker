@@ -178,6 +178,9 @@ package framework.component.core{
 							component.y-=_position.y;
 						}
 					}
+				}else if(_scrollEnabled && !(component.hasOwnProperty("autoScroll") && !component.autoScroll)){
+					component.x-=_position.x;
+					component.y-=_position.y;
 				}
 				// -- Drawable Component --
 				dimension = GraphicComponent(component).getDimension();//Width and Height

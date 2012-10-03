@@ -45,11 +45,11 @@ package framework.component.core{
 		private var _rectangle:Rectangle=null; // Scrolling rectangle position
 		private var _scrollingTarget:*=null; // If auto scroll based on a target
 		private var _loop:Boolean=true; // At then end of the image go back to the start
-		private var _speed:Point=new Point(0,0);
+		private var _speed:IsoPoint=new IsoPoint(0,0);
 		private var _offset:Point = new Point(0,0);
 		
 		public function ScrollingBitmapComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
-			super($componentName, $entity);
+			super($componentName,$entity,$singleton,$prop);
 			_initVar($prop);
 		}
 		//------ Init Var ------------------------------------
@@ -224,6 +224,10 @@ package framework.component.core{
 			if(_autoScroll){
 				registerPropertyReference("enterFrame", {onEnterFrame:onTick});
 			}
+		}
+		//----- Set speed -----------------------------------
+		public function set speed($speed:IsoPoint):void {
+			_speed = $speed;
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
