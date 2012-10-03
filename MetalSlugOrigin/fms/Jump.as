@@ -35,10 +35,7 @@ package fms{
 	import utils.richardlord.*;
 
 	public class Jump extends MS_State{
-		private var _movingDir:IsoPoint = null;
 		private var _bool:Boolean = true;
-		private var _rowing:Boolean=false;
-		private var _dash:Boolean=false;
 		private var _throw:Boolean=false;
 		
 		//Jump State
@@ -55,13 +52,7 @@ package fms{
 			if (!_object.bitmapSet)	return;
 			var spatialMove:SpatialMove = _object.spatialMove;
 			var frame:Object = _object.getCurrentFrame();
-			_movingDir = new IsoPoint(spatialMove.movingDir.x,spatialMove.movingDir.y);
-			if(frame.name == "Jump"){
-				stopMoving();
-			}else if(frame.name == "RunJump"){
-				_object.bitmapSet.currentAnim.autoAnim = false;
-				updateSpeed();
-			}
+			updateSpeed();
 			update();
 		}
 		//------ Update ------------------------------------
@@ -75,12 +66,9 @@ package fms{
 			if(spatialMove.movingDir.z==0 && _bool && (frame.hasOwnProperty("dvz")|| frame.name=="RunJump" )){
 				spatialMove.movingDir.z=1;
 				spatialMove.speed.z = frame.dvz;
-				spatialMove.movingDir.x=_movingDir.x;
-				spatialMove.movingDir.y=_movingDir.y;
 			}else if(spatialMove.movingDir.z==1){
 				//trace("Jump",spatialMove.speed.z,spatialMove.gravity );
 				if((keyPad.fire1.isDown) && (frame.hasOwnProperty("hit_a")|| frame.hasOwnProperty("hit_n_w_a")) && (frame.name == "Jump" || frame.name == "RunJump")){
-					_object.bitmapSet.currentAnim.reverse=0;
 					if(_object.weapon && (keyPad.right.isDown || keyPad.left.isDown)){
 						updateAnim(frame.hit_t_w_a);
 						_object.weapon.updateAnim(_object.getCurrentFrame().wpoint.weaponact);
@@ -91,9 +79,6 @@ package fms{
 						updateAnim(frame.hit_a);
 					}
 				}
-				if(keyPad.fire3.isDown && keyPad.fire3.doubleClick){
-					_rowing=true;
-				}
 				spatialMove.speed.z-= spatialMove.gravity;
 				if(spatialMove.speed.z<=0){
 					spatialMove.movingDir.z=-1;
@@ -102,40 +87,15 @@ package fms{
 			}else if(spatialMove.movingDir.z==-1){
 				//trace("Fall",spatialMove.speed.z,spatialMove.gravity);
 				spatialMove.speed.z+= spatialMove.gravity;
-				if(keyPad.fire3.isDown && keyPad.fire3.doubleClick && !keyPad.fire3.getLongClick()){
-					_rowing=true;
-				}else if(keyPad.fire2.isDown && !keyPad.fire2.getLongClick() && frame.name!="RunJump"){
-					_dash=true;
-				}
 				if(_object.z>=0){
-					if(frame.name=="Jump"){
-						_object.bitmapSet.currentAnim.reverse=-1;
-					}else if(frame.name=="RunJump"){
-						_object.bitmapSet.currentAnim.reverse=1;
-						_object.bitmapSet.currentAnim.autoAnim = true;
-					}
 					_bool = false;
 					_object.z=0;
 					stopMoving();
 				}
-			}else if((frame.name!="Jump" && frame.name!="RunJump") || frame.name=="Jump" && (_rowing||_dash ||_object.bitmapSet.currentAnim.position == 0 && _object.bitmapSet.currentAnim.reverse==-1) || frame.name=="RunJump" && (_rowing||_dash|| _object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition)){
-				_bool = true;
-				_object.bitmapSet.currentAnim.reverse=0;
-				if(_rowing && (frame.name=="Jump" || frame.name=="RunJump")&& frame.hasOwnProperty("dbl_hit_d")){
-					_rowing = false;
-					updateAnim(frame.dbl_hit_d);
-				}else if(_dash && frame.name=="Jump" && frame.hasOwnProperty("dbl_hit_j")){
-					_dash = false;
-					updateAnim(frame.dbl_hit_j);
-					enter(this);
-					updateSpeed();
-				}else{
-					updateAnim(frame.next);
-				}
+			}else{
+				updateAnim(frame.next);
 				updateState();
 			}
-			object.hurtEnemy();
-			checkFlip();
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
