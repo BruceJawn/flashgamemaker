@@ -90,7 +90,7 @@ package screens{
 			_bg =_entityManager.addComponentFromName("MSOrigin","ScrollingBitmapComponent","myBackgroundComponent",{render:"bitmapRender"}) as ScrollingBitmapComponent;
 			//_bg.registerPropertyReference("timer");
 			_bg.graphic = _graphicManager.getGraphic(Data.BACKGROUND.bg.path);
-			_bg.pushFunction({executeOnlyIfDisplayed:true,callback:_bg.scrollBitmap});
+			//_bg.pushFunction({executeOnlyIfDisplayed:false,callback:_bg.scrollView});
 			LayoutUtil.Align(_bg,LayoutUtil.ALIGN_BOTTOM_LEFT);
 			
 			var keyPad:KeyPad = new KeyPad(true);
@@ -101,6 +101,9 @@ package screens{
 			_player.registerPropertyReference("keyboardInput");
 			_player.moveTo(10,160);
 			_player.layer=1;
+			
+			//_bg.setTarget(_player);
+			
 			var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad", 20,30,keyPad);
 			gamePad.hideDirectionKeys();
 			gamePad.button4.visible=false;
@@ -109,8 +112,6 @@ package screens{
 			gamePad.hideBg();
 			gamePad.moveFireKeys(120,10);
 			LayoutUtil.Align(gamePad,LayoutUtil.ALIGN_BOTTOM_LEFT,null,null,new Point(10,-20));
-			
-			
 			
 			_statutBar=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myStatutBarGraphicComponent") as GraphicComponent;
 			_statutBar.graphic = _graphicManager.getGraphic(Data.OTHER.statutBar.path);
@@ -132,6 +133,7 @@ package screens{
 			_soundComponent.scaleX /=1.5;
 			_soundComponent.scaleY /=1.5;
 			_soundComponent.sound = _soundManager.getSound(Framework.root+Data.BACKGROUND.mainMusic.path);
+			_soundComponent.nextFrame();
 			_soundComponent.registerPropertyReference("mouseInput",{onMouseDown:onSoundClick});
 			LayoutUtil.Align(_soundComponent,LayoutUtil.ALIGN_TOP_RIGHT,null,null,new Point(-5,5));
 			
@@ -148,6 +150,7 @@ package screens{
 		}
 		//------ On Chrono Complete ------------------------------------
 		private function onRPGTextComplete($rpgTextComponent:RPGTextComponent):void {
+			_soundComponent.prevFrame();
 			_soundComponent.play(_volume);
 			var endChronoComponent:ChronoComponent=_entityManager.addComponentFromName("MSOrigin","ChronoComponent","myChronoComponent",{onChronoComplete:onChronoComplete}) as ChronoComponent;
 			endChronoComponent.graphic = _graphicManager.getGraphic(Data.OTHER.chrono.path);
