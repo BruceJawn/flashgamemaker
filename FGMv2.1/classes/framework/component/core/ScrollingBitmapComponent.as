@@ -43,7 +43,10 @@ package framework.component.core{
 		private var _bitmap:Bitmap=null;
 		private var _canvas:Object=null;
 		private var _rectangle:Rectangle=null; // Scrolling rectangle position
-		private var _scrollingTarget:*=null; // If auto scroll based on a target
+		private var _scrollTarget:DisplayObject=null;
+		private var _toScroll:Array = null;
+		private var _scrollArea:Rectangle=null;
+		private var _scrollPosition:IsoPoint=null;
 		private var _loop:Boolean=true; // At then end of the image go back to the start
 		private var _speed:IsoPoint=new IsoPoint(0,0);
 		private var _offset:Point = new Point(0,0);
@@ -59,6 +62,8 @@ package framework.component.core{
 			if($prop && $prop.loop)			_loop 		= $prop.loop;
 			if($prop && $prop.canvas)		_canvas 	= $prop.canvas;
 			_bitmap = new Bitmap();
+			_scrollPosition = new IsoPoint;
+			_toScroll = new Array();
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		protected override function onGraphicLoadingComplete($graphic:DisplayObject, $callback:Function=null):void {
@@ -225,9 +230,41 @@ package framework.component.core{
 				registerPropertyReference("enterFrame", {onEnterFrame:onTick});
 			}
 		}
+		//------ Scroll View ------------------------------------
+		public function scrollView():void {
+			if(_scrollTarget){
+				if(_scrollTarget.x<100 && x>10){
+					_scrollPosition.x=-10;
+				}else if(_scrollTarget.x>Framework.width-100){
+					_scrollPosition.x=10;
+				}else if (_scrollPosition.x!=0){
+					_scrollPosition.x=0;
+				}
+				if(_scrollTarget.y<10){
+					_scrollPosition.y=-10;
+				}else if(_scrollTarget.y>Framework.height-100){
+					_scrollPosition.y=10;
+				}else if (_scrollPosition.y!=0){
+					_scrollPosition.y=0;
+				}
+				moveTo(x-_scrollPosition.x,y-_scrollPosition.y);
+			}
+		}
 		//----- Set speed -----------------------------------
 		public function set speed($speed:IsoPoint):void {
 			_speed = $speed;
+		}
+		//------ Set Target ------------------------------------
+		public function setTarget($target:DisplayObject):void {
+			_scrollTarget = $target;
+		}
+		//------ Set Scroll Area ------------------------------------
+		public function setScrollArea($scrollArea:Rectangle):void {
+			_scrollArea = $scrollArea;
+		}
+		//----- Set speed -----------------------------------
+		public function addComponent($graphic:DisplayObject):void {
+			_toScroll.push($graphic);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
