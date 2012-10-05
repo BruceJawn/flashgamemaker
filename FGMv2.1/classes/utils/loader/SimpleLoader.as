@@ -27,6 +27,7 @@ package utils.loader{
 	import flash.events.*;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
@@ -113,6 +114,11 @@ package utils.loader{
 			path=$path.substring(0,$path.lastIndexOf("/"));
 			path=path.substring(0,path.lastIndexOf("/")+1);
 			return path;
+		}
+		//------ LoadUrl ------------------------------------
+		public static function LoadUrl($url:String,$window:String=null):void {
+			var url:URLRequest = new URLRequest( $url);
+			navigateToURL(url,$window);//self,blank,parent,top
 		}
 	}
 }

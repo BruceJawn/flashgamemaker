@@ -419,6 +419,13 @@ package framework.component.core{
 			if ($object1.component.y > $object2.component.y) return -1;
 			return 0;
 		}
+		//---- Start ------------------------------------------------
+		public function start():void{
+			if(!_isListening){
+				_isListening=true;
+				initListener();
+			}
+		}	
 		//------- ToString -------------------------------
 		public override function ToString():void {
 

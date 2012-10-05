@@ -39,6 +39,8 @@ package script{
 			var helloWorld2:HelloWorld2;
 			var tuto2_SimpleGraphicComponent:Tuto2_SimpleGraphicComponent;
 			var tuto3_GraphicComponent:Tuto3_GraphicComponent;
+			var demo:Demo;
+			var bunnyMark:BunnyMark;
 		}
 	}
 }

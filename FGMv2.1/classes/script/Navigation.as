@@ -24,8 +24,11 @@
 package script{
 	import flash.display.Bitmap;
 	
+	import framework.Framework;
 	import framework.component.core.*;
 	import framework.entity.*;
+	
+	import utils.ui.LayoutUtil;
 
 	/**
 	* Navigation Script Class
@@ -52,14 +55,15 @@ package script{
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var spatialComponent:SpatialMoveComponent=_entityManager.addComponentFromName("GameEntity","SpatialComponent","mySpatialComponent") as SpatialMoveComponent;
+			var spatialComponent:SpatialMoveComponent=_entityManager.addComponentFromName("GameEntity","SpatialMoveComponent","mySpatialComponent") as SpatialMoveComponent;
 			var renderComponent:RenderComponent=_entityManager.addComponentFromName("GameEntity","RenderComponent","myRenderComponent") as RenderComponent;
 			var navigationComponent:NavigationComponent=_entityManager.addComponentFromName("GameEntity","NavigationComponent","myNavigationComponent") as NavigationComponent;
-			navigationComponent.loadGraphic("texture/framework/interface/navigationScreen.swf",onGraphicLoadingComplete);
+			navigationComponent.loadGraphic(Framework.root+"assets/navigationScreen.swf",onGraphicLoadingComplete);
 		}
 		//------ Init Component ------------------------------------
-		private function onGraphicLoadingComplete($bitmap:Bitmap):void {
-			//navigationComponent.setScript(_scriptName);
+		private function onGraphicLoadingComplete($navigationComponent:NavigationComponent):void {
+			LayoutUtil.Align($navigationComponent,LayoutUtil.ALIGN_CENTER_CENTER);
+			$navigationComponent.setScript(_scriptName);
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

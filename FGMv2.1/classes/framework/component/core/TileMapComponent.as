@@ -303,14 +303,15 @@ package framework.component.core{
 			if(!_pauseScroll && Framework.clip.mouseY<600 && _mouseManager.clicked==null && _mouseManager.rollOver==null){
 				var positionX:Number = x;
 				var positionY:Number = y;
-				if(x-$position.x<=-40 && x-$position.x>-width){
+				trace(x,y,$position.x,$position.y,width,height,x-$position.x<=-40,x-$position.x>-width,y-$position.y<=-40,y-$position.y>-height);
+				//if(x-$position.x<=-40 && x-$position.x>-width){
 					positionX = x-$position.x;
 					_scrollPosition.x+=$position.x;
-				}
-				if(y-$position.y<=-40 && y-$position.y>-height){
+				//}
+				//if(y-$position.y<=-40 && y-$position.y>-height){
 					positionY = y-$position.y;
 					_scrollPosition.y+=$position.y+$position.z;
-				}
+				//}
 				if(positionX==x && positionY==y)	return;
 				moveTo(positionX,positionY);
 				blit($position);
