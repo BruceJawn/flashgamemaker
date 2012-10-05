@@ -70,19 +70,23 @@ package{
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName($entityName,"MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName($entityName,"EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName($entityName,"BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
-			BasicTransform.SetRectMask(bitmapRenderComponent,10,20,Framework.width-20,Framework.height-40);
+			//BasicTransform.SetRectMask(bitmapRenderComponent,10,20,Framework.width-20,Framework.height-40);
 			var tileMapComponent:TileMapComponent=_entityManager.addComponentFromName($entityName,"TileMapComponent","myTileMapComponent") as TileMapComponent;
 			tileMapComponent.initMap(1,1000,500, 2);
 			var tileSet:Bitmap = $graphic as Bitmap;
 			var bitmapData:BitmapData = BitmapTo.BitmapToBitmapData(tileSet);
 			tileMapComponent.addTileLayer("1,498*10,1,499000*1,1,498*10,1",bitmapData,60,40,10,null,new IsoPoint(12,28,1));
-			var position:Point = LayoutUtil.GetAlignPosition(tileMapComponent,LayoutUtil.ALIGN_CENTER_CENTER,null,null,new Point(tileMapComponent.x,tileMapComponent.y+20));
+			/*var position:Point = LayoutUtil.GetAlignPosition(tileMapComponent,LayoutUtil.ALIGN_CENTER_CENTER,null,null,new Point(tileMapComponent.x,tileMapComponent.y+60));
 			if(tileMapComponent.height>Framework.height){	
 				position.y+=(tileMapComponent.height-Framework.height)/2;
-			}
+			}*/
+			tileMapComponent.y+=30;
 			//bitmapRenderComponent.setScrollArea(new Rectangle(0,0,tileMapComponent.x+tileMapComponent.maxWidth,tileMapComponent.y+tileMapComponent.maxHeight));
 			mouseInput.start();
 			//var tileMapEditorComponent:TileMapEditorComponent=entityManager.addComponentFromName($entityName,"TileMapEditorComponent","myTileMapEditorComponent", {tileMapComponent:tileMapComponent}) as TileMapEditorComponent;
+			
+			var systemInfoComponent:SystemInfoComponent=_entityManager.addComponentFromName($entityName,"SystemInfoComponent","mySystemInfoComponent") as SystemInfoComponent;
+			systemInfoComponent.moveTo(5,5);
 		}
 	}
 }
