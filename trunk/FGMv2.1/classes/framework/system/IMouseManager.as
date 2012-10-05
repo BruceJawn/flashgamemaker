@@ -46,6 +46,10 @@ package framework.system{
 		 * Is the caller currently rollOver
 		 */	
 		function isRollOver($caller:*):Boolean
+		/**
+		 * CheckClick
+		 */	
+		function checkClick():void
 		 /**
 		 * To String
 		 */		

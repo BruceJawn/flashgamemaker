@@ -37,9 +37,10 @@ package script{
 			//new HelloWorld2();
 			//new Tuto2_SimpleGraphicComponent();
 			//new Tuto3_BackgroundColorComponent();
-			//new Navigation("Demo");
 			//new Demo();
-			new BunnyMark();
+			new Navigation("script.Demo");
+			//new BunnyMark();
+			//new Navigation("script.BunnyMark");
 		}
 	}
 }

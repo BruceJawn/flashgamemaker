@@ -33,6 +33,8 @@ package framework.component.core{
 	import framework.Framework;
 	import framework.component.*;
 	import framework.entity.*;
+	
+	import utils.loader.SimpleLoader;
 
 	/**
 	* Navigation Component Class
@@ -43,6 +45,7 @@ package framework.component.core{
 
 		private var _entityManager:IEntityManager=null;
 		private var _startBt:SimpleButton=null;
+		private var _flashgamemakerBt:SimpleButton=null;
 		private var _scriptName:String=null;
 		private var _label:TextField=null;
 
@@ -59,27 +62,41 @@ package framework.component.core{
 		public function setScript(scriptName:String):void {
 			_scriptName=scriptName;
 		}
+		//------ On Graphic Loading Complete ------------------------------------
+		protected override function onGraphicLoadingComplete($graphic:DisplayObject, $callback:Function =null):void {
+			_graphic = $graphic;
+			_startBt = _graphic.startBt;
+			_startBt.addEventListener(MouseEvent.CLICK, onStartBtClick,false,0,true);
+			_flashgamemakerBt = _graphic.flashgamemakerBt
+			_flashgamemakerBt.addEventListener(MouseEvent.CLICK, onFlashGameMakerBtClick,false,0,true);
+			Framework.AddChild($graphic,this);
+			if($callback is Function)	$callback(this);
+		}
+		//------- On Start -------------------------------
+		private function onStartBtClick($evt:MouseEvent):void {
+			launchScript();
+		}
 		//------- Lauch Script -------------------------------
 		public function launchScript():void {
 			if (_scriptName!=null) {
 				var classRef:Class = getClass(_scriptName);
 				new classRef();
 				Framework.Focus();
-				entity.removeComponentFromName(_componentName);
+				destroy();
 			}
-		}
-		//------- On Start -------------------------------
-		private function onStart(evt:MouseEvent):void {
-			launchScript();
 		}
 		//------ Gets class name from instance ------------------------------------
 		private function getClass(scriptName:String):Class {
-			var classRef:Class=getDefinitionByName("script."+scriptName) as Class;
+			var classRef:Class=getDefinitionByName(scriptName) as Class;
 			return (classRef);
+		}
+		//------- On FlashGameMaker -------------------------------
+		private function onFlashGameMakerBtClick($evt:MouseEvent):void {
+			SimpleLoader.LoadUrl("http://flashgamemakeras3.blogspot.fr","_blank");
 		}
 		//------ Reset  ------------------------------------
 		public function reset(ownerName:String,componentName:String):void {
-			_startBt.removeEventListener(MouseEvent.CLICK, onStart);
+			_startBt.removeEventListener(MouseEvent.CLICK, onStartBtClick);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {

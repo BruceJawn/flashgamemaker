@@ -184,6 +184,10 @@ package framework.component.core{
 		public function addLoadingText():void {
 			addChild(_textField);
 		}
+		//------ Get Loading Text ------------------------------------
+		public function get loadingText():TextField {
+			return _textField;
+		}
 		//------ On Loading Complete ------------------------------------
 		public function get progress():Number {
 			return _progress;

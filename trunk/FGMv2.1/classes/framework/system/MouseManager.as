@@ -137,7 +137,7 @@ package framework.system{
 			return _lastClickTime;
 		}
 		//---- Check Click ------------------------------------------------
-		private function checkClick():void{
+		public function checkClick():void{
 			var mouseEvent:MouseEvent = _mousePad.mouseEvent
 			if(mouseEvent.type == MouseEvent.MOUSE_DOWN){
 				_lastClickPosition = new Point(mouseEvent.stageX,mouseEvent.stageY);
