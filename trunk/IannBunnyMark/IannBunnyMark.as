@@ -77,7 +77,8 @@ package {
 		//------ Init Game ------------------------------------
 		private function _initGame():void {
 			//Start your coding here
-			new BunnyMark();
+			var bunnymark:BunnyMark;
+			new Navigation("BunnyMark");
 		}
 	}
 }
