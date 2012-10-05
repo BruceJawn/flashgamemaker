@@ -24,15 +24,18 @@ package screens{
 	import data.Data;
 	
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import framework.Framework;
 	import framework.component.core.*;
 	import framework.entity.*;
+	import framework.system.GraphicManager;
 	import framework.system.IRessourceManager;
 	import framework.system.ISoundManager;
 	import framework.system.RessourceManager;
 	import framework.system.SoundManager;
 	
+	import utils.loader.SimpleLoader;
 	import utils.richardlord.*;
 
 	public class Preloader extends State implements IState{
@@ -41,7 +44,8 @@ package screens{
 		private var _preloaderComponent:PreloaderComponent;
 		private var _soundManager:ISoundManager=null;
 		private var _ressourceManager:IRessourceManager=null;
-		private var _currentDirectoryPath:String
+		private var _currentDirectoryPath:String;
+		private var _navigationComponent:GraphicComponent = null;
 		
 		// Preloader load the main swf (FlashGameMaker.swf) and preload assets
 		public function Preloader(){
@@ -59,10 +63,12 @@ package screens{
 			var assetsToLoad:Array = getAssetsToLoad();
 			_preloaderComponent = _entityManager.addComponentFromName("MSOrigin","PreloaderComponent","myPreloaderComponent", {onLoadingComplete:onLoadingComplete ,onAssetsLoadingComplete:onAssetsLoadingComplete, assetsToLoad:assetsToLoad}) as PreloaderComponent;
 			_preloaderComponent.addLoadingText();
+			_preloaderComponent.loadingText.textColor = 0xFFFFFF;
 		}
 		//------ Get Assets To Load ------------------------------------
 		private function getAssetsToLoad():Array {
 			var assetsToLoad:Array = new Array();
+			assetsToLoad.push(Framework.root+"assets/navigationScreen.swf");
 			for each(var bg:Object in Data.BACKGROUND){
 				assetsToLoad.push(Framework.root+bg.path);
 			}
@@ -80,11 +86,24 @@ package screens{
 		}
 		//------ On Loading Complete ------------------------------------
 		private function onLoadingComplete():void {
-			
 		}
 		//------ On Asset Loading Complete ------------------------------------
 		private function onAssetsLoadingComplete():void {
+			_navigationComponent=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myNavigationComponent") as GraphicComponent;
+			_navigationComponent.graphic = GraphicManager.getInstance().getGraphic(Framework.root+"assets/navigationScreen.swf");
+			_navigationComponent.graphic.startBt.addEventListener(MouseEvent.CLICK, onStartBtClick,false,0,true);
+			_navigationComponent.graphic.flashgamemakerBt.addEventListener(MouseEvent.CLICK, onFlashGameMakerBtClick,false,0,true);
+		}
+		//------- On Start -------------------------------
+		private function onStartBtClick($evt:MouseEvent):void {
+			$evt.target.removeEventListener(MouseEvent.CLICK, onStartBtClick);
+			$evt.target.removeEventListener(MouseEvent.CLICK, onFlashGameMakerBtClick);
+			_navigationComponent.destroy();
 			_finiteStateMachine.goToNextState();
+		}
+		//------- On Start -------------------------------
+		private function onFlashGameMakerBtClick($evt:MouseEvent):void {
+			SimpleLoader.LoadUrl("http://flashgamemakeras3.blogspot.fr","_blank");
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {

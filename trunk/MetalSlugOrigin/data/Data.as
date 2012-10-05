@@ -41,7 +41,7 @@ package data{
 		public static const BACKGROUND:Object =
 			{
 				'bg':{
-					'path':'assets/MSbg.png'
+					'path':'assets/MSBg.png'
 				},
 				'mainMusic':{
 					'path':'assets/main.mp3'
