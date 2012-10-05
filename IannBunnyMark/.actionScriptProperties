@@ -24,8 +24,7 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="lib/FlashGameMaker.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="lib/TheMiner_en.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="1" linkType="1" path="lib"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
