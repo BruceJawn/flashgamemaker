@@ -62,7 +62,7 @@ package screens{
 		}
 		//------ Start Music ------------------------------------
 		private function startMusic():void {
-			_soundManager.play(_mainMusic,0.01,true);
+			//_soundManager.play(_mainMusic,0.01,true);
 		}
 		//------ Stop Music ------------------------------------
 		private function stopMusic():void {
@@ -71,34 +71,29 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
-			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","LFE_Menu") as GraphicComponent;
+			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
 			_menuComponent.graphic = new MenuUI as MovieClip;
 			_menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick});
 			_menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick});
-			_menuComponent.setButtonAtFrame(2,"vsModeBt", {onMouseClick:onVsModeBtClick});
-			_menuComponent.setButtonAtFrame(2,"stageModeBt", {onMouseClick:onStageModeBtClick});
+			_menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick});
 			var keyInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
 			keyInput.startListening();
 		}
 		//------ On Start Bt Click ------------------------------------
 		private function onStartBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop(2);
+			_menuComponent.gotoAndStop("GAME_MENU");
+			_finiteStateMachine.changeStateByName("GameMenu");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function onControlSettingsBtClick($mousePad:MousePad):void {
-			//_menuComponent.gotoAndStop(3);
-			//_finiteStateMachine.changeStateByName("StageGame");
+			_menuComponent.gotoAndStop("CONTROL_SETTINGS");
+			_finiteStateMachine.changeStateByName("ControlSettings");
 		}
-		//------ On VS Mode Bt Click ------------------------------------
-		private function onVsModeBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop(4);
-			_finiteStateMachine.changeStateByName("StageGame");
-		}
-		//------ On VS Mode Bt Click ------------------------------------
-		private function onStageModeBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop(5);
-			_finiteStateMachine.changeStateByName("StageGame");
+		//------ On Control Settings Bt Click ------------------------------------
+		private function onDemoBtClick($mousePad:MousePad):void {
+			_menuComponent.gotoAndStop("GAME");
+			_finiteStateMachine.changeStateByName("Demo");
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
@@ -108,9 +103,11 @@ package screens{
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
-			initVar();
-			initComponent();
-			startMusic();
+			if(!_entityManager){
+				initVar();
+				initComponent();
+				startMusic();
+			}
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {

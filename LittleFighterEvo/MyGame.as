@@ -24,6 +24,8 @@ package {
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	
+	import framework.component.core.EnterFrameComponent;
+	import framework.component.core.PauseComponent;
 	import framework.entity.EntityManager;
 	import framework.entity.IEntity;
 	import framework.entity.IEntityManager;
@@ -39,6 +41,7 @@ package {
 		private var _preloader:Preloader=null;
 		private var _uInterface:UInterface=null;
 		private var _finiteStateMachine:FiniteStateMachine = null;
+		public static var pause:PauseComponent = null;
 		public function MyGame() {
 			_initVar();
 			_initStateMachine();
@@ -56,9 +59,29 @@ package {
 			stateList["Preloader"]=new Preloader();
 			stateList["UInterface"]=new UInterface();
 			stateList["StageGame"]=new StageGame();
+			stateList["GameMenu"]=new GameMenu();
+			stateList["Demo"]=new Demo();
+			stateList["CharacterSelection"]=new CharacterSelection();
+			stateList["ControlSettings"]=new ControlSettings();
 			_finiteStateMachine.setStateList(stateList);
 			_finiteStateMachine.setNextStateByName("UInterface"); 
 			_finiteStateMachine.changeStateByName("Preloader");
+		}
+		//------ Init Finite StateMachine ------------------------------------
+		public static  function Pause():void {
+			var entityManager:IEntityManager=EntityManager.getInstance();
+			if(!pause){
+				pause=entityManager.addComponentFromName("LittleFighterEvo","PauseComponent","myPauseComponent") as PauseComponent;
+				pause.visible =false;
+			}
+			var enterframeComponent:EnterFrameComponent = entityManager.getComponent("LittleFighterEvo","myEnterFrameComponent") as EnterFrameComponent;
+			pause.visible = !pause.visible;
+			if(pause.visible) {
+				enterframeComponent.stop();
+			}else{
+				enterframeComponent.start();
+			}	
+			
 		}
 	}
 }
