@@ -74,7 +74,8 @@ package framework.component.core{
 		}
 		//------ On Tick ------------------------------------
 		private function onTick($evt:Event=null):void {
-			dispatch("onEnterFrame");
+			if(_isRunning)
+				dispatch("onEnterFrame");
 		}
 		//------  Dispatch ------------------------------------
 		private function dispatch($callback:String):void {
@@ -97,6 +98,14 @@ package framework.component.core{
 			if(_testPerformance){
 				trace("EnterFrameComponent - Final:", Time.GetTime()-time2);
 			}
+		}
+		//------  Start ------------------------------------
+		public function start():void{
+			_isRunning=true;
+		}
+		//------  Stop ------------------------------------
+		public function stop():void{
+			_isRunning=false;
 		}
 	}
 }
