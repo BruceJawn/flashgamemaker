@@ -35,12 +35,7 @@ package screens{
 	import framework.component.add.GamePadComponent;
 	import framework.component.core.*;
 	import framework.entity.*;
-	import framework.system.GraphicManager;
-	import framework.system.IGraphicManager;
-	import framework.system.IRessourceManager;
-	import framework.system.ISoundManager;
-	import framework.system.RessourceManager;
-	import framework.system.SoundManager;
+	import framework.system.*;
 	
 	import utils.bitmap.BitmapTo;
 	import utils.iso.IsoPoint;
@@ -54,19 +49,16 @@ package screens{
 	/**
 	 * Game
 	 */
-	public class StageGame extends State implements IState{
+	public class Demo extends State implements IState{
 		
 		private var _entityManager:IEntityManager=null;
-		private var _player1:LFE_ObjectComponent=null;
-		private var _player2:LFE_ObjectComponent=null;
 		private var _graphicManager:IGraphicManager = null;
 		private var _battleField:ScrollingBitmapComponent = null;
 		private var _forests:GraphicComponent = null;
 		private var _forestm2:ScrollingBitmapComponent = null;
 		private var _forestm3:GraphicComponent = null
-		private var _pause:PauseComponent = null;
 		
-		public function StageGame(){
+		public function Demo(){
 		}
 		//------ Init Var ------------------------------------
 		private function initVar():void {
@@ -77,36 +69,17 @@ package screens{
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("LittleFighterEvo","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
+			var keyBoardInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
+			keyBoardInput.addEventListener(KeyboardEvent.KEY_UP,onKeyUp,false,0,true);
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;
 			Framework.SetChildIndex(bitmapRenderComponent,Framework.numChildren-1);
 			var spatialMoveComponent:SpatialMoveComponent=_entityManager.addComponentFromName("LittleFighterEvo","SpatialMoveComponent","mySpatialMoveComponent") as SpatialMoveComponent;
-			var keyBoardInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
-			keyBoardInput.addEventListener(KeyboardEvent.KEY_UP,onKeyUp,false,0,true);
-			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardMoveComponent","myKeyboardMoveComponent") as KeyboardMoveComponent;
 			var collisionDetectionComponent:CollisionDetectionComponent=_entityManager.addComponentFromName("LittleFighterEvo","CollisionDetectionComponent","myCollisionDetectionComponent") as CollisionDetectionComponent;
 			createBattleField();
 			
-			var keyPad1:KeyPad = new KeyPad(true);
-			keyPad1.useZQSD();
-			keyPad1.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
-			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad1);
-			player1.registerPropertyReference("keyboardInput");
-			player1.moveTo(0,300);
-			//player1.setTimeMultiplicator(10);
-			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad1);
-			
-			var keyPad2:KeyPad = new KeyPad(true);
-			keyPad2.useArrows();
-			keyPad2.mapFireButtons(KeyCode.M,KeyCode.PERCENT,KeyCode.STAR,KeyCode.ENTER);
-			var player2:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad2);
-			player2.registerPropertyReference("keyboardInput");
-			//player2.setAI(true);
-			player2.moveTo(360,340);
-			var gamePad2:GamePadComponent = EntityFactory.CreateGamePad("GamePad2", 400,520,keyPad2);
-			
 			var player:LFE_ObjectComponent;
-			for (var i:int =0; i<10;i++){
+			for (var i:int =0; i<8;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
@@ -146,6 +119,8 @@ package screens{
 		private function onKeyUp($evt:KeyboardEvent):void {
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
 			if(KeyCode.GetKey($evt.keyCode)=="F1"){
+				MyGame.Pause();
+			}else if(KeyCode.GetKey($evt.keyCode)=="Esc"){
 				MyGame.Pause();
 			}
 		}

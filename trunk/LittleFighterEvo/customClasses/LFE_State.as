@@ -124,13 +124,13 @@ package customClasses{
 				updateAnim(frame.hit_j);
 			}else if(frame.hasOwnProperty("hit_d") && keyPad.fire3.isDown && !keyPad.fire3.getLongClick()){
 				updateAnim(frame.hit_d);
-			}else if(frame.hasOwnProperty("hit_up") && keyPad.up.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_up){
+			}else if(frame.hasOwnProperty("hit_up") && keyPad.up.isDown){
 				updateAnim(frame.hit_up);
-			}else if(frame.hasOwnProperty("hit_down")&& keyPad.down.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_down){
+			}else if(frame.hasOwnProperty("hit_down")&& keyPad.down.isDown){
 				updateAnim(frame.hit_down);
-			}else if(frame.hasOwnProperty("hit_right") && keyPad.right.isDown && _object.bitmapSet.currentAnimName!=frame.hit_right){
+			}else if(frame.hasOwnProperty("hit_right") && keyPad.right.isDown){
 				updateAnim(frame.hit_right);
-			}else if(frame.hasOwnProperty("hit_left") && keyPad.left.isDown &&  _object.bitmapSet.currentAnimName!=frame.hit_left){
+			}else if(frame.hasOwnProperty("hit_left") && keyPad.left.isDown){
 				updateAnim(frame.hit_left);
 			}else if(frame.hasOwnProperty("next") && _object.bitmapSet.endAnim && (_object.bitmapSet.currentPosition == 0 && _object.bitmapSet.reverse==-1 || _object.bitmapSet.currentPosition == _object.bitmapSet.lastPosition || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 				if(_object.bitmapSet.readyToAnim){

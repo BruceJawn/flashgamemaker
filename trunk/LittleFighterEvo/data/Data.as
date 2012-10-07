@@ -56,11 +56,13 @@ package data{
 			{
 				'1':{
 					'name': 'Davis','kind':0,'data':'data/Davis.txt',
-					'graphics':['assets/davis_0.png','assets/davis_1.png','assets/davis_2.png']
-					}/*,
+					'graphics':['assets/davis_0.png','assets/davis_1.png','assets/davis_2.png'],
+					'face':'assets/davis_f.png'	
+				}/*,
 				'2':{
 					'name': 'Henry','kind':0, 'data':'data/Henry.txt',
-					'graphics':['assets/henry_0.png','assets/henry_1.png','assets/henry_2.png']
+					'graphics':['assets/henry_0.png','assets/henry_1.png','assets/henry_2.png'],
+					'face':'assets/henry_f.png'
 				},
 				'3':{
 					'name': 'Woody','kind':0, 'data':'data/Woody.txt',

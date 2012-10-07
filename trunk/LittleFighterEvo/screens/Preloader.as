@@ -59,6 +59,7 @@ package screens{
 			var assetsToLoad:Array = getAssetsToLoad();
 			_preloaderComponent = _entityManager.addComponentFromName("LittleFighterEvo","PreloaderComponent","myPreloaderComponent", {onLoadingComplete:onLoadingComplete ,onAssetsLoadingComplete:onAssetsLoadingComplete, assetsToLoad:assetsToLoad}) as PreloaderComponent;
 			_preloaderComponent.addLoadingText();
+			_preloaderComponent.loadingText.textColor = 0xFFFFFF;
 		}
 		//------ Get Assets To Load ------------------------------------
 		private function getAssetsToLoad():Array {
@@ -70,6 +71,9 @@ package screens{
 				assetsToLoad.push(Framework.root+object.data);
 				for each(var graphic:String in object.graphics){
 					assetsToLoad.push(Framework.root+graphic);
+					if(object.hasOwnProperty("face")){
+						assetsToLoad.push(Framework.root+object.face);
+					}
 				}
 			}
 			assetsToLoad.push(Framework.root+"assets/main.mp3");
@@ -86,8 +90,10 @@ package screens{
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
-			initVar();
-			initComponent();
+			if(!_entityManager){
+				initVar();
+				initComponent();
+			}
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
