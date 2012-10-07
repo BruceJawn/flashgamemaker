@@ -171,7 +171,7 @@ package framework.system{
 		//------ Stop Music ------------------------------------
 		public function stop($path:String):Number {
 			var soundChannel:SoundChannel = _sounds[$path].soundChannel;
-			soundChannel.stop();
+			if(soundChannel)	soundChannel.stop();
 			return 0;
 		}
 		//------ Mute ------------------------------------

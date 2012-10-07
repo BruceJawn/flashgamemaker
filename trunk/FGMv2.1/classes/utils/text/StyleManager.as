@@ -53,5 +53,6 @@ package utils.text{
 		
 		public static const  ClickToStart:TextFormat 	= new TextFormat("Arial", 50, 0x990000,true,null,null,null,null,TextAlign.CENTER) ;
 		public static const  ToolTip:TextFormat 		= new TextFormat("Arial", 12, 0xFFFFFF,true,null,null,null,null,TextAlign.CENTER) ;
+		public static const  Pause:TextFormat 			= new TextFormat("Arial", 20, 0xFFFFFF,true,null,null,null,null,TextAlign.CENTER) ;
 	}
 }

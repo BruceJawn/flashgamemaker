@@ -147,7 +147,7 @@ package utils.keyboard{
 		public static function GetKey($charCode:int):String{
 			switch($charCode){
 				case UP: 		return "Up";	
-				case DOWN: 		return "Dwn";
+				case DOWN: 		return "Down";
 				case LEFT: 		return "Left";
 				case RIGHT:		return "Right";
 				case ENTER: 	return "Ok";
@@ -155,6 +155,19 @@ package utils.keyboard{
 				case SHIFT: 	return "SHIFT";
 				case STAR: 		return "*";
 				case PERCENT: 	return "ù";
+				case ESC: 	return "Esc";
+				case F1: 	return "F1";
+				case F2: 	return "F2";
+				case F3: 	return "F3";
+				case F4: 	return "F4";
+				case F5: 	return "F5";
+				case F6: 	return "F6";
+				case F7: 	return "F7";
+				case F8: 	return "F8";
+				case F9: 	return "F9";
+				case F10: 	return "F10";
+				case F11: 	return "F11";
+				case F12: 	return "F12";
 			} 
 			var keyTouch:String = String.fromCharCode($charCode);
 			return keyTouch;

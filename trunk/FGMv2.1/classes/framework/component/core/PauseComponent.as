@@ -22,29 +22,45 @@
 */
 
 package framework.component.core{
+	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.*;
+	import flash.text.TextField;
 	
+	import framework.Framework;
+	import framework.component.Component;
 	import framework.entity.IEntity;
 	
+	import utils.text.StyleManager;
+	import utils.ui.LayoutUtil;
+	
 	/**
-	 * DialogueComponent Component
+	 * PauseComponent Component
 	 * 
 	 */
-	public class DialogueComponent extends GraphicComponent {
+	public class PauseComponent extends Component {
 		
-		public function DialogueComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true,  $prop:Object = null) {
+		private var _textField:TextField = null;
+		public function PauseComponent($componentName:String, $entity:IEntity, $singleton:Boolean = true,  $prop:Object = null) {
 			super($componentName, $entity, true);
 			_initVar($prop);
 		}
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
-			
-		}
-		//------ Init Property  ------------------------------------
-		public override function initProperty():void {
-			super.initProperty();
+			_textField = new TextField();
+			_textField.text = "Pause";
+			_textField.setTextFormat(StyleManager.Pause);
+			_textField.filters = StyleManager.DropShadow;
+			if ($prop != null) {
+				if($prop.hasOwnProperty("text"))		_textField.text = $prop.text;
+				if($prop.hasOwnProperty("textFormat"))	_textField.setTextFormat($prop.textFormat);
+				if($prop.hasOwnProperty("filters"))		_textField.filters = $prop.filters;
+			}
+			Framework.AddChild(_textField,this);
+			Framework.AddChild(this);
+			Framework.SetChildIndex(this,Framework.numChildren-1);
+			LayoutUtil.Align(this,LayoutUtil.ALIGN_CENTER_CENTER);
 		}
 		//------- ToString -------------------------------
 		public override function ToString():void {
