@@ -48,7 +48,7 @@ package framework.component.core{
 		private function _initVar():void {
 			_bitmapData = new BitmapData(100,100,true,0);
 			_bitmap=new Bitmap(_bitmapData);
-			Framework.AddChild(_bitmap);
+			Framework.AddChild(_bitmap,this);
 		}
 		//------ Init Slider ------------------------------------
 		public function init($images:Array):void {
