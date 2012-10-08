@@ -216,5 +216,11 @@ package data{
 					'kind':2
 				}
 			}
+		public static const OTHERS:Object = {
+			'random':'assets/random.jpg',
+			'pressAttackToJoin':'assets/pressAttackToJoin.jpg',
+			'main_mp3':'assets/main.mp3',
+			'stage1_mp3':'assets/stage1.mp3'
+		}
 	}
 }
