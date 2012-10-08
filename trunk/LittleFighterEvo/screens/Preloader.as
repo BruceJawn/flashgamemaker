@@ -76,8 +76,9 @@ package screens{
 					}
 				}
 			}
-			assetsToLoad.push(Framework.root+"assets/main.mp3");
-			assetsToLoad.push(Framework.root+"assets/stage1.mp3");
+			for each(var other:Object in Data.OTHERS){
+				assetsToLoad.push(Framework.root+other);
+			}
 			return assetsToLoad;
 		}
 		//------ On Loading Complete ------------------------------------

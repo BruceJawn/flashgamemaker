@@ -46,6 +46,7 @@ package screens{
 		private var _entityManager:IEntityManager=null;
 		private var _menuComponent:GraphicComponent = null;
 		private var _graphicManager:IGraphicManager = null;
+		private var _sliderList:Array = null;
 		
 		public function CharacterSelection(){
 		}
@@ -53,6 +54,7 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
+			_sliderList = new Array();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -61,10 +63,20 @@ package screens{
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 		}
 		//------ Init Slider ------------------------------------
-		private function initSlider():void {
-			var imageSliderComponent:ImageSliderComponent=_entityManager.addComponentFromName("LittleFighterEvo","ImageSliderComponent","mySliderComponent") as ImageSliderComponent;
+		private function _initSliders():void {
+			for(var i:int=0;i<4;i++){
+				_initSlider(i,155+i*140,0);
+			}
+		}
+		//------ Init Slider ------------------------------------
+		private function _initSlider($id:int, $x:Number, $y:Number):void {
+			var imageSliderComponent:ImageSliderComponent=_entityManager.addComponentFromName("LittleFighterEvo","ImageSliderComponent","mySliderComponent_"+$id) as ImageSliderComponent;
 			var list:Array = new Array();
 			var graphic:Bitmap;
+			graphic = _graphicManager.getGraphic(Framework.root+Data.OTHERS.pressAttackToJoin);
+			list.push(graphic);
+			graphic = _graphicManager.getGraphic(Framework.root+Data.OTHERS.random);
+			list.push(graphic);
 			for each(var object:Object in Data.OBJECT){
 				if(object.hasOwnProperty("face")){
 					graphic = _graphicManager.getGraphic(Framework.root+object.face);
@@ -72,7 +84,7 @@ package screens{
 				}
 			}
 			imageSliderComponent.init(list);
-			imageSliderComponent.moveTo(150,400);
+			imageSliderComponent.moveTo($x,$y);
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
@@ -85,7 +97,7 @@ package screens{
 			if(!_entityManager){
 				initVar();
 				initComponent();
-				initSlider();
+				_initSliders();
 			}
 		}
 		//------ Enter ------------------------------------
