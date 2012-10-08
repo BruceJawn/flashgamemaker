@@ -31,6 +31,8 @@ package framework.component.core{
 	import framework.Framework;
 	import framework.entity.*;
 	
+	import utils.math.SimpleMath;
+	
 	/**
 	* Image Slider Class
 	* @ purpose: 
@@ -39,6 +41,7 @@ package framework.component.core{
 		private var _list:Array = null;
 		private var _bitmap:Bitmap = null;
 		private var _bitmapData:BitmapData = null;
+		private var _position:int = 0;
 		
 		public function ImageSliderComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity);
@@ -64,11 +67,41 @@ package framework.component.core{
 		//------ Refresh ------------------------------------
 		private function _refresh():void {
 			if(!_list || _list.length==0)	return;
-			var graphic:Bitmap = _list[0];
+			var graphic:Bitmap = _list[_position];
 			if(_bitmapData) _bitmapData.dispose();
 			_bitmapData = new BitmapData(graphic.width,graphic.height,true,0);
 			_bitmapData.copyPixels(graphic.bitmapData,graphic.bitmapData.rect,new Point);
 			_bitmap.bitmapData = _bitmapData;
+		}
+		//------ Next ------------------------------------
+		public function next($except:Array=null):void {
+			if(_position<_list.length-1)	_position++;
+			else							_position = 0;
+			if($except && $except.indexOf(_position)!=-1)	return next();
+			_refresh();
+		}
+		//------ Prev ------------------------------------
+		public function prev($except:Array=null):void {
+			if(_position>0)		_position--;
+			else				_position = _list.length-1;
+			if($except && $except.indexOf(_position)!=-1)	return prev();
+			_refresh();
+		}
+		//------ Random ------------------------------------
+		public function random($except:Array=null):void {
+			var rand:int=SimpleMath.RandomBetween(0, _list.length-1);
+			if($except && $except.indexOf(rand)!=-1)	return random($except);
+			_position = rand;
+			_refresh();
+		}
+		//------ Get Position ------------------------------------
+		public function get position():int {
+			return _position;	
+		}
+		//------ Refresh ------------------------------------
+		public function reset():void {
+			_position = 0;
+			_refresh();
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
