@@ -65,7 +65,7 @@ package screens{
 		//------ Init Slider ------------------------------------
 		private function _initSliders():void {
 			for(var i:int=0;i<4;i++){
-				_initSlider(i,155+i*140,0);
+				_initSlider(i,155+i*150,175);
 			}
 		}
 		//------ Init Slider ------------------------------------
