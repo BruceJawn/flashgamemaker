@@ -37,6 +37,7 @@ package screens{
 	
 	import utils.loader.SimpleLoader;
 	import utils.richardlord.*;
+	import utils.ui.LayoutUtil;
 
 	public class Preloader extends State implements IState{
 		
@@ -89,10 +90,12 @@ package screens{
 		}
 		//------ On Asset Loading Complete ------------------------------------
 		private function onAssetsLoadingComplete():void {
+			_preloaderComponent.destroy();
 			_navigationComponent=_entityManager.addComponentFromName("MSOrigin","GraphicComponent","myNavigationComponent") as GraphicComponent;
 			_navigationComponent.graphic = GraphicManager.getInstance().getGraphic(Framework.root+"assets/navigationScreen.swf");
 			_navigationComponent.graphic.startBt.addEventListener(MouseEvent.CLICK, onStartBtClick,false,0,true);
 			_navigationComponent.graphic.flashgamemakerBt.addEventListener(MouseEvent.CLICK, onFlashGameMakerBtClick,false,0,true);
+			LayoutUtil.Align(_navigationComponent,LayoutUtil.ALIGN_CENTER_CENTER);
 		}
 		//------- On Start -------------------------------
 		private function onStartBtClick($evt:MouseEvent):void {
