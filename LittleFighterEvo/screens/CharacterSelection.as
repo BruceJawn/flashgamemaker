@@ -25,6 +25,8 @@ package screens{
 	
 	import flash.display.Bitmap;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	
 	import framework.Framework;
 	import framework.component.core.GraphicComponent;
@@ -47,6 +49,9 @@ package screens{
 		private var _menuComponent:GraphicComponent = null;
 		private var _graphicManager:IGraphicManager = null;
 		private var _sliderList:Array = null;
+		private var _position:int = 0;
+		private var _nestImageObject:Array=null;
+		private var _team:Array = null;
 		
 		public function CharacterSelection(){
 		}
@@ -55,6 +60,7 @@ package screens{
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
 			_sliderList = new Array();
+			_nestImageObject = new Array();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -65,7 +71,8 @@ package screens{
 		//------ Init Slider ------------------------------------
 		private function _initSliders():void {
 			for(var i:int=0;i<4;i++){
-				_initSlider(i,155+i*150,175);
+				_initSlider(i,155+i*153,174);
+				_initSlider(i+4,155+i*153,375);
 			}
 		}
 		//------ Init Slider ------------------------------------
@@ -77,20 +84,63 @@ package screens{
 			list.push(graphic);
 			graphic = _graphicManager.getGraphic(Framework.root+Data.OTHERS.random);
 			list.push(graphic);
+			var i:int=0;
 			for each(var object:Object in Data.OBJECT){
 				if(object.hasOwnProperty("face")){
 					graphic = _graphicManager.getGraphic(Framework.root+object.face);
 					list.push(graphic);
+					if(!_nestImageObject[i]){
+						_nestImageObject[i] = object;
+						i++;
+					}
+					
 				}
 			}
 			imageSliderComponent.init(list);
 			imageSliderComponent.moveTo($x,$y);
+			_sliderList.push(imageSliderComponent);
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
 			if($evt.keyCode == KeyCode.ESC){
 				_menuComponent.gotoAndStop("MENU");
+			}else if($evt.keyCode == KeyCode.I){
+				var imageSliderComponent:ImageSliderComponent=_sliderList[_position];
+				if(imageSliderComponent.position==0){
+					imageSliderComponent.next([0]);
+				}else if(imageSliderComponent.position==1){
+					imageSliderComponent.random([0,1]);
+					selectCharacter(imageSliderComponent.position-2);
+				}else if(imageSliderComponent.position>1){
+					selectCharacter(imageSliderComponent.position-2);
+				}
+			}else if($evt.keyCode == KeyCode.LEFT){
+				imageSliderComponent=_sliderList[_position];
+				if(imageSliderComponent.position>0){
+					imageSliderComponent.prev([0]);
+					selectCharacter(imageSliderComponent.position-2);
+				}
+			}else if($evt.keyCode == KeyCode.RIGHT){
+				imageSliderComponent=_sliderList[_position];
+				if(imageSliderComponent.position>0){
+					imageSliderComponent.next([0]);
+					selectCharacter(imageSliderComponent.position-2);
+				}
 			}
+		}
+		//------ Select Character ------------------------------------
+		public function selectCharacter($position:Number):void {
+			var index:int = _position+1;
+			var playerTF:TextField = _menuComponent.graphic["player"+index+"Txt"];
+			playerTF.text = index.toString();
+			playerTF.autoSize = TextFieldAutoSize.CENTER;
+			var fighterTF:TextField = _menuComponent.graphic["fighter"+index+"Txt"];
+			if($position==-1){
+				fighterTF.text = "Random";
+			}else{
+				fighterTF.text = _nestImageObject[$position].name;
+			}
+			fighterTF.autoSize = TextFieldAutoSize.CENTER;
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
