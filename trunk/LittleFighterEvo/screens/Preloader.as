@@ -51,7 +51,6 @@ package screens{
 			_entityManager = EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
 			_ressourceManager = RessourceManager.getInstance();
-			
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {

@@ -51,6 +51,9 @@ package screens{
 		private var _menuComponent:GraphicComponent=null;
 		private var _soundManager:ISoundManager=null;
 		private var _mainMusic:String;
+		private var _startBt:GraphicComponent = null;
+		private var _demoBt:GraphicComponent = null;
+		private var _controlSettingsBt:GraphicComponent = null;
 		
 		public function UInterface(){
 		}
@@ -73,12 +76,13 @@ package screens{
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
 			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
 			_menuComponent.graphic = new MenuUI as MovieClip;
-			_menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick});
-			_menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick});
-			_menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick});
+			_startBt = _menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick});
+			_controlSettingsBt = _menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick});
+			_demoBt = _menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick});
 			var keyInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
 			keyInput.startListening();
+
 		}
 		//------ On Start Bt Click ------------------------------------
 		private function onStartBtClick($mousePad:MousePad):void {
@@ -98,7 +102,6 @@ package screens{
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
 			if($evt.keyCode == KeyCode.ESC){
-				_menuComponent.gotoAndStop(1);
 			}
 		}
 		//------ Enter ------------------------------------
