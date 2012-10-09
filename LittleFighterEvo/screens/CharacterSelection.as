@@ -39,6 +39,7 @@ package screens{
 	
 	import utils.keyboard.KeyCode;
 	import utils.richardlord.*;
+	import utils.collection.List;
 
 	/**
 	 * Character Selection
@@ -51,7 +52,8 @@ package screens{
 		private var _sliderList:Array = null;
 		private var _position:int = 0;
 		private var _nestImageObject:Array=null;
-		private var _team:Array = null;
+		private var _team:List = null;
+		private var _characterSelected:Boolean = false;
 		
 		public function CharacterSelection(){
 		}
@@ -61,6 +63,7 @@ package screens{
 			_graphicManager = GraphicManager.getInstance();
 			_sliderList = new Array();
 			_nestImageObject = new Array();
+			_team = ["independent","team1","team2","team3","team4"]
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -110,21 +113,31 @@ package screens{
 					imageSliderComponent.next([0]);
 				}else if(imageSliderComponent.position==1){
 					imageSliderComponent.random([0,1]);
-					selectCharacter(imageSliderComponent.position-2);
+					selectCharacter(imageSliderComponent.position - 2);
+					_characterSelected = true;
+					selectTeam();
 				}else if(imageSliderComponent.position>1){
-					selectCharacter(imageSliderComponent.position-2);
+					selectCharacter(imageSliderComponent.position - 2);
+					_characterSelected = true;
+					selectTeam();
 				}
 			}else if($evt.keyCode == KeyCode.LEFT){
 				imageSliderComponent=_sliderList[_position];
-				if(imageSliderComponent.position>0){
+				if(imageSliderComponent.position>0 && !_characterSelected){
 					imageSliderComponent.prev([0]);
 					selectCharacter(imageSliderComponent.position-2);
+				}else if (_characterSelected) {
+					_team.prev();
+					selectTeam();
 				}
 			}else if($evt.keyCode == KeyCode.RIGHT){
 				imageSliderComponent=_sliderList[_position];
-				if(imageSliderComponent.position>0){
+				if(imageSliderComponent.position>0 && !_characterSelected){
 					imageSliderComponent.next([0]);
 					selectCharacter(imageSliderComponent.position-2);
+				}else if (_characterSelected) {
+					_team.next();
+					selectTeam();
 				}
 			}
 		}
@@ -141,6 +154,13 @@ package screens{
 				fighterTF.text = _nestImageObject[$position].name;
 			}
 			fighterTF.autoSize = TextFieldAutoSize.CENTER;
+		}
+		//------ Select Team ------------------------------------
+		public function selectTeam($position:Number):void {
+			var index:int = _position + 1;
+			var teamTF:TextField = _menuComponent.graphic["team"+index+"Txt"];
+			teamTF.text = _team.currentNode as String;
+			teamTF.autoSize = TextFieldAutoSize.CENTER;
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
