@@ -55,6 +55,7 @@ package framework.component.core{
 		private var _count:Number=3;
 		private var _countMax:Number = 0;
 		public var _reversed:Boolean = true;
+		private var _chronoTF:TextField=null;
 		
 		public function ChronoComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity);
@@ -63,16 +64,34 @@ package framework.component.core{
 		//------ Init Var ------------------------------------
 		private function _initVar($prop:Object):void {
 			if($prop && $prop.delay)		_delay = $prop.delay;
+			if($prop && $prop.count)		_count = $prop.count;
 			if($prop && $prop.hasOwnProperty("onChronoComplete"))	_callback = $prop.onChronoComplete;
+			_chronoTF = new TextField();
+			setFormat("Arial",30,0xFF0000);
+			updateText();
 		}
+		
 		//------ Create Chrono ------------------------------------
 		private function createChrono($graphic:Bitmap=null):void {
 			if(_bitmapData)			_bitmapData.dispose();
-			if($graphic)			_source = $graphic;	
-			_bitmapData = new BitmapData(_source.width/10*4,_source.height); // We suppose that the chrono doesn't exceed 9999 and that the source align the digits
-			_bitmap = new Bitmap(_bitmapData);
-			if(!contains(_bitmap))	addChild(_bitmap);
+			if($graphic){
+				_source = $graphic;	
+				_bitmapData = new BitmapData(_source.width/10*4,_source.height); // We suppose that the chrono doesn't exceed 9999 and that the source align the digits
+				_bitmap = new Bitmap(_bitmapData);
+				if(!contains(_bitmap))	addChild(_bitmap);
+			}
 			actualizeChrono();
+		}
+		//------Set Format -------------------------------------
+		public function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
+			var textFormat:TextFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
+			_chronoTF.defaultTextFormat=textFormat;
+			_chronoTF.autoSize="center";
+			_chronoTF.selectable=false;
+		}
+		//------ Get Time ------------------------------------
+		private function updateText():void {
+			_chronoTF.text=_count.toString();
 		}
 		//------ On Graphic Loading Complete ------------------------------------
 		override protected function onGraphicLoadingComplete($graphic:DisplayObject, $callback:Function=null):void {
@@ -94,6 +113,8 @@ package framework.component.core{
 					_bitmapData.copyPixels(_source.bitmapData, new Rectangle(X*_source.width/10,0,_source.width/10 ,_source.height), new Point((count.length-i-1)*_source.width/10, 0),null,null,true);
 				}
 				_bitmapData.lock();
+			}else{
+				updateText();
 			}
 		}
 		//------ On Tick ------------------------------------
@@ -105,9 +126,17 @@ package framework.component.core{
 			}
 		}
 		//------ Start ------------------------------------
-		public function start($count:Number, $show:Boolean=true):void {
+		public function start($count:Number, $delay:Number=3500):void {
 			if($count) 	_count = $count;
-			if(!contains(_bitmap))		addChild(_bitmap);
+			if($delay)	_delay = $delay;
+			if(_bitmap && !contains(_bitmap)){
+				addChild(_bitmap);
+			}else if(!_bitmap ){
+				if(!_chronoTF)
+					createChrono();
+				if(!contains(_chronoTF))
+					addChild(_chronoTF);
+			}
 			actualizeChrono();
 			_isRunning = true;
 			registerPropertyReference("timer",{callback:onTick, delay:_delay});
@@ -124,8 +153,9 @@ package framework.component.core{
 			}
 		}
 		//------ Rest Chrono ------------------------------------
-		public function reset($count:Number):void {
+		public function reset($count:Number=3):void {
 			_count = $count;
+			if(!_isRunning) start(_count);
 		}
 	}
 }

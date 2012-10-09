@@ -62,7 +62,7 @@ package framework.component.core{
 			super.initProperty();
 		}
 		//------Set Format -------------------------------------
-		private function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
+		public function setFormat(font:String = null, size:Object = null, color:Object = null, bold:Object = null, italic:Object = null, underline:Object = null, url:String = null, target:String = null, align:String = null):void {
 			var textFormat:TextFormat=new TextFormat(font,size,color,bold,italic,underline,url,target,align);
 			_score.defaultTextFormat=textFormat;
 			_score.autoSize="center";
