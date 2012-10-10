@@ -21,6 +21,10 @@
 *
 */
 package screens{
+	import com.adobe.serialization.json.JSON;
+	
+	import data.Data;
+	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -32,6 +36,7 @@ package screens{
 	import framework.entity.*;
 	import framework.system.ISoundManager;
 	import framework.system.MouseManager;
+	import framework.system.RessourceManager;
 	import framework.system.SoundManager;
 	
 	import utils.keyboard.KeyCode;
@@ -104,11 +109,20 @@ package screens{
 			if($evt.keyCode == KeyCode.ESC){
 			}
 		}
+		//------ Init Component ------------------------------------
+		private function initKeyConfig():void {
+			var dataString:String = RessourceManager.getInstance().getFile(Data.OTHERS.keyConfig);
+			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
+			var dataJSON:Object = JSON.decode(dataString);//Flash 10
+			KeyConfig.Player1 = dataJSON.player1;
+			KeyConfig.Player2 = dataJSON.player2;
+		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
 				initComponent();
+				initKeyConfig();
 				startMusic();
 			}
 		}

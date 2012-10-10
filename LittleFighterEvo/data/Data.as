@@ -23,6 +23,7 @@
 package data{
 	
 	public class Data{
+		
 		public static const OBJECT_KIND_CHARACTER:int 		= 0; // (Bandit)
 		public static const OBJECT_KIND_WEAPON:int 			= 1; // which can be used to slam enemies (Baseball Bat)
 		public static const OBJECT_KIND_HEAVY_WEAPON:int 	= 2; // which can be thrown to knock down enemies, it slows down you movement speed (Stone)
@@ -217,6 +218,7 @@ package data{
 				}
 			}
 		public static const OTHERS:Object = {
+			'keyConfig':'data/keyConfig.txt',
 			'random':'assets/random.jpg',
 			'pressAttackToJoin':'assets/pressAttackToJoin.jpg',
 			'main_mp3':'assets/main.mp3',

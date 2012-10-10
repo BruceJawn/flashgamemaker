@@ -87,15 +87,11 @@ package screens{
 		//------ Init Slider ------------------------------------
 		private function _initSliders():void {
 			var playerTF:TextField = _menuComponent.graphic["player"+i+"Txt"];
-			for(var i:int=0;i<4;i++){
+			for(var i:int=0;i<8;i++){
 				playerTF = _menuComponent.graphic["player"+(i+1)+"Txt"]
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
 				playerTF.text = "join";
-				_initSlider(i,155+i*153,174);
-				playerTF = _menuComponent.graphic["player"+(i+5)+"Txt"]
-				playerTF.autoSize = TextFieldAutoSize.CENTER;
-				playerTF.text = "join";
-				_initSlider(i+4,155+i*153,375);
+				_initSlider(i,155+(i%4)*153,174+211*Math.floor(i/4));
 			}
 		}
 		//------ Init Slider ------------------------------------
@@ -126,8 +122,9 @@ package screens{
 		private function onKeyFire($evt:KeyboardEvent):void {
 			if($evt.keyCode == KeyCode.ESC){
 				_menuComponent.gotoAndStop("MENU");
-			}else if($evt.keyCode == KeyCode.I){
-				var imageSliderComponent:ImageSliderComponent=_sliderList[_position];
+			}else if($evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A){
+				var index:int = $evt.keyCode == KeyConfig.Player1.A?0:1;
+				var imageSliderComponent:ImageSliderComponent=_sliderList[index];
 				if(_step==INIT){
 					if(imageSliderComponent.position==0){
 						imageSliderComponent.next([0]);
