@@ -154,7 +154,7 @@ package utils.keyboard{
 				case BACKSPACE: return "BACKSPACE";
 				case SHIFT: 	return "SHIFT";
 				case STAR: 		return "*";
-				case PERCENT: 	return "ù";
+				case PERCENT: 	return "%";
 				case ESC: 	return "Esc";
 				case F1: 	return "F1";
 				case F2: 	return "F2";
