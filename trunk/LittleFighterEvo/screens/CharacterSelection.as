@@ -128,16 +128,16 @@ package screens{
 				if(_step==INIT){
 					if(imageSliderComponent.position==0){
 						imageSliderComponent.next([0]);
-						selectCharacter(imageSliderComponent.position - 2);
+						selectCharacter(index);
 						_step=PLAYER_SELECTION;
 					}
 				}else if(_step==PLAYER_SELECTION){
 					if(imageSliderComponent.position==1){
 						imageSliderComponent.random([0,1]);
-						selectCharacter(imageSliderComponent.position - 2);
+						selectCharacter(index);
 						selectTeam();
 					}else if(imageSliderComponent.position>1){
-						selectCharacter(imageSliderComponent.position - 2);
+						selectCharacter(index);
 						selectTeam();
 					}
 					_step=TEAM_SELECTION;
@@ -159,7 +159,7 @@ package screens{
 				if(_step==PLAYER_SELECTION){
 					if(imageSliderComponent.position>0){
 						imageSliderComponent.prev([0]);
-						selectCharacter(imageSliderComponent.position-2);
+						selectCharacter(index);
 					}
 				}else if(_step==TEAM_SELECTION){
 					_team.prev();
@@ -169,11 +169,11 @@ package screens{
 				}else if(_step==COMPUTER_SELECTION){
 				}
 			}else if($evt.keyCode == KeyCode.RIGHT){
-				imageSliderComponent=_sliderList[_position];
+				imageSliderComponent=_sliderList[index];
 				if(_step==PLAYER_SELECTION){
 					if(imageSliderComponent.position>0){
 						imageSliderComponent.next([0]);
-						selectCharacter(imageSliderComponent.position-2);
+						selectCharacter(index);
 					}
 				}else if(_step==TEAM_SELECTION){
 					_team.next();
