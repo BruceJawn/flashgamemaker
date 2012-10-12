@@ -159,6 +159,10 @@ package framework.component.core{
 				Framework.AddChild(_graphic,this);
 			}
 		}
+		//------ Get Current Frame ------------------------------------
+		public function get currentFrame():int {
+			return _graphic.currentFrame;
+		}
 		//------ Get IsDisplayed ------------------------------------
 		public function get isDisplayed():Boolean {
 			return _isDisplayed;
