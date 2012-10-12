@@ -42,6 +42,8 @@ package framework.component.core{
 		private var _bitmap:Bitmap = null;
 		private var _bitmapData:BitmapData = null;
 		private var _position:int = 0;
+		private var _loop:Boolean = false;
+		private var _except:Array = null;
 		
 		public function ImageSliderComponent($componentName:String, $entity:IEntity, $singleton:Boolean = false, $prop:Object = null) {
 			super($componentName, $entity);
@@ -51,6 +53,7 @@ package framework.component.core{
 		private function _initVar():void {
 			_bitmapData = new BitmapData(100,100,true,0);
 			_bitmap=new Bitmap(_bitmapData);
+			_except = new Array();
 			Framework.AddChild(_bitmap,this);
 		}
 		//------ Init Slider ------------------------------------
@@ -76,15 +79,21 @@ package framework.component.core{
 		//------ Next ------------------------------------
 		public function next($except:Array=null):void {
 			if(_position<_list.length-1)	_position++;
-			else							_position = 0;
-			if($except && $except.indexOf(_position)!=-1)	return next();
+			else if(_loop)					_position=0;
+			if(($except && $except.indexOf(_position)!=-1 || _except.indexOf(_position)!=-1)){
+				if(!_loop && _position==_list.length-1) _position--;
+				else 									return next();
+			}	
 			_refresh();
 		}
 		//------ Prev ------------------------------------
 		public function prev($except:Array=null):void {
 			if(_position>0)		_position--;
-			else				_position = _list.length-1;
-			if($except && $except.indexOf(_position)!=-1)	return prev();
+			else if(_position==0 && _loop)		_position = _list.length-1;
+			if(($except && $except.indexOf(_position)!=-1 || _except.indexOf(_position)!=-1)){
+				if(!_loop && _position==0) 			_position++;
+				else 								return prev();
+			}
 			_refresh();
 		}
 		//------ Random ------------------------------------
@@ -97,6 +106,14 @@ package framework.component.core{
 		//------ Get Position ------------------------------------
 		public function get position():int {
 			return _position;	
+		}
+		//------ Set Loop ------------------------------------
+		public function set loop($loop:Boolean):void {
+			_loop=$loop;	
+		}
+		//------ Set Except ------------------------------------
+		public function set except($except:Array):void {
+			_except=$except;	
 		}
 		//------ Refresh ------------------------------------
 		public function reset():void {

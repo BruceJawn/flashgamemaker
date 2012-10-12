@@ -210,7 +210,7 @@ package framework.component.core{
 			return bitmapSet.currentPoseName;
 		}
 		//------- Get CurrentFrame -------------------------------
-		public function get currentFrame():int {
+		public override function get currentFrame():int {
 			return bitmapSet.currentPosition;
 		}
 		//------- Get LastFrame -------------------------------
