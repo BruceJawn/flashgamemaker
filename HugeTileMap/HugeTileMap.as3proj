@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin-release\IannBunnyMark.swf" />
+    <movie path="bin-release\HugeTileMap.swf" />
     <movie fps="30" />
     <movie width="640" />
     <movie height="480" />
@@ -63,7 +63,7 @@
   </rslPaths>
   <!-- Intrinsic Libraries -->
   <intrinsics>
-    <!-- example: <element path="..." /> -->
+    <element path="" />
   </intrinsics>
   <!-- Assets to embed into the output SWF -->
   <library>
@@ -71,7 +71,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="IannBunnyMark.as" />
+    <compile path="HugeTileMap.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
