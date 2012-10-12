@@ -80,7 +80,7 @@ package{
 			if(tileMapComponent.height>Framework.height){	
 				position.y+=(tileMapComponent.height-Framework.height)/2;
 			}*/
-			tileMapComponent.y+=30;
+			
 			//bitmapRenderComponent.setScrollArea(new Rectangle(0,0,tileMapComponent.x+tileMapComponent.maxWidth,tileMapComponent.y+tileMapComponent.maxHeight));
 			mouseInput.start();
 			//var tileMapEditorComponent:TileMapEditorComponent=entityManager.addComponentFromName($entityName,"TileMapEditorComponent","myTileMapEditorComponent", {tileMapComponent:tileMapComponent}) as TileMapEditorComponent;
