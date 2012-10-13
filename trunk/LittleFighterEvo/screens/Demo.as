@@ -32,6 +32,7 @@ package screens{
 	import flash.utils.setTimeout;
 	
 	import framework.Framework;
+	import framework.component.Component;
 	import framework.component.add.GamePadComponent;
 	import framework.component.core.*;
 	import framework.entity.*;
@@ -52,11 +53,13 @@ package screens{
 	public class Demo extends State implements IState{
 		
 		private var _entityManager:IEntityManager=null;
+		private var _menuComponent:GraphicComponent = null;
 		private var _graphicManager:IGraphicManager = null;
 		private var _battleField:ScrollingBitmapComponent = null;
 		private var _forests:GraphicComponent = null;
 		private var _forestm2:ScrollingBitmapComponent = null;
 		private var _forestm3:GraphicComponent = null
+		private var _list:Array = null;
 		
 		public function Demo(){
 		}
@@ -64,6 +67,8 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
+			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
+			_list=new Array();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -79,10 +84,11 @@ package screens{
 			createBattleField();
 			
 			var player:LFE_ObjectComponent;
-			for (var i:int =0; i<8;i++){
+			for (var i:int =0; i<5;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
+				_list.push(player);
 			}
 			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
@@ -95,6 +101,8 @@ package screens{
 		private function createBattleField():void {
 			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
 			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
+			_list.push(_forests);
+			
 			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
 			var bitmaps:Vector.<Bitmap> = new Vector.<Bitmap>()
 			bitmaps.push(_graphicManager.getGraphic("forestm1.png") as Bitmap);
@@ -102,6 +110,7 @@ package screens{
 			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
 			_forestm2.graphic = bitmap;
 			_forestm2.moveTo(0,18);
+			_list.push(_forestm2);
 			
 			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
 			bitmaps = new Vector.<Bitmap>()
@@ -110,10 +119,12 @@ package screens{
 			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
 			_forestm3.graphic =bitmap;
 			_forestm3.moveTo(0,50);
+			_list.push(_forestm3);
 			
 			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
 			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
 			_battleField.moveTo(0,80);
+			_list.push(_battleField);
 		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {
@@ -121,15 +132,28 @@ package screens{
 			if(KeyCode.GetKey($evt.keyCode)=="F1"){
 				MyGame.Pause();
 			}else if(KeyCode.GetKey($evt.keyCode)=="Esc"){
-				MyGame.Pause();
+				_reset();
+				_menuComponent.gotoAndStop(1);
+				_finiteStateMachine.goToPreviousState();
 			}
+		}
+		//------ Reset ------------------------------------
+		private  function _reset():void {
+			for each (var graphicComponent:GraphicComponent in _list){
+				graphicComponent.destroy();
+			}
+			var specialMoveComponents:Vector.<Component> = _entityManager.getComponentsFromFamily(LFE_ObjectComponent);
+			for each (var specialMoveComponent:Component in specialMoveComponents){
+				specialMoveComponent.destroy();
+			}
+			_list=new Array();
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
-				initComponent();
-			}			
+			}		
+			initComponent();
 		}
 	}
 }

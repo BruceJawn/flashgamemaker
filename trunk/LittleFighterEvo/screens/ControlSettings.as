@@ -44,30 +44,31 @@ package screens{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
+			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
+			_menuComponent.setButton(_menuComponent.graphic.configOkBt, {onMouseClick:onOkBtClick},"configOkBt");
+			_menuComponent.setButton(_menuComponent.graphic.configCancelBt, {onMouseClick:onCancelBtClick},"configCancelBt");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var keyInput:KeyboardInputComponent=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
-			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
-			_menuComponent.setButton(_menuComponent.graphic.configOkBt, {onMouseClick:onOkBtClick});
-			_menuComponent.setButton(_menuComponent.graphic.configCancelBt, {onMouseClick:onCancelBtClick});
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
+			if(_finiteStateMachine.currentState!=this)	return;
 			if($evt.keyCode == KeyCode.ESC){
-				_menuComponent.gotoAndStop("MENU");
+				_menuComponent.gotoAndStop(1);
 				_finiteStateMachine.goToPreviousState();
 			}
 		}
 		//------ On Ok Bt Click ------------------------------------
 		private function onOkBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("MENU");
+			_menuComponent.gotoAndStop(1);
 			_finiteStateMachine.goToPreviousState();
 		}
 		//------ On Cancel Bt Click ------------------------------------
 		private function onCancelBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("MENU");
+			_menuComponent.gotoAndStop(1);
 			_finiteStateMachine.goToPreviousState();
 		}
 		//------ Enter ------------------------------------
