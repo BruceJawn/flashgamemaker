@@ -45,26 +45,27 @@ package screens{
 		//------ Init Var ------------------------------------
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
+			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
+			_menuComponent.setButton(_menuComponent.graphic.vsModeBt, {onMouseClick:onVsModeBtClick},"vsModeBt");
+			//_menuComponent.setButton(_menuComponent.graphic.stageModeBt, {onMouseClick:onStageModeBtClick},"stageModeBt");
+			//_menuComponent.setButton(_menuComponent.graphic.survivalModeBt, {onMouseClick:onSurvivalModeBtClick},"survivalModeBt");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var keyInput:KeyboardInputComponent=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
-			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
-			_menuComponent.setButton(_menuComponent.graphic.vsModeBt, {onMouseClick:onVsModeBtClick});
-			//_menuComponent.setButton(_menuComponent.graphic.stageModeBt, {onMouseClick:onStageModeBtClick});
-			//_menuComponent.setButton(_menuComponent.graphic.survivalModeBt, {onMouseClick:onSurvivalModeBtClick});
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
+			if(_finiteStateMachine.currentState!=this)	return;
 			if($evt.keyCode == KeyCode.ESC){
 				_menuComponent.gotoAndStop(1);
-				_finiteStateMachine.goToPreviousState();
+				_finiteStateMachine.changeStateByName("UInterface");
 			}
 		}
 		//------ On VS Mode Bt Click ------------------------------------
 		private function onVsModeBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("CHARACTER_SELECTION");
+			_menuComponent.gotoAndStop(4);
 			_finiteStateMachine.changeStateByName("CharacterSelection");
 		}
 		//------ On Stage Mode Bt Click ------------------------------------

@@ -56,9 +56,6 @@ package screens{
 		private var _menuComponent:GraphicComponent=null;
 		private var _soundManager:ISoundManager=null;
 		private var _mainMusic:String;
-		private var _startBt:GraphicComponent = null;
-		private var _demoBt:GraphicComponent = null;
-		private var _controlSettingsBt:GraphicComponent = null;
 		
 		public function UInterface(){
 		}
@@ -79,33 +76,33 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
-			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
-			_menuComponent.graphic = new MenuUI as MovieClip;
-			_startBt = _menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick});
-			_controlSettingsBt = _menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick});
-			_demoBt = _menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick});
 			var keyInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
 			keyInput.startListening();
-
+			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
+			_menuComponent.graphic = new MenuUI as MovieClip;
+			_menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick},"startBt");
+			_menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick},"controlSettingsBt");
+			_menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick},"demoBt");
 		}
 		//------ On Start Bt Click ------------------------------------
 		private function onStartBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("GAME_MENU");
+			_menuComponent.gotoAndStop(2);
 			_finiteStateMachine.changeStateByName("GameMenu");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function onControlSettingsBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("CONTROL_SETTINGS");
+			_menuComponent.gotoAndStop(3);
 			_finiteStateMachine.changeStateByName("ControlSettings");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function onDemoBtClick($mousePad:MousePad):void {
-			_menuComponent.gotoAndStop("GAME");
+			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("Demo");
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
+			if(_finiteStateMachine.currentState!=this)	return;
 			if($evt.keyCode == KeyCode.ESC){
 			}
 		}
