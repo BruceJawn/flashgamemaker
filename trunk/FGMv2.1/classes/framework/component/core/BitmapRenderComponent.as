@@ -93,6 +93,7 @@ package framework.component.core{
 			if($prop && $prop.hasOwnProperty("sortDepth")){
 				_sortDepth = $prop.sortDepth;
 			}
+			this.mouseEnabled=false;
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
