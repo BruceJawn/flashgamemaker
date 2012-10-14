@@ -43,6 +43,7 @@ package screens{
 	import utils.keyboard.KeyCode;
 	import utils.keyboard.KeyPad;
 	import utils.loader.SimpleLoader;
+	import utils.math.SimpleMath;
 	import utils.popforge.WavURLPlayer;
 	import utils.richardlord.*;
 	import utils.ui.LayoutUtil;
@@ -85,7 +86,7 @@ package screens{
 			
 			var player:LFE_ObjectComponent;
 			for (var i:int =0; i<5;i++){
-				player = LFE_Object.CreateObject(1,null,new KeyPad);
+				player = LFE_Object.CreateObject(SimpleMath.RandomBetween(1,3),null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
 				_list.push(player);

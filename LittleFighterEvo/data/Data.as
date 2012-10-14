@@ -23,7 +23,7 @@
 package data{
 	
 	public class Data{
-		
+		public static var GAME_PARAM:Object 				= new Object;
 		public static const OBJECT_KIND_CHARACTER:int 		= 0; // (Bandit)
 		public static const OBJECT_KIND_WEAPON:int 			= 1; // which can be used to slam enemies (Baseball Bat)
 		public static const OBJECT_KIND_HEAVY_WEAPON:int 	= 2; // which can be thrown to knock down enemies, it slows down you movement speed (Stone)
@@ -59,7 +59,7 @@ package data{
 					'name': 'Davis','kind':0,'data':'data/Davis.txt',
 					'graphics':['assets/davis_0.png','assets/davis_1.png','assets/davis_2.png'],
 					'face':'assets/davis_f.png'	
-				}/*,
+				},
 				'2':{
 					'name': 'Henry','kind':0, 'data':'data/Henry.txt',
 					'graphics':['assets/henry_0.png','assets/henry_1.png','assets/henry_2.png'],
@@ -67,8 +67,9 @@ package data{
 				},
 				'3':{
 					'name': 'Woody','kind':0, 'data':'data/Woody.txt',
-					'graphics':['assets/woody_0.png','assets/woody_1.png','assets/woody_2.png']
-				},
+					'graphics':['assets/woody_0.png','assets/woody_1.png','assets/woody_2.png'],
+					'face':'assets/woody_f.png'
+				}/*,
 				'4':{
 					'name': 'Dennis','kind':0, 'data':'data/Dennis.txt',
 					'graphics':['assets/dennis_0.png','assets/dennis_1.png','assets/dennis_2.png']
