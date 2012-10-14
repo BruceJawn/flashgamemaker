@@ -132,8 +132,15 @@ package framework.component{
 		}
 		//------ Set Property Reference ------------------------------------
 		public function registerPropertyReference($propertyName:String, $param:Object=null):void {
-			_entity.entityManager.registerPropertyReference($propertyName, this, $param);
-			_propertyReferences[$propertyName] = {name:$propertyName, param:$param};
+			if(!isRegisteredTo($propertyName)){
+				_entity.entityManager.registerPropertyReference($propertyName, this, $param);
+				_propertyReferences[$propertyName] = {name:$propertyName, param:$param};
+			}
+		}
+		//------ Is Registered ------------------------------------
+		public function isRegisteredTo($propertyName:String):Boolean {
+			var isRegistered:Boolean = _propertyReferences[$propertyName] != null;
+			return isRegistered;
 		}
 		//------ Unregister Property Reference ------------------------------------
 		public function unregisterPropertyReference($propertyName:String):void {

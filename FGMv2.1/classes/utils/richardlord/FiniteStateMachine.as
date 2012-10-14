@@ -127,6 +127,7 @@ package utils.richardlord{
 		public function changeStateByName( $stateName:String,$previousState:String=null,$nextState:String=null ):State{
 			var state:State = getStateByName($stateName);
 			var previous:State = getStateByName($previousState);
+			if(!previous)	previous= _currentState;
 			var nextState:State = getStateByName($nextState);
 			changeState(state,previous,nextState);
 			return state;
@@ -136,7 +137,7 @@ package utils.richardlord{
 			if(!_previousState.finiteStateMachine){
 				_previousState.finiteStateMachine=this;
 			}
-			changeState( _previousState );
+			changeState( _previousState);
 		}
 		
 		// Go to the next state

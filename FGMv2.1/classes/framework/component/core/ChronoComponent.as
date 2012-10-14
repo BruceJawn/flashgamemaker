@@ -147,8 +147,8 @@ package framework.component.core{
 			if(_callback is Function)	_callback(this);
 			_isRunning = false;
 			unregisterPropertyReference("timer");
+			visible=false;
 			if($destroy){
-				visible=false;
 				destroy();
 			}
 		}

@@ -311,6 +311,8 @@ package framework.component.add{
 		}
 		//------ On Mouse Move ------------------------------------
 		public function onStickMouseMove($mouseEvent:MouseEvent):void {
+			if(!Framework.isMouseOnScreen())
+				onStickMouseUp(null);
 			if(_stickDown){
 				var dirX:Number = $mouseEvent.stageX-x;
 				var dirY:Number = $mouseEvent.stageY-y;

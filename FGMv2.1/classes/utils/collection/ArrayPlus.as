@@ -74,12 +74,14 @@ package utils.collection{
 		 * Supprime un élément du tableau. Attention, ne le supprime qu'une fois s'il est présent en doublons ! Si l'élément n'est pas présent, une erreur est lancée.
 		 * @param item L'élément à supprimer.
 		 */
-		public function remove(item:*):void{
+		public function remove(item:*,error:Boolean = true):void{
 			var id:int=this.indexOf(item);
 			if(id!=-1)
 				this.splice(id,1);
-			else
+			else if(error)
 				throw new Error("Suppression d'un item inexistant");
+			else
+				trace("[WARNING] Suppression d'un item inexistant");
 		}
 		
 		/**

@@ -49,6 +49,10 @@ package utils.collection{
 				
 			}
 		}
+		//------ Goto ------------------------------------
+		public function goto($index:int):void {
+			index =$index;
+		}
 		//------ Get Current Item ------------------------------------
 		public function get currentItem():* {
 			return this[index];
