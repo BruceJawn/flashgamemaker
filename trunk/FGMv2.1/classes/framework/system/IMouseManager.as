@@ -50,6 +50,10 @@ package framework.system{
 		 * CheckClick
 		 */	
 		function checkClick():void
+		/**
+		 * Update Cursor
+		 */	
+		function updateCursor():void
 		 /**
 		 * To String
 		 */		
@@ -76,5 +80,6 @@ package framework.system{
 		function set rollOver($rollOver:DisplayObject):void;
 		function set mouseTargets($mouseTargets:Array):void;
 		function set mouseExcludeTargets($mouseExcludeTargets:Array):void;
+		function set passiveTarget($passiveTarget:DisplayObject):void;
 	}
 }

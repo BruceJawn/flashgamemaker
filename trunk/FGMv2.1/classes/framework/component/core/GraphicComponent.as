@@ -183,6 +183,7 @@ package framework.component.core{
 			graphicComponent.graphic = $button;
 			graphicComponent._componentParent = this;
 			if(graphic is MovieClip){
+				//SetButton only works if you use int frame. Labels will not work !!!
 				graphicComponent._frame = graphic.currentFrame;
 			}
 			if(_componentChildren.lastIndexOf(graphicComponent)==-1){

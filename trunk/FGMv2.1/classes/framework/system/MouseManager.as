@@ -40,6 +40,7 @@ package framework.system{
 	import framework.component.Component;
 	
 	import utils.mouse.MousePad;
+	import utils.movieclip.Frame;
 	import utils.time.Time;
 	
 	/**
@@ -58,6 +59,7 @@ package framework.system{
 		private var _lastClickTime:Number = 0;
 		private var _mouseTargets:Array=null;
 		private var _mouseExcludeTargets:Array=null;
+		private var _passiveTarget:DisplayObject = null;
 	
 		public function MouseManager() {
 			if (! _allowInstanciation||_instance!=null) {
@@ -108,10 +110,12 @@ package framework.system{
 			Mouse.cursor=$cursor;
 		}
 		//---- Update Cursor ------------------------------------------------
-		private  function updateCursor():void{
+		public  function updateCursor():void{
 			if(drag){
 				switchHandCursor(MouseCursor.HAND);
 			}else if(_clicked || _rollOver){
+				switchHandCursor(MouseCursor.BUTTON);
+			}else if(_passiveTarget){
 				switchHandCursor(MouseCursor.BUTTON);
 			}else{
 				switchHandCursor(MouseCursor.ARROW);
@@ -173,7 +177,7 @@ package framework.system{
 		
 		public function set clicked($clicked:DisplayObject):void {
 			_clicked = $clicked;
-			updateCursor();
+			//updateCursor();
 		}
 		public function set drag($drag:*):void {
 			_drag = $drag;
@@ -197,6 +201,9 @@ package framework.system{
 		}
 		public function set mouseExcludeTargets($mouseExcludeTargets:Array):void {
 			_mouseExcludeTargets = $mouseExcludeTargets;
+		}
+		public function set passiveTarget($passiveTarget:DisplayObject):void {
+			_passiveTarget = $passiveTarget;
 		}
 		//------- ToString -------------------------------
 		public function ToString():void {

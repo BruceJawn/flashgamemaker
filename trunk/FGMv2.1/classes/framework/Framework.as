@@ -106,6 +106,13 @@ package framework{
 			if(!container)	return;
 			container.setChildIndex($displayObject,$index);
 		}
+		//---- Is mouse on screen ------------------------------------------------
+		public static function isMouseOnScreen():Boolean{
+			if(clip.mouseX>1 && clip.mouseX<width-1)
+				if(clip.mouseY>1 && clip.mouseY<height-1)
+					return true;
+			return false;
+		}
 		//------ Focus  ------------------------------------
 		public static function Focus():void {
 			STAGE.focus=CLIP;
