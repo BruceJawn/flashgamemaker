@@ -115,7 +115,7 @@ package framework{
 		}
 		//------ Focus  ------------------------------------
 		public static function Focus():void {
-			STAGE.focus=CLIP;
+			STAGE.focus=null;
 		}
 		//------ Get Clip  ------------------------------------
 		public static function get clip():Sprite {

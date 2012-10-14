@@ -55,6 +55,7 @@ package framework.component.core{
 			_mouseManager = MouseManager.getInstance();
 			_layers = new Array();
 			_zoom = [0.5,1,1.5];
+			this.mouseEnabled=false;
 		}
 		//------ Init Property Info ------------------------------------
 		public override function initProperty():void {
