@@ -59,7 +59,7 @@ package data{
 					'name': 'Davis','kind':0,'data':'data/Davis.txt',
 					'graphics':['assets/davis_0.png','assets/davis_1.png','assets/davis_2.png'],
 					'face':'assets/davis_f.png'	
-				},
+				}/*,
 				'2':{
 					'name': 'Henry','kind':0, 'data':'data/Henry.txt',
 					'graphics':['assets/henry_0.png','assets/henry_1.png','assets/henry_2.png'],
@@ -69,74 +69,83 @@ package data{
 					'name': 'Woody','kind':0, 'data':'data/Woody.txt',
 					'graphics':['assets/woody_0.png','assets/woody_1.png','assets/woody_2.png'],
 					'face':'assets/woody_f.png'
-				}/*,
+				},
 				'4':{
 					'name': 'Dennis','kind':0, 'data':'data/Dennis.txt',
-					'graphics':['assets/dennis_0.png','assets/dennis_1.png','assets/dennis_2.png']
+					'graphics':['assets/dennis_0.png','assets/dennis_1.png','assets/dennis_2.png'],
+					'face':'assets/dennis_f.png'
 				},
 				'5':{
 					'name': 'Freeze','kind':0, 'data':'data/Freeze.txt',
-					'graphics':['assets/freeze_0.png','assets/freeze_1.png','assets/freeze_2.png']
+					'graphics':['assets/freeze_0.png','assets/freeze_1.png','assets/freeze_2.png'],
+					'face':'assets/freeze_f.png'
 				},
 				'6':{
 					'name': 'Firen','kind':0, 'data':'data/Firen.txt',
-					'graphics':['assets/firen_0.png','assets/firen_1.png','assets/firen_2.png']
+					'graphics':['assets/firen_0.png','assets/firen_1.png','assets/firen_2.png'],
+					'face':'assets/firen_f.png'
 				},
 				'7':{
 					'name': 'Louis','kind':0, 'data':'data/Louis.txt',
-					'graphics':['assets/louis_0.png','assets/louis_1.png','assets/louis_2.png']
+					'graphics':['assets/louis_0.png','assets/louis_1.png','assets/louis_2.png'],
+					'face':'assets/louis_f.png'
 				},
 				'8':{
 					'name': 'Rudolf','kind':0, 'data':'data/Rudolf.txt',
-					'graphics':['assets/rudolf_0.png','assets/rudolf_1.png','assets/rudolf_2.png']
+					'graphics':['assets/rudolf_0.png','assets/rudolf_1.png','assets/rudolf_2.png'],
+					'face':'assets/rudolf_f.png'
 				},
 				'9':{
 					'name': 'John','kind':0, 'data':'data/John.txt',
-					'graphics':['assets/john_0.png','assets/john_1.png','assets/john_2.png']
+					'graphics':['assets/john_0.png','assets/john_1.png','assets/john_2.png'],
+					'face':'assets/john_f.png'
 				},
 				'10':{
 					'name': 'Deep','kind':0, 'data':'data/Deep.txt',
-					'graphics':['assets/deep_0.png','assets/deep_1.png','assets/deep_2.png']
+					'graphics':['assets/deep_0.png','assets/deep_1.png','assets/deep_2.png'],
+					'face':'assets/deep_f.png'
 				},
 				'11':{
+					'name': 'Justin','kind':0, 'data':'data/Justin.txt',
+					'graphics':['assets/justin_0.png','assets/justin_1.png'],
+					'face':'assets/justin_f.png'
+				},
+				'12':{
+					'name': 'Bat','kind':0, 'data':'data/Bat.txt',
+					'graphics':['assets/bat_0.png','assets/bat_1.png','assets/bat_2.png'],
+					'face':'assets/bat_f.png'
+				},
+				'13':{
 					'name': 'Bandit','kind':0, 'data':'data/Bandit.txt',
 					'graphics':['assets/bandit_0.png','assets/bandit_1.png']
 				},
-				'12':{
+				'14':{
 					'name': 'Hunter','kind':0, 'data':'data/Hunter.txt',
 					'graphics':['assets/hunter_0.png','assets/hunter_1.png']
 				},
-				'13':{
+				'15':{
 					'name': 'Jack','kind':0, 'data':'data/Jack.txt',
 					'graphics':['assets/jack_0.png','assets/jack_1.png']
 				},
-				'14':{
+				'16':{
 					'name': 'Mark','kind':0, 'data':'data/Mark.txt',
 					'graphics':['assets/mark_0.png','assets/mark_1.png']
 				},
-				'15':{
+				'17':{
 					'name': 'Sorcerer','kind':0, 'data':'data/Sorcerer.txt',
 					'graphics':['assets/sorcerer_0.png','assets/sorcerer_1.png']
 				},
-				'16':{
+				'18':{
 					'name': 'Monk','kind':0, 'data':'data/Monk.txt',
 					'graphics':['assets/monk_0.png','assets/monk_1.png']
 				},
-				'17':{
+				'19':{
 					'name': 'Jan','kind':0, 'data':'data/Jan.txt',
 					'graphics':['assets/jan_0.png','assets/jan_1.png','assets/jan_2.png']
 				},
-				'18':{
+				'20':{
 					'name': 'Knight','kind':0, 'data':'data/Knight.txt',
 					'graphics':['assets/knight_0.png','assets/knight_1.png','assets/knight_2.png']
-				},
-				'19':{
-					'name': 'Justin','kind':0, 'data':'data/Justin.txt',
-					'graphics':['assets/justin_0.png','assets/justin_1.png']
-				},
-				'20':{
-					'name': 'Bat','kind':0, 'data':'data/Bat.txt',
-					'graphics':['assets/bat_0.png','assets/bat_1.png','assets/bat_2.png']
 				},
 				'21':{
 					'name': 'LouisEx','kind':0, 'data':'data/LouisEx.txt',
@@ -148,7 +157,8 @@ package data{
 				},
 				'23':{
 					'name': 'Julian','kind':0, 'data':'data/Julian.txt',
-					'graphics':['assets/julian_0.png','assets/julian_1.png','assets/julian_2.png']
+					'graphics':['assets/julian_0.png','assets/julian_1.png','assets/julian_2.png'],
+					'face':'assets/julian_f.png'
 				}*/,
 				'207':{
 					'name': 'Davis_ball',

@@ -83,20 +83,9 @@ package screens{
 			var spatialMoveComponent:SpatialMoveComponent=_entityManager.addComponentFromName("LittleFighterEvo","SpatialMoveComponent","mySpatialMoveComponent") as SpatialMoveComponent;
 			var collisionDetectionComponent:CollisionDetectionComponent=_entityManager.addComponentFromName("LittleFighterEvo","CollisionDetectionComponent","myCollisionDetectionComponent") as CollisionDetectionComponent;
 			createBattleField();
-			
-			var player:LFE_ObjectComponent;
-			for (var i:int =0; i<5;i++){
-				player = LFE_Object.CreateObject(SimpleMath.RandomBetween(1,3),null,new KeyPad);
-				player.setAI(true);
-				player.moveTo(Math.random()*600,300+Math.random()*100);
-				_list.push(player);
-			}
-			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
-			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
-			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
-			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
-			
-			EntityFactory.CreateSystemInfo("SystemInfo",100,582);
+			createPlayers();
+			createWeapons();
+			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",100,582));
 		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
@@ -127,6 +116,24 @@ package screens{
 			_battleField.moveTo(0,80);
 			_list.push(_battleField);
 		}
+		//------- Create Players-------------------------------
+		private function createPlayers():void {
+			var player:LFE_ObjectComponent;
+			for (var i:int =0; i<5;i++){
+				player = LFE_Object.CreateObject(1,null,new KeyPad);
+				player.setAI(true);
+				player.moveTo(Math.random()*600,300+Math.random()*100);
+				_list.push(player);
+			}
+		}
+		//------- Create Weapons -------------------------------
+		private function createWeapons():void {
+			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
+			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
+			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
+			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
+			
+		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
@@ -135,19 +142,20 @@ package screens{
 			}else if(KeyCode.GetKey($evt.keyCode)=="Esc"){
 				_reset();
 				_menuComponent.gotoAndStop(1);
-				_finiteStateMachine.goToPreviousState();
+				_finiteStateMachine.changeStateByName("UInterface");
 			}
 		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
-			for each (var graphicComponent:GraphicComponent in _list){
-				graphicComponent.destroy();
+			for each (var component:Component in _list){
+				component.destroy();
 			}
-			var specialMoveComponents:Vector.<Component> = _entityManager.getComponentsFromFamily(LFE_ObjectComponent);
-			for each (var specialMoveComponent:Component in specialMoveComponents){
-				specialMoveComponent.destroy();
+			var components:Vector.<Component> = _entityManager.getComponentsFromFamily(LFE_ObjectComponent);
+			for each (component in components){
+				component.destroy();
 			}
 			_list=new Array();
+			Framework.Focus();
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {

@@ -168,6 +168,9 @@ package screens{
 					target = "_stepPlayer";
 				}
 				if(step==INIT){
+					if(_chronoList){
+						_cancelCounter();
+					}	
 					if(imageSliderComponent.position==0){
 						imageSliderComponent.next([0]);
 						selectCharacter(index);
@@ -340,8 +343,6 @@ package screens{
 					_chronoList.push(chrono);
 					chrono.start(2, 1000);
 				}
-			}else{
-				_resetCounter();
 			}
 		}
 		//------ On Chrono Complete ------------------------------------
@@ -374,13 +375,6 @@ package screens{
 				c.visible = false;
 			}
 		}
-		//------ ResetCounter ------------------------------------
-		private  function _resetCounter():void {
-			for each(var c:ChronoComponent in _chronoList){
-				c.reset(3);
-				c.visible = true;
-			}
-		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
@@ -402,15 +396,16 @@ package screens{
 			for each(var slider:ImageSliderComponent in _sliderList){
 				slider.visible=false;
 			}
-			for each(var c:ChronoComponent in _chronoList){
-				c.destroy();
-			}
-			_chronoList = null;
+			_resetCounter();
 			_randomList = new ArrayPlus();
 			_difficulty.goto(0);
 			_background.goto(0);
 			if(_fightMenu)	_fightMenu.visible=false;
-			if(_computerComponent) _computerComponent.visible = false;
+			if(_computerComponent){ 
+				_computerComponent.visible = false;
+				(_computerComponent.graphic.c0TF as TextField).textColor = 0xFFFFFF;
+				(_computerComponent.graphic.c7TF as TextField).textColor = 0xFFFFFF;
+			}
 		}
 		//------ Reset All------------------------------------
 		private  function _resetAll():void {
@@ -422,6 +417,12 @@ package screens{
 			_stepComputer = 1;
 			_computerSliderPosition=0;
 			_fightMenu.visible=false;
+			_resetSliders();
+			_resetCounter();
+			_randomList = new ArrayPlus();
+		}
+		//------ Reset Sliders------------------------------------
+		private  function _resetSliders():void {
 			var playerTF:TextField=null;
 			var fighterTF:TextField=null;
 			var teamTF:TextField=null;
@@ -438,12 +439,22 @@ package screens{
 				imageSliderComponent.visible=true;
 				imageSliderComponent.reset();
 			}
+		}
+		//------ Reset Counter------------------------------------
+		private  function _resetCounter():void {
 			for each(var c:ChronoComponent in _chronoList){
 				c.destroy();
 			}
 			_chronoList = null;
-			_randomList = new ArrayPlus();
 		}
+		//------ Cancel Counter------------------------------------
+		private  function _cancelCounter():void {
+			_resetCounter();
+			for each(var imageSliderComponent:ImageSliderComponent in _sliderList){
+				imageSliderComponent.visible = true;
+			}
+		}
+		
 		//------ Reset Random------------------------------------
 		private  function _resetRandom():void {
 			var imageSliderComponent:ImageSliderComponent;
