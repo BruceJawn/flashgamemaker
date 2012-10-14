@@ -42,6 +42,7 @@ package screens{
 	import framework.system.GraphicManager;
 	import framework.system.IGraphicManager;
 	
+	import utils.collection.ArrayPlus;
 	import utils.collection.List;
 	import utils.keyboard.KeyCode;
 	import utils.mouse.MousePad;
@@ -77,6 +78,9 @@ package screens{
 		private var _nbPlayer:int=0;
 		private var _nbComputer:int=0;
 		private var _fightMenu:GraphicComponent = null;
+		private var _randomList:ArrayPlus = null;
+		private var _difficulty:List = null;
+		private var _background:List = null;
 		
 		public function CharacterSelection(){
 		}
@@ -87,9 +91,12 @@ package screens{
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_sliderList = new Array();
 			_nestImageObject = new Array();
+			_randomList = new ArrayPlus();
 			_teamPlayer1 = new List("independent","team1","team2","team3","team4");
 			_teamPlayer2 = new List("independent","team1","team2","team3","team4");
 			_teamComputer = new List("independent","team1","team2","team3","team4");
+			_difficulty = new List("Easy","Normal","Difficult");
+			_background = new List("Forest");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -99,11 +106,18 @@ package screens{
 		//------ Init Slider ------------------------------------
 		private function _initSliders():void {
 			var playerTF:TextField = _menuComponent.graphic["player"+i+"TF"];
+			var imageSliderComponent:ImageSliderComponent;
 			for(var i:int=0;i<8;i++){
 				playerTF = _menuComponent.graphic["player"+(i+1)+"TF"]
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
 				playerTF.text = "join";
-				_initSlider(i,155+(i%4)*153,174+211*Math.floor(i/4));
+				imageSliderComponent = _sliderList[i]
+				if(!imageSliderComponent){
+					_initSlider(i,155+(i%4)*153,174+211*Math.floor(i/4));
+				}else{
+					imageSliderComponent.visible=true;
+					imageSliderComponent.reset();
+				}
 			}
 		}
 		//------ Init Slider ------------------------------------
@@ -163,6 +177,7 @@ package screens{
 				}else if(step==PLAYER_SELECTION){
 					if(imageSliderComponent.position==1){
 						imageSliderComponent.random([0,1]);
+						_randomList.uniquePush(index);
 						selectCharacter(index);
 						selectTeam(index);
 					}else if(imageSliderComponent.position>1){
@@ -333,16 +348,19 @@ package screens{
 		private function onChronoComplete($chronoComponent:ChronoComponent):void {
 			if(_finiteStateMachine.currentState!=this)	return;
 			if(!_computerComponent){
-				_stopCounter();
 				_computerComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myComputers") as GraphicComponent;
 				_computerComponent.graphic = new ComputersUI as MovieClip;
 				LayoutUtil.Align(_computerComponent,LayoutUtil.ALIGN_CENTER_CENTER);
-				if(_stepPlayer1!=WAITING_NEW_PLAYER || _stepPlayer2!=WAITING_NEW_PLAYER){
-					(_computerComponent.graphic.c0TF as TextField).textColor = 0x666666;
-					_computerComponent.nextFrame();
-				}else{
-					(_computerComponent.graphic.c7TF as TextField).textColor = 0x666666;
-				}
+			}else{
+				_computerComponent.visible = true;
+				_computerComponent.gotoAndStop(1);
+			}
+			_stopCounter();
+			if(_stepPlayer1!=WAITING_NEW_PLAYER || _stepPlayer2!=WAITING_NEW_PLAYER){
+				(_computerComponent.graphic.c0TF as TextField).textColor = 0x666666;
+				_computerComponent.nextFrame();
+			}else{
+				(_computerComponent.graphic.c7TF as TextField).textColor = 0x666666;
 			}
 			if(_stepPlayer1 == WAITING_NEW_PLAYER){
 				_stepPlayer1=NB_COMPUTER_SELECTION;
@@ -359,7 +377,7 @@ package screens{
 		//------ ResetCounter ------------------------------------
 		private  function _resetCounter():void {
 			for each(var c:ChronoComponent in _chronoList){
-				c.reset(9);
+				c.reset(3);
 				c.visible = true;
 			}
 		}
@@ -382,14 +400,58 @@ package screens{
 			_stepComputer = 1;
 			_computerSliderPosition=0;
 			for each(var slider:ImageSliderComponent in _sliderList){
-				slider.destroy();
+				slider.visible=false;
 			}
-			_sliderList = new Array();
 			for each(var c:ChronoComponent in _chronoList){
 				c.destroy();
 			}
 			_chronoList = null;
+			_randomList = new ArrayPlus();
+			_difficulty.goto(0);
+			_background.goto(0);
 			if(_fightMenu)	_fightMenu.visible=false;
+			if(_computerComponent) _computerComponent.visible = false;
+		}
+		//------ Reset All------------------------------------
+		private  function _resetAll():void {
+			_teamPlayer1.goto(0);
+			_teamPlayer2.goto(0);
+			_teamComputer.goto(0);
+			_stepPlayer1 = 0;
+			_stepPlayer2 = 0;
+			_stepComputer = 1;
+			_computerSliderPosition=0;
+			_fightMenu.visible=false;
+			var playerTF:TextField=null;
+			var fighterTF:TextField=null;
+			var teamTF:TextField=null;
+			var imageSliderComponent:ImageSliderComponent;
+			for(var i:int=0;i<8;i++){
+				playerTF = _menuComponent.graphic["player"+(i+1)+"TF"]
+				playerTF.autoSize = TextFieldAutoSize.CENTER;
+				playerTF.text = "join";
+				fighterTF = _menuComponent.graphic["fighter"+(i+1)+"TF"]
+				fighterTF.text = "";
+				teamTF = _menuComponent.graphic["team"+(i+1)+"TF"]
+				teamTF.text = "";
+				imageSliderComponent = _sliderList[i]
+				imageSliderComponent.visible=true;
+				imageSliderComponent.reset();
+			}
+			for each(var c:ChronoComponent in _chronoList){
+				c.destroy();
+			}
+			_chronoList = null;
+			_randomList = new ArrayPlus();
+		}
+		//------ Reset Random------------------------------------
+		private  function _resetRandom():void {
+			var imageSliderComponent:ImageSliderComponent;
+			for each(var index:int in _randomList){
+				imageSliderComponent = _sliderList[index]
+				imageSliderComponent.random([0,1]);
+				selectCharacter(index);
+			}
 		}
 		//------ Show Fight Menu ------------------------------------
 		private  function _showFightMenu():void {
@@ -404,22 +466,45 @@ package screens{
 				_fightMenu.setButton(_fightMenu.graphic.backgroundBt, {onMouseClick:onBackgroundBt},"backgroundBt");
 				_fightMenu.setButton(_fightMenu.graphic.quitBt, {onMouseClick:onQuitBt},"quitBt");
 				_fightMenu.moveTo(0,100);
+				_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
+				_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
 			}
 		}
 		//------ On Fight Bt Click ------------------------------------
 		private function onFightBt($mousePad:MousePad):void {
+			var list:Array = new Array();
+			var imageSliderComponent:ImageSliderComponent;
+			var teamTF:TextField=null;	
+			var playerTF:TextField=null;	
+			for (var index:int=0;index<_nbComputer+_nbPlayer;index++){
+				imageSliderComponent = _sliderList[index];
+				teamTF =  _menuComponent.graphic["team"+(index+1)+"TF"];
+				playerTF =  _menuComponent.graphic["player"+(index+1)+"TF"];
+				list.push([imageSliderComponent.position-1 ,playerTF.text, teamTF.text]);
+			}
+			Data.GAME_PARAM.players = list;
+			Data.GAME_PARAM.difficulty =_difficulty.currentItem;
+			Data.GAME_PARAM.background = _background.currentItem;
+			_menuComponent.gotoAndStop(5);
+			_finiteStateMachine.goToNextState();
 		}
 		//------ On Reset Random Bt Click ------------------------------------
 		private function onResetRandomBt($mousePad:MousePad):void {
+			_resetRandom();
 		}
 		//------ On Reset All Bt Click ------------------------------------
 		private function onResetAllBt($mousePad:MousePad):void {
+			_resetAll();
 		}
 		//------ On Difficulty Bt Click ------------------------------------
 		private function onDifficultyBt($mousePad:MousePad):void {
+			_difficulty.next();
+			_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
 		}
 		//------ On Background Bt Click ------------------------------------
 		private function onBackgroundBt($mousePad:MousePad):void {
+			_background.next();
+			_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
 		}
 		//------ On Quit Bt Click ------------------------------------
 		private function onQuitBt($mousePad:MousePad):void {

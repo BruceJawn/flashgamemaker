@@ -63,6 +63,7 @@ package {
 			stateList["Demo"]=new Demo();
 			stateList["CharacterSelection"]=new CharacterSelection();
 			stateList["ControlSettings"]=new ControlSettings();
+			stateList["VsGame"]=new VsGame();
 			_finiteStateMachine.setStateList(stateList);
 			_finiteStateMachine.setNextStateByName("UInterface"); 
 			_finiteStateMachine.changeStateByName("Preloader");

@@ -66,17 +66,17 @@ package screens{
 		//------ On VS Mode Bt Click ------------------------------------
 		private function onVsModeBtClick($mousePad:MousePad):void {
 			_menuComponent.gotoAndStop(4);
-			_finiteStateMachine.changeStateByName("CharacterSelection");
+			_finiteStateMachine.changeStateByName("CharacterSelection",null,"VsGame");
 		}
 		//------ On Stage Mode Bt Click ------------------------------------
 		private function onStageModeBtClick($mousePad:MousePad):void {
 			_menuComponent.gotoAndStop(5);
-			_finiteStateMachine.changeStateByName("StageGame");
+			_finiteStateMachine.changeStateByName("CharacterSelection",null,"StageGame");
 		}
 		//------ On Survival Mode Bt Click ------------------------------------
 		private function onSurvivalModeBtClick($mousePad:MousePad):void {
 			_menuComponent.gotoAndStop(5);
-			_finiteStateMachine.changeStateByName("SurvivalGame");
+			_finiteStateMachine.changeStateByName("CharacterSelection",null,"SurvivalGame");
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
