@@ -88,6 +88,7 @@ package screens{
 		//------ On Start Bt Click ------------------------------------
 		private function onStartBtClick($mousePad:MousePad):void {
 			_menuComponent.gotoAndStop(2);
+			//_finiteStateMachine.changeStateByName("StageGame");
 			_finiteStateMachine.changeStateByName("GameMenu");
 		}
 		//------ On Control Settings Bt Click ------------------------------------

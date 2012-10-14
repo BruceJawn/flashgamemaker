@@ -21,6 +21,7 @@
 *
 */
 package screens{
+	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
 	
 	import framework.component.core.GraphicComponent;
@@ -47,6 +48,10 @@ package screens{
 			_entityManager=EntityManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_menuComponent.setButton(_menuComponent.graphic.vsModeBt, {onMouseClick:onVsModeBtClick},"vsModeBt");
+			SimpleButton(_menuComponent.graphic.stageModeBt).mouseEnabled=false;
+			SimpleButton(_menuComponent.graphic.survivalModeBt).mouseEnabled=false;
+			SimpleButton(_menuComponent.graphic.onevsonechampionshipBt).mouseEnabled=false;
+			SimpleButton(_menuComponent.graphic.twovstwochampionshipBt).mouseEnabled=false;
 			//_menuComponent.setButton(_menuComponent.graphic.stageModeBt, {onMouseClick:onStageModeBtClick},"stageModeBt");
 			//_menuComponent.setButton(_menuComponent.graphic.survivalModeBt, {onMouseClick:onSurvivalModeBtClick},"survivalModeBt");
 		}

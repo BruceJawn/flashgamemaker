@@ -32,6 +32,7 @@ package screens{
 	import flash.utils.setTimeout;
 	
 	import framework.Framework;
+	import framework.component.Component;
 	import framework.component.add.GamePadComponent;
 	import framework.component.core.*;
 	import framework.entity.*;
@@ -65,6 +66,7 @@ package screens{
 		private var _forestm2:ScrollingBitmapComponent = null;
 		private var _forestm3:GraphicComponent = null
 		private var _pause:PauseComponent = null;
+		private var _list:Array = null;
 		
 		public function StageGame(){
 		}
@@ -72,6 +74,7 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
+			_list=new Array();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -90,27 +93,30 @@ package screens{
 			var keyPad1:KeyPad = new KeyPad(true);
 			keyPad1.useZQSD();
 			keyPad1.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
-			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad1);
+			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(3,null,keyPad1);
 			player1.registerPropertyReference("keyboardInput");
 			player1.moveTo(0,300);
 			//player1.setTimeMultiplicator(10);
+			_list.push(player1);
 			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad1);
 			
-			var keyPad2:KeyPad = new KeyPad(true);
+			/*var keyPad2:KeyPad = new KeyPad(true);
 			keyPad2.useArrows();
 			keyPad2.mapFireButtons(KeyCode.M,KeyCode.PERCENT,KeyCode.STAR,KeyCode.ENTER);
 			var player2:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad2);
 			player2.registerPropertyReference("keyboardInput");
 			//player2.setAI(true);
 			player2.moveTo(360,340);
-			var gamePad2:GamePadComponent = EntityFactory.CreateGamePad("GamePad2", 400,520,keyPad2);
+			_list.push(player2);
+			var gamePad2:GamePadComponent = EntityFactory.CreateGamePad("GamePad2", 400,520,keyPad2);*/
 			
-			var player:LFE_ObjectComponent;
+			/*var player:LFE_ObjectComponent;
 			for (var i:int =0; i<10;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
-			}
+				_list.push(player);
+			}*/
 			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
@@ -148,6 +154,17 @@ package screens{
 			if(KeyCode.GetKey($evt.keyCode)=="F1"){
 				MyGame.Pause();
 			}
+		}
+		//------ Reset ------------------------------------
+		private  function _reset():void {
+			for each (var component:Component in _list){
+				component.destroy();
+			}
+			var components:Vector.<Component> = _entityManager.getComponentsFromFamily(LFE_ObjectComponent);
+			for each (component in components){
+				component.destroy();
+			}
+			_list=new Array();
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
