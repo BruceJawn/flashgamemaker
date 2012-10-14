@@ -179,5 +179,8 @@ package utils.keyboard{
 			}
 			return keyTouchArray;
 		}
+		public static function GetKeyCode($char:String):int{
+			return $char.charCodeAt(0);
+		}
 	}
 }
