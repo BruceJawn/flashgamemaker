@@ -244,6 +244,7 @@ package screens{
 								_stepPlayer2 = WAITING_NEW_PLAYER;
 							else if(_stepPlayer1==COMPUTER_SELECTION)
 								_stepPlayer1 = WAITING_NEW_PLAYER;
+							_randomList = new ArrayPlus();
 							onChronoComplete(null);
 						}else{
 							_computerSliderPosition--;

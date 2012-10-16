@@ -56,6 +56,7 @@ package screens{
 		private var _menuComponent:GraphicComponent=null;
 		private var _soundManager:ISoundManager=null;
 		private var _mainMusic:String;
+		private var _keyInput:KeyboardInputComponent;
 		
 		public function UInterface(){
 		}
@@ -76,9 +77,7 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
-			var keyInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
-			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
-			keyInput.startListening();
+			_keyInput=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
 			_menuComponent.graphic = new MenuUI as MovieClip;
 			_menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick},"startBt");
@@ -123,6 +122,15 @@ package screens{
 			KeyConfig.Player1 = dataJSON.player1;
 			KeyConfig.Player2 = dataJSON.player2;
 		}
+		//------ Init Key Listener ------------------------------------
+		private function _initKeyListener():void {
+			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+			_keyInput.startListening();
+		}
+		//------ Remove Key Listener ------------------------------------
+		private function _removeKeyListener():void {
+			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
+		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
@@ -131,10 +139,12 @@ package screens{
 				initKeyConfig();
 				startMusic();
 			}
+			_initKeyListener();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
 			stopMusic();
+			_removeKeyListener();
 		}
 	}
 }
