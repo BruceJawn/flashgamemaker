@@ -103,6 +103,14 @@ package screens{
 			if($evt.keyCode == KeyCode.ESC){
 				_menuComponent.gotoAndStop(1);
 				_finiteStateMachine.goToPreviousState();
+			}else if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
+				var index:int= _menuComponent.graphic.focusClip.currentFrame;
+				if(index==1)			onOkBtClick(null);
+				if(index==2)			onCancelBtClick(null);
+			}else if($evt.keyCode == KeyCode.RIGHT || $evt.keyCode == KeyConfig.Player1.RIGHT || $evt.keyCode == KeyConfig.Player2.RIGHT ){
+				_menuComponent.graphic.focusClip.nextFrame();
+			}else if($evt.keyCode == KeyCode.LEFT || $evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT ){
+				_menuComponent.graphic.focusClip.prevFrame();
 			}
 		}
 		//------ On Ok Bt Click ------------------------------------

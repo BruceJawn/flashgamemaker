@@ -233,7 +233,8 @@ package data{
 			'random':'assets/random.jpg',
 			'pressAttackToJoin':'assets/pressAttackToJoin.jpg',
 			'main_mp3':'assets/main.mp3',
-			'stage1_mp3':'assets/stage1.mp3'
+			'stage1_mp3':'assets/stage1.mp3',
+			'stage2_mp3':'assets/stage2.mp3'
 		}
 	}
 }
