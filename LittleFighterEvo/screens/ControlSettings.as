@@ -41,6 +41,7 @@ package screens{
 		private var _entityManager:IEntityManager	= null;
 		private var _menuComponent:GraphicComponent = null;
 		private var _list:Array = null;
+		private var _keyInput:KeyboardInputComponent;
 		
 		public function ControlSettings(){
 		}
@@ -68,8 +69,8 @@ package screens{
 		}
 		//------ Init Component ------------------------------------
 		private function _initComponent():void {
-			var keyInput:KeyboardInputComponent=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
-			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+			_keyInput = _entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
+			
 		}
 		//------ Init Restrictions ------------------------------------
 		private function _initRestrictions():void {
@@ -78,6 +79,14 @@ package screens{
 				textField.restrict = "^a-z";
 				textField.setTextFormat( textFormat);
 			}
+		}
+		//------ Init Key Listener ------------------------------------
+		private function _initKeyListener():void {
+			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+		}
+		//------ Remove Key Listener ------------------------------------
+		private function _removeKeyListener():void {
+			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
 		}
 		//------ Init Keys ------------------------------------
 		private function _initKeys():void {
@@ -148,11 +157,13 @@ package screens{
 				_initVar();
 				_initComponent();
 			}
+			_initKeyListener();
 			_initKeys();
 			_initRestrictions();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
+			_removeKeyListener();
 		}
 	}
 }

@@ -40,6 +40,7 @@ package screens{
 		
 		private var _entityManager:IEntityManager	= null;
 		private var _menuComponent:GraphicComponent = null;
+		private var _keyInput:KeyboardInputComponent;
 		
 		public function GameMenu(){
 		}
@@ -57,8 +58,7 @@ package screens{
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
-			var keyInput:KeyboardInputComponent=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
-			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+			_keyInput=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
 		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
@@ -90,15 +90,25 @@ package screens{
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"SurvivalGame");
 		}
+		//------ Init Key Listener ------------------------------------
+		private function _initKeyListener():void {
+			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+		}
+		//------ Remove Key Listener ------------------------------------
+		private function _removeKeyListener():void {
+			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
+		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
 				initComponent();
 			}
+			_initKeyListener();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
+			_removeKeyListener();
 		}
 	}
 }
