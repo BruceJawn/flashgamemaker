@@ -208,28 +208,65 @@ package screens{
 					if(target=="_stepComputer") _stepComputer=COMPUTER_SELECTION
 					else this[target+(index+1)]=COMPUTER_SELECTION;
 					_computerComponent.visible = false;
-					var start:int = _stepPlayer1>=WAITING_NEW_PLAYER && _stepPlayer2>=WAITING_NEW_PLAYER?2:1;
-					var playerTF:TextField;
 					_nbComputer = _computerComponent.currentFrame-1;
 					if(_nbComputer ==0){
 						_showFightMenu();
 						return ;
 					}
-					for (var i:int=start;i<start+_nbComputer;i++){
-						imageSliderComponent=_sliderList[i];
-						imageSliderComponent.next([0]);
-						imageSliderComponent.visible = true;
-						selectCharacter(i);
-						playerTF = _menuComponent.graphic["player"+(i+1)+"TF"];
-						playerTF.text= "Computer";
-					}
-				}else if(step==COMPUTER_SELECTION){
-					//this["_stepPlayer"+(index+1)]=FIGHT_MENU;
+					_resetComputers();
 				}
-			}else if($evt.keyCode == KeyCode.O){
-				if(step==WAITING_NEW_PLAYER){
-					if(target=="_stepComputer") _stepComputer=TEAM_SELECTION
-					else this[target+(index+1)]=TEAM_SELECTION;
+			}else if($evt.keyCode == KeyConfig.Player1.J || $evt.keyCode == KeyConfig.Player2.J){
+				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
+					index = _computerSliderPosition;
+					step = _stepComputer;
+					team = _teamComputer;
+					imageSliderComponent=_sliderList[index];
+					target = "_stepComputer";
+				}else{
+					index = $evt.keyCode == KeyConfig.Player1.J?0:1;
+					step = this["_stepPlayer"+(index+1)];
+					team = this["_teamPlayer"+(index+1)];
+					imageSliderComponent=_sliderList[index];
+					target = "_stepPlayer";
+				}
+				if(_stepPlayer1==INIT && _stepPlayer2==INIT){
+					onQuitBt(null);
+				}
+				if(step==PLAYER_SELECTION){
+					if(target=="_stepComputer"){
+						_stepComputer=1;
+						if(_computerSliderPosition+1-_nbPlayer==1){
+							_deleteComputer(index);
+							if(_stepPlayer2==COMPUTER_SELECTION)
+								_stepPlayer2 = WAITING_NEW_PLAYER;
+							else if(_stepPlayer1==COMPUTER_SELECTION)
+								_stepPlayer1 = WAITING_NEW_PLAYER;
+							onChronoComplete(null);
+						}else{
+							_computerSliderPosition--;
+							_resetComputer(index);
+							var teamTF:TextField = _menuComponent.graphic["team"+(_computerSliderPosition+1)+"TF"]
+							teamTF.text = "";
+						} 
+					}else{
+						imageSliderComponent.goto(0);
+						var playerTF:TextField = _menuComponent.graphic["player"+index+1+"TF"];
+						var fighterTF:TextField = _menuComponent.graphic["fighter"+index+1+"TF"];
+						playerTF.text="join";
+						fighterTF.text="";
+						this[target+(index+1)]=INIT;	
+						}
+				}else if(step==TEAM_SELECTION){
+					if(target=="_stepComputer"){
+						_stepComputer=PLAYER_SELECTION;
+					}else{
+						this[target+(index+1)]=PLAYER_SELECTION;
+					}
+					teamTF = _menuComponent.graphic["team"+(index+1)+"TF"]
+					teamTF.text = "";
+				}else if(step==NB_COMPUTER_SELECTION){
+					//if(target=="_stepComputer") _stepComputer=COMPUTER_SELECTION
+					//else this[target+(index+1)]=COMPUTER_SELECTION;
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -295,6 +332,7 @@ package screens{
 			var index:int = $index+1;
 			var playerTF:TextField = _menuComponent.graphic["player"+index+"TF"];
 			var fighterTF:TextField = _menuComponent.graphic["fighter"+index+"TF"];
+			var teamTF:TextField = _menuComponent.graphic["team"+index+"TF"];
 			var imageSliderComponent:ImageSliderComponent=_sliderList[$index];
 			var position:int = imageSliderComponent.position;
 			if(playerTF.text!="Computer"){
@@ -306,6 +344,8 @@ package screens{
 			}else if(position>1){
 				fighterTF.text = _nestImageObject[position-2].name;
 			}
+			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
+			teamTF.text = "";
 			fighterTF.autoSize = TextFieldAutoSize.CENTER;
 		}
 		//------ Select Team ------------------------------------
@@ -420,6 +460,45 @@ package screens{
 			_resetSliders();
 			_resetCounter();
 			_randomList = new ArrayPlus();
+		}
+		//------ Reset Computers ------------------------------------
+		private function _resetComputers():void {
+			var start:int = _stepPlayer1>=WAITING_NEW_PLAYER && _stepPlayer2>=WAITING_NEW_PLAYER?2:1;
+			_nbComputer = _computerComponent.currentFrame-1;
+			for (var i:int=start;i<start+_nbComputer;i++){
+				_resetComputer(i);
+			}
+		}
+		//------ Reset Computer ------------------------------------
+		private function _resetComputer($index:int):void {
+			var imageSliderComponent:ImageSliderComponent;
+			var playerTF:TextField 
+			var fighterTF:TextField;
+			var teamTF:TextField;
+			imageSliderComponent=_sliderList[$index];
+			imageSliderComponent.goto(1);
+			imageSliderComponent.visible = true;
+			playerTF = _menuComponent.graphic["player"+($index+1)+"TF"];
+			playerTF.text= "Computer";
+			fighterTF = _menuComponent.graphic["fighter"+($index+1)+"TF"];
+			fighterTF.text="Random";
+			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
+			teamTF.text = "";
+		}
+		//------ Reset Computer ------------------------------------
+		private function _deleteComputer($index:int):void {
+			var imageSliderComponent:ImageSliderComponent;
+			var playerTF:TextField 
+			var fighterTF:TextField;
+			var teamTF:TextField;
+			imageSliderComponent=_sliderList[$index];
+			imageSliderComponent.visible = false;
+			playerTF = _menuComponent.graphic["player"+($index+1)+"TF"];
+			playerTF.text= "-";
+			fighterTF = _menuComponent.graphic["fighter"+($index+1)+"TF"];
+			fighterTF.text="";
+			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
+			teamTF.text = "";
 		}
 		//------ Reset Sliders------------------------------------
 		private  function _resetSliders():void {
