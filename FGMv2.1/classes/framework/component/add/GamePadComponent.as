@@ -238,13 +238,13 @@ package framework.component.add{
 			_button4.addEventListener(MouseEvent.MOUSE_UP,releaseButton4,false,0,true);
 			if(_isAligned){
 				_button1.x=245;
-				_button1.y=45;
+				_button1.y=48;
 				_button2.x=280;
-				_button2.y=45;
+				_button2.y=48;
 				_button3.x=315;
-				_button3.y=45;
+				_button3.y=48;
 				_button4.x=350;
-				_button4.y=45;
+				_button4.y=48;
 			}else{
 				_button1.x=243.50;
 				_button1.y=30;
