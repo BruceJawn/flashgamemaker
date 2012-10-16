@@ -76,6 +76,14 @@ package framework.component.core{
 			_bitmapData.copyPixels(graphic.bitmapData,graphic.bitmapData.rect,new Point);
 			_bitmap.bitmapData = _bitmapData;
 		}
+		//------ Goto ------------------------------------
+		public function goto($position:int):void {
+			if($position>_list.length-1)
+				_list[$position]; //To trigger the classic error message
+			_position=$position;
+			_refresh();
+		}
+		
 		//------ Next ------------------------------------
 		public function next($except:Array=null):void {
 			if(_position<_list.length-1)	_position++;
