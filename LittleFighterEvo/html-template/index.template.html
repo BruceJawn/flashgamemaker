@@ -33,6 +33,11 @@
 		    
         <script type="text/javascript" src="swfobject.js"></script>
         <script type="text/javascript">
+        	function onFlashReady(e) {
+				var f = document.${swf};
+				f.tabIndex = 0;
+				f.focus();
+			}
             <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
             <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
@@ -43,6 +48,7 @@
             params.bgcolor = "${bgcolor}";
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
+            params.wmode = "opaque";
             var attributes = {};
             attributes.id = "${application}";
             attributes.name = "${application}";

@@ -66,6 +66,13 @@ package screens{
 			if($evt.keyCode == KeyCode.ESC){
 				_menuComponent.gotoAndStop(1);
 				_finiteStateMachine.changeStateByName("UInterface");
+			}else if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
+				var index:int= _menuComponent.graphic.focusClip.currentFrame;
+				if(index==1)			onVsModeBtClick(null);
+			}else if($evt.keyCode == KeyCode.DOWN || $evt.keyCode == KeyConfig.Player1.DOWN || $evt.keyCode == KeyConfig.Player2.DOWN ){
+				_menuComponent.graphic.focusClip.nextFrame();
+			}else if($evt.keyCode == KeyCode.UP || $evt.keyCode == KeyConfig.Player1.UP || $evt.keyCode == KeyConfig.Player2.UP ){
+				_menuComponent.graphic.focusClip.prevFrame();
 			}
 		}
 		//------ On VS Mode Bt Click ------------------------------------

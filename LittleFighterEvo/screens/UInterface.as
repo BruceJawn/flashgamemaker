@@ -104,7 +104,15 @@ package screens{
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
 			if(_finiteStateMachine.currentState!=this)	return;
-			if($evt.keyCode == KeyCode.ESC){
+			if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
+				var index:int= _menuComponent.graphic.focusClip.currentFrame;
+				if(index==1)			onStartBtClick(null);
+				else if(index==2)		onControlSettingsBtClick(null);
+				else if(index==3)		onDemoBtClick(null);
+			}else if($evt.keyCode == KeyCode.DOWN || $evt.keyCode == KeyConfig.Player1.DOWN || $evt.keyCode == KeyConfig.Player2.DOWN ){
+				_menuComponent.graphic.focusClip.nextFrame();
+			}else if($evt.keyCode == KeyCode.UP || $evt.keyCode == KeyConfig.Player1.UP || $evt.keyCode == KeyConfig.Player2.UP ){
+				_menuComponent.graphic.focusClip.prevFrame();
 			}
 		}
 		//------ Init Component ------------------------------------

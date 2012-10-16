@@ -81,6 +81,7 @@ package screens{
 		private var _randomList:ArrayPlus = null;
 		private var _difficulty:List = null;
 		private var _background:List = null;
+		private var _music:List = null;
 		
 		public function CharacterSelection(){
 		}
@@ -97,6 +98,7 @@ package screens{
 			_teamComputer = new List("independent","team1","team2","team3","team4");
 			_difficulty = new List("Easy","Normal","Difficult");
 			_background = new List("Forest");
+			_music = new List("stage1","stage2");
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -236,7 +238,8 @@ package screens{
 					if(target=="_stepComputer"){
 						_stepComputer=1;
 						if(_computerSliderPosition+1-_nbPlayer==1){
-							_deleteComputer(index);
+							for (var i:int = index; i<index+_nbComputer;i++)
+								_deleteComputer(i);
 							if(_stepPlayer2==COMPUTER_SELECTION)
 								_stepPlayer2 = WAITING_NEW_PLAYER;
 							else if(_stepPlayer1==COMPUTER_SELECTION)
@@ -250,8 +253,8 @@ package screens{
 						} 
 					}else{
 						imageSliderComponent.goto(0);
-						var playerTF:TextField = _menuComponent.graphic["player"+index+1+"TF"];
-						var fighterTF:TextField = _menuComponent.graphic["fighter"+index+1+"TF"];
+						var playerTF:TextField = _menuComponent.graphic["player"+(index+1)+"TF"];
+						var fighterTF:TextField = _menuComponent.graphic["fighter"+(index+1)+"TF"];
 						playerTF.text="join";
 						fighterTF.text="";
 						this[target+(index+1)]=INIT;	
@@ -264,9 +267,6 @@ package screens{
 					}
 					teamTF = _menuComponent.graphic["team"+(index+1)+"TF"]
 					teamTF.text = "";
-				}else if(step==NB_COMPUTER_SELECTION){
-					//if(target=="_stepComputer") _stepComputer=COMPUTER_SELECTION
-					//else this[target+(index+1)]=COMPUTER_SELECTION;
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -294,7 +294,9 @@ package screens{
 					if(!(_computerComponent.currentFrame==2 && (_stepPlayer1<WAITING_NEW_PLAYER || _stepPlayer2<WAITING_NEW_PLAYER))){
 						_computerComponent.prevFrame();
 					}
-				}else if(step==COMPUTER_SELECTION){
+				}else if(_fightMenu && _fightMenu.visible){
+					_music.prev();
+					_fightMenu.graphic.musicTF.text = _music.currentItem;
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.RIGHT || $evt.keyCode == KeyConfig.Player2.RIGHT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -322,8 +324,9 @@ package screens{
 					if(!(_computerComponent.currentFrame==7 && _stepPlayer1>=WAITING_NEW_PLAYER && _stepPlayer2>=WAITING_NEW_PLAYER)){
 						_computerComponent.nextFrame();
 					}
-				}else if(step==COMPUTER_SELECTION){
-					
+				}else if(_fightMenu && _fightMenu.visible){
+					_music.prev();
+					_fightMenu.graphic.musicTF.text = _music.currentItem;
 				}
 			}
 		}
@@ -344,8 +347,6 @@ package screens{
 			}else if(position>1){
 				fighterTF.text = _nestImageObject[position-2].name;
 			}
-			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
-			teamTF.text = "";
 			fighterTF.autoSize = TextFieldAutoSize.CENTER;
 		}
 		//------ Select Team ------------------------------------
@@ -555,9 +556,10 @@ package screens{
 				_fightMenu.setButton(_fightMenu.graphic.difficultyBt, {onMouseClick:onDifficultyBt},"difficultyBt");
 				_fightMenu.setButton(_fightMenu.graphic.backgroundBt, {onMouseClick:onBackgroundBt},"backgroundBt");
 				_fightMenu.setButton(_fightMenu.graphic.quitBt, {onMouseClick:onQuitBt},"quitBt");
-				_fightMenu.moveTo(0,100);
+				_fightMenu.moveTo(0,105);
 				_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
 				_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
+				_fightMenu.graphic.musicTF.text = _music.currentItem;
 			}
 		}
 		//------ On Fight Bt Click ------------------------------------

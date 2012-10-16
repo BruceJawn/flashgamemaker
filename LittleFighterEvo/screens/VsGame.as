@@ -151,6 +151,7 @@ package screens{
 					var playerComponent:LFE_ObjectComponent = LFE_Object.CreateObject(oid,null,keyPad);
 					playerComponent.registerPropertyReference("keyboardInput");
 					var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad"+player, 20+(int(player)-1)*400,510,keyPad);
+					gamePad.button4.visible=false
 					_list.push(gamePad);
 				}else{
 					playerComponent = LFE_Object.CreateObject(oid,null,new KeyPad);
