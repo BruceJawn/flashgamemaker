@@ -229,6 +229,7 @@ package data{
 				}
 			}
 		public static const OTHERS:Object = {
+			'multilang':'data/Multilang.txt',
 			'keyConfig':'data/keyConfig.txt',
 			'random':'assets/random.jpg',
 			'pressAttackToJoin':'assets/pressAttackToJoin.jpg',
