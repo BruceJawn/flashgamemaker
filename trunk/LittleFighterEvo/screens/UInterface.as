@@ -122,6 +122,13 @@ package screens{
 			KeyConfig.Player1 = dataJSON.player1;
 			KeyConfig.Player2 = dataJSON.player2;
 		}
+		//------ Init MultiLang ------------------------------------
+		private function initMultiLang():void {
+			var dataString:String = RessourceManager.getInstance().getFile(Data.OTHERS.multilang);
+			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
+			var dataJSON:Object = JSON.decode(dataString);//Flash 10
+			MultiLang.data = dataJSON;
+		}
 		//------ Init Key Listener ------------------------------------
 		private function _initKeyListener():void {
 			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
@@ -131,15 +138,21 @@ package screens{
 		private function _removeKeyListener():void {
 			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
 		}
+		//------ Update Lang ------------------------------------
+		private function _upateLang():void {
+			
+		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
 				initComponent();
 				initKeyConfig();
+				initMultiLang();
 				startMusic();
 			}
 			_initKeyListener();
+			_upateLang();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {

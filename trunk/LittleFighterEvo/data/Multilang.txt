@@ -1,0 +1,40 @@
+{
+	"fr":
+	{
+		"Uinterface":
+		{
+					
+		},
+		"GameMenu":
+		{
+					
+		},
+		"ControlSettings":
+		{
+					
+		},
+		"CharacterSelection":
+		{
+					
+		}
+	},
+	"eng":
+	{
+		"Uinterface":
+		{
+					
+		},
+		"GameMenu":
+		{
+					
+		},
+		"ControlSettings":
+		{
+					
+		},
+		"CharacterSelection":
+		{
+					
+		}
+	}
+}
