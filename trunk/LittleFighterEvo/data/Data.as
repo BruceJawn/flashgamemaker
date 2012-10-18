@@ -24,6 +24,7 @@ package data{
 	
 	public class Data{
 		public static var GAME_PARAM:Object 				= new Object;
+		public static var LOCAL_LANG:String 				= "fr";//fr, eng
 		public static const OBJECT_KIND_CHARACTER:int 		= 0; // (Bandit)
 		public static const OBJECT_KIND_WEAPON:int 			= 1; // which can be used to slam enemies (Baseball Bat)
 		public static const OBJECT_KIND_HEAVY_WEAPON:int 	= 2; // which can be thrown to knock down enemies, it slows down you movement speed (Stone)

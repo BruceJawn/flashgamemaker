@@ -21,8 +21,12 @@
 *
 */
 package screens{
+	import data.Data;
+	
 	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	
 	import framework.component.core.GraphicComponent;
 	import framework.component.core.KeyboardInputComponent;
@@ -48,13 +52,16 @@ package screens{
 		private function initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
-			_menuComponent.setButton(_menuComponent.graphic.vsModeBt, {onMouseClick:onVsModeBtClick},"vsModeBt");
 			SimpleButton(_menuComponent.graphic.stageModeBt).mouseEnabled=false;
 			SimpleButton(_menuComponent.graphic.survivalModeBt).mouseEnabled=false;
 			SimpleButton(_menuComponent.graphic.onevsonechampionshipBt).mouseEnabled=false;
 			SimpleButton(_menuComponent.graphic.twovstwochampionshipBt).mouseEnabled=false;
 			//_menuComponent.setButton(_menuComponent.graphic.stageModeBt, {onMouseClick:onStageModeBtClick},"stageModeBt");
 			//_menuComponent.setButton(_menuComponent.graphic.survivalModeBt, {onMouseClick:onSurvivalModeBtClick},"survivalModeBt");
+		}
+		//------ Init Listener ------------------------------------
+		private function _initListener():void {
+			SimpleButton(_menuComponent.graphic.vsModeBt).addEventListener(MouseEvent.CLICK, _onVsModeBtClick,false,0,true);
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -68,7 +75,7 @@ package screens{
 				_finiteStateMachine.changeStateByName("UInterface");
 			}else if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
 				var index:int= _menuComponent.graphic.focusClip.currentFrame;
-				if(index==1)			onVsModeBtClick(null);
+				if(index==1)			_onVsModeBtClick(null);
 			}else if($evt.keyCode == KeyCode.DOWN || $evt.keyCode == KeyConfig.Player1.DOWN || $evt.keyCode == KeyConfig.Player2.DOWN ){
 				_menuComponent.graphic.focusClip.nextFrame();
 			}else if($evt.keyCode == KeyCode.UP || $evt.keyCode == KeyConfig.Player1.UP || $evt.keyCode == KeyConfig.Player2.UP ){
@@ -76,17 +83,17 @@ package screens{
 			}
 		}
 		//------ On VS Mode Bt Click ------------------------------------
-		private function onVsModeBtClick($mousePad:MousePad):void {
+		private function _onVsModeBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(4);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"VsGame");
 		}
 		//------ On Stage Mode Bt Click ------------------------------------
-		private function onStageModeBtClick($mousePad:MousePad):void {
+		private function _onStageModeBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"StageGame");
 		}
 		//------ On Survival Mode Bt Click ------------------------------------
-		private function onSurvivalModeBtClick($mousePad:MousePad):void {
+		private function _onSurvivalModeBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"SurvivalGame");
 		}
@@ -98,13 +105,24 @@ package screens{
 		private function _removeKeyListener():void {
 			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
 		}
+		//------ Update Lang ------------------------------------
+		private function _upateLang():void {
+			_upateButtonTF(_menuComponent.graphic.vsModeBt,MultiLang.data[Data.LOCAL_LANG].GameMenu.vsModeBt);
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateButtonTF($button:SimpleButton, $text:String):void {
+			TextField($button.upState).text=$text;
+			TextField($button.overState).text=$text;
+		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
 				initComponent();
 			}
+			_initListener();
 			_initKeyListener();
+			_upateLang();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
