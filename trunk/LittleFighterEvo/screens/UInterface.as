@@ -27,8 +27,10 @@ package screens{
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextField;
 	
 	import framework.Framework;
 	import framework.component.Component;
@@ -140,7 +142,13 @@ package screens{
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateLang():void {
-			
+			_upateButtonTF(_menuComponent.graphic.gameStartBt,MultiLang.data.eng.Uinterface.gameStartBt);
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateButtonTF($button:SimpleButton, $text:String):void {
+			TextField($button.upState).text=$text;
+			TextField($button.overState).text=$text;
+			TextField($button.downState).text=$text;
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
