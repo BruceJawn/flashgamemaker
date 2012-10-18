@@ -30,6 +30,7 @@ package screens{
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	import framework.Framework;
@@ -63,53 +64,68 @@ package screens{
 		public function UInterface(){
 		}
 		//------ Init Var ------------------------------------
-		private function initVar():void {
+		private function _initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
 			_mainMusic = Framework.root+"assets/main.mp3"
 		}
 		//------ Start Music ------------------------------------
-		private function startMusic():void {
+		private function _startMusic():void {
 			//_soundManager.play(_mainMusic,0.01,true);
 		}
 		//------ Stop Music ------------------------------------
-		private function stopMusic():void {
+		private function _stopMusic():void {
 			_soundManager.stop(_mainMusic);
 		}
 		//------ Init Component ------------------------------------
-		private function initComponent():void {
+		private function _initComponent():void {
 			var mouseInput:MouseInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","MouseInputComponent","myMouseInputComponent") as MouseInputComponent;
 			_keyInput=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			_menuComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myMenu") as GraphicComponent;
 			_menuComponent.graphic = new MenuUI as MovieClip;
-			_menuComponent.setButton(_menuComponent.graphic.gameStartBt, {onMouseClick:onStartBtClick},"startBt");
-			_menuComponent.setButton(_menuComponent.graphic.controlSettingsBt, {onMouseClick:onControlSettingsBtClick},"controlSettingsBt");
-			_menuComponent.setButton(_menuComponent.graphic.demoBt, {onMouseClick:onDemoBtClick},"demoBt");
+		}
+		//------ Init Listener ------------------------------------
+		private function _initListener():void {
+			SimpleButton(_menuComponent.graphic.gameStartBt).addEventListener(MouseEvent.CLICK, _onStartBtClick,false,0,true);
+			SimpleButton(_menuComponent.graphic.controlSettingsBt).addEventListener(MouseEvent.CLICK, _onControlSettingsBtClick,false,0,true);
+			SimpleButton(_menuComponent.graphic.demoBt).addEventListener(MouseEvent.CLICK, _onDemoBtClick,false,0,true);
+			SimpleButton(_menuComponent.graphic.frBt).addEventListener(MouseEvent.CLICK, _onFrBtClick,false,0,true);
+			SimpleButton(_menuComponent.graphic.engBt).addEventListener(MouseEvent.CLICK, _onEngBtClick,false,0,true);
 		}
 		//------ On Start Bt Click ------------------------------------
-		private function onStartBtClick($mousePad:MousePad):void {
+		private function _onStartBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(2);
 			//_finiteStateMachine.changeStateByName("StageGame");
 			_finiteStateMachine.changeStateByName("GameMenu");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
-		private function onControlSettingsBtClick($mousePad:MousePad):void {
+		private function _onControlSettingsBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(3);
 			_finiteStateMachine.changeStateByName("ControlSettings");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
-		private function onDemoBtClick($mousePad:MousePad):void {
+		private function _onDemoBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("Demo");
 		}
+		//------ On Control Settings Bt Click ------------------------------------
+		private function _onFrBtClick($evt:MouseEvent):void {
+			Data.LOCAL_LANG="fr";
+			_upateLang();
+		}
+		//------ On Control Settings Bt Click ------------------------------------
+		private function _onEngBtClick($evt:MouseEvent):void {
+			Data.LOCAL_LANG="eng";
+			_upateLang();
+		}
 		//------ On Key Fire ------------------------------------
-		private function onKeyFire($evt:KeyboardEvent):void {
+		private function _onKeyFire($evt:KeyboardEvent):void {
 			if(_finiteStateMachine.currentState!=this)	return;
 			if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
 				var index:int= _menuComponent.graphic.focusClip.currentFrame;
-				if(index==1)			onStartBtClick(null);
-				else if(index==2)		onControlSettingsBtClick(null);
-				else if(index==3)		onDemoBtClick(null);
+				if(index==1)			_onStartBtClick(null);
+				else if(index==2)		_onControlSettingsBtClick(null);
+				else if(index==3)		_onDemoBtClick(null);
 			}else if($evt.keyCode == KeyCode.DOWN || $evt.keyCode == KeyConfig.Player1.DOWN || $evt.keyCode == KeyConfig.Player2.DOWN ){
 				_menuComponent.graphic.focusClip.nextFrame();
 			}else if($evt.keyCode == KeyCode.UP || $evt.keyCode == KeyConfig.Player1.UP || $evt.keyCode == KeyConfig.Player2.UP ){
@@ -117,7 +133,7 @@ package screens{
 			}
 		}
 		//------ Init Component ------------------------------------
-		private function initKeyConfig():void {
+		private function _initKeyConfig():void {
 			var dataString:String = RessourceManager.getInstance().getFile(Data.OTHERS.keyConfig);
 			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
 			var dataJSON:Object = JSON.decode(dataString);//Flash 10
@@ -125,7 +141,7 @@ package screens{
 			KeyConfig.Player2 = dataJSON.player2;
 		}
 		//------ Init MultiLang ------------------------------------
-		private function initMultiLang():void {
+		private function _initMultiLang():void {
 			var dataString:String = RessourceManager.getInstance().getFile(Data.OTHERS.multilang);
 			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
 			var dataJSON:Object = JSON.decode(dataString);//Flash 10
@@ -133,16 +149,20 @@ package screens{
 		}
 		//------ Init Key Listener ------------------------------------
 		private function _initKeyListener():void {
-			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
+			_keyInput.addEventListener(KeyboardEvent.KEY_DOWN,_onKeyFire,false,0,true);
 			_keyInput.startListening();
 		}
 		//------ Remove Key Listener ------------------------------------
 		private function _removeKeyListener():void {
-			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyFire);
+			_keyInput.removeEventListener(KeyboardEvent.KEY_DOWN,_onKeyFire);
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateLang():void {
-			_upateButtonTF(_menuComponent.graphic.gameStartBt,MultiLang.data.eng.Uinterface.gameStartBt);
+			TextField(_menuComponent.graphic.licenseTF).htmlText = MultiLang.data[Data.LOCAL_LANG].Uinterface.licenseTF;
+			TextField(_menuComponent.graphic.clickTF).htmlText = MultiLang.data[Data.LOCAL_LANG].Uinterface.clickTF;
+			_upateButtonTF(_menuComponent.graphic.gameStartBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.gameStartBt);
+			_upateButtonTF(_menuComponent.graphic.controlSettingsBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.controlSettingsBt);
+			_upateButtonTF(_menuComponent.graphic.demoBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.demoBt);
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateButtonTF($button:SimpleButton, $text:String):void {
@@ -153,18 +173,19 @@ package screens{
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
-				initVar();
-				initComponent();
-				initKeyConfig();
-				initMultiLang();
-				startMusic();
+				_initVar();
+				_initComponent();
+				_initKeyConfig();
+				_initMultiLang();
+				_startMusic();
 			}
+			_initListener();
 			_initKeyListener();
 			_upateLang();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
-			stopMusic();
+			_stopMusic();
 			_removeKeyListener();
 		}
 	}

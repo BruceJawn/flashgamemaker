@@ -21,7 +21,11 @@
 *
 */
 package screens{
+	import data.Data;
+	
+	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
@@ -49,8 +53,6 @@ package screens{
 		private function _initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
-			_menuComponent.setButton(_menuComponent.graphic.configOkBt, {onMouseClick:onOkBtClick},"configOkBt");
-			_menuComponent.setButton(_menuComponent.graphic.configCancelBt, {onMouseClick:onCancelBtClick},"configCancelBt");
 			_list = new Array();
 			_list.push(_menuComponent.graphic.firstPlayerUpTF);
 			_list.push(_menuComponent.graphic.firstPlayerDownTF);
@@ -67,6 +69,12 @@ package screens{
 			_list.push(_menuComponent.graphic.secondPlayerJumpTF);
 			_list.push(_menuComponent.graphic.secondPlayerDefenseTF);
 		}
+		//------ Init Listener ------------------------------------
+		private function _initListener():void {
+			SimpleButton(_menuComponent.graphic.configOkBt).addEventListener(MouseEvent.CLICK, _onOkBtClick,false,0,true);
+			SimpleButton(_menuComponent.graphic.configCancelBt).addEventListener(MouseEvent.CLICK, _onCancelBtClick,false,0,true);
+		}
+		
 		//------ Init Component ------------------------------------
 		private function _initComponent():void {
 			_keyInput = _entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
@@ -114,8 +122,8 @@ package screens{
 				_finiteStateMachine.goToPreviousState();
 			}else if($evt.keyCode == KeyCode.ENTER || $evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A ){
 				var index:int= _menuComponent.graphic.focusClip.currentFrame;
-				if(index==1)			onOkBtClick(null);
-				if(index==2)			onCancelBtClick(null);
+				if(index==1)			_onOkBtClick(null);
+				if(index==2)			_onCancelBtClick(null);
 			}else if($evt.keyCode == KeyCode.RIGHT || $evt.keyCode == KeyConfig.Player1.RIGHT || $evt.keyCode == KeyConfig.Player2.RIGHT ){
 				_menuComponent.graphic.focusClip.nextFrame();
 			}else if($evt.keyCode == KeyCode.LEFT || $evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT ){
@@ -123,7 +131,7 @@ package screens{
 			}
 		}
 		//------ On Ok Bt Click ------------------------------------
-		private function onOkBtClick($mousePad:MousePad):void {
+		private function _onOkBtClick($evt:MouseEvent):void {
 			_saveKeys();
 			_menuComponent.gotoAndStop(1);
 			_finiteStateMachine.goToPreviousState();
@@ -147,9 +155,28 @@ package screens{
 			KeyConfig.Player2.D = KeyCode.GetKeyCode(_menuComponent.graphic.secondPlayerDefenseTF.text);*/
 		}
 		//------ On Cancel Bt Click ------------------------------------
-		private function onCancelBtClick($mousePad:MousePad):void {
+		private function _onCancelBtClick($evt:MouseEvent):void {
 			_menuComponent.gotoAndStop(1);
 			_finiteStateMachine.goToPreviousState();
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateLang():void {
+			TextField(_menuComponent.graphic.inputTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.inputTF;
+			TextField(_menuComponent.graphic.controlSettingTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.controlSettingTF;
+			TextField(_menuComponent.graphic.upTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.upTF;
+			TextField(_menuComponent.graphic.downTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.downTF;
+			TextField(_menuComponent.graphic.leftTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.leftTF;
+			TextField(_menuComponent.graphic.rightTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.rightTF;
+			TextField(_menuComponent.graphic.attackTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.attackTF;
+			TextField(_menuComponent.graphic.jumpTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.jumpTF;
+			TextField(_menuComponent.graphic.defenseTF).htmlText = MultiLang.data[Data.LOCAL_LANG].ControlSettings.defenseTF;
+			_upateButtonTF(_menuComponent.graphic.configOkBt,MultiLang.data[Data.LOCAL_LANG].ControlSettings.configOkBt);
+			_upateButtonTF(_menuComponent.graphic.configCancelBt,MultiLang.data[Data.LOCAL_LANG].ControlSettings.configCancelBt);
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateButtonTF($button:SimpleButton, $text:String):void {
+			TextField($button.upState).text=$text;
+			TextField($button.overState).text=$text;
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
@@ -157,9 +184,11 @@ package screens{
 				_initVar();
 				_initComponent();
 			}
+			_initListener();
 			_initKeyListener();
 			_initKeys();
 			_initRestrictions();
+			_upateLang();
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {

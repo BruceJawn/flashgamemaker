@@ -3,15 +3,31 @@
 	{
 		"Uinterface":
 		{
-					
+			"licenseTF":"Originalement crée par Marti et Starky Wong<br>Développé avec FlashGameMaker<br>http://flashgamemakeras3.blogspot.fr",
+			"clickTF":"Cliquez à l'écran pour activer le clavier",
+			"gameStartBt": "commencer",
+			"controlSettingsBt": "configuration",
+			"demoBt": "demo"			
 		},
 		"GameMenu":
 		{
-					
+			"vsModeBt":"VS Mode"			
 		},
 		"ControlSettings":
 		{
-					
+			"inputTF": "insérez votre nom ici",
+			"controlSettingTF": "configuration",
+			"okBt": "ok",
+			"cancelBt": "annuler",
+			"upTF":"haut",
+			"downTF":"bas",
+			"leftTF":"gauche",
+			"rightTF":"droite",
+			"attackTF":"attack",
+			"jumpTF":"saut",
+			"defenseTF":"defense",
+			"configOkBt":"ok",
+			"configCancelBt":"annuler"
 		},
 		"CharacterSelection":
 		{
@@ -22,15 +38,31 @@
 	{
 		"Uinterface":
 		{
-			"gameStartBt": "game start"		
+			"licenseTF":"Originally from Marti and Starky Wong<br>Powered by FlashGameMaker<br>http://flashgamemakeras3.blogspot.fr",
+			"clickTF":"Please click on the screen to activate keyboard",
+			"gameStartBt": "game start",	
+			"controlSettingsBt": "control settings",
+			"demoBt": "demo"
 		},
 		"GameMenu":
 		{
-					
+			"vsModeBt":"VS Mode"	
 		},
 		"ControlSettings":
 		{
-					
+			"inputTF": "you can input your name ",
+			"controlSettingTF": "control setting",
+			"okBt": "ok",
+			"cancelBt": "cancel",
+			"upTF":"up",
+			"downTF":"down",
+			"leftTF":"left",
+			"rightTF":"right",
+			"attackTF":"attack",
+			"jumpTF":"jump",
+			"defenseTF":"defense",
+			"configOkBt":"ok",
+			"configCancelBt":"cancel"
 		},
 		"CharacterSelection":
 		{
