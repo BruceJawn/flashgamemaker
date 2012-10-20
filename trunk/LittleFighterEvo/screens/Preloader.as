@@ -73,6 +73,9 @@ package screens{
 					if(object.hasOwnProperty("face")){
 						assetsToLoad.push(Framework.root+object.face);
 					}
+					if(object.hasOwnProperty("small")){
+						assetsToLoad.push(Framework.root+object.small);
+					}
 				}
 			}
 			for each(var other:Object in Data.OTHERS){

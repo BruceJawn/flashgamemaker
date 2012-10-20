@@ -23,6 +23,8 @@
 
 package customClasses{
 	
+	import data.Data;
+	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -38,11 +40,12 @@ package customClasses{
 	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
 	
-	import framework.component.core.AnimationComponent;
-	import framework.entity.IEntity;
-	
-	import data.Data;
 	import fms.*;
+	
+	import framework.component.core.AnimationComponent;
+	import framework.component.core.GraphicComponent;
+	import framework.entity.EntityManager;
+	import framework.entity.IEntity;
 	
 	import utils.bitmap.BitmapAnim;
 	import utils.bitmap.BitmapCell;
@@ -74,6 +77,7 @@ package customClasses{
 		protected var _source:LFE_ObjectComponent = null //For object such as weapon
 		protected var _weapon:LFE_ObjectComponent = null;
 		protected var _target:LFE_ObjectComponent = null;
+		protected var _playerName:GraphicComponent = null;
 		protected var _ai:Object = null;
 		
 		public function LFE_ObjectComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object = null) {
@@ -198,6 +202,22 @@ package customClasses{
 				_aiStateMachine.currentState.lastUpdateTime = Time.GetTime();
 				_aiStateMachine.currentState.update();
 			}
+			updatePlayerName();
+		}
+		//------ Add Player Name ------------------------------------
+		public function addPlayerName($name:String):void {
+			var textField:TextField = new TextField;
+			textField.selectable = false;
+			textField.autoSize = "center";
+			textField.text = $name;
+			textField.setTextFormat(new TextFormat("Arial",12,0xFFFFF,true));
+			_playerName = EntityManager.getInstance().addComponentFromName("LittleFighterEvo","GraphicComponent") as GraphicComponent;
+			_playerName.graphic = textField;
+		}
+		//------ Update PlayerName ------------------------------------
+		public function updatePlayerName():void {
+			if(_playerName)
+				_playerName.moveTo(x,y+height);
 		}
 		//------ Hurt Enemy ------------------------------------
 		public function hurtEnemy():Boolean {
@@ -376,7 +396,6 @@ package customClasses{
 				updateAnim($frameId);
 			}
 		}
-		
 		//------ Update State ------------------------------------
 		public function updateState():void {
 			LFE_State(_playerStateMachine.currentState).updateState();
@@ -455,6 +474,10 @@ package customClasses{
 		public function setTimeMultiplicator($timeMultiplicator:Number):void {
 			_bitmapSet.graph.setTimeMultiplicator($timeMultiplicator);
 			_spatialMove.timeMultiplicator = $timeMultiplicator;
+		}
+		//------ Get Player Name ------------------------------------
+		public function get playerName():GraphicComponent {
+			return _playerName;
 		}
 		//------ Set Artificial Intelligence  ------------------------------------
 		public function set ai($ai:Object):void {

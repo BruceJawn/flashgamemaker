@@ -118,7 +118,7 @@ package screens{
 				playerTF.text = _lang.join;
 				imageSliderComponent = _sliderList[i]
 				if(!imageSliderComponent){
-					_initSlider(i,155+(i%4)*153,174+211*Math.floor(i/4));
+					_initSlider(i,195+(i%4)*153,55+211*Math.floor(i/4));
 				}else{
 					imageSliderComponent.visible=true;
 					imageSliderComponent.reset();
@@ -414,7 +414,7 @@ package screens{
 						chrono=_entityManager.addComponentFromName("LittleFighterEvo","ChronoComponent","myChronoComponent_"+i) as ChronoComponent;
 					}
 					chrono.setFormat("Arial",40,0xFFFFFF);
-					chrono.moveTo(167+150*(i%4),215 + 205 *Math.floor(i/4));
+					chrono.moveTo(207+150*(i%4),95 + 205 *Math.floor(i/4));
 					_chronoList.push(chrono);
 					chrono.start(2, 1000);
 				}
@@ -583,7 +583,7 @@ package screens{
 				_fightMenu.setButton(_fightMenu.graphic.difficultyBt, {onMouseClick:_onDifficultyBt},"difficultyBt");
 				_fightMenu.setButton(_fightMenu.graphic.backgroundBt, {onMouseClick:_onBackgroundBt},"backgroundBt");
 				_fightMenu.setButton(_fightMenu.graphic.quitBt, {onMouseClick:_onQuitBt},"quitBt");
-				_fightMenu.moveTo(0,105);
+				_fightMenu.moveTo(0,10);
 			}
 			_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
 			_fightMenu.graphic.backgroundTF.text  = _background.currentItem;

@@ -25,7 +25,10 @@ package screens{
 	
 	import customClasses.*;
 	
+	import data.Data;
+	
 	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.geom.ColorTransform;
@@ -61,6 +64,7 @@ package screens{
 		private var _forestm2:ScrollingBitmapComponent = null;
 		private var _forestm3:GraphicComponent = null
 		private var _list:Array = null;
+		private var _statusBar:GraphicComponent = null;
 		
 		public function Demo(){
 		}
@@ -85,12 +89,14 @@ package screens{
 			createBattleField();
 			createPlayers();
 			createWeapons();
-			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",100,582));
+			createStatusBar();
+			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",20,462));
 		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
 			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
 			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
+			_forests.moveTo(0,43);
 			_list.push(_forests);
 			
 			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
@@ -99,7 +105,7 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
 			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
 			_forestm2.graphic = bitmap;
-			_forestm2.moveTo(0,18);
+			_forestm2.moveTo(0,63);
 			_list.push(_forestm2);
 			
 			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
@@ -108,18 +114,18 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
 			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
 			_forestm3.graphic =bitmap;
-			_forestm3.moveTo(0,50);
+			_forestm3.moveTo(0,85);
 			_list.push(_forestm3);
 			
 			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
 			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
-			_battleField.moveTo(0,80);
+			_battleField.moveTo(0,130);
 			_list.push(_battleField);
 		}
 		//------- Create Players-------------------------------
 		private function createPlayers():void {
 			var player:LFE_ObjectComponent;
-			for (var i:int =0; i<5;i++){
+			for (var i:int =0; i<8;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
@@ -132,7 +138,20 @@ package screens{
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
 			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
-			
+		}
+		//------- Create Status Bar -------------------------------
+		private function createStatusBar():void {
+			_statusBar = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myStatusBar") as GraphicComponent;
+			_statusBar.graphic = new StatusBarUI as MovieClip;
+			var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[1].small);
+			_statusBar.graphic.status1.faceClip.addChild(bitmap);
+			_statusBar.graphic.status2.faceClip.addChild(bitmap);
+			_statusBar.graphic.status3.faceClip.addChild(bitmap);
+			_statusBar.graphic.status4.faceClip.addChild(bitmap);
+			_statusBar.graphic.status5.faceClip.addChild(bitmap);
+			_statusBar.graphic.status6.faceClip.addChild(bitmap);
+			_statusBar.graphic.status7.faceClip.addChild(bitmap);
+			_statusBar.graphic.status8.faceClip.addChild(bitmap);
 		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {

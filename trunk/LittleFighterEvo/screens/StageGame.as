@@ -25,7 +25,10 @@ package screens{
 	
 	import customClasses.*;
 	
+	import data.Data;
+	
 	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.geom.ColorTransform;
@@ -67,6 +70,7 @@ package screens{
 		private var _forestm3:GraphicComponent = null
 		private var _pause:PauseComponent = null;
 		private var _list:Array = null;
+		private var _statusBar:GraphicComponent = null;
 		
 		public function StageGame(){
 		}
@@ -89,17 +93,51 @@ package screens{
 			var keyboardMoveComponent:KeyboardMoveComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardMoveComponent","myKeyboardMoveComponent") as KeyboardMoveComponent;
 			var collisionDetectionComponent:CollisionDetectionComponent=_entityManager.addComponentFromName("LittleFighterEvo","CollisionDetectionComponent","myCollisionDetectionComponent") as CollisionDetectionComponent;
 			createBattleField();
+			createPlayers();
+			createStatusBar();
+			createWeapons();
 			
+			EntityFactory.CreateSystemInfo("SystemInfo",200,462);
+		}
+		//------- Create Battle Field -------------------------------
+		private function createBattleField():void {
+			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
+			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
+			_forests.moveTo(0,43)
+			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
+			var bitmaps:Vector.<Bitmap> = new Vector.<Bitmap>()
+			bitmaps.push(_graphicManager.getGraphic("forestm1.png") as Bitmap);
+			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
+			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
+			_forestm2.graphic = bitmap;
+			_forestm2.moveTo(0,63);
+			
+			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
+			bitmaps = new Vector.<Bitmap>()
+			bitmaps.push(_graphicManager.getGraphic("forestm3.png") as Bitmap);
+			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
+			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
+			_forestm3.graphic =bitmap;
+			_forestm3.moveTo(0,85);
+			
+			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
+			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
+			_battleField.moveTo(0,130);
+		}
+		//------- Create Players -------------------------------
+		private function createPlayers():void {
 			var keyPad1:KeyPad = new KeyPad(true);
 			keyPad1.useZQSD();
 			keyPad1.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
-			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(3,null,keyPad1);
+			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(6,null,keyPad1);
 			player1.registerPropertyReference("keyboardInput");
 			player1.moveTo(0,300);
 			//player1.setTimeMultiplicator(10);
 			_list.push(player1);
-			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,520,keyPad1);
-			
+			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,395,keyPad1);
+			gamePad1.moveFireKeys(400,15);
+			gamePad1.hideDirectionKeys();
+			gamePad1.button4.visible=false;
 			/*var keyPad2:KeyPad = new KeyPad(true);
 			keyPad2.useArrows();
 			keyPad2.mapFireButtons(KeyCode.M,KeyCode.PERCENT,KeyCode.STAR,KeyCode.ENTER);
@@ -112,41 +150,29 @@ package screens{
 			
 			/*var player:LFE_ObjectComponent;
 			for (var i:int =0; i<10;i++){
-				player = LFE_Object.CreateObject(1,null,new KeyPad);
-				player.setAI(true);
-				player.moveTo(Math.random()*600,300+Math.random()*100);
-				_list.push(player);
+			player = LFE_Object.CreateObject(1,null,new KeyPad);
+			player.setAI(true);
+			player.moveTo(Math.random()*600,300+Math.random()*100);
+			_list.push(player);
 			}*/
+		}
+		//------- Create Status Bar -------------------------------
+		private function createStatusBar():void {
+			_statusBar = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myStatusBar") as GraphicComponent;
+			_statusBar.graphic = new StatusBarUI as MovieClip;
+			var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[6].small);
+			_statusBar.graphic.status1.faceClip.addChild(bitmap);
+			_statusBar.graphic.status5.visible=false;
+			_statusBar.graphic.status6.visible=false;
+			_statusBar.graphic.status7.visible=false;
+			_statusBar.graphic.status8.visible=false;
+		}
+		//------- Create Weapons -------------------------------
+		private function createWeapons():void {
 			//LFE_Object.CreateObject(151,null,null,new IsoPoint(150,330));
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
 			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
-			
-			EntityFactory.CreateSystemInfo("SystemInfo",100,582);
-		}
-		//------- Create Battle Field -------------------------------
-		private function createBattleField():void {
-			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
-			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
-			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
-			var bitmaps:Vector.<Bitmap> = new Vector.<Bitmap>()
-			bitmaps.push(_graphicManager.getGraphic("forestm1.png") as Bitmap);
-			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
-			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
-			_forestm2.graphic = bitmap;
-			_forestm2.moveTo(0,18);
-			
-			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
-			bitmaps = new Vector.<Bitmap>()
-			bitmaps.push(_graphicManager.getGraphic("forestm3.png") as Bitmap);
-			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
-			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
-			_forestm3.graphic =bitmap;
-			_forestm3.moveTo(0,50);
-			
-			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
-			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
-			_battleField.moveTo(0,80);
 		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {

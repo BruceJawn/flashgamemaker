@@ -28,9 +28,11 @@ package screens{
 	import data.Data;
 	
 	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.geom.ColorTransform;
+	import flash.text.TextField;
 	import flash.utils.setTimeout;
 	
 	import framework.Framework;
@@ -69,9 +71,10 @@ package screens{
 		private var _forestm3:GraphicComponent = null
 		private var _pause:PauseComponent = null;
 		private var _menuComponent:GraphicComponent = null;
+		private var _statusBar:GraphicComponent = null;
 		private var _list:Array = null;
 		private var _lang:Object = null;
-		
+		private var _nbPlayer:int =0;
 		public function VsGame(){
 		}
 		//------ Init Var ------------------------------------
@@ -100,6 +103,7 @@ package screens{
 			createBattleField();
 			createWeapons();
 			createPlayers();
+			createStatusBar();
 			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",100,582));
 		}
 		//------- Create Battle Field -------------------------------
@@ -141,7 +145,9 @@ package screens{
 		}
 		//------- Create Players -------------------------------
 		private function createPlayers():void {
+			_nbPlayer = 0;
 			for each(var data:Object in Data.GAME_PARAM.players){
+				_nbPlayer++;
 				var oid:int = data[0];
 				var player:String = data[1];
 				var team:String = data[2];
@@ -153,14 +159,40 @@ package screens{
 					var playerComponent:LFE_ObjectComponent = LFE_Object.CreateObject(oid,null,keyPad);
 					playerComponent.registerPropertyReference("keyboardInput");
 					var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad"+player, 20+(int(player)-1)*400,510,keyPad);
+					gamePad.hideDirectionKeys();
 					gamePad.button4.visible=false
 					_list.push(gamePad);
+					playerComponent.addPlayerName(_nbPlayer.toString());
 				}else{
 					playerComponent = LFE_Object.CreateObject(oid,null,new KeyPad);
 					playerComponent.setAI(true);
+					playerComponent.addPlayerName(_lang.CharacterSelection.computer);
 				}
 				playerComponent.moveTo(Math.random()*600,300+Math.random()*100);
 				_list.push(playerComponent);
+				_list.push(playerComponent.playerName);
+			}
+		}
+		//------- Create Status Bar -------------------------------
+		private function createStatusBar():void {
+			_statusBar = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myStatusBar") as GraphicComponent;
+			_statusBar.graphic = new StatusBarUI as MovieClip;
+			_list.push(_statusBar);
+			for(var i:int=0;i<=8;i++){
+				if(_nbPlayer<5 && i>=5){
+					_statusBar.graphic["status"+i].visible = false;
+				}
+				if(i>_nbPlayer){
+					_statusBar.graphic["status"+i].lifeBar.visible = false;
+					_statusBar.graphic["status"+i].mpBar.visible = false;	
+				}
+			}
+			i=1;
+			for each(var data:Object in Data.GAME_PARAM.players){
+				var oid:int = data[0];
+				var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[oid].small);
+				_statusBar.graphic["status"+i].faceClip.addChild(BitmapTo.Clone(bitmap));
+				i++;
 			}
 		}
 		//------- On Key Up -------------------------------
@@ -190,8 +222,8 @@ package screens{
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
-				initComponent();
 			}			
+			initComponent();
 		}
 	}
 }
