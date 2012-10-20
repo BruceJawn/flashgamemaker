@@ -27,6 +27,7 @@ package screens{
 	
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -82,6 +83,7 @@ package screens{
 		private var _difficulty:List = null;
 		private var _background:List = null;
 		private var _music:List = null;
+		private var _lang:Object = null;
 		
 		public function CharacterSelection(){
 		}
@@ -93,10 +95,11 @@ package screens{
 			_sliderList = new Array();
 			_nestImageObject = new Array();
 			_randomList = new ArrayPlus();
-			_teamPlayer1 = new List("independent","team1","team2","team3","team4");
-			_teamPlayer2 = new List("independent","team1","team2","team3","team4");
-			_teamComputer = new List("independent","team1","team2","team3","team4");
-			_difficulty = new List("Easy","Normal","Difficult");
+			_lang= MultiLang.data[Data.LOCAL_LANG].CharacterSelection;
+			_teamPlayer1 = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_teamPlayer2 = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_teamComputer = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_difficulty = new List(_lang.easy,_lang.normal,_lang.hard);
 			_background = new List("Forest");
 			_music = new List("stage1","stage2");
 		}
@@ -112,7 +115,7 @@ package screens{
 			for(var i:int=0;i<8;i++){
 				playerTF = _menuComponent.graphic["player"+(i+1)+"TF"]
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
-				playerTF.text = "join";
+				playerTF.text = _lang.join;
 				imageSliderComponent = _sliderList[i]
 				if(!imageSliderComponent){
 					_initSlider(i,155+(i%4)*153,174+211*Math.floor(i/4));
@@ -216,6 +219,12 @@ package screens{
 						return ;
 					}
 					_resetComputers();
+				}else if(_fightMenu && _fightMenu.visible){
+					index= _fightMenu.graphic.focusClip.currentFrame;
+					if(index==1)			_onFightBt(null);
+					else if(index==2)		_onResetRandomBt(null);
+					else if(index==3)		_onResetAllBt(null);
+					else if(index==6)		_onQuitBt(null);
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.J || $evt.keyCode == KeyConfig.Player2.J){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -232,7 +241,7 @@ package screens{
 					target = "_stepPlayer";
 				}
 				if(_stepPlayer1==INIT && _stepPlayer2==INIT){
-					onQuitBt(null);
+					_onQuitBt(null);
 				}
 				if(step==PLAYER_SELECTION){
 					if(target=="_stepComputer"){
@@ -256,7 +265,7 @@ package screens{
 						imageSliderComponent.goto(0);
 						var playerTF:TextField = _menuComponent.graphic["player"+(index+1)+"TF"];
 						var fighterTF:TextField = _menuComponent.graphic["fighter"+(index+1)+"TF"];
-						playerTF.text="join";
+						playerTF.text=_lang.join;
 						fighterTF.text="";
 						this[target+(index+1)]=INIT;	
 						}
@@ -296,8 +305,17 @@ package screens{
 						_computerComponent.prevFrame();
 					}
 				}else if(_fightMenu && _fightMenu.visible){
-					_music.prev();
-					_fightMenu.graphic.musicTF.text = _music.currentItem;
+					index= _fightMenu.graphic.focusClip.currentFrame;
+					if(index==4){
+						_difficulty.prev();
+						_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
+					}else if(index==5){
+						_background.prev();
+						_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
+					}else{
+						_music.prev();
+						_fightMenu.graphic.musicTF.text = _music.currentItem;
+					}
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.RIGHT || $evt.keyCode == KeyConfig.Player2.RIGHT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -326,8 +344,23 @@ package screens{
 						_computerComponent.nextFrame();
 					}
 				}else if(_fightMenu && _fightMenu.visible){
-					_music.prev();
-					_fightMenu.graphic.musicTF.text = _music.currentItem;
+					index= _fightMenu.graphic.focusClip.currentFrame;
+					if(index==4){
+						_difficulty.next();
+						_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
+					}else if(index==5){
+						_background.next();
+						_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
+					}else{
+						_music.prev();
+						_fightMenu.graphic.musicTF.text = _music.currentItem;
+					}
+				}
+			}else if(_fightMenu && _fightMenu.visible){
+				if($evt.keyCode == KeyCode.DOWN || $evt.keyCode == KeyConfig.Player1.DOWN || $evt.keyCode == KeyConfig.Player2.DOWN ){
+					_fightMenu.graphic.focusClip.nextFrame();
+				}else if($evt.keyCode == KeyCode.UP || $evt.keyCode == KeyConfig.Player1.UP || $evt.keyCode == KeyConfig.Player2.UP ){
+					_fightMenu.graphic.focusClip.prevFrame();
 				}
 			}
 		}
@@ -339,12 +372,12 @@ package screens{
 			var teamTF:TextField = _menuComponent.graphic["team"+index+"TF"];
 			var imageSliderComponent:ImageSliderComponent=_sliderList[$index];
 			var position:int = imageSliderComponent.position;
-			if(playerTF.text!="Computer"){
+			if(playerTF.text!=_lang.computer){
 				playerTF.text = index.toString();
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
 			}
 			if(position==1){
-				fighterTF.text = "Random";
+				fighterTF.text = _lang.random;
 			}else if(position>1){
 				fighterTF.text = _nestImageObject[position-2].name;
 			}
@@ -353,7 +386,7 @@ package screens{
 		//------ Select Team ------------------------------------
 		public function selectTeam($position:Number):void {
 			var index:int = $position + 1;
-			if(_menuComponent.graphic["player"+index+"TF"].text=="Computer")
+			if(_menuComponent.graphic["player"+index+"TF"].text==_lang.computer)
 				var team:List = _teamComputer;
 			else{
 				team = this["_teamPlayer"+index];
@@ -405,6 +438,7 @@ package screens{
 			}else{
 				(_computerComponent.graphic.c7TF as TextField).textColor = 0x666666;
 			}
+			_computerComponent.graphic.nbComputersTF.text = _lang.nbComputersTF;
 			if(_stepPlayer1 == WAITING_NEW_PLAYER){
 				_stepPlayer1=NB_COMPUTER_SELECTION;
 			}if(_stepPlayer2 == WAITING_NEW_PLAYER){
@@ -416,14 +450,6 @@ package screens{
 			for each(var c:ChronoComponent in _chronoList){
 				c.visible = false;
 			}
-		}
-		//------ Enter ------------------------------------
-		public override function enter($previousState:State):void {
-			if(!_entityManager){
-				initVar();
-				initComponent();
-			}
-			_initSliders();
 		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
@@ -481,9 +507,9 @@ package screens{
 			imageSliderComponent.goto(1);
 			imageSliderComponent.visible = true;
 			playerTF = _menuComponent.graphic["player"+($index+1)+"TF"];
-			playerTF.text= "Computer";
+			playerTF.text= _lang.computer;
 			fighterTF = _menuComponent.graphic["fighter"+($index+1)+"TF"];
-			fighterTF.text="Random";
+			fighterTF.text=_lang.random;
 			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
 			teamTF.text = "";
 		}
@@ -511,7 +537,7 @@ package screens{
 			for(var i:int=0;i<8;i++){
 				playerTF = _menuComponent.graphic["player"+(i+1)+"TF"]
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
-				playerTF.text = "join";
+				playerTF.text = _lang.join;
 				fighterTF = _menuComponent.graphic["fighter"+(i+1)+"TF"]
 				fighterTF.text = "";
 				teamTF = _menuComponent.graphic["team"+(i+1)+"TF"]
@@ -551,20 +577,28 @@ package screens{
 			else{
 				_fightMenu = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myFightMenu") as GraphicComponent;
 				_fightMenu.graphic = new FightUI as MovieClip;
-				_fightMenu.setButton(_fightMenu.graphic.fightBt, {onMouseClick:onFightBt},"fightBt");
-				_fightMenu.setButton(_fightMenu.graphic.resetRandomBt, {onMouseClick:onResetRandomBt},"resetRandomBt");
-				_fightMenu.setButton(_fightMenu.graphic.resetAllBt, {onMouseClick:onResetAllBt},"resetAllBt");
-				_fightMenu.setButton(_fightMenu.graphic.difficultyBt, {onMouseClick:onDifficultyBt},"difficultyBt");
-				_fightMenu.setButton(_fightMenu.graphic.backgroundBt, {onMouseClick:onBackgroundBt},"backgroundBt");
-				_fightMenu.setButton(_fightMenu.graphic.quitBt, {onMouseClick:onQuitBt},"quitBt");
+				_fightMenu.setButton(_fightMenu.graphic.fightBt, {onMouseClick:_onFightBt},"fightBt");
+				_fightMenu.setButton(_fightMenu.graphic.resetRandomBt, {onMouseClick:_onResetRandomBt},"resetRandomBt");
+				_fightMenu.setButton(_fightMenu.graphic.resetAllBt, {onMouseClick:_onResetAllBt},"resetAllBt");
+				_fightMenu.setButton(_fightMenu.graphic.difficultyBt, {onMouseClick:_onDifficultyBt},"difficultyBt");
+				_fightMenu.setButton(_fightMenu.graphic.backgroundBt, {onMouseClick:_onBackgroundBt},"backgroundBt");
+				_fightMenu.setButton(_fightMenu.graphic.quitBt, {onMouseClick:_onQuitBt},"quitBt");
 				_fightMenu.moveTo(0,105);
-				_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
-				_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
-				_fightMenu.graphic.musicTF.text = _music.currentItem;
 			}
+			_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
+			_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
+			_fightMenu.graphic.musicTF.text = _music.currentItem;
+			_fightMenu.graphic.changeMusicTF.text = _lang.changeMusicTF;
+			_upateButtonTF(_fightMenu.graphic.fightBt, _lang.fightBt);
+			_upateButtonTF(_fightMenu.graphic.resetRandomBt, _lang.resetRandomBt);
+			_upateButtonTF(_fightMenu.graphic.resetAllBt, _lang.resetAllBt);
+			_upateButtonTF(_fightMenu.graphic.difficultyBt, _lang.difficultyBt);
+			_upateButtonTF(_fightMenu.graphic.backgroundBt, _lang.backgroundBt);
+			_upateButtonTF(_fightMenu.graphic.quitBt, _lang.quitBt);
 		}
 		//------ On Fight Bt Click ------------------------------------
-		private function onFightBt($mousePad:MousePad):void {
+		private function _onFightBt($mousePad:MousePad):void {
+			Framework.Focus();
 			var list:Array = new Array();
 			var imageSliderComponent:ImageSliderComponent;
 			var teamTF:TextField=null;	
@@ -582,27 +616,62 @@ package screens{
 			_finiteStateMachine.goToNextState();
 		}
 		//------ On Reset Random Bt Click ------------------------------------
-		private function onResetRandomBt($mousePad:MousePad):void {
+		private function _onResetRandomBt($mousePad:MousePad):void {
+			Framework.Focus();
 			_resetRandom();
 		}
 		//------ On Reset All Bt Click ------------------------------------
-		private function onResetAllBt($mousePad:MousePad):void {
+		private function _onResetAllBt($mousePad:MousePad):void {
+			Framework.Focus();
 			_resetAll();
 		}
 		//------ On Difficulty Bt Click ------------------------------------
-		private function onDifficultyBt($mousePad:MousePad):void {
+		private function _onDifficultyBt($mousePad:MousePad):void {
+			Framework.Focus();
 			_difficulty.next();
 			_fightMenu.graphic.difficultyTF.text  = _difficulty.currentItem;
 		}
 		//------ On Background Bt Click ------------------------------------
-		private function onBackgroundBt($mousePad:MousePad):void {
+		private function _onBackgroundBt($mousePad:MousePad):void {
+			Framework.Focus();
 			_background.next();
 			_fightMenu.graphic.backgroundTF.text  = _background.currentItem;
 		}
 		//------ On Quit Bt Click ------------------------------------
-		private function onQuitBt($mousePad:MousePad):void {
+		private function _onQuitBt($mousePad:MousePad):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(2);
 			_finiteStateMachine.goToPreviousState();
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateLang():void {
+			_lang= MultiLang.data[Data.LOCAL_LANG].CharacterSelection;
+			_teamPlayer1 = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_teamPlayer2 = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_teamComputer = new List(_lang.independent,_lang.team1,_lang.team2,_lang.team3,_lang.team4);
+			_difficulty = new List(_lang.easy,_lang.normal,_lang.hard);
+			TextField(_menuComponent.graphic.characterSelectionTF).htmlText = _lang.characterSelectionTF;
+			TextField(_menuComponent.graphic.playerField1TF).htmlText = _lang.playerFieldTF;
+			TextField(_menuComponent.graphic.playerField2TF).htmlText = _lang.playerFieldTF;
+			TextField(_menuComponent.graphic.fighterField1TF).htmlText = _lang.fighterFieldTF;
+			TextField(_menuComponent.graphic.fighterField2TF).htmlText = _lang.fighterFieldTF;
+			TextField(_menuComponent.graphic.teamField1TF).htmlText = _lang.teamFieldTF;
+			TextField(_menuComponent.graphic.teamField2TF).htmlText = _lang.teamFieldTF;
+		}
+		//------ Update Lang ------------------------------------
+		private function _upateButtonTF($button:SimpleButton, $text:String):void {
+			TextField($button.upState).text=$text;
+			TextField($button.overState).text=$text;
+			TextField($button.downState).text=$text;
+		}
+		//------ Enter ------------------------------------
+		public override function enter($previousState:State):void {
+			if(!_entityManager){
+				initVar();
+				initComponent();
+			}
+			_initSliders();
+			_upateLang();
 		}
 		//------ Exit ------------------------------------
 		public override function exit($previousState:State):void {

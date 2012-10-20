@@ -70,6 +70,7 @@ package screens{
 		private var _pause:PauseComponent = null;
 		private var _menuComponent:GraphicComponent = null;
 		private var _list:Array = null;
+		private var _lang:Object = null;
 		
 		public function VsGame(){
 		}
@@ -79,6 +80,7 @@ package screens{
 			_graphicManager = GraphicManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_list=new Array();
+			_lang= MultiLang.data[Data.LOCAL_LANG];
 		}
 		//------- Start Game -------------------------------
 		public function startGame():void {
@@ -143,7 +145,7 @@ package screens{
 				var oid:int = data[0];
 				var player:String = data[1];
 				var team:String = data[2];
-				if(player!="Computer"){
+				if(player!=_lang.CharacterSelection.computer){
 					var keyPad:KeyPad = new KeyPad(true);
 					var keyConfig:Object = KeyConfig["Player"+player];
 					keyPad.mapDirection(keyConfig.UP,keyConfig.DOWN,keyConfig.LEFT,keyConfig.RIGHT);
@@ -163,6 +165,7 @@ package screens{
 		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {
+			if(_finiteStateMachine.currentState!=this)	return;
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
 			if(KeyCode.GetKey($evt.keyCode)=="F1"){
 				MyGame.Pause();

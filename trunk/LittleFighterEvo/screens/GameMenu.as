@@ -28,6 +28,7 @@ package screens{
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
+	import framework.Framework;
 	import framework.component.core.GraphicComponent;
 	import framework.component.core.KeyboardInputComponent;
 	import framework.entity.EntityManager;
@@ -45,6 +46,7 @@ package screens{
 		private var _entityManager:IEntityManager	= null;
 		private var _menuComponent:GraphicComponent = null;
 		private var _keyInput:KeyboardInputComponent;
+		private var _lang:Object = null;
 		
 		public function GameMenu(){
 		}
@@ -58,6 +60,7 @@ package screens{
 			SimpleButton(_menuComponent.graphic.twovstwochampionshipBt).mouseEnabled=false;
 			//_menuComponent.setButton(_menuComponent.graphic.stageModeBt, {onMouseClick:onStageModeBtClick},"stageModeBt");
 			//_menuComponent.setButton(_menuComponent.graphic.survivalModeBt, {onMouseClick:onSurvivalModeBtClick},"survivalModeBt");
+			_lang= MultiLang.data[Data.LOCAL_LANG].GameMenu;
 		}
 		//------ Init Listener ------------------------------------
 		private function _initListener():void {
@@ -84,16 +87,19 @@ package screens{
 		}
 		//------ On VS Mode Bt Click ------------------------------------
 		private function _onVsModeBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(4);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"VsGame");
 		}
 		//------ On Stage Mode Bt Click ------------------------------------
 		private function _onStageModeBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"StageGame");
 		}
 		//------ On Survival Mode Bt Click ------------------------------------
 		private function _onSurvivalModeBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("CharacterSelection",null,"SurvivalGame");
 		}
@@ -107,7 +113,8 @@ package screens{
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateLang():void {
-			_upateButtonTF(_menuComponent.graphic.vsModeBt,MultiLang.data[Data.LOCAL_LANG].GameMenu.vsModeBt);
+			_lang= MultiLang.data[Data.LOCAL_LANG].GameMenu;
+			_upateButtonTF(_menuComponent.graphic.vsModeBt,_lang.vsModeBt);
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateButtonTF($button:SimpleButton, $text:String):void {
