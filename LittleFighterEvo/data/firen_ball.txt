@@ -1,8 +1,8 @@
 {
-	"name":"Davis_ball",
+	"name":"Firen_ball",
 	"fps":14,
-	"w":80,
-	"h":46,
+	"w":81,
+	"h":82,
 	"d":20,
 	"row":3,
 	"col":4,
@@ -10,69 +10,34 @@
 	
 	"frames":[
 		{
-			"id":0, "frame":0, "name":"Fly", "state":"Fly", "wait":0,"next":12, "flip":true,"endAnim":true, "dvx":9, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
+			"id":0, "frame":0, "name":"Fly", "state":"Fly", "wait":0,"next":12, "flip":true, "dvx":9, "dvy":0, "offsetx":0, "offsety":0,
+			"bdy": {"kind":0, "x":22, "y":27, "w":55, "h":27},
+			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30, "effect":20} 
 		},
 		{
 			"id":1,"frame":1, "name":"Fly", "state":"Fly", "wait":0, "next":10,"dvx":10, "dvy":0,  "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"bdy": {"kind":0, "x":22, "y":27, "w":55, "h":27},
 			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30}
 		},
 		{
 			"id":2, "frame":0, "name":"Fly", "state":"Fly", "wait":0,"next":10, "flip":true, "dvx":12, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"bdy": {"kind":0, "x":22, "y":27, "w":55, "h":27},
 			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
 		},
 		{
-			"id":3,"frame":1, "name":"Fly", "state":"Fly", "wait":0,"next":10, "dvx":10, "dvy":0,  "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
+			"id":3,"frame":4, "name":"Hit", "state":"Fly", "fps":18,"endAnim":true,"wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
 		},
 		{
-			"id":4,"frame":2, "name":"Fly", "state":"Fly", "wait":0,"next":10, "dvx":10, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
+			"id":4,"frame":5, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
 		},
 		{
-			"id":5,"frame":3, "name":"Fly", "state":"Fly", "wait":0,"next":10, "dvx":10, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
+			"id":5,"frame":6, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
 		},
 		{
-			"id":6,"frame":2, "name":"Fly", "state":"Fly", "wait":0,"next":10, "dvx":10, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
+			"id":6,"frame":7, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
 		},
 		{
-			"id":7,"frame":3, "name":"Fly", "state":"Fly", "wait":0,"next":10, "dvx":10, "dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":7, "fall":20, "arest":6, "bdefend":10, "injury": 30} 
-		},
-		{
-			"id":8,"frame":8, "name":"Fly", "state":"Fly", "wait":20,"next":10, "dvx":16, "dvy":0, "offsetx":0, "offsety":-3,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":6, "fall":70, "arest":6, "bdefend":10, "injury": 30} 
-		},
-		{
-			"id":9,"frame":9, "name":"Fly", "state":"Fly", "wait":20,"next":10, "dvx":18, "dvy":0, "offsetx":0, "offsety":-3,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
-			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":6, "fall":70, "arest":6, "bdefend":10, "injury": 30} 
-		},
-		{
-			"id":10,"frame":4, "name":"Hit", "state":"Fly", "fps":18,"endAnim":true,"wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
-		},
-		{
-			"id":11,"frame":5, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
-		},
-		{
-			"id":12,"frame":6, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
-		},
-		{
-			"id":13,"frame":7, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
-		},
-		{
-			"id":14,"frame":10, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":7,"frame":10, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
 		}
 	]
 }
