@@ -60,6 +60,7 @@ package screens{
 		private var _soundManager:ISoundManager=null;
 		private var _mainMusic:String;
 		private var _keyInput:KeyboardInputComponent;
+		private var _lang:Object = null;
 		
 		public function UInterface(){
 		}
@@ -94,27 +95,32 @@ package screens{
 		}
 		//------ On Start Bt Click ------------------------------------
 		private function _onStartBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(2);
 			//_finiteStateMachine.changeStateByName("StageGame");
 			_finiteStateMachine.changeStateByName("GameMenu");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function _onControlSettingsBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(3);
 			_finiteStateMachine.changeStateByName("ControlSettings");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function _onDemoBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("Demo");
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function _onFrBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			Data.LOCAL_LANG="fr";
 			_upateLang();
 		}
 		//------ On Control Settings Bt Click ------------------------------------
 		private function _onEngBtClick($evt:MouseEvent):void {
+			Framework.Focus();
 			Data.LOCAL_LANG="eng";
 			_upateLang();
 		}
@@ -146,6 +152,7 @@ package screens{
 			//var dataJSON:Object = JSON.parse(dataString);//Flash 11
 			var dataJSON:Object = JSON.decode(dataString);//Flash 10
 			MultiLang.data = dataJSON;
+			_lang= MultiLang.data[Data.LOCAL_LANG].Uinterface;
 		}
 		//------ Init Key Listener ------------------------------------
 		private function _initKeyListener():void {
@@ -158,11 +165,12 @@ package screens{
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateLang():void {
-			TextField(_menuComponent.graphic.licenseTF).htmlText = MultiLang.data[Data.LOCAL_LANG].Uinterface.licenseTF;
-			TextField(_menuComponent.graphic.clickTF).htmlText = MultiLang.data[Data.LOCAL_LANG].Uinterface.clickTF;
-			_upateButtonTF(_menuComponent.graphic.gameStartBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.gameStartBt);
-			_upateButtonTF(_menuComponent.graphic.controlSettingsBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.controlSettingsBt);
-			_upateButtonTF(_menuComponent.graphic.demoBt,MultiLang.data[Data.LOCAL_LANG].Uinterface.demoBt);
+			_lang= MultiLang.data[Data.LOCAL_LANG].Uinterface;
+			TextField(_menuComponent.graphic.licenseTF).htmlText = _lang.licenseTF;
+			TextField(_menuComponent.graphic.clickTF).htmlText = _lang.clickTF;
+			_upateButtonTF(_menuComponent.graphic.gameStartBt,_lang.gameStartBt);
+			_upateButtonTF(_menuComponent.graphic.controlSettingsBt,_lang.controlSettingsBt);
+			_upateButtonTF(_menuComponent.graphic.demoBt,_lang.demoBt);
 		}
 		//------ Update Lang ------------------------------------
 		private function _upateButtonTF($button:SimpleButton, $text:String):void {

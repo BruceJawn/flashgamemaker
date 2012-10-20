@@ -11,7 +11,7 @@
 		},
 		"GameMenu":
 		{
-			"vsModeBt":"VS Mode"			
+			"vsModeBt":"VS mode"			
 		},
 		"ControlSettings":
 		{
@@ -31,7 +31,29 @@
 		},
 		"CharacterSelection":
 		{
-					
+			"characterSelectionTF":"Sélection du joueur",
+			"playerFieldTF":"joueur",
+			"fighterFieldTF":"combattant",
+			"teamFieldTF":"équipe",
+			"independent":"indépendent",
+			"team1":"équipe1",
+			"team2":"équipe2",
+			"team3":"équipe3",
+			"team4":"équipe4",
+			"easy":"Facil",
+			"normal":"Normal",
+			"hard":"Difficil",
+			"join":"joindre",
+			"random":"aléatoire",
+			"computer":"ordinateur",
+			"changeMusicTF":"(Appui Gauche/Droite pour changer)",
+			"fightBt":"Fight",
+			"resetRandomBt":"Reset Aléatoire",
+			"resetAllBt":"Reset All",
+			"difficultyBt":"Difficulté:",
+			"backgroundBt":"Background:",
+			"quitBt":"Quitter",
+			"nbComputersTF":"Nombre de joueurs ordinateur"
 		}
 	},
 	"eng":
@@ -46,7 +68,7 @@
 		},
 		"GameMenu":
 		{
-			"vsModeBt":"VS Mode"	
+			"vsModeBt":"VS mode"	
 		},
 		"ControlSettings":
 		{
@@ -66,7 +88,29 @@
 		},
 		"CharacterSelection":
 		{
-					
+			"characterSelectionTF":"Character Selection",
+			"playerFieldTF":"player",
+			"fighterFieldTF":"fighter",
+			"teamFieldTF":"team",
+			"independent":"independent",
+			"team1":"team1",
+			"team2":"team2",
+			"team3":"team3",
+			"team4":"team4",
+			"easy":"Easy",
+			"normal":"Normal",
+			"hard":"Hard",
+			"join":"join",
+			"random":"random",
+			"computer":"computer",
+			"changeMusicTF":"(Press Left/Right to change)",
+			"fightBt":"Fight!",
+			"resetRandomBt":"Reset Random",
+			"resetAllBt":"Reset All",
+			"difficultyBt":"Difficulty:",
+			"backgroundBt":"Background:",
+			"quitBt":"Quit",
+			"nbComputersTF":"How many Computer Players?"
 		}
 	}
 }
