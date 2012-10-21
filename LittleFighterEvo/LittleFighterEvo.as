@@ -36,6 +36,9 @@ package {
 	 */
 	[SWF(width=800, height=480, backgroundColor=0x101F62, frameRate=30, scriptTimeLimit=15)]
 	public class LittleFighterEvo extends Sprite {
+		public static var ROOT:String;
+		private var _useGlobalPath:Boolean=true;
+		private var _globalPath:String = "http://angelstreetv2.free.fr/LittleFighterEvo/";
 		
 		public function LittleFighterEvo() {
 			if (stage){
@@ -68,6 +71,8 @@ package {
 		//------ Init Framework ------------------------------------
 		private function _initFramework():void {
 			var framework:Framework = new Framework(this);
+			if(_useGlobalPath)		ROOT = _globalPath;
+			else					ROOT = Framework.root;
 		}
 		//------ Init Profiler: The Miner ------------------------------------
 		private function _initProfiler():void {

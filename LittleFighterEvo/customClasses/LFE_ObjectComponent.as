@@ -51,6 +51,7 @@ package customClasses{
 	import utils.bitmap.BitmapCell;
 	import utils.bitmap.BitmapGraph;
 	import utils.bitmap.BitmapSet;
+	import utils.game.Status;
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
 	import utils.physic.SpatialMove;
@@ -78,7 +79,9 @@ package customClasses{
 		protected var _weapon:LFE_ObjectComponent = null;
 		protected var _target:LFE_ObjectComponent = null;
 		protected var _playerName:GraphicComponent = null;
+		protected var _miniBar:GraphicComponent = null;
 		protected var _ai:Object = null;
+		protected var _status:Status;
 		
 		public function LFE_ObjectComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -103,6 +106,7 @@ package customClasses{
 			}else{
 				_keyPad = new KeyPad;
 			}
+			_status = new Status(_lfe_frame.data.life,_lfe_frame.data.mp);
 		}
 		//------ Init Property  ------------------------------------
 		public override function initProperty():void {
@@ -203,6 +207,7 @@ package customClasses{
 				_aiStateMachine.currentState.update();
 			}
 			updatePlayerName();
+			updateMiniBar();
 		}
 		//------ Add Player Name ------------------------------------
 		public function addPlayerName($name:String):void {
@@ -210,14 +215,24 @@ package customClasses{
 			textField.selectable = false;
 			textField.autoSize = "center";
 			textField.text = $name;
-			textField.setTextFormat(new TextFormat("Arial",12,0xFFFFF,true));
+			textField.setTextFormat(new TextFormat("Arial",11,0xFFFFFF,true));
 			_playerName = EntityManager.getInstance().addComponentFromName("LittleFighterEvo","GraphicComponent") as GraphicComponent;
 			_playerName.graphic = textField;
 		}
 		//------ Update PlayerName ------------------------------------
 		public function updatePlayerName():void {
 			if(_playerName)
-				_playerName.moveTo(x,y+height);
+				_playerName.moveTo(x-7,y+height-5);
+		}
+		//------ Add Mini Bar ------------------------------------
+		public function addMiniBar():void {
+			_miniBar = EntityManager.getInstance().addComponentFromName("LittleFighterEvo","GraphicComponent") as GraphicComponent;
+			_miniBar.graphic = new MiniBar;
+		}
+		//------ Update MiniBar ------------------------------------
+		public function updateMiniBar():void {
+			if(_miniBar)
+				_miniBar.moveTo(x+_miniBar.graphic.width/2-2,y+height+11);
 		}
 		//------ Hurt Enemy ------------------------------------
 		public function hurtEnemy():Boolean {
@@ -478,6 +493,10 @@ package customClasses{
 		//------ Get Player Name ------------------------------------
 		public function get playerName():GraphicComponent {
 			return _playerName;
+		}
+		//------ Get Player Name ------------------------------------
+		public function get miniBar():GraphicComponent {
+			return _miniBar;
 		}
 		//------ Set Artificial Intelligence  ------------------------------------
 		public function set ai($ai:Object):void {

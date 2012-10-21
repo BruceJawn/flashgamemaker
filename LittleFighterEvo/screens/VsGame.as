@@ -75,6 +75,7 @@ package screens{
 		private var _list:Array = null;
 		private var _lang:Object = null;
 		private var _nbPlayer:int =0;
+		private var _useMiniBar:Boolean = true;
 		public function VsGame(){
 		}
 		//------ Init Var ------------------------------------
@@ -158,9 +159,10 @@ package screens{
 					keyPad.mapFireButtons(keyConfig.A,keyConfig.J,keyConfig.D,0);
 					var playerComponent:LFE_ObjectComponent = LFE_Object.CreateObject(oid,null,keyPad);
 					playerComponent.registerPropertyReference("keyboardInput");
-					var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad"+player, 20+(int(player)-1)*400,510,keyPad);
+					var gamePad:GamePadComponent = EntityFactory.CreateGamePad("GamePad"+player, 20+(int(player)-1)*450,395,keyPad);
 					gamePad.hideDirectionKeys();
 					gamePad.button4.visible=false
+					gamePad.moveFireKeys(-100,10);
 					_list.push(gamePad);
 					playerComponent.addPlayerName(_nbPlayer.toString());
 				}else{
@@ -168,6 +170,7 @@ package screens{
 					playerComponent.setAI(true);
 					playerComponent.addPlayerName(_lang.CharacterSelection.computer);
 				}
+				if(_useMiniBar)playerComponent.addMiniBar();
 				playerComponent.moveTo(Math.random()*600,300+Math.random()*100);
 				_list.push(playerComponent);
 				_list.push(playerComponent.playerName);
@@ -175,6 +178,7 @@ package screens{
 		}
 		//------- Create Status Bar -------------------------------
 		private function createStatusBar():void {
+			if(_useMiniBar)	return;
 			_statusBar = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myStatusBar") as GraphicComponent;
 			_statusBar.graphic = new StatusBarUI as MovieClip;
 			_list.push(_statusBar);

@@ -21,6 +21,8 @@
 *
 */
 package screens{
+	import com.adobe.serialization.json.JSON;
+	
 	import data.Data;
 	
 	import flash.events.Event;
@@ -41,7 +43,8 @@ package screens{
 		private var _preloaderComponent:PreloaderComponent;
 		private var _soundManager:ISoundManager=null;
 		private var _ressourceManager:IRessourceManager=null;
-		private var _currentDirectoryPath:String
+		private var _currentDirectoryPath:String;
+		
 		
 		// Preloader load the main swf (FlashGameMaker.swf) and preload assets
 		public function Preloader(){
@@ -51,6 +54,21 @@ package screens{
 			_entityManager = EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
 			_ressourceManager = RessourceManager.getInstance();
+		}
+		//------ Init Data ------------------------------------
+		private function initData():void {
+			var callback:Object = {onComplete:onDataLoaded};
+			_ressourceManager.loadFile(LittleFighterEvo.ROOT+"/data/Data.txt",callback);
+		}
+		//------ On Data Loaded ------------------------------------
+		private function onDataLoaded($dataString:String):void {
+			//var dataJSON:Object = JSON.parse($dataString);//Flash 11
+			var dataJSON:Object = JSON.decode($dataString);//Flash 10
+			trace($dataString);
+			Data.OBJECT 	= dataJSON.OBJECT;
+			Data.BACKGROUND = dataJSON.BACKGROUND;
+			Data.OTHERS 	= dataJSON.OTHERS;
+			initComponent();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -64,22 +82,22 @@ package screens{
 		private function getAssetsToLoad():Array {
 			var assetsToLoad:Array = new Array();
 			for each(var bg:Object in Data.BACKGROUND){
-				assetsToLoad.push(Framework.root+bg.path);
+				assetsToLoad.push(LittleFighterEvo.ROOT+bg.path);
 			}
 			for each(var object:Object in Data.OBJECT){
-				assetsToLoad.push(Framework.root+object.data);
+				assetsToLoad.push(LittleFighterEvo.ROOT+object.data);
 				for each(var graphic:String in object.graphics){
-					assetsToLoad.push(Framework.root+graphic);
+					assetsToLoad.push(LittleFighterEvo.ROOT+graphic);
 					if(object.hasOwnProperty("face")){
-						assetsToLoad.push(Framework.root+object.face);
+						assetsToLoad.push(LittleFighterEvo.ROOT+object.face);
 					}
 					if(object.hasOwnProperty("small")){
-						assetsToLoad.push(Framework.root+object.small);
+						assetsToLoad.push(LittleFighterEvo.ROOT+object.small);
 					}
 				}
 			}
 			for each(var other:Object in Data.OTHERS){
-				assetsToLoad.push(Framework.root+other);
+				assetsToLoad.push(LittleFighterEvo.ROOT+other);
 			}
 			return assetsToLoad;
 		}
@@ -95,7 +113,7 @@ package screens{
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
 				initVar();
-				initComponent();
+				initData();
 			}
 		}
 		//------ Exit ------------------------------------

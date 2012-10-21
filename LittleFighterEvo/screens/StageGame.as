@@ -94,7 +94,7 @@ package screens{
 			var collisionDetectionComponent:CollisionDetectionComponent=_entityManager.addComponentFromName("LittleFighterEvo","CollisionDetectionComponent","myCollisionDetectionComponent") as CollisionDetectionComponent;
 			createBattleField();
 			createPlayers();
-			createStatusBar();
+			//createStatusBar();
 			createWeapons();
 			
 			EntityFactory.CreateSystemInfo("SystemInfo",200,462);
@@ -129,11 +129,13 @@ package screens{
 			var keyPad1:KeyPad = new KeyPad(true);
 			keyPad1.useZQSD();
 			keyPad1.mapFireButtons(KeyCode.I,KeyCode.O,KeyCode.P,221);
-			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(6,null,keyPad1);
+			var player1:LFE_ObjectComponent = LFE_Object.CreateObject(1,null,keyPad1);
 			player1.registerPropertyReference("keyboardInput");
 			player1.moveTo(0,300);
+			player1.addMiniBar();
 			//player1.setTimeMultiplicator(10);
 			_list.push(player1);
+			_list.push(player1.miniBar);
 			var gamePad1:GamePadComponent = EntityFactory.CreateGamePad("GamePad1", 20,395,keyPad1);
 			gamePad1.moveFireKeys(400,15);
 			gamePad1.hideDirectionKeys();
@@ -160,7 +162,7 @@ package screens{
 		private function createStatusBar():void {
 			_statusBar = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myStatusBar") as GraphicComponent;
 			_statusBar.graphic = new StatusBarUI as MovieClip;
-			var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[6].small);
+			var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[1].small);
 			_statusBar.graphic.status1.faceClip.addChild(bitmap);
 			_statusBar.graphic.status5.visible=false;
 			_statusBar.graphic.status6.visible=false;

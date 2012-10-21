@@ -29,6 +29,7 @@ package screens{
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextColorType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
@@ -84,6 +85,10 @@ package screens{
 		private var _background:List = null;
 		private var _music:List = null;
 		private var _lang:Object = null;
+		private var _focusTextField1:TextField;
+		private var _focusTextField2:TextField;
+		private var _focusTextFieldComputer:TextField;
+		private var _focusTextColor:uint =0xACB8DC;
 		
 		public function CharacterSelection(){
 		}
@@ -163,12 +168,14 @@ package screens{
 					var index:int = _computerSliderPosition;
 					var step:int = _stepComputer;
 					var team:List = _teamComputer;
+					var focusTextField:String = "_focusTextFieldComputer" 
 					var imageSliderComponent:ImageSliderComponent=_sliderList[index];
 					target = "_stepComputer";
 				}else{
 					index = $evt.keyCode == KeyConfig.Player1.A?0:1;
 					step = this["_stepPlayer"+(index+1)];
 					team = this["_teamPlayer"+(index+1)];
+					focusTextField = "_focusTextField"+(index+1);
 					imageSliderComponent=_sliderList[index];
 					target = "_stepPlayer";
 				}
@@ -176,6 +183,16 @@ package screens{
 					if(_chronoList){
 						_cancelCounter();
 					}	
+					if(_computerComponent){
+						_computerComponent.visible = false;
+						(_computerComponent.graphic.c0TF as TextField).textColor = 0xFFFFFF;
+						(_computerComponent.graphic.c7TF as TextField).textColor = 0xFFFFFF;
+						if(_stepPlayer1 == NB_COMPUTER_SELECTION){
+							_stepPlayer1=WAITING_NEW_PLAYER;
+						}if(_stepPlayer2 == NB_COMPUTER_SELECTION){
+							_stepPlayer2=WAITING_NEW_PLAYER;
+						}
+					}
 					if(imageSliderComponent.position==0){
 						imageSliderComponent.next([0]);
 						selectCharacter(index);
@@ -201,11 +218,27 @@ package screens{
 							_computerSliderPosition++;
 							_stepComputer = 1;
 							_teamComputer.goto(0);
+							_focusTextFieldComputer.textColor = 0xFFFFFF
+							teamTF = _menuComponent.graphic["team"+(_computerSliderPosition)+"TF"];
+							teamTF.textColor=0xFFFFFF;
+							fighterTF = _menuComponent.graphic["fighter"+(_computerSliderPosition+1)+"TF"];
+							fighterTF.textColor=_focusTextColor;
+							_focusTextFieldComputer = fighterTF;
 						}else{
+							if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
+							_focusTextField1 = null;
+							if(_focusTextField2)_focusTextField2.textColor=0xFFFFFF;
+							_focusTextField2 = null;
+							if(_focusTextFieldComputer)_focusTextFieldComputer.textColor=0xFFFFFF;
+							_focusTextFieldComputer = null;
 							_showFightMenu();
 							return ;
 						}
-					}else this[target+(index+1)]=WAITING_NEW_PLAYER;
+					}else{
+						this[target+(index+1)]=WAITING_NEW_PLAYER;
+						if(this[focusTextField])this[focusTextField].textColor = 0xFFFFFF
+						this[focusTextField] = null;
+					} 
 					if(index==0 && (_stepPlayer2==INIT || _stepPlayer2==WAITING_NEW_PLAYER) || index==1 && (_stepPlayer1==INIT || _stepPlayer1==WAITING_NEW_PLAYER)){
 						startCounter();
 					}
@@ -215,6 +248,8 @@ package screens{
 					_computerComponent.visible = false;
 					_nbComputer = _computerComponent.currentFrame-1;
 					if(_nbComputer ==0){
+						if(this[focusTextField])	this[focusTextField].textColor = 0xFFFFFF;
+						this[focusTextField] = null;
 						_showFightMenu();
 						return ;
 					}
@@ -233,12 +268,14 @@ package screens{
 					team = _teamComputer;
 					imageSliderComponent=_sliderList[index];
 					target = "_stepComputer";
+					focusTextField = "_focusTextFieldComputer" 
 				}else{
 					index = $evt.keyCode == KeyConfig.Player1.J?0:1;
 					step = this["_stepPlayer"+(index+1)];
 					team = this["_teamPlayer"+(index+1)];
 					imageSliderComponent=_sliderList[index];
 					target = "_stepPlayer";
+					focusTextField = "_focusTextField"+(index+1);
 				}
 				if(_stepPlayer1==INIT && _stepPlayer2==INIT){
 					_onQuitBt(null);
@@ -260,6 +297,11 @@ package screens{
 							_resetComputer(index);
 							var teamTF:TextField = _menuComponent.graphic["team"+(_computerSliderPosition+1)+"TF"]
 							teamTF.text = "";
+							fighterTF = _menuComponent.graphic["fighter"+(_computerSliderPosition+1)+"TF"];
+							fighterTF.textColor = 0xFFFFFF
+							fighterTF = _menuComponent.graphic["fighter"+(_computerSliderPosition+1)+"TF"];
+							fighterTF.textColor = _focusTextColor
+							this[focusTextField] = fighterTF;
 						} 
 					}else{
 						imageSliderComponent.goto(0);
@@ -277,6 +319,14 @@ package screens{
 					}
 					teamTF = _menuComponent.graphic["team"+(index+1)+"TF"]
 					teamTF.text = "";
+					fighterTF = _menuComponent.graphic["fighter"+(index+1)+"TF"];
+					fighterTF.textColor = _focusTextColor;
+					this[focusTextField] = fighterTF;
+				}else if(step==WAITING_NEW_PLAYER){
+					teamTF = _menuComponent.graphic["team"+(index+1)+"TF"];
+					teamTF.textColor = _focusTextColor;
+					this[focusTextField] = teamTF;
+					this[target+(index+1)]=TEAM_SELECTION;
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -372,15 +422,27 @@ package screens{
 			var teamTF:TextField = _menuComponent.graphic["team"+index+"TF"];
 			var imageSliderComponent:ImageSliderComponent=_sliderList[$index];
 			var position:int = imageSliderComponent.position;
+			if(index==1){
+				var focusTextField:String = "_focusTextField1";
+			}else if(index==2){
+				focusTextField = "_focusTextField2";
+			}else{
+				focusTextField = "_focusTextFieldComputer";
+			}
 			if(playerTF.text!=_lang.computer){
 				playerTF.text = index.toString();
 				playerTF.autoSize = TextFieldAutoSize.CENTER;
+			}
+			if(this[focusTextField] && this[focusTextField]!=fighterTF){
+				this[focusTextField].textColor=0xFFFFFF;
 			}
 			if(position==1){
 				fighterTF.text = _lang.random;
 			}else if(position>1){
 				fighterTF.text = _nestImageObject[position-2].name;
 			}
+			fighterTF.textColor=_focusTextColor;
+			this[focusTextField] = fighterTF;
 			fighterTF.autoSize = TextFieldAutoSize.CENTER;
 		}
 		//------ Select Team ------------------------------------
@@ -391,9 +453,21 @@ package screens{
 			else{
 				team = this["_teamPlayer"+index];
 			}
+			if(index==1){
+				var focusTextField:String = "_focusTextField1";
+			}else if(index==2){
+				focusTextField = "_focusTextField2";
+			}else{
+				focusTextField = "_focusTextFieldComputer";
+			}
 			var teamTF:TextField = _menuComponent.graphic["team"+index+"TF"];
+			if(this[focusTextField] && this[focusTextField]!=teamTF){
+				this[focusTextField].textColor=0xFFFFFF;
+			}
 			teamTF.text = team.currentItem;
 			teamTF.autoSize = TextFieldAutoSize.CENTER;
+			teamTF.textColor=_focusTextColor;
+			this[focusTextField] = teamTF;
 		}
 		//------ Start Counter ------------------------------------
 		public function startCounter():void {
@@ -474,6 +548,12 @@ package screens{
 				(_computerComponent.graphic.c0TF as TextField).textColor = 0xFFFFFF;
 				(_computerComponent.graphic.c7TF as TextField).textColor = 0xFFFFFF;
 			}
+			if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
+			_focusTextField1 = null;
+			if(_focusTextField2)_focusTextField2.textColor=0xFFFFFF;
+			_focusTextField2 = null;
+			if(_focusTextFieldComputer)_focusTextFieldComputer.textColor=0xFFFFFF;
+			_focusTextFieldComputer = null;
 		}
 		//------ Reset All------------------------------------
 		private  function _resetAll():void {
@@ -488,6 +568,12 @@ package screens{
 			_resetSliders();
 			_resetCounter();
 			_randomList = new ArrayPlus();
+			if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
+			_focusTextField1 = null;
+			if(_focusTextField2)_focusTextField2.textColor=0xFFFFFF;
+			_focusTextField2 = null;
+			if(_focusTextFieldComputer)_focusTextFieldComputer.textColor=0xFFFFFF;
+			_focusTextFieldComputer = null;
 		}
 		//------ Reset Computers ------------------------------------
 		private function _resetComputers():void {
@@ -496,6 +582,9 @@ package screens{
 			for (var i:int=start;i<start+_nbComputer;i++){
 				_resetComputer(i);
 			}
+			var fighterTF:TextField = _menuComponent.graphic["fighter"+(start+1)+"TF"];
+			fighterTF.textColor=_focusTextColor;
+			_focusTextFieldComputer = fighterTF;
 		}
 		//------ Reset Computer ------------------------------------
 		private function _resetComputer($index:int):void {
@@ -510,6 +599,7 @@ package screens{
 			playerTF.text= _lang.computer;
 			fighterTF = _menuComponent.graphic["fighter"+($index+1)+"TF"];
 			fighterTF.text=_lang.random;
+			fighterTF.textColor = 0xFFFFFF;
 			teamTF = _menuComponent.graphic["team"+($index+1)+"TF"]
 			teamTF.text = "";
 		}
@@ -619,6 +709,12 @@ package screens{
 		private function _onResetRandomBt($mousePad:MousePad):void {
 			Framework.Focus();
 			_resetRandom();
+			if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
+			_focusTextField1 = null;
+			if(_focusTextField2)_focusTextField2.textColor=0xFFFFFF;
+			_focusTextField2 = null;
+			if(_focusTextFieldComputer)_focusTextFieldComputer.textColor=0xFFFFFF;
+			_focusTextFieldComputer = null;
 		}
 		//------ On Reset All Bt Click ------------------------------------
 		private function _onResetAllBt($mousePad:MousePad):void {

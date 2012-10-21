@@ -68,7 +68,7 @@ package screens{
 		private function _initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
-			_mainMusic = Framework.root+"assets/main.mp3"
+			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3"
 		}
 		//------ Start Music ------------------------------------
 		private function _startMusic():void {
