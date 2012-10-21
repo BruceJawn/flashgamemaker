@@ -64,5 +64,8 @@ package utils.bitmap{
 			}
 			return new Bitmap(bitmapData);
 		}
+		public static function Clone($bitmap:Bitmap):Bitmap{
+			return new Bitmap($bitmap.bitmapData);
+		}
 	}
 }
