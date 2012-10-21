@@ -152,7 +152,7 @@ package framework.component.core{
 			dispatch("onKeyFire");
 			dispatchEvent(_keyBoardEvent);
 		}
-		//------  Dispatch ------------------------------------
+		//------  Dispatch ----------------------------i--------
 		private function _updateKeyPadDown():void {
 			var components:Vector.<Object> = _properties["keyboardInput"].components;
 			var keyPad:KeyPad;
