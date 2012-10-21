@@ -65,7 +65,7 @@ package {
 			stateList["ControlSettings"]=new ControlSettings();
 			stateList["VsGame"]=new VsGame();
 			_finiteStateMachine.setStateList(stateList);
-			_finiteStateMachine.setNextStateByName("UInterface"); 
+			_finiteStateMachine.setNextStateByName("StageGame"); 
 			_finiteStateMachine.changeStateByName("Preloader");
 		}
 		//------ Init Finite StateMachine ------------------------------------
