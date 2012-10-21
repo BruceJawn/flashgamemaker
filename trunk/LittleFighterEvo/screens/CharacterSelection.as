@@ -179,7 +179,13 @@ package screens{
 					imageSliderComponent=_sliderList[index];
 					target = "_stepPlayer";
 				}
-				if(step==INIT){
+				if(_fightMenu && _fightMenu.visible){
+					index= _fightMenu.graphic.focusClip.currentFrame;
+					if(index==1)			_onFightBt(null);
+					else if(index==2)		_onResetRandomBt(null);
+					else if(index==3)		_onResetAllBt(null);
+					else if(index==6)		_onQuitBt(null);
+				}else if(step==INIT){
 					if(_chronoList){
 						_cancelCounter();
 					}	
@@ -254,12 +260,6 @@ package screens{
 						return ;
 					}
 					_resetComputers();
-				}else if(_fightMenu && _fightMenu.visible){
-					index= _fightMenu.graphic.focusClip.currentFrame;
-					if(index==1)			_onFightBt(null);
-					else if(index==2)		_onResetRandomBt(null);
-					else if(index==3)		_onResetAllBt(null);
-					else if(index==6)		_onQuitBt(null);
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.J || $evt.keyCode == KeyConfig.Player2.J){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){

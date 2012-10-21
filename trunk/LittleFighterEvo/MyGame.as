@@ -42,6 +42,7 @@ package {
 		private var _uInterface:UInterface=null;
 		private var _finiteStateMachine:FiniteStateMachine = null;
 		public static var pause:PauseComponent = null;
+		public static var isPause:Boolean = false;
 		public function MyGame() {
 			_initVar();
 			_initStateMachine();
@@ -65,24 +66,26 @@ package {
 			stateList["ControlSettings"]=new ControlSettings();
 			stateList["VsGame"]=new VsGame();
 			_finiteStateMachine.setStateList(stateList);
-			_finiteStateMachine.setNextStateByName("StageGame"); 
+			_finiteStateMachine.setNextStateByName("UInterface"); 
 			_finiteStateMachine.changeStateByName("Preloader");
 		}
 		//------ Init Finite StateMachine ------------------------------------
-		public static  function Pause():void {
+		public static  function Pause($hidePause:Boolean=false):void {
 			var entityManager:IEntityManager=EntityManager.getInstance();
-			if(!pause){
-				pause=entityManager.addComponentFromName("LittleFighterEvo","PauseComponent","myPauseComponent") as PauseComponent;
-				pause.visible =false;
+			if(!$hidePause){
+				if(!pause){
+					pause=entityManager.addComponentFromName("LittleFighterEvo","PauseComponent","myPauseComponent") as PauseComponent;
+					pause.visible =false;
+				}
 			}
 			var enterframeComponent:EnterFrameComponent = entityManager.getComponent("LittleFighterEvo","myEnterFrameComponent") as EnterFrameComponent;
-			pause.visible = !pause.visible;
-			if(pause.visible) {
+			if(!$hidePause)	pause.visible = !pause.visible;
+			if(!isPause) {
 				enterframeComponent.stop();
 			}else{
 				enterframeComponent.start();
 			}	
-			
+			isPause = !isPause
 		}
 	}
 }

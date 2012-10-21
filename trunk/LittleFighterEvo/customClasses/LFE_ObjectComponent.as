@@ -82,6 +82,7 @@ package customClasses{
 		protected var _miniBar:GraphicComponent = null;
 		protected var _ai:Object = null;
 		protected var _status:Status;
+		protected var _isDead:Boolean = false;
 		
 		public function LFE_ObjectComponent($componentName:String, $entity:IEntity, $singleton:Boolean=false, $prop:Object = null) {
 			super($componentName, $entity, $singleton, $prop);
@@ -231,8 +232,17 @@ package customClasses{
 		}
 		//------ Update MiniBar ------------------------------------
 		public function updateMiniBar():void {
-			if(_miniBar)
+			if(_miniBar){
 				_miniBar.moveTo(x+_miniBar.graphic.width/2-2,y+height+11);
+				_miniBar.graphic.lifeBar.scaleX = _status.lifePercent;
+				_miniBar.graphic.mpBar.scaleX = _status.mpPercent;
+				if(_status.life<=0 && !_isDead){
+					dispatchEvent(new Event(Event.COMPLETE));
+					_isDead = true;
+				}else if(_isDead && _status.life>0){
+					_isDead=false;
+				}
+			}
 		}
 		//------ Hurt Enemy ------------------------------------
 		public function hurtEnemy():Boolean {
@@ -280,20 +290,23 @@ package customClasses{
 								Fly(object.getCurrentState()).explode();
 								continue;
 							}
-							if(itr.hasOwnProperty("fall") || object.z!=0){
+							if(itr.hasOwnProperty("fall") || object.z!=0 || object.status.life<=0){
 								if(itr.hasOwnProperty("dvx"))	object.spatialMove.speed.x=itr.dvx;
 								if(itr.hasOwnProperty("dvy"))	object.spatialMove.speed.y=itr.dvy;
 								switch(itr.fall){
 									case 70:	
+									ennemyInjured(object,itr);
 									ennemyFall(object,itr);
 									return true;
 								}
-								if(object.spatialMove.speed.z!=0){
+								if(object.spatialMove.speed.z!=0 || object.status.life<=0){
+									ennemyInjured(object,itr);
 									ennemyFall(object,itr);
 									return true;
 								}
 							}
 							ennemyInjured(object,itr);
+							if(object.status.life<=0)	ennemyFall(object,itr);
 						}
 					}
 				}
@@ -326,6 +339,12 @@ package customClasses{
 			var frame:Object = getCurrentFrame();
 			var objectCurrentFrame:Object = $ennemy.getCurrentFrame();
 			var objectLfeFrame:Object = $ennemy.lfe_Frame;
+			if($itr.injury){
+				_status.attack+=$itr.injury;
+				$ennemy.status.removeLife($itr.injury);
+				if($ennemy.status.life==0)	_status.kill++;
+				updateMiniBar();
+			}
 			if(objectCurrentFrame.state == "Hurt"){
 				var id:int = (objectLfeFrame.hurtId as Array).indexOf(objectCurrentFrame.id);
 				id=(id+1)%objectLfeFrame.hurtId.length;
@@ -497,6 +516,10 @@ package customClasses{
 		//------ Get Player Name ------------------------------------
 		public function get miniBar():GraphicComponent {
 			return _miniBar;
+		}
+		//------ Get Status ------------------------------------
+		public function get status():Status {
+			return _status;
 		}
 		//------ Set Artificial Intelligence  ------------------------------------
 		public function set ai($ai:Object):void {

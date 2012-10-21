@@ -82,8 +82,10 @@ package fms{
 				}
 			}else if(spatialMove.movingDir.z==0 && (_object.bitmapSet.currentAnim.position == 0 && _object.bitmapSet.currentAnim.reverse==-1 || _object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed) && _object.bitmapSet.readyToAnim){
 				stopMoving();
-				updateAnim(frame.next);
-				updateState();
+				if(_object.status.life>0){
+					updateAnim(frame.next);
+					updateState();
+				}
 			}
 		}
 		//------ Exit ------------------------------------
