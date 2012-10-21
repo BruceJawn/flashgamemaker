@@ -8,7 +8,7 @@
 	"d":30, 
 	"row":7,
 	"col":10,
-	"life":500,
+	"life":400,
 	"mp":200,
 	"hurtId":[112,115],
 	"defenseHurtId":23,
@@ -320,7 +320,7 @@
 		{
 			"id":56,"frame":11, "name":"Attack2", "state":"Attack", "wait":5, "stand":0, "dvx":0,"dvy":0, "offsetx":17, "offsety":0,"hit_a":59,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":25,  "y":18, "w": 60, "h":31,"dvx":2, "vrest":1}, 
+			"itr":{ "kind":0,  "x":25,  "y":18, "w": 60, "h":31,"dvx":2, "injury":20,"vrest":1}, 
 			"bdy": {"kind":0, "x":26, "y":12, "w":30, "h":68}
 		},
 		{
@@ -341,19 +341,19 @@
 		{
 			"id":60,"frame":52, "name":"Attack3", "state":"Attack", "wait":200, "next":0, "dvx":2,"dvy":0, "offsetx":2, "offsety":0,"hit_a":61,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":23,  "y":10, "w": 52, "h":40,"dvx":6, "vrest":1,"fall":20},
+			"itr":{ "kind":0,  "x":23,  "y":10, "w": 52, "h":40,"dvx":6,"injury":20, "vrest":1,"fall":20},
 			"bdy": {"kind":0, "x":19, "y":15, "w":28, "h":65}
 		},
 		{
 			"id":61,"frame":8, "name":"Attack4", "state":"Attack", "wait":20, "next":0, "fps":10,"endAnim":true,"dvx":2,"dvy":0, "offsetx":9, "offsety":0,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":30,  "y":15, "w": 47, "h":41,"dvx":6, "vrest":1,"fall":20}, 
+			"itr":{ "kind":0,  "x":30,  "y":15, "w": 47, "h":41,"dvx":6,"injury":20, "vrest":1,"fall":20}, 
 			"bdy": {"kind":0, "x":26, "y":12, "w":35, "h":66}
 		},
 		{
 			"id":62,"frame":9, "name":"Attack4", "state":"Attack", "wait":160, "next":0, "dvx":0,"dvy":0, "offsetx":9, "offsety":0,"hit_a":64,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":30,  "y":15, "w": 47, "h":41,"dvx":6, "vrest":1,"fall":20}, 
+			"itr":{ "kind":0,  "x":30,  "y":15, "w": 47, "h":41,"dvx":6, "injury":20,"vrest":1,"fall":20}, 
 			"bdy": {"kind":0, "x":23, "y":10, "w":29, "h":69}
 		},
 		{
@@ -364,19 +364,19 @@
 		{
 			"id":64,"frame":19, "name":"Attack5", "state":"Attack", "wait":50,"next":0,"fps":10,"endAnim":true, "dvx":2,"dvy":0, "offsetx":10, "offsety":0,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":25,  "y":0, "w": 45, "h":50,"dvx":6, "vrest":1,"fall":70}, 
+			"itr":{ "kind":0,  "x":25,  "y":0, "w": 45, "h":50,"dvx":6, "injury":20,"vrest":1,"fall":70}, 
 			"bdy": {"kind":0, "x":18, "y":15, "w":41, "h":65}
 		},
 		{
 			"id":65,"frame":29, "name":"Attack5", "state":"Attack", "wait":20,  "next":0,"dvx":0,"dvy":0, "offsetx":9, "offsety":0,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":35,  "y":15, "w": 30, "h":32,"dvx":6, "vrest":1,"fall":70}, 
+			"itr":{ "kind":0,  "x":35,  "y":15, "w": 30, "h":32,"dvx":6,"injury":20, "vrest":1,"fall":70}, 
 			"bdy": {"kind":0, "x":24, "y":10, "w":34, "h":69}
 		},
 		{
 			"id":66,"frame":39, "name":"Attack5", "state":"Attack", "wait":120,  "next":0,"dvx":2,"dvy":0, "offsetx":1, "offsety":0,
 			"bpoint":{"x":39, "y":34},
-			"itr":{ "kind":0,  "x":25,  "y":0, "w": 45, "h":50,"dvx":6, "vrest":1,"fall":70}, 
+			"itr":{ "kind":0,  "x":25,  "y":0, "w": 45, "h":50,"dvx":6,"injury":20, "vrest":1,"fall":70}, 
 			"bdy": {"kind":0, "x":29, "y":6, "w":23, "h":72}
 		},
 		{
@@ -424,57 +424,57 @@
 		},
 		{
 			"id":77,"frame":154, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":[{"kind":0,  "x":63,  "y":9, "w": 16, "h":67,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3}, {"kind":0,  "x":17,  "y":35, "w": 61, "h":13,"fall":1, "dvx":6,"vrest":1}], 
+			"itr":[{"kind":0,  "x":63,  "y":9, "w": 16, "h":67,"fall":70,"dvx":8,"injury":20, "vrest":1,"effect":4,"dvx":3}, {"kind":0,  "x":17,  "y":35, "w": 61, "h":13,"fall":1, "dvx":6,"injury":20,"vrest":1}], 
 			"bdy":{"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":78,"frame":155, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1, "effect":4,"dvx":3}, 
+			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8,"injury":20, "vrest":1, "effect":4,"dvx":3}, 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":79,"frame":156, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":[{"kind":0,  "x":57,  "y":9, "w": 18, "h":67,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3}, {"kind":0,  "x":14,  "y":35, "w": 58, "h":18,"fall":1, "dvx":5,"vrest":1}],
+			"itr":[{"kind":0,  "x":57,  "y":9, "w": 18, "h":67,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20}, {"kind":0,  "x":14,  "y":35, "w": 58, "h":18,"fall":1, "dvx":5,"injury":20,"vrest":1}],
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":80,"frame":157, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70, "vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":81,"frame":158, "name":"ManyPunch", "state":"Power", "wait":1, "next":0, "dvx":5,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":82,"frame":159, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":[{"kind":0,  "x":64,  "y":5, "w": 18, "h":68,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3}, {"kind":0,  "x":-1,  "y":22, "w": 81, "h":25,"fall":1,"dvx":6, "vrest":1}], 
+			"itr":[{"kind":0,  "x":64,  "y":5, "w": 18, "h":68,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20}, {"kind":0,  "x":-1,  "y":22, "w": 81, "h":25,"fall":1,"dvx":6, "vrest":1,"injury":20}], 
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":83,"frame":169, "name":"ManyPunch", "state":"Power", "wait":1, "next":0, "dvx":5,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":84,"frame":168, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70, "dvx":8,"vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70, "dvx":8,"vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":85,"frame":167, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":5,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":[{"kind":0,  "x":64,  "y":10, "w": 18, "h":68,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3}, { "kind":0,  "x":-1,  "y":42, "w": 81, "h":25,"fall":1,"dvx":6, "vrest":1}],
+			"itr":[{"kind":0,  "x":64,  "y":10, "w": 18, "h":68,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20}, { "kind":0,  "x":-1,  "y":42, "w": 81, "h":25,"fall":1,"dvx":6, "vrest":1,"injury":20}],
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":86,"frame":166, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":7,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":20,  "y":22, "w": 55, "h":38,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":20,  "y":22, "w": 55, "h":38,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":87,"frame":165, "name":"ManyPunch", "state":"Power", "wait":2,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":20,  "y":2, "w": 55, "h":48,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3},
+			"itr":{ "kind":0,  "x":20,  "y":2, "w": 55, "h":48,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},	
 		{
@@ -490,21 +490,21 @@
 		},
 		{
 			"id":91,"frame":171, "name":"DragonPunch", "state":"Power", "wait":0,"next":0, "dvx":8,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":10,  "y":3, "w": 72, "h":75,"dvx":7,"fall":70, "vrest":1}
+			"itr":{ "kind":0,  "x":10,  "y":3, "w": 72, "h":75,"dvx":7,"injury":30,"fall":70, "vrest":1}
 		},
 		{
 			"id":92,"frame":172, "name":"DragonPunch", "state":"Power", "wait":0,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":13,  "y":-1, "w": 67, "h":80,"dvx":7,"fall":70, "vrest":1},
+			"itr":{ "kind":0,  "x":13,  "y":-1, "w": 67, "h":80,"dvx":7,"injury":30,"fall":70, "vrest":1},
 			"bdy": {"kind":0, "x":19, "y":7, "w":36, "h":69}
 		},
 		{
 			"id":93,"frame":173, "name":"DragonPunch", "state":"Power", "wait":0,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":11,  "y":-2, "w": 63, "h":41,"dvx":7,"fall":70, "vrest":1},
+			"itr":{ "kind":0,  "x":11,  "y":-2, "w": 63, "h":41,"dvx":7,"injury":30,"fall":70, "vrest":1},
 			"bdy": {"kind":0, "x":22, "y":6, "w":30, "h":69}
 		},
 		{
 			"id":94,"frame":174, "name":"DragonPunch", "state":"Power", "wait":5,"next":0, "dvx":1,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":19,  "y":1, "w": 61, "h":80,"dvx":7,"fall":70, "vrest":1},
+			"itr":{ "kind":0,  "x":19,  "y":1, "w": 61, "h":80,"dvx":7,"injury":30,"fall":70, "vrest":1},
 			"bdy": {"kind":0, "x":28, "y":12, "w":29, "h":66}
 		},
 		{
@@ -552,12 +552,12 @@
 		},
 		{
 			"id":105,"frame":135, "name":"JumpAttack", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
-			"itr":{ "kind":0,  "x":17,  "y":37, "w": 52, "h":17, "vrest":1, "dvx":4},  
+			"itr":{ "kind":0,  "x":17,  "y":37, "w": 52, "h":17, "vrest":1, "dvx":4,"injury":20},  
 			"bdy": {"kind":0, "x":11, "y":2, "w":29, "h":63}
 		},
 		{
 			"id":106,"frame":136, "name":"JumpAttack", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
-			"itr":{ "kind":0,  "x":32,  "y":40, "w": 36, "h":16, "vrest":1, "dvx":4}, 
+			"itr":{ "kind":0,  "x":32,  "y":40, "w": 36, "h":16, "vrest":1, "dvx":4,"injury":20}, 
 			"bdy": {"kind":0, "x":11, "y":5, "w":28, "h":63}
 		},
 		{
@@ -574,7 +574,7 @@
 		},
 		{
 			"id":110,"frame":162, "name":"JumpPower2", "state":"Power","endAnim":true,"fps":6, "wait":10,"dvx":9,"next":0, "offsetx":0, "offsety":0,"hit_d":110,
-			"itr":{ "kind":0,  "x":25,  "y":58, "w": 37, "h":21,"dvx":6,"fall":70, "vrest":1},
+			"itr":{ "kind":0,  "x":25,  "y":58, "w": 37, "h":21,"dvx":6,"injury":20,"fall":70, "vrest":1},
 			"bdy": {"kind":0, "x":16, "y":20, "w":46, "h":46}
 		},
 		{

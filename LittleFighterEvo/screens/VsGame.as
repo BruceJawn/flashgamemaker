@@ -28,6 +28,7 @@ package screens{
 	import data.Data;
 	
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -54,6 +55,7 @@ package screens{
 	import utils.loader.SimpleLoader;
 	import utils.popforge.WavURLPlayer;
 	import utils.richardlord.*;
+	import utils.time.Time;
 	import utils.ui.LayoutUtil;
 
 	/**
@@ -64,6 +66,7 @@ package screens{
 		private var _entityManager:IEntityManager=null;
 		private var _player1:LFE_ObjectComponent=null;
 		private var _player2:LFE_ObjectComponent=null;
+		private var _players:Array;
 		private var _graphicManager:IGraphicManager = null;
 		private var _battleField:ScrollingBitmapComponent = null;
 		private var _forests:GraphicComponent = null;
@@ -75,7 +78,10 @@ package screens{
 		private var _list:Array = null;
 		private var _lang:Object = null;
 		private var _nbPlayer:int =0;
+		private var _deadPlayer:int =0;
 		private var _useMiniBar:Boolean = true;
+		private var _summary:GraphicComponent = null;
+		private var _startTime:Number =0;
 		public function VsGame(){
 		}
 		//------ Init Var ------------------------------------
@@ -85,9 +91,7 @@ package screens{
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_list=new Array();
 			_lang= MultiLang.data[Data.LOCAL_LANG];
-		}
-		//------- Start Game -------------------------------
-		public function startGame():void {
+			_players = new Array();
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -106,6 +110,7 @@ package screens{
 			createPlayers();
 			createStatusBar();
 			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",100,582));
+			_startTime = Time.GetTime();
 		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
@@ -165,15 +170,20 @@ package screens{
 					gamePad.moveFireKeys(-100,10);
 					_list.push(gamePad);
 					playerComponent.addPlayerName(_nbPlayer.toString());
+					if(player=="1")	_player1 = playerComponent;
+					else 			_player2 = playerComponent;
 				}else{
 					playerComponent = LFE_Object.CreateObject(oid,null,new KeyPad);
 					playerComponent.setAI(true);
 					playerComponent.addPlayerName(_lang.CharacterSelection.computer);
 				}
+				playerComponent.addEventListener(Event.COMPLETE,onPlayerDead,false,0,true);
 				if(_useMiniBar)playerComponent.addMiniBar();
 				playerComponent.moveTo(Math.random()*600,300+Math.random()*100);
 				_list.push(playerComponent);
 				_list.push(playerComponent.playerName);
+				_list.push(playerComponent.miniBar);
+				_players.push(playerComponent);
 			}
 		}
 		//------- Create Status Bar -------------------------------
@@ -209,6 +219,30 @@ package screens{
 				_reset();
 				_menuComponent.gotoAndStop(2);
 				_finiteStateMachine.changeStateByName("GameMenu");
+			}else if(KeyCode.GetKey($evt.keyCode)=="F5"){
+				if(_player1)	_player1.status.resetLife();
+				if(_player2)	_player2.status.resetLife();
+			}else if(KeyCode.GetKey($evt.keyCode)=="F6"){
+				if(_player1)	_player1.status.resetMp();
+				if(_player2)	_player2.status.resetMp();
+			}else if(KeyCode.GetKey($evt.keyCode)=="F7"){
+				if(_player1)	_player1.status.reset();
+				if(_player2)	_player2.status.reset();
+			}else if(_summary && ($evt.keyCode == KeyConfig.Player1.A || $evt.keyCode == KeyConfig.Player2.A)){
+				MyGame.Pause(true);
+				_startTime = Time.GetTime();
+				_summary.destroy();
+				_summary = null;
+				_deadPlayer = 0;
+				for each(var player:LFE_ObjectComponent in _players){
+					player.status.reset();
+					player.moveTo(Math.random()*600,300+Math.random()*100);
+				}
+			}else if(_summary && ($evt.keyCode == KeyConfig.Player1.J || $evt.keyCode == KeyConfig.Player2.J)){
+				MyGame.Pause(true);
+				_reset();
+				_menuComponent.gotoAndStop(4);
+				_finiteStateMachine.changeStateByName("CharacterSelection");
 			}
 		}
 		//------ Reset ------------------------------------
@@ -221,6 +255,58 @@ package screens{
 				component.destroy();
 			}
 			_list=new Array();
+			_deadPlayer=0;
+			if(_summary){
+				_summary.destroy();
+				_summary = null;
+			}	
+		}
+		//------ Update ------------------------------------
+		public function onPlayerDead($evt:Event):void {
+			_deadPlayer++;
+			if(_deadPlayer==_nbPlayer-1)
+				setTimeout(_showSummary,1000);
+		}
+		//------ Show Summary ------------------------------------
+		private function _showSummary():void {
+			if(!_summary){
+				MyGame.Pause(true);
+				_summary=_entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","mySummaryClip") as GraphicComponent;
+				_summary.graphic = new SummaryClipUI;
+				_summary.graphic.top.summaryTF.text = _lang.Summary.summaryTF;
+				_summary.graphic.top.playerTF.text = _lang.Summary.playerTF;
+				_summary.graphic.top.killTF.text = _lang.Summary.killTF;
+				_summary.graphic.top.attackTF.text = _lang.Summary.attackTF;
+				_summary.graphic.top.hpLostTF.text = _lang.Summary.hpLostTF;
+				_summary.graphic.top.mpUsageTF.text = _lang.Summary.mpUsageTF;
+				_summary.graphic.top.pickingTF.text = _lang.Summary.pickingTF;
+				_summary.graphic.top.statusTF.text = _lang.Summary.statusTF;
+				_summary.graphic.bottom.pressTF.text = _lang.Summary.pressTF;
+				var time:Number = Time.GetTime()-_startTime;
+				_summary.graphic.bottom.timeValueTF.text = Time.extractMinutes(time)+":"+Time.extractSecondes(time);
+				var bitmap:Bitmap = GraphicManager.getInstance().getGraphic(Data.OBJECT[1].small);
+				for(var i:int=1;i<=8;i++){
+					if(i<=2){
+						var clip:DisplayObject = _summary.graphic["middle"+i].addChild(BitmapTo.Clone(bitmap));
+						clip.x+=10;
+						_summary.graphic["middle"+i].killTF.text=this["_player"+i].status.kill;
+						_summary.graphic["middle"+i].attackTF.text=this["_player"+i].status.attack;
+						_summary.graphic["middle"+i].hpLostTF.text=this["_player"+i].status.mpMax-this["_player"+i].status.mp;
+						//_summary.graphic["middle"+i].mpUsageTF.text=this["_player"+i].status.mpUsage;
+						_summary.graphic["middle"+i].pickingTF.text=0;
+						if(this["_player"+i].status.life<=0){
+							_summary.graphic["middle"+i].statusTF.text="Lose";
+						}else{
+							_summary.graphic["middle"+i].statusTF.text="Win";
+						}
+					}
+					else{
+						_summary.graphic["middle"+i].visible = false;
+					}
+				}
+				_summary.graphic.bottom.y=_summary.graphic.top.y+_summary.graphic.top.height+2*(_summary.graphic.middle1.height-2);
+				LayoutUtil.Align(_summary,LayoutUtil.ALIGN_CENTER_CENTER);
+			}
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {

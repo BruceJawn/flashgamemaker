@@ -54,6 +54,19 @@
 			"backgroundBt":"Background:",
 			"quitBt":"Quitter",
 			"nbComputersTF":"Nombre de joueurs ordinateur"
+		},
+		"Summary":
+		{
+			"summaryTF":"Résumé",
+			"playerTF":"Joeur",
+			"killTF":"Victimes",
+			"attackTF":"Attaque",
+			"hpLostTF":"HP Perdu",
+			"mpUsageTF":"MP Utilisé",
+			"pickingTF":"Projection",
+			"statusTF":"Statut",
+			"pressTF":"Appuyer Attaque pour rejouer ou Saut pour continuer",
+			"timeTF":"durée:"
 		}
 	},
 	"eng":
@@ -111,6 +124,19 @@
 			"backgroundBt":"Background:",
 			"quitBt":"Quit",
 			"nbComputersTF":"How many Computer Players?"
+		},
+		"Summary":
+		{
+			"summaryTF":"Summary",
+			"playerTF":"Player",
+			"killTF":"Kill",
+			"attackTF":"Attack",
+			"hpLostTF":"HP Lost",
+			"mpUsageTF":"MP Usage",
+			"pickingTF":"Picking",
+			"statusTF":"Status",
+			"pressTF":"Press Attack to replay or Jump to continue",
+			"timeTF":"time:"
 		}
 	}
 }

@@ -60,19 +60,19 @@
 			"itr":{ "kind":2,  "x":26,  "y":12, "w": 45, "h":24, "dvx":6, "fall":70, "arest":6, "bdefend":10, "injury": 30} 
 		},
 		{
-			"id":10,"frame":4, "name":"Hit", "state":"Fly", "fps":18,"endAnim":true,"wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":10,"frame":4, "name":"Hit", "state":"Fly", "fps":18,"endAnim":true,"wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0, "injury": 30
 		},
 		{
-			"id":11,"frame":5, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":11,"frame":5, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0, "injury": 30
 		},
 		{
-			"id":12,"frame":6, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":12,"frame":6, "name":"Hit", "state":"Fly", "wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0, "injury": 30
 		},
 		{
-			"id":13,"frame":7, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":13,"frame":7, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0, "injury": 30
 		},
 		{
-			"id":14,"frame":10, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0
+			"id":14,"frame":10, "name":"Hit", "state":"Fly","wait":0, "dvx":0, "dvy":0, "offsetx":0, "offsety":0, "injury": 30
 		}
 	]
 }
