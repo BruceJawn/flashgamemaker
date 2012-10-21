@@ -89,14 +89,13 @@ package screens{
 			createBattleField();
 			createPlayers();
 			createWeapons();
-			createStatusBar();
+			//createStatusBar();
 			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",20,462));
 		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
 			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
 			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
-			_forests.moveTo(0,43);
 			_list.push(_forests);
 			
 			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
@@ -105,7 +104,7 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
 			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
 			_forestm2.graphic = bitmap;
-			_forestm2.moveTo(0,63);
+			_forestm2.moveTo(0,18);
 			_list.push(_forestm2);
 			
 			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
@@ -114,12 +113,12 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
 			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
 			_forestm3.graphic =bitmap;
-			_forestm3.moveTo(0,85);
+			_forestm3.moveTo(0,50);
 			_list.push(_forestm3);
 			
 			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
 			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
-			_battleField.moveTo(0,130);
+			_battleField.moveTo(0,80);
 			_list.push(_battleField);
 		}
 		//------- Create Players-------------------------------
@@ -130,6 +129,8 @@ package screens{
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
 				_list.push(player);
+				//_list.push(player.miniBar);
+				//player.addMiniBar();
 			}
 		}
 		//------- Create Weapons -------------------------------

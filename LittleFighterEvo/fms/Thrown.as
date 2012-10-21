@@ -46,7 +46,7 @@ package fms{
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			//trace("Enter Thrown");
-			if (!_object.bitmapSet)	return;
+			if (!_object.bitmapSet || !_object.source)	return;//TODO verify why _object.source is null
 			var frame:Object = _object.source.getCurrentFrame();
 			var spatialMove:SpatialMove = _object.spatialMove;
 			if(frame.hasOwnProperty("wpoint")){
