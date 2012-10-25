@@ -49,6 +49,7 @@ package fms{
 			if (!_object.bitmapSet)	return;
 			var keyPad:KeyPad = _object.keyPad;
 			update();
+			checkSound();
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {
@@ -75,21 +76,26 @@ package fms{
 			}
 			if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick()){
 				updateAnim(frame.hit_a);
+				checkSound();
 				updateState();
 			}else if(keyPad.fire2.isDown && !keyPad.fire2.getLongClick()){
 				updateAnim(frame.hit_j);
+				checkSound();
 				updateState();
 			}else if(keyPad.fire3.isDown && !keyPad.fire3.getLongClick()){
 				updateAnim(frame.hit_d);
+				checkSound();
 				updateState();
 			}else if(_object.spatialMove.facingDir.x!=x){
 				updateAnim(frame.next);//Slide
+				checkSound();
 				updateState();
 			}
 		}
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Run");
+			
 		}
 	}
 }

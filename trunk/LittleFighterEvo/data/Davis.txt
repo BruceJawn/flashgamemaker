@@ -8,8 +8,8 @@
 	"d":30, 
 	"row":7,
 	"col":10,
-	"life":400,
-	"mp":200,
+	"life":300,
+	"mp":600,
 	"hurtId":[112,115],
 	"defenseHurtId":23,
 	"defenseBrokenId":178,
@@ -81,7 +81,8 @@
 			"id":8,"frame":20, "name":"Run", "state":"Run", "reverse":1,"wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
 			"bpoint":{"x":67, "y":32},
 			"wpoint":{"kind":1, "x":41, "y":9, "weaponact":25, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
-			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
+			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60},
+			"sound": "assets/003.wav"
 		},
 		{
 			"id":9,"frame":21, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15, 
@@ -93,7 +94,8 @@
 			"id":10,"frame":22, "name":"Run", "state":"Run", "wait":3, "next":11, "dvx":10, "dvy":5, "dvz":0, "offsetx":0, "offsety":0,"hit_a":69, "hit_d":18, "hit_j":15,
 			"bpoint":{"x":39, "y":34},
 			"wpoint":{"kind":1, "x":17, "y":13, "weaponact":26, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
-			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60}
+			"bdy": {"kind":0, "x":25, "y":19, "w":38, "h":60},
+			"sound": "assets/004.wav"
 		},
 		{
 			"id":11,"frame":14, "name":"Slide", "state":"Slide", "wait":25, "next":0,"endAnim":true, "dvx":8, "dvy":0, "dvz":0, "offsetx":0, "offsety":0,
@@ -104,7 +106,8 @@
 		{
 			"id":12,"frame":60, "name":"Jump", "state":"Jump", "wait":2, "next":0,"reverse":0,"endAnim":true, "offsetx":0, "offsety":0, "hit_a":102, "dbl_hit_j":0,"dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
 			"wpoint":{"kind":1, "x":24, "y":16, "weaponact":24, "attacking":0,  "dvx":0, "dvy":0, "dvz": 0}, 
-			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56}
+			"bdy": {"kind":0, "x":26, "y":26, "w":34, "h":56},
+			"sound": "assets/017.wav"
 		},
 		{
 			"id":13,"frame":61, "name":"Jump", "state":"Jump", "wait":5, "next":0,"reverse":0,  "offsetx":0, "offsety":0,"hit_a":102, "dbl_hit_j":0, "dbl_hit_d":18,"dbl_hit_j":15,"hit_n_w_a":151,"hit_t_w_a":166,
@@ -135,7 +138,8 @@
 			"bdy": {"kind":0, "x":20, "y":6, "w":23, "h":30}
 		},
 		{
-			"id":18,"frame":58, "name":"Rowing", "state":"Rowing", "wait":20, "endAnim":true,"stand":0, "walk":4, "dvx":12,"dvy":0, "offsetx":0, "offsety":0
+			"id":18,"frame":58, "name":"Rowing", "state":"Rowing", "wait":20, "endAnim":true,"stand":0, "walk":4, "dvx":12,"dvy":0, "offsetx":0, "offsety":0,
+			"sound": "assets/017.wav"
 		},
 		{
 			"id":19,"frame":59, "name":"Rowing", "state":"Rowing", "wait":20, "stand":0, "walk":4,"dvx":12,"dvy":0, "offsetx":0, "offsety":0
@@ -157,7 +161,7 @@
 			"bdy": {"kind":0, "x":16, "y":19, "w":42, "h":60}
 		},
 		{
-			"id":24,"frame":140, "name":"Ball1", "state":"Power", "wait":0,"endAnim":true,"fps":18, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":24,"frame":140, "name":"Ball1", "state":"Power", "wait":0,"endAnim":true,"fps":18, "next":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,"mp":40,
 			"bpoint":{"x":39, "y":34},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
@@ -198,9 +202,10 @@
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":32,"frame":146, "name":"Ball2", "state":"Power", "wait":0,"fps":18,"endAnim":true, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":32,"frame":146, "name":"Ball2", "state":"Power", "wait":0,"fps":18,"endAnim":true, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,"mp":40,
 			"bpoint":{"x":39, "y":34},
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/048.wav"
 		},
 		{
 			"id":33,"frame":147, "name":"Ball2", "state":"Power", "wait":0, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
@@ -234,9 +239,10 @@
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":39,"frame":145, "name":"Ball3", "state":"Power", "wait":0, "endAnim":true,"fps":18,"stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":39,"frame":145, "name":"Ball3", "state":"Power", "wait":0, "endAnim":true,"fps":18,"stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,"mp":40,
 			"bpoint":{"x":39, "y":34},
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/048.wav"
 		},
 		{
 			"id":40,"frame":142, "name":"Ball3", "state":"Power", "wait":0, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
@@ -270,9 +276,10 @@
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":46,"frame":150, "name":"Ball4", "state":"Power", "wait":0,"fps":18, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
+			"id":46,"frame":150, "name":"Ball4", "state":"Power", "wait":0,"fps":18, "stand":0, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,"mp":40,
 			"bpoint":{"x":39, "y":34},
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/048.wav"
 		},
 		{
 			"id":47,"frame":151, "name":"Ball4", "state":"Power", "wait":0, "stand":0, "dvx":0,"dvy":0, "offsetx":5, "offsety":0,
@@ -297,7 +304,8 @@
 		},
 		{
 			"id":51,"frame":14, "name":"Attack1", "state":"Attack", "wait":0,"fps":18, "stand":0,"endAnim":true, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,"hit_a":59,
-			"bdy": {"kind":0, "x":26, "y":12, "w":27, "h":68}
+			"bdy": {"kind":0, "x":26, "y":12, "w":27, "h":68},
+			"sound": "assets/007.wav"
 		},
 		{
 			"id":52,"frame":15, "name":"Attack1", "state":"Attack", "wait":0, "stand":0, "dvx":0,"dvy":0, "offsetx":17, "offsety":0,"hit_a":59,
@@ -315,7 +323,8 @@
 		{
 			"id":55,"frame":10, "name":"Attack2", "state":"Attack", "wait":5, "stand":0,"fps":18, "endAnim":true, "dvx":0,"dvy":0, "offsetx":0, "offsety":0,
 			"bpoint":{"x":39, "y":34},
-			"bdy": {"kind":0, "x":26, "y":12, "w":27, "h":68}
+			"bdy": {"kind":0, "x":26, "y":12, "w":27, "h":68},
+			"sound": "assets/007.wav"
 		},
 		{
 			"id":56,"frame":11, "name":"Attack2", "state":"Attack", "wait":5, "stand":0, "dvx":0,"dvy":0, "offsetx":17, "offsety":0,"hit_a":59,
@@ -365,7 +374,8 @@
 			"id":64,"frame":19, "name":"Attack5", "state":"Attack", "wait":50,"next":0,"fps":10,"endAnim":true, "dvx":2,"dvy":0, "offsetx":10, "offsety":0,
 			"bpoint":{"x":39, "y":34},
 			"itr":{ "kind":0,  "x":25,  "y":0, "w": 45, "h":50,"dvx":6, "injury":20,"vrest":1,"fall":70}, 
-			"bdy": {"kind":0, "x":18, "y":15, "w":41, "h":65}
+			"bdy": {"kind":0, "x":18, "y":15, "w":41, "h":65},
+			"sound": "assets/003.wav"
 		},
 		{
 			"id":65,"frame":29, "name":"Attack5", "state":"Attack", "wait":20,  "next":0,"dvx":0,"dvy":0, "offsetx":9, "offsety":0,
@@ -394,7 +404,8 @@
 		},
 		{
 			"id":70,"frame":101, "name":"RunAttack", "state":"Attack", "wait":5,"next":0, "dvx":5, "dvy":0, "offsetx":6, "offsety":0,
-			"bdy": {"kind":0, "x":25, "y":24, "w":31, "h":55}
+			"bdy": {"kind":0, "x":25, "y":24, "w":31, "h":55},
+			"sound": "assets/003.wav"
 		},
 		{
 			"id":71,"frame":102, "name":"RunAttack", "state":"Attack", "wait":15,"next":0, "dvx":9,"dvy":0, "offsetx":12, "offsety":0,
@@ -419,8 +430,9 @@
 			"bdy": {"kind":0, "x":20, "y":11, "w":31, "h":68}
 		},
 		{
-			"id":76,"frame":153, "name":"ManyPunch", "state":"Power", "endAnim":true,"fps":18,"wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"id":76,"frame":153, "name":"ManyPunch", "state":"Power", "endAnim":true,"fps":18,"wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,"mp":75,
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/017.wav"
 		},
 		{
 			"id":77,"frame":154, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
@@ -438,14 +450,15 @@
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":80,"frame":157, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
+			"id":80,"frame":157, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,"mp":75,
 			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70, "vrest":1,"effect":4,"dvx":3,"injury":20},
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
 			"id":81,"frame":158, "name":"ManyPunch", "state":"Power", "wait":1, "next":0, "dvx":5,"dvy":0, "offsetx":0, "offsety":0,
 			"itr":{ "kind":0,  "x":49,  "y":9, "w": 18, "h":64,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20},
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/017.wav"
 		},
 		{
 			"id":82,"frame":159, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
@@ -465,7 +478,8 @@
 		{
 			"id":85,"frame":167, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":5,"dvy":0, "offsetx":0, "offsety":0,
 			"itr":[{"kind":0,  "x":64,  "y":10, "w": 18, "h":68,"fall":70,"dvx":8, "vrest":1,"effect":4,"dvx":3,"injury":20}, { "kind":0,  "x":-1,  "y":42, "w": 81, "h":25,"fall":1,"dvx":6, "vrest":1,"injury":20}],
-			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
+			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62},
+			"sound": "assets/07.wav"
 		},
 		{
 			"id":86,"frame":166, "name":"ManyPunch", "state":"Power", "wait":1,"next":0, "dvx":7,"dvy":0, "offsetx":0, "offsety":0,
@@ -486,11 +500,13 @@
 			"bdy": {"kind":0, "x":21, "y":18, "w":43, "h":62}
 		},
 		{
-			"id":90,"frame":170, "name":"DragonPunch", "state":"Power","endAnim":true,"fps":10, "wait":0,"next":0, "dvx":12,"dvy":0,"dvz":22, "offsetx":0, "offsety":0
+			"id":90,"frame":170, "name":"DragonPunch", "state":"Power","endAnim":true,"fps":10, "wait":0,"next":0, "dvx":12,"dvy":0,"dvz":22, "offsetx":0, "offsety":0,"mp":225,
+			"sound": "assets/095.wav"
 		},
 		{
 			"id":91,"frame":171, "name":"DragonPunch", "state":"Power", "wait":0,"next":0, "dvx":8,"dvy":0, "offsetx":0, "offsety":0,
-			"itr":{ "kind":0,  "x":10,  "y":3, "w": 72, "h":75,"dvx":7,"injury":30,"fall":70, "vrest":1}
+			"itr":{ "kind":0,  "x":10,  "y":3, "w": 72, "h":75,"dvx":7,"injury":30,"fall":70, "vrest":1},
+			"sound": "assets/031.wav"
 		},
 		{
 			"id":92,"frame":172, "name":"DragonPunch", "state":"Power", "wait":0,"next":0, "dvx":3,"dvy":0, "offsetx":0, "offsety":0,
@@ -543,7 +559,8 @@
 		{
 			"id":103,"frame":133, "name":"JumpAttack", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
 			"bpoint":{"x":39, "y":34},
-			"bdy": {"kind":0, "x":21, "y":18, "w":35, "h":56}
+			"bdy": {"kind":0, "x":21, "y":18, "w":35, "h":56},
+			"sound": "assets/007.wav"
 		},
 		{
 			"id":104,"frame":134, "name":"JumpAttack", "state":"Jump", "wait":0,"next":0,"dvz":14, "offsetx":0, "offsety":0,"dbl_hit_d":18,
@@ -565,8 +582,9 @@
 			"bdy": {"kind":0, "x":21, "y":6, "w":29, "h":58}
 		},
 		{
-			"id":108,"frame":160, "name":"JumpPower1", "state":"Power","endAnim":true,"fps":12, "wait":0,"next":0,"dvx":10,"dvz":16, "offsetx":0, "offsety":0,"hit_a":110,
-			"bdy": {"kind":0, "x":13, "y":8, "w":38, "h":61}
+			"id":108,"frame":160, "name":"JumpPower1", "state":"Power","endAnim":true,"fps":12, "wait":0,"next":0,"dvx":10,"dvz":16, "offsetx":0, "offsety":0,"hit_a":110,"mp":25,
+			"bdy": {"kind":0, "x":13, "y":8, "w":38, "h":61},
+			"sound": "assets/007.wav"
 		},
 		{
 			"id":109,"frame":161, "name":"JumpPower1", "state":"Power", "wait":10,"next":0,"dvz":16,"dvx":9, "offsetx":0, "offsety":0,"hit_a":110,
@@ -575,7 +593,8 @@
 		{
 			"id":110,"frame":162, "name":"JumpPower2", "state":"Power","endAnim":true,"fps":6, "wait":10,"dvx":9,"next":0, "offsetx":0, "offsety":0,"hit_d":110,
 			"itr":{ "kind":0,  "x":25,  "y":58, "w": 37, "h":21,"dvx":6,"injury":20,"fall":70, "vrest":1},
-			"bdy": {"kind":0, "x":16, "y":20, "w":46, "h":46}
+			"bdy": {"kind":0, "x":16, "y":20, "w":46, "h":46},
+			"sound": "assets/017.wav"
 		},
 		{
 			"id":111,"frame":163, "name":"JumpPower2", "state":"Power", "wait":10,"next":0,"dvx":9, "offsetx":0, "offsety":0,

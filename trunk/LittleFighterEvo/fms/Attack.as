@@ -56,6 +56,7 @@ package fms{
 			//trace("Enter Attack");
 			if (!_object.bitmapSet)	return;
 			move(_object.spatialMove.facingDir.x,0,0);
+			checkSound();
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {
@@ -123,6 +124,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Attack");
+			checkSound();
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

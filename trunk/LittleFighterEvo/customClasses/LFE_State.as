@@ -31,6 +31,8 @@ package customClasses{
 	import flash.net.getClassByAlias;
 	
 	import framework.Framework;
+	import framework.system.ISoundManager;
+	import framework.system.SoundManager;
 	
 	import utils.bitmap.BitmapSet;
 	import utils.convert.BoolTo;
@@ -48,6 +50,7 @@ package customClasses{
 		private var _bitmap:Bitmap = null;
 		protected var _bitmapData:BitmapData = null;
 		protected var _debugMode:Boolean = false;
+		protected var _soundManager:ISoundManager;
 		
 		public function LFE_State(){
 			_initVar();
@@ -57,6 +60,7 @@ package customClasses{
 			if(_debugMode){
 				_initDebugMode();
 			}
+			_soundManager = SoundManager.getInstance();
 		}
 		//------ Init Var ------------------------------------
 		protected function _initDebugMode():void {
@@ -72,7 +76,16 @@ package customClasses{
 			if(!_object.bitmapSet.flip && spatialMove.facingDir.x==-1 || _object.bitmapSet.flip && spatialMove.facingDir.x==1){
 				_object.bitmapSet.flip = !_object.bitmapSet.flip;
 			}
+			checkSound();
 			update();
+		}
+		//------ CheckSound ------------------------------------
+		public function checkSound():void {
+			var frame:Object = _object.getCurrentFrame();
+			var sound:String = frame.sound
+			if(sound){
+				_soundManager.playWav(Framework.root+sound);
+			}
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {
@@ -98,11 +111,7 @@ package customClasses{
 				updateAnim(frame.hit_Fj);
 			}else if(frame.hasOwnProperty("hit_Uj") && keyPad.up.isDown && keyPad.fire2.isDown && !keyPad.fire2.getLongClick(125) && keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.fire3)){
 				updateAnim(frame.hit_Uj);
-			}/*else if(frame.hasOwnProperty("dbl_hit_up") && keyPad.up.doubleClick  && keyPad.up.isDown && !keyPad.up.getLongClick(20)){
-				updateAnim(frame.dbl_hit_up);
-			}else if(frame.hasOwnProperty("dbl_hit_down")&& keyPad.down.doubleClick && keyPad.down.isDown && !keyPad.down.getLongClick(20)){
-				updateAnim(frame.dbl_hit_down);
-			}*/else if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
+			}else if(frame.hasOwnProperty("dbl_hit_right") && keyPad.right.doubleClick){
 				updateAnim(frame.dbl_hit_right);
 			}else if(frame.hasOwnProperty("dbl_hit_left") && keyPad.left.doubleClick){
 				updateAnim(frame.dbl_hit_left);
@@ -140,6 +149,7 @@ package customClasses{
 					updateAnim(frame.next);
 				}
 		    }
+			updateMp();
 			updateSpeed();
 			updateWeapon();
 			checkFlip();
@@ -352,6 +362,19 @@ package customClasses{
 			var frame:Object = _object.getCurrentFrame();
 			if(frame.hasOwnProperty("opoint") &&_object.bitmapSet.currentAnim.iteration==0 ){
 				var object:LFE_ObjectComponent = LFE_Object.CreateObject(frame.opoint.oid,_object);
+			}
+		}
+		//------ CheckMp ------------------------------------
+		public function checkMp():void {
+			var frame:Object = _object.getCurrentFrame();
+			if(frame.mp){
+				_object.status.removeMp(frame.mp);
+			}
+		}
+		//------ UpdateMp ------------------------------------
+		public function updateMp():void {
+			if(_object.status.mp<_object.status.mpMax){
+				_object.status.removeMp(-0.5);
 			}
 		}
 		//------ GET/SET ------------------------------------
