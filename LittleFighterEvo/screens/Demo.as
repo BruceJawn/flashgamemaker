@@ -65,6 +65,8 @@ package screens{
 		private var _forestm3:GraphicComponent = null
 		private var _list:Array = null;
 		private var _statusBar:GraphicComponent = null;
+		private var _deadPlayer:int =0;
+		private var _nbPlayer:int =6;
 		
 		public function Demo(){
 		}
@@ -124,13 +126,16 @@ package screens{
 		//------- Create Players-------------------------------
 		private function createPlayers():void {
 			var player:LFE_ObjectComponent;
-			for (var i:int =0; i<8;i++){
+			for (var i:int =0; i<_nbPlayer;i++){
 				player = LFE_Object.CreateObject(1,null,new KeyPad);
 				player.setAI(true);
 				player.moveTo(Math.random()*600,300+Math.random()*100);
+				//player.status.unlimitedLife = true;
+				//player.status.unlimitedMp = true;
 				_list.push(player);
-				//_list.push(player.miniBar);
-				//player.addMiniBar();
+				player.addMiniBar();
+				_list.push(player.miniBar);
+				player.addEventListener(Event.COMPLETE,onPlayerDead,false,0,true);
 			}
 		}
 		//------- Create Weapons -------------------------------
@@ -165,6 +170,21 @@ package screens{
 				_finiteStateMachine.changeStateByName("UInterface");
 			}
 		}
+		//------ Update ------------------------------------
+		public function onPlayerDead($evt:Event):void {
+			_deadPlayer++;
+			if(_deadPlayer==_nbPlayer-1)
+				setTimeout(_replay,500);
+		}
+		//------ Reset ------------------------------------
+		private  function _replay():void {
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent))	continue;
+				LFE_ObjectComponent(player).moveTo(Math.random()*600,300+Math.random()*100);
+				LFE_ObjectComponent(player).status.reset();
+				_deadPlayer=0;
+			}
+		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
 			for each (var component:Component in _list){
@@ -176,6 +196,7 @@ package screens{
 			}
 			_list=new Array();
 			Framework.Focus();
+			_deadPlayer = 0;
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {

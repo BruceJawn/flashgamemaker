@@ -64,7 +64,6 @@ package screens{
 		private function onDataLoaded($dataString:String):void {
 			//var dataJSON:Object = JSON.parse($dataString);//Flash 11
 			var dataJSON:Object = JSON.decode($dataString);//Flash 10
-			trace($dataString);
 			Data.OBJECT 	= dataJSON.OBJECT;
 			Data.BACKGROUND = dataJSON.BACKGROUND;
 			Data.OTHERS 	= dataJSON.OTHERS;

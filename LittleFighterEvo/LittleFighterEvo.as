@@ -38,7 +38,7 @@ package {
 	public class LittleFighterEvo extends Sprite {
 		
 		public static var ROOT:String;
-		private var _useGlobalPath:Boolean=true;
+		private var _useGlobalPath:Boolean=false;
 		private var _globalPath:String = "http://angelstreetv2.free.fr/LittleFighterEvo/";
 		
 		public function LittleFighterEvo() {
@@ -56,6 +56,10 @@ package {
 			addEventListener(Event.ENTER_FRAME,_onLoading,false,0,true);
 		}
 		private function _onLoading($e:Event = null):void {
+			if(!stage || !stage.loaderInfo){
+				removeEventListener(Event.ENTER_FRAME, _onLoading);
+				_onLoadingComplete();
+			}
 			var loaded:Number = stage.loaderInfo.bytesLoaded;
 			var total:Number = stage.loaderInfo.bytesTotal;
 			trace("Loading... "+ Math.floor((loaded/total)*100)+ "%");

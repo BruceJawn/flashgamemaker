@@ -21,12 +21,12 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.keyboard.KeyCode;
 	import utils.keyboard.KeyPad;
@@ -71,25 +71,43 @@ package fms{
 				updateSpeed();
 			}else if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick()){
 				if(frame.hasOwnProperty("hit_Da") && (keyPad.down.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.down))){
-					updateAnim(frame.hit_Da);
-					updateState();
+					var powerFrame:Object = _object.lfe_Frame.frames[frame.hit_Da];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+						updateAnim(frame.hit_Da);
+						updateState();
+					}
 				}else if(frame.hasOwnProperty("hit_Ua") && (keyPad.up.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.up))){
-					updateAnim(frame.hit_Ua);
-					updateState();
+					powerFrame = _object.lfe_Frame.frames[frame.hit_Ua];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+						updateAnim(frame.hit_Ua);
+						updateState();
+					}
 				}else if(frame.hasOwnProperty("hit_Fa")){
-					updateAnim(frame.hit_Fa);
-					updateState();
+					powerFrame = _object.lfe_Frame.frames[frame.hit_Fa];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+						updateAnim(frame.hit_Fa);
+						updateState();
+					}
 				} 
 			}else if(keyPad.fire2.isDown && !keyPad.fire2.getLongClick()){
 				if(frame.hasOwnProperty("hit_Dj") &&(keyPad.down.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.down))){
-					updateAnim(frame.hit_Dj);
-					updateState();
+					powerFrame = _object.lfe_Frame.frames[frame.hit_Dj];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+						updateAnim(frame.hit_Dj);
+						updateState();
+					}
 				}else if(frame.hasOwnProperty("hit_Uj") && (keyPad.up.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.up))){
-					updateAnim(frame.hit_Uj);
-					updateState();
+					powerFrame = _object.lfe_Frame.frames[frame.hit_Uj];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+						updateAnim(frame.hit_Uj);
+						updateState();
+					}
 				}else if(frame.hasOwnProperty("hit_Fj")){
-					updateAnim(frame.hit_Fj);
-					updateState();
+					powerFrame = _object.lfe_Frame.frames[frame.hit_Fj];
+					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.hit_Fj.mp>_object.status.mp)){
+						updateAnim(frame.hit_Fj);
+						updateState();
+					}
 				} 
 			}else if(frame.hasOwnProperty("dbl_hit_direction") && (keyPad.right.isDown && keyPad.right.doubleClick || keyPad.left.isDown && keyPad.left.doubleClick)){
 				updateAnim(frame.dbl_hit_direction);

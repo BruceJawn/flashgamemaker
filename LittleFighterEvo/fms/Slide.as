@@ -49,6 +49,7 @@ package fms{
 		public override function enter($previousState:State):void {
 			//trace("Enter Slide");
 			if (!_object.bitmapSet)	return;
+			checkSound();
 		}
 		//------ Enter ------------------------------------
 		public override function update():void {
@@ -64,6 +65,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Slide");
+			checkSound();
 			checkFlip();
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){

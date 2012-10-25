@@ -61,7 +61,9 @@ package fms{
 			var keyPad:KeyPad = _object.keyPad;
 			var frame:Object = _object.getCurrentFrame();
 			_dvz = frame.dvz;
+			checkSound();
 			checkFlip();
+			checkMp();
 			update();
 			updateWeapon();
 		}
@@ -102,6 +104,7 @@ package fms{
 			if(spatialMove.movingDir.z!=0 && frame.hasOwnProperty("hit_a")){
 				if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick()){
 					updateAnim(frame.hit_a);
+					checkMp();
 				}
 			}else if(_object.bitmapSet.currentAnim.position >0){
 				if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick(65)){
@@ -120,12 +123,16 @@ package fms{
 				if(!_bool || (_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1 || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 					if(_hit_a && frame.hasOwnProperty("hit_a")){
 						updateAnim(frame.hit_a);
+						checkMp();
 					}else if(_hit_j && frame.hasOwnProperty("hit_j")){
 						updateAnim(frame.hit_j);
+						checkMp();
 					}else if(_hit_d && frame.hasOwnProperty("hit_d")){
 						updateAnim(frame.hit_d);
+						checkMp();
 					}else{
 						updateAnim(frame.next);
+						checkMp();
 					}
 					_bool = true;
 					_hit_a = false;
@@ -163,6 +170,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Power");
+			checkSound();
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

@@ -62,6 +62,7 @@ package fms{
 				_object.bitmapSet.currentAnim.autoAnim = false;
 				updateSpeed();
 			}
+			checkSound();
 			update();
 		}
 		//------ Update ------------------------------------
@@ -140,6 +141,7 @@ package fms{
 		//------ Exit ------------------------------------
 		public override function exit($nextState:State):void {
 			//trace("Exit Jump");
+			checkSound();
 			if(_debugMode && _object.kind==Data.OBJECT_KIND_CHARACTER){
 				if(_bitmapData){
 					_bitmapData.lock();

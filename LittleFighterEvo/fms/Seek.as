@@ -31,7 +31,6 @@ package fms{
 	import utils.space.Space;
 
 	public class Seek extends LFE_AiState{
-		private var _target:LFE_ObjectComponent = null;
 		private var _runningDistance:Number = 160; 
 		//Seek State
 		public function Seek(){
@@ -55,6 +54,10 @@ package fms{
 			var dir:int = Space.GetDirection(bounds1,bounds2 ,true,true);
 			var dist:Number = 0;
 			var rand:Number = SimpleMath.RandomBetween(0,20);
+			if(_object.target.status.life<=0){
+				_finiteStateMachine.changeStateByName("Target");
+				return;
+			}
 			if(dir==Space.CENTER){
 				var depthAlignement:Number =  Math.abs(object.y+object.height-object.z-object.target.y-object.target.height+object.target.z);
 				if(depthAlignement<5){

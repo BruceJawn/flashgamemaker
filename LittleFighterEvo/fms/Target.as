@@ -21,10 +21,13 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import data.Data;
+	
 	import flash.geom.Point;
 	
-	import customClasses.*;
-	import data.Data;
+	import framework.component.core.GraphicComponent;
 	
 	import utils.math.SimpleMath;
 	import utils.richardlord.State;
@@ -46,7 +49,12 @@ package fms{
 				_object.collisionParam.anyDirection = {range:-500,components:new Array,dists:new Array};
 				//_object.collisionParam.leftSide 	= {range:-500,components:new Array,dists:new Array};
 			}else{
-				_object.target = _object.collision[0];
+				for each(var player:GraphicComponent in _object.collision){
+					if(player is LFE_ObjectComponent && LFE_ObjectComponent(player).status.life>0){
+						_object.target = player as LFE_ObjectComponent;
+						return
+					}
+				}
 			}
 		}
 		//------ Enter ------------------------------------
