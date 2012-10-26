@@ -80,6 +80,8 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("LittleFighterEvo","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myComponent") as Component;
+			component.registerPropertyReference("enterFrame", { onEnterFrame:_onEnterFrame } );
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var keyBoardInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyBoardInput.addEventListener(KeyboardEvent.KEY_UP,onKeyUp,false,0,true);
@@ -184,6 +186,26 @@ package screens{
 				LFE_ObjectComponent(player).status.reset();
 				_deadPlayer=0;
 			}
+		}
+		//------ On Enter Frame ------------------------------------
+		private  function _onEnterFrame():void {
+			var left:int = 0;
+			var right:int = 0;
+			var center:int = 0;
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent))	continue;
+				if (player.x < 200)			left++;
+				else if (player.x > 600)	right++;
+				else 						center++;
+			}
+			if (left > right && left > center) {
+				//_battleField.moveTo(_battleField.x-5,_battleField.y);
+			}else if (right > left && right > center) {
+				//_battleField.moveTo(_battleField.x+5,_battleField.y);
+			}
+			left = 0;
+			right = 0;
+			center = 0;
 		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
