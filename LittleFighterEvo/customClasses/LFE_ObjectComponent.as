@@ -118,30 +118,26 @@ package customClasses{
 		}
 		//------ Init Player Finite StateMachine ------------------------------------
 		private function _initPlayerStateMachine():void {
-			var stateList:Dictionary = new Dictionary(true);
-			stateList["Stand"] 		= _initState(new Stand());
-			stateList["Knee"] 		= _initState(new Knee());
-			stateList["Walk"] 		= _initState(new Walk());
-			stateList["Run"] 		= _initState(new Run());
-			stateList["Slide"]		= _initState(new Slide());
-			stateList["Jump"] 		= _initState(new Jump());
-			stateList["Rowing"] 	= _initState(new Rowing());
-			stateList["Defense"]	= _initState(new Defense());
-			stateList["Attack"]		= _initState(new Attack());
-			stateList["Power"] 		= _initState(new Power());
-			stateList["Hurt"] 		= _initState(new Hurt());
-			stateList["Fall"] 		= _initState(new Fall());
-			stateList["Fly"] 		= _initState(new Fly());
-			stateList["InTheSky"] 	= _initState(new InTheSky());
-			stateList["Thrown"] 	= _initState(new Thrown());
 			_playerStateMachine 	= new FiniteStateMachine();
+			var stateList:Dictionary = new Dictionary(true);
+			stateList["Stand"] 		= new Stand(_playerStateMachine);
+			stateList["Knee"] 		= new Knee(_playerStateMachine);
+			stateList["Walk"] 		= new Walk(_playerStateMachine);
+			stateList["Run"] 		= new Run(_playerStateMachine);
+			stateList["Slide"]		= new Slide(_playerStateMachine);
+			stateList["Jump"] 		= new Jump(_playerStateMachine);
+			stateList["Rowing"] 	= new Rowing(_playerStateMachine);
+			stateList["Defense"]	= new Defense(_playerStateMachine);
+			stateList["Attack"]		= new Attack(_playerStateMachine);
+			stateList["Power"] 		= new Power(_playerStateMachine);
+			stateList["Hurt"] 		= new Hurt(_playerStateMachine);
+			stateList["Fall"] 		= new Fall(_playerStateMachine);
+			stateList["Fly"] 		= new Fly(_playerStateMachine);
+			stateList["InTheSky"] 	= new InTheSky(_playerStateMachine);
+			stateList["Thrown"] 	= new Thrown(_playerStateMachine);
+			
 			_playerStateMachine.setStateList(stateList);
 			_playerStateMachine.changeStateByName("Stand");
-		}
-		//------ Init State ------------------------------------
-		private function _initState($state:LFE_State):LFE_State {
-			$state.object = this;
-			return $state;
 		}
 		//------ Create Player ------------------------------------
 		public override function createBitmap($graphic:Bitmap):BitmapSet {
@@ -541,13 +537,13 @@ package customClasses{
 		//------ AI Finite StateMachine ------------------------------------
 		private function _initAiStateMachine():void {
 			var stateList:Dictionary = new Dictionary(true);
-			stateList["Target"] = _initState(new Target());
-			stateList["Seek"] = _initState(new Seek());
-			stateList["Flee"] = _initState(new Flee());
-			stateList["Melee"] = _initState(new Melee());
-			stateList["ShortRange"] = _initState(new ShortRange());
-			stateList["LongRange"] = _initState(new LongRange());
-			stateList["Dodge"] = _initState(new Dodge());
+			stateList["Target"] = new Target(_aiStateMachine);
+			stateList["Seek"] = new Seek(_aiStateMachine);
+			stateList["Flee"] = new Flee(_aiStateMachine);
+			stateList["Melee"] = new Melee(_aiStateMachine);
+			stateList["ShortRange"] = new ShortRange(_aiStateMachine);
+			stateList["LongRange"] = new LongRange(_aiStateMachine);
+			stateList["Dodge"] = new Dodge(_aiStateMachine);
 			_aiStateMachine = new FiniteStateMachine();
 			_aiStateMachine.setStateList(stateList);
 			_aiStateMachine.changeStateByName("Target");

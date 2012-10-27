@@ -25,6 +25,7 @@ package fms{
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 	import utils.time.Time;
@@ -32,7 +33,8 @@ package fms{
 	public class Melee extends LFE_AiState{
 		
 		//Melee State
-		public function Melee(){
+		public function Melee($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

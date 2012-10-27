@@ -21,12 +21,12 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.keyboard.KeyPad;
 	import utils.physic.SpatialMove;
@@ -35,7 +35,8 @@ package fms{
 	public class Knee extends LFE_State{
 		
 		//Stand State
-		public function Knee(){
+		public function Knee($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

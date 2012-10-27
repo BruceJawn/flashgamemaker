@@ -30,12 +30,14 @@ package fms{
 	import framework.component.core.GraphicComponent;
 	
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
 	public class Target extends LFE_AiState{
 		private var _longRangeDist:Number = 220; 
 		//Target State
-		public function Target(){
+		public function Target($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

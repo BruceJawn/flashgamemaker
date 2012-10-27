@@ -36,7 +36,8 @@ package fms{
 	public class Stand extends LFE_State{
 		
 		//Stand State
-		public function Stand(){
+		public function Stand($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

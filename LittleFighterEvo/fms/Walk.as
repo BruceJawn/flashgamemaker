@@ -21,13 +21,14 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import data.Data;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
-	import data.Data;
 	
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
@@ -38,7 +39,8 @@ package fms{
 	public class Walk extends LFE_State{
 		
 		//Walk State
-		public function Walk(){
+		public function Walk($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

@@ -21,12 +21,12 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.keyboard.KeyPad;
 	import utils.physic.SpatialMove;
@@ -36,7 +36,8 @@ package fms{
 	public class Rowing extends LFE_State{
 		
 		//Rowing State
-		public function Rowing(){
+		public function Rowing($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

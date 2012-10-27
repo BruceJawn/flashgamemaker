@@ -21,12 +21,13 @@
 *
 */
 package fms{
-	import flash.geom.Rectangle;
-	
 	import customClasses.*;
+	
+	import flash.geom.Rectangle;
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 
@@ -35,7 +36,8 @@ package fms{
 		private var _frameName:String = null;
 		private var _step:int=0;
 		//ShortRange State
-		public function ShortRange(){
+		public function ShortRange($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

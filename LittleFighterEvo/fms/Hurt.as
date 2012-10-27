@@ -35,7 +35,8 @@ package fms{
 	public class Hurt extends LFE_State{
 		
 		//Hurt State
-		public function Hurt(){
+		public function Hurt($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

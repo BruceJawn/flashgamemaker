@@ -42,7 +42,8 @@ package fms{
 		private var _bool:Boolean = true;
 		
 		//Power State
-		public function Power(){
+		public function Power(fms:FiniteStateMachine=null){
+			super(fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

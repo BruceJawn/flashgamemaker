@@ -21,13 +21,14 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import data.Data;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
-	import data.Data;
 	
 	import utils.keyboard.KeyPad;
 	import utils.physic.SpatialMove;
@@ -38,7 +39,8 @@ package fms{
 	public class Slide extends LFE_State {
 
 		//Slide State
-		public function Slide(){
+		public function Slide($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

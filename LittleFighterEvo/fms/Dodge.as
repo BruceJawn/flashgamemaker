@@ -21,12 +21,13 @@
 *
 */
 package fms{
-	import flash.geom.Rectangle;
-	
 	import customClasses.*;
+	
+	import flash.geom.Rectangle;
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 
@@ -36,7 +37,8 @@ package fms{
 		private var _step:int=0;
 		private var _isDefending:Boolean = false;
 		//Dodge State
-		public function Dodge(){
+		public function Dodge($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

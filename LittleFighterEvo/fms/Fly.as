@@ -21,12 +21,12 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
@@ -38,7 +38,8 @@ package fms{
 	public class Fly extends LFE_State{
 		private var _max:Number = 2000;//Max flying time 
 		//Fly State
-		public function Fly(){
+		public function Fly($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------
