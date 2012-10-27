@@ -39,6 +39,7 @@ package framework.system{
 
 		private static var _instance:ISoundManager=null;
 		private static var _allowInstanciation:Boolean=false;
+		private var _loadingSound:String = null;
 		private var _playingSound:Sound = null;
 		private var _playingSoundChannel:SoundChannel=null;
 		private var _playingSoundPosition:Number=0;
@@ -195,14 +196,20 @@ package framework.system{
 				stop($wavUrl);
 			}
 			if(_playingSounds[$wavUrl]){
-				trace("[WARNING] the sound "+$wavUrl+" has already been played");
+				trace("[WARNING] the sound "+$wavUrl+" has already been played once");
 			}else if(_sounds[$wavUrl]){
 				var sound:Sound = _sounds[$wavUrl];
 				sound.play();
 			}else{
-				_playingSounds[$wavUrl] = $wavUrl;
-				WavURLPlayer.PlayWavFromURL($wavUrl);
+				_loadingSound = $wavUrl;
+				WavURLPlayer.PlayWavFromURL($wavUrl,_onSoundLoadingComplete);
 			}
+		}
+		//------ onLoaderComplete ------------------------------------
+		private function _onSoundLoadingComplete($sound:Sound):void{
+			_sounds[_loadingSound] = $sound;
+			_loadingSound = null;
+			$sound.play();
 		}
 		//------ Get Sound ------------------------------------
 		public function getSound($path:String):Sound {

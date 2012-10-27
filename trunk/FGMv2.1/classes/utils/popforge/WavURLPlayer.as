@@ -28,17 +28,18 @@ package utils.popforge{
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	
+	import utils.senocular.PassParameters;
 
 	public class WavURLPlayer{
 		//From http://stackoverflow.com/questions/668186/can-the-flash-player-play-wav-files-from-a-url	
 		//Demo: WavURLPlayer.PlayWavFromURL("http://path.wav");
 	
-		public static var _callBack:Function = onSoundFactoryComplete;
+		public static var _callBack:Function = null;
 		public static var _autoPlay:Boolean = true;
-		public static function PlayWavFromURL($wavurl:String,$callBack:Function=null,$autoPlay:Boolean=true):void{
-			if($callBack!=null){
-				_callBack=$callBack;
-			}	
+		public static var _sound:Sound = null;
+		public static function PlayWavFromURL($wavurl:String,$callBack:Function,$autoPlay:Boolean=true):void{
+			_callBack=$callBack;
 			_autoPlay = $autoPlay;
 			var urlLoader:URLLoader = new URLLoader();
 			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -55,21 +56,14 @@ package utils.popforge{
 			
 			var wavformat:WavFormat = WavFormat.decode(urlLoader.data);
 			
-			if(_autoPlay)
-				SoundFactory.fromArray(wavformat.samples, wavformat.channels, wavformat.bits, wavformat.rate, _callBack);
-			else	
-				SoundFactory.fromArray(wavformat.samples, wavformat.channels, wavformat.bits, wavformat.rate, null);
+			SoundFactory.fromArray(wavformat.samples, wavformat.channels, wavformat.bits, wavformat.rate,_callBack);
 		}
 		//------ onLoaderComplete ------------------------------------
 		private static function onLoaderIOError(e:IOErrorEvent):void{
 			var urlLoader:URLLoader = e.target as URLLoader;
 			urlLoader.removeEventListener(Event.COMPLETE, onLoaderComplete);
 			urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, onLoaderIOError);
-			trace("error loading sound");
-		}
-		//------ onLoaderComplete ------------------------------------
-		private static function onSoundFactoryComplete($sound:Sound):void{
-			$sound.play();
+			throw new Error("[WavURLPlayer]Error loading sound "+ e);
 		}
 	}	
 }

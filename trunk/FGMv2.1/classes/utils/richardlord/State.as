@@ -11,12 +11,12 @@ package utils.richardlord{
 		public var lastUpdateTime:Number= 0;
 		public var exitStateTime:Number= 0;
 		
-		public function State():void{
-			_initVar()
+		public function State(fms:FiniteStateMachine=null):void{
+			_initVar(fms)
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar():void {
-			
+		private function _initVar(fms:FiniteStateMachine=null):void {
+			_finiteStateMachine = fms;
 		}
 		//------ Set FSM ------------------------------------
 		public function set finiteStateMachine($finiteStateMachine:FiniteStateMachine):void{

@@ -35,6 +35,8 @@ package utils.game{
 		public var xpMax:Number=0;
 		public var attack:Number=0; //damage you did to others
 		public var kill:Number=0;
+		public var unlimitedMp:Boolean=false;
+		public var unlimitedLife:Boolean=false;
 		
 		public function Status($lifeMax:Number, $mpMax:Number, $energyMax:Number=0){
 			_initVar($lifeMax,$mpMax,$energyMax);
@@ -45,11 +47,13 @@ package utils.game{
 			energy = energyMax = $energyMax;
 		}
 		public function removeLife($life:Number):void{
+			if (unlimitedLife) return;
 			life-=$life;
 			if(life<0)			life = 0;
 			if(life>lifeMax)	life = lifeMax;
 		}
 		public function removeMp($mp:Number):void{
+			if (unlimitedMp) return;
 			mp-=$mp;
 			if(mp<0)			mp = 0;
 			if(mp>mpMax)		mp = mpMax;

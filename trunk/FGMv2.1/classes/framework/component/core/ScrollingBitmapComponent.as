@@ -173,6 +173,11 @@ package framework.component.core{
 			_rectangle.x=x;
 			_rectangle.y=y;
 		}
+		//----- Scroll Position -----------------------------------
+		public function scrollPosition(x:Number,y:Number):void {
+			_rectangle.x+=x;
+			_rectangle.y+=y;
+		}
 		//----- Flip BitmapData  -----------------------------------
 		public function flipBitmapData(myBitmapData:BitmapData):void {
 			var flipHorizontalMatrix:Matrix = new Matrix();
@@ -249,6 +254,10 @@ package framework.component.core{
 				}
 				moveTo(x-_scrollPosition.x,y-_scrollPosition.y);
 			}
+		}
+		//----- Get speed -----------------------------------
+		public function get speed():IsoPoint {
+			return _speed;
 		}
 		//----- Set speed -----------------------------------
 		public function set speed($speed:IsoPoint):void {
