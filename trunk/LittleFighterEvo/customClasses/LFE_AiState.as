@@ -22,19 +22,20 @@
 */
 
 package customClasses{
+	import data.Data;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.net.getClassByAlias;
 	
-	import data.Data;
-	
 	import utils.bitmap.BitmapSet;
 	import utils.convert.BoolTo;
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
 	import utils.physic.SpatialMove;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
 	/**
@@ -42,14 +43,15 @@ package customClasses{
 	*/
 	public class LFE_AiState extends LFE_State implements LFE_IState{
 		
-		public function LFE_AiState(){
-			_initVar();
+		public function LFE_AiState($fms:FiniteStateMachine=null):void{
+			_initVar($fms)
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar():void {
+		private function _initVar($fms:FiniteStateMachine=null):void {
 			if(_debugMode){
 				_initDebugMode();
 			}
+			_finiteStateMachine = $fms;
 		}
 		//------ Move Right ------------------------------------
 		protected function _moveRight($doubleClick:Boolean=false):void {

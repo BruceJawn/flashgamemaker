@@ -39,6 +39,7 @@ package customClasses{
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
 	import utils.physic.SpatialMove;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 
 	/**
@@ -52,14 +53,15 @@ package customClasses{
 		protected var _debugMode:Boolean = false;
 		protected var _soundManager:ISoundManager;
 		
-		public function LFE_State(){
-			_initVar();
+		public function LFE_State($fms:FiniteStateMachine=null):void{
+			_initVar($fms)
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar():void {
+		private function _initVar($fms:FiniteStateMachine=null):void {
 			if(_debugMode){
 				_initDebugMode();
 			}
+			_finiteStateMachine = $fms;
 			_soundManager = SoundManager.getInstance();
 		}
 		//------ Init Var ------------------------------------

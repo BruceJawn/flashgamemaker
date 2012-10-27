@@ -36,7 +36,8 @@ package fms{
 	public class Defense extends LFE_State{
 		
 		//Defense State
-		public function Defense(){
+		public function Defense($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

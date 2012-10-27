@@ -36,7 +36,8 @@ package fms{
 	public class Thrown extends LFE_State{
 		
 		//Thrown State
-		public function Thrown(){
+		public function Thrown($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

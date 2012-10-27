@@ -21,19 +21,21 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import customClasses.*;
-	
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 
 	public class Seek extends LFE_AiState{
 		private var _runningDistance:Number = 160; 
 		//Seek State
-		public function Seek(){
+		public function Seek($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

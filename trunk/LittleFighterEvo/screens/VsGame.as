@@ -96,6 +96,8 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("LittleFighterEvo","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
+			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myComponent") as Component;
+			component.registerPropertyReference("enterFrame", { onEnterFrame:_onEnterFrame } );
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;
@@ -147,7 +149,7 @@ package screens{
 			_list.push(weapon);
 			//setTimeout(LFE_Object.CreateObject,1000,100,null,null,new IsoPoint(300,100,30));
 			//setTimeout(LFE_Object.CreateObject,2000,101,null,null,new IsoPoint(100,100,30));
-			setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
+			//setTimeout(LFE_Object.CreateObject,3000,121,null,null,new IsoPoint(500,100,30));
 		}
 		//------- Create Players -------------------------------
 		private function createPlayers():void {
@@ -306,6 +308,36 @@ package screens{
 				}
 				_summary.graphic.bottom.y=_summary.graphic.top.y+_summary.graphic.top.height+2*(_summary.graphic.middle1.height-2);
 				LayoutUtil.Align(_summary,LayoutUtil.ALIGN_CENTER_CENTER);
+			}
+		}
+		//------ On Enter Frame ------------------------------------
+		private  function _onEnterFrame():void {
+			var left:int = 0;
+			var right:int = 0;
+			var center:int = 0;
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
+				if (player.x < 200)			left++;
+				else if (player.x > 600)	right++;
+				else 						center++;
+			}
+			if (left > right && left > center) {
+				scroll(-4);
+			}else if (right > left && right > center) {
+				scroll(4);
+			}
+			left = 0;
+			right = 0;
+			center = 0;
+		}
+		//------ Scroll ------------------------------------
+		public function scroll($x:Number):void {
+			_battleField.speed.x=$x;
+			_battleField.scrollH();
+			_battleField.speed.x=0;
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent))	continue;
+					player.moveTo(player.x-$x,player.y);
 			}
 		}
 		//------ Enter ------------------------------------

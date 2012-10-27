@@ -21,13 +21,14 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
+	import data.Data;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
-	import data.Data;
 	
 	import utils.iso.IsoPoint;
 	import utils.keyboard.KeyPad;
@@ -42,7 +43,8 @@ package fms{
 		private var _throw:Boolean=false;
 		
 		//Jump State
-		public function Jump(){
+		public function Jump($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

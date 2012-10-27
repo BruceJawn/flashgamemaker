@@ -21,12 +21,13 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import customClasses.*;
-	
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 
@@ -34,7 +35,8 @@ package fms{
 		private var _target:LFE_ObjectComponent = null;
 		private var _runningDistance:Number = 200; 
 		//Flee State
-		public function Flee(){
+		public function Flee($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

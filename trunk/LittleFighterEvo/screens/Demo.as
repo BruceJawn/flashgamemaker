@@ -122,6 +122,7 @@ package screens{
 			
 			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
 			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
+			_battleField.loop=true;
 			_battleField.moveTo(0,80);
 			_list.push(_battleField);
 		}
@@ -187,26 +188,6 @@ package screens{
 				_deadPlayer=0;
 			}
 		}
-		//------ On Enter Frame ------------------------------------
-		private  function _onEnterFrame():void {
-			var left:int = 0;
-			var right:int = 0;
-			var center:int = 0;
-			for each(var player:Component in _list){
-				if(!(player is LFE_ObjectComponent))	continue;
-				if (player.x < 200)			left++;
-				else if (player.x > 600)	right++;
-				else 						center++;
-			}
-			if (left > right && left > center) {
-				//_battleField.moveTo(_battleField.x-5,_battleField.y);
-			}else if (right > left && right > center) {
-				//_battleField.moveTo(_battleField.x+5,_battleField.y);
-			}
-			left = 0;
-			right = 0;
-			center = 0;
-		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
 			for each (var component:Component in _list){
@@ -219,6 +200,36 @@ package screens{
 			_list=new Array();
 			Framework.Focus();
 			_deadPlayer = 0;
+		}
+		//------ On Enter Frame ------------------------------------
+		private  function _onEnterFrame():void {
+			var left:int = 0;
+			var right:int = 0;
+			var center:int = 0;
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
+				if (player.x < 200)			left++;
+				else if (player.x > 600)	right++;
+				else 						center++;
+			}
+			if (left > right && left > center) {
+				scroll(-4);
+			}else if (right > left && right > center) {
+				scroll(4);
+			}
+			left = 0;
+			right = 0;
+			center = 0;
+		}
+		//------ Scroll ------------------------------------
+		public function scroll($x:Number):void {
+			_battleField.speed.x=$x;
+			_battleField.scrollH();
+			_battleField.speed.x=0;
+			for each(var player:Component in _list){
+				if(!(player is LFE_ObjectComponent))	continue;
+				player.moveTo(player.x-$x,player.y);
+			}
 		}
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {

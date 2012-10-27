@@ -21,12 +21,13 @@
 *
 */
 package fms{
-	import flash.geom.Rectangle;
-	
 	import customClasses.*;
+	
+	import flash.geom.Rectangle;
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
+	import utils.richardlord.FiniteStateMachine;
 	import utils.richardlord.State;
 	import utils.space.Space;
 
@@ -35,7 +36,8 @@ package fms{
 		private var _distMax:Number =5;
 		private var _isAttacking:Boolean = false;
 		//LongRange State
-		public function LongRange(){
+		public function LongRange($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

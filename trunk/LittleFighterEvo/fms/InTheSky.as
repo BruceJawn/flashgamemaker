@@ -21,12 +21,12 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.keyboard.KeyPad;
 	import utils.math.SimpleMath;
@@ -37,7 +37,8 @@ package fms{
 		private var _dvz:Number=0;
 		
 		//InTheSky State
-		public function InTheSky(){
+		public function InTheSky($fms:FiniteStateMachine=null){
+			super($fms);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------
