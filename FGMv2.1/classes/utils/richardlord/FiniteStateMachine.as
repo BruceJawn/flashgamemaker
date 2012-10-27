@@ -17,8 +17,9 @@ package utils.richardlord{
 		public function stateMachine():void{
 		}
 		//------ FiniteStateMachine  ------------------------------------
-		public function FiniteStateMachine($name:String=null):void {
+		public function FiniteStateMachine($name:String="myFiniteStateMachine"):void {
 			_name = $name;
+			_stateList = new Dictionary;
 		}
 		// prepare a state for use after the current state
 		private function setNextState( $state:State ):void{
@@ -45,16 +46,23 @@ package utils.richardlord{
 			setPreviousState(state);
 		}
 		// prepare a state list
-		public function setStateList( $stateList:Dictionary):void{
+		public function setStateList( $stateList:Dictionary, $addDefaultState:Boolean = false):void{
 			_stateList = $stateList;
+			if($addDefaultState && !_currentState){
+				for each(var state:State in _stateList){
+					_currentState = state;
+					return;
+				}
+			}	
 		}
 		// prepare a state for use after the current state
-		public function addState( $stateName:String, $state:IState):void{
+		public function addState( $stateName:String, $state:IState, $addDefaultState:Boolean = false):void{
 			if(_stateList[$stateName]){
 				trace("[Warning] the state "+ $stateName+" already exists");
 				return
 			}
 			_stateList[$stateName] = $state;
+			if($addDefaultState && !_currentState)	_currentState = _stateList[$stateName]; 
 			if(!$state.finiteStateMachine){
 				$state.finiteStateMachine=this;
 			}
@@ -126,6 +134,10 @@ package utils.richardlord{
 		// Change to another state by name
 		public function changeStateByName( $stateName:String,$previousState:String=null,$nextState:String=null ):State{
 			var state:State = getStateByName($stateName);
+			if(_currentState == state){
+				trace("[WARNING] Same state");
+				return state;
+			}
 			var previous:State = getStateByName($previousState);
 			if(!previous)	previous= _currentState;
 			var nextState:State = getStateByName($nextState);
