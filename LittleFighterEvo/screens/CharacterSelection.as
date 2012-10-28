@@ -21,6 +21,8 @@
 *
 */
 package screens{
+	import com.google.analytics.v4.GoogleAnalyticsAPI;
+	
 	import data.Data;
 	
 	import fl.controls.Slider;
@@ -29,6 +31,7 @@ package screens{
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.text.TextColorType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -191,8 +194,8 @@ package screens{
 					}	
 					if(_computerComponent){
 						_computerComponent.visible = false;
-						(_computerComponent.graphic.c0TF as TextField).textColor = 0xFFFFFF;
-						(_computerComponent.graphic.c7TF as TextField).textColor = 0xFFFFFF;
+						(_computerComponent.graphic.bt0.upState as TextField).textColor = 0xFFFFFF;
+						(_computerComponent.graphic.bt7.upState as TextField).textColor = 0xFFFFFF;
 						if(_stepPlayer1 == NB_COMPUTER_SELECTION){
 							_stepPlayer1=WAITING_NEW_PLAYER;
 						}if(_stepPlayer2 == NB_COMPUTER_SELECTION){
@@ -500,6 +503,14 @@ package screens{
 			if(!_computerComponent){
 				_computerComponent = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myComputers") as GraphicComponent;
 				_computerComponent.graphic = new ComputersUI as MovieClip;
+				SimpleButton(_computerComponent.graphic.bt0).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt1).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt2).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt3).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt4).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt5).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt6).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
+				SimpleButton(_computerComponent.graphic.bt7).addEventListener(MouseEvent.CLICK,_onComputerBtClick,false,0,true);
 				LayoutUtil.Align(_computerComponent,LayoutUtil.ALIGN_CENTER_CENTER);
 			}else{
 				_computerComponent.visible = true;
@@ -507,16 +518,25 @@ package screens{
 			}
 			_stopCounter();
 			if(_stepPlayer1!=WAITING_NEW_PLAYER || _stepPlayer2!=WAITING_NEW_PLAYER){
-				(_computerComponent.graphic.c0TF as TextField).textColor = 0x666666;
+				(_computerComponent.graphic.bt0.upState as TextField).textColor = 0x666666;
 				_computerComponent.nextFrame();
 			}else{
-				(_computerComponent.graphic.c7TF as TextField).textColor = 0x666666;
+				(_computerComponent.graphic.bt7.upState as TextField).textColor = 0x666666;
 			}
 			_computerComponent.graphic.nbComputersTF.text = _lang.nbComputersTF;
 			if(_stepPlayer1 == WAITING_NEW_PLAYER){
 				_stepPlayer1=NB_COMPUTER_SELECTION;
 			}if(_stepPlayer2 == WAITING_NEW_PLAYER){
 				_stepPlayer2=NB_COMPUTER_SELECTION;
+			}
+		}
+		//------ StopCounter ------------------------------------
+		private  function _onComputerBtClick($evt:MouseEvent):void {
+			_computerComponent.gotoAndStop(int($evt.target.upState.text)+1);
+			if(_stepPlayer1 == NB_COMPUTER_SELECTION){
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.A));
+			}else if(_stepPlayer2 == NB_COMPUTER_SELECTION){
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player2.A));
 			}
 		}
 		//------ StopCounter ------------------------------------
@@ -545,8 +565,8 @@ package screens{
 			if(_fightMenu)	_fightMenu.visible=false;
 			if(_computerComponent){ 
 				_computerComponent.visible = false;
-				(_computerComponent.graphic.c0TF as TextField).textColor = 0xFFFFFF;
-				(_computerComponent.graphic.c7TF as TextField).textColor = 0xFFFFFF;
+				(_computerComponent.graphic.bt0.upState as TextField).textColor = 0xFFFFFF;
+				(_computerComponent.graphic.bt7.upState as TextField).textColor = 0xFFFFFF;
 			}
 			if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
 			_focusTextField1 = null;
