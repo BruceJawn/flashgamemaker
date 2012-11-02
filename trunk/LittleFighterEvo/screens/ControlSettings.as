@@ -73,12 +73,12 @@ package screens{
 		private function _initListener():void {
 			SimpleButton(_menuComponent.graphic.configOkBt).addEventListener(MouseEvent.CLICK, _onOkBtClick,false,0,true);
 			SimpleButton(_menuComponent.graphic.configCancelBt).addEventListener(MouseEvent.CLICK, _onCancelBtClick,false,0,true);
+			_menuComponent.graphic.focusClip.mouseEnabled=false;
 		}
 		
 		//------ Init Component ------------------------------------
 		private function _initComponent():void {
 			_keyInput = _entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
-			
 		}
 		//------ Init Restrictions ------------------------------------
 		private function _initRestrictions():void {

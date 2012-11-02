@@ -21,13 +21,13 @@
 *
 */
 package fms{
+	import customClasses.*;
+	
 	import flash.events.Event;
 	import flash.net.sendToURL;
 	
 	import framework.component.core.*;
 	import framework.entity.*;
-	
-	import customClasses.*;
 	
 	import utils.keyboard.KeyPad;
 	import utils.physic.SpatialMove;
@@ -36,8 +36,8 @@ package fms{
 	public class Thrown extends LFE_State{
 		
 		//Thrown State
-		public function Thrown($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Thrown($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

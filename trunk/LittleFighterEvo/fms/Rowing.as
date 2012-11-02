@@ -36,8 +36,8 @@ package fms{
 	public class Rowing extends LFE_State{
 		
 		//Rowing State
-		public function Rowing($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Rowing($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

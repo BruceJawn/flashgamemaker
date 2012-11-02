@@ -35,8 +35,8 @@ package fms{
 	public class Knee extends LFE_State{
 		
 		//Stand State
-		public function Knee($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Knee($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

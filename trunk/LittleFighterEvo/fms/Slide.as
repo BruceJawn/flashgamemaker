@@ -39,8 +39,8 @@ package fms{
 	public class Slide extends LFE_State {
 
 		//Slide State
-		public function Slide($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Slide($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

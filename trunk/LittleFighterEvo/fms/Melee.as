@@ -33,8 +33,8 @@ package fms{
 	public class Melee extends LFE_AiState{
 		
 		//Melee State
-		public function Melee($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Melee($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

@@ -37,8 +37,8 @@ package fms{
 		private var _step:int=0;
 		private var _isDefending:Boolean = false;
 		//Dodge State
-		public function Dodge($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Dodge($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

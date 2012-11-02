@@ -120,21 +120,21 @@ package customClasses{
 		private function _initPlayerStateMachine():void {
 			_playerStateMachine 	= new FiniteStateMachine();
 			var stateList:Dictionary = new Dictionary(true);
-			stateList["Stand"] 		= new Stand(_playerStateMachine);
-			stateList["Knee"] 		= new Knee(_playerStateMachine);
-			stateList["Walk"] 		= new Walk(_playerStateMachine);
-			stateList["Run"] 		= new Run(_playerStateMachine);
-			stateList["Slide"]		= new Slide(_playerStateMachine);
-			stateList["Jump"] 		= new Jump(_playerStateMachine);
-			stateList["Rowing"] 	= new Rowing(_playerStateMachine);
-			stateList["Defense"]	= new Defense(_playerStateMachine);
-			stateList["Attack"]		= new Attack(_playerStateMachine);
-			stateList["Power"] 		= new Power(_playerStateMachine);
-			stateList["Hurt"] 		= new Hurt(_playerStateMachine);
-			stateList["Fall"] 		= new Fall(_playerStateMachine);
-			stateList["Fly"] 		= new Fly(_playerStateMachine);
-			stateList["InTheSky"] 	= new InTheSky(_playerStateMachine);
-			stateList["Thrown"] 	= new Thrown(_playerStateMachine);
+			stateList["Stand"] 		= new Stand(_playerStateMachine,this);
+			stateList["Knee"] 		= new Knee(_playerStateMachine,this);
+			stateList["Walk"] 		= new Walk(_playerStateMachine,this);
+			stateList["Run"] 		= new Run(_playerStateMachine,this);
+			stateList["Slide"]		= new Slide(_playerStateMachine,this);
+			stateList["Jump"] 		= new Jump(_playerStateMachine,this);
+			stateList["Rowing"] 	= new Rowing(_playerStateMachine,this);
+			stateList["Defense"]	= new Defense(_playerStateMachine,this);
+			stateList["Attack"]		= new Attack(_playerStateMachine,this);
+			stateList["Power"] 		= new Power(_playerStateMachine,this);
+			stateList["Hurt"] 		= new Hurt(_playerStateMachine,this);
+			stateList["Fall"] 		= new Fall(_playerStateMachine,this);
+			stateList["Fly"] 		= new Fly(_playerStateMachine,this);
+			stateList["InTheSky"] 	= new InTheSky(_playerStateMachine,this);
+			stateList["Thrown"] 	= new Thrown(_playerStateMachine,this);
 			
 			_playerStateMachine.setStateList(stateList);
 			_playerStateMachine.changeStateByName("Stand");
@@ -261,6 +261,7 @@ package customClasses{
 					if(object==this)							continue;//To avoid autoCollision
 					if(_source && object==_source)				continue;//To avoid collision with special move
 					if(_weapon && object.weapon==_weapon)		continue;//To avoid collision with your weapon
+					if(!object.status.gotLife)					continue;//To avoid dead ennemies
 					depthAlignement =  Math.abs(object.y+object.height-object.z-y-height+z);
 					objectCurrentFrame = object.getCurrentFrame();
 					if(objectCurrentFrame.hasOwnProperty("bdy") && depthAlignement<=_depth && (!_lastHit || _lastHit[0]!=object || _lastHit[1]!=frame.id)){
@@ -537,13 +538,13 @@ package customClasses{
 		//------ AI Finite StateMachine ------------------------------------
 		private function _initAiStateMachine():void {
 			var stateList:Dictionary = new Dictionary(true);
-			stateList["Target"] = new Target(_aiStateMachine);
-			stateList["Seek"] = new Seek(_aiStateMachine);
-			stateList["Flee"] = new Flee(_aiStateMachine);
-			stateList["Melee"] = new Melee(_aiStateMachine);
-			stateList["ShortRange"] = new ShortRange(_aiStateMachine);
-			stateList["LongRange"] = new LongRange(_aiStateMachine);
-			stateList["Dodge"] = new Dodge(_aiStateMachine);
+			stateList["Target"] = new Target(_aiStateMachine,this);
+			stateList["Seek"] = new Seek(_aiStateMachine,this);
+			stateList["Flee"] = new Flee(_aiStateMachine,this);
+			stateList["Melee"] = new Melee(_aiStateMachine,this);
+			stateList["ShortRange"] = new ShortRange(_aiStateMachine,this);
+			stateList["LongRange"] = new LongRange(_aiStateMachine,this);
+			stateList["Dodge"] = new Dodge(_aiStateMachine,this);
 			_aiStateMachine = new FiniteStateMachine();
 			_aiStateMachine.setStateList(stateList);
 			_aiStateMachine.changeStateByName("Target");

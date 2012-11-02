@@ -43,15 +43,16 @@ package customClasses{
 	*/
 	public class LFE_AiState extends LFE_State implements LFE_IState{
 		
-		public function LFE_AiState($fms:FiniteStateMachine=null):void{
-			_initVar($fms)
+		public function LFE_AiState($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null):void{
+			_initVar($fms,$lfe_objectComponent)
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar($fms:FiniteStateMachine=null):void {
+		private function _initVar($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null):void {
 			if(_debugMode){
 				_initDebugMode();
 			}
 			_finiteStateMachine = $fms;
+			_object = $lfe_objectComponent;
 		}
 		//------ Move Right ------------------------------------
 		protected function _moveRight($doubleClick:Boolean=false):void {

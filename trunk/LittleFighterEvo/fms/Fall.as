@@ -36,8 +36,8 @@ package fms{
 	public class Fall extends LFE_State{
 		
 		//Fall_Down State
-		public function Fall(fms:FiniteStateMachine=null){
-			super(fms);
+		public function Fall($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

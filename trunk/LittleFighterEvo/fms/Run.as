@@ -36,8 +36,8 @@ package fms{
 	public class Run extends LFE_State{
 		
 		//Run State
-		public function Run($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Run($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

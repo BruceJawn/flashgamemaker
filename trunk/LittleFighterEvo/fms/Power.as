@@ -42,8 +42,8 @@ package fms{
 		private var _bool:Boolean = true;
 		
 		//Power State
-		public function Power(fms:FiniteStateMachine=null){
-			super(fms);
+		public function Power($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------
@@ -83,7 +83,7 @@ package fms{
 				spatialMove.facingDir.y=1;
 			}
 			//Jump
-			if(frame.hasOwnProperty("dvz") && spatialMove.movingDir.z==0 && _bool){
+			if(_dvz && spatialMove.movingDir.z==0 && _bool){
 				spatialMove.movingDir.z=1;
 				spatialMove.speed.z = _dvz;
 			}else if(spatialMove.movingDir.z==1){

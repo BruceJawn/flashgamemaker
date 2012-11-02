@@ -32,6 +32,7 @@ package screens{
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
 	import flash.utils.setTimeout;
@@ -96,8 +97,9 @@ package screens{
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("LittleFighterEvo","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
-			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myComponent") as Component;
+			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myVSComponent") as Component;
 			component.registerPropertyReference("enterFrame", { onEnterFrame:_onEnterFrame } );
+			_list.push(component);
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var bitmapRenderComponent:BitmapRenderComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapRenderComponent","myBitmapRenderComponent") as BitmapRenderComponent;
 			bitmapRenderComponent.scrollEnabled = false;
@@ -114,31 +116,46 @@ package screens{
 			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",100,582));
 			_startTime = Time.GetTime();
 		}
+		//------ Init Menu Bar ------------------------------------
+		private function _initMenuBar():void {
+			_menuComponent.graphic.exitBt.addEventListener(MouseEvent.CLICK,_onExitBtClick,false,0,true);
+			_menuComponent.graphic.pauseBt.addEventListener(MouseEvent.CLICK,_onPauseBtClick,false,0,true);
+			_menuComponent.graphic.f1Bt.addEventListener(MouseEvent.CLICK,_onF1BtClick,false,0,true);
+			_menuComponent.graphic.f2Bt.addEventListener(MouseEvent.CLICK,_onF2BtClick,false,0,true);
+			_menuComponent.graphic.f3Bt.addEventListener(MouseEvent.CLICK,_onF3BtClick,false,0,true);
+			_menuComponent.graphic.f4Bt.addEventListener(MouseEvent.CLICK,_onF4BtClick,false,0,true);
+			_menuComponent.graphic.f5Bt.addEventListener(MouseEvent.CLICK,_onF5BtClick,false,0,true);
+			_menuComponent.graphic.f6Bt.addEventListener(MouseEvent.CLICK,_onF6BtClick,false,0,true);
+			_menuComponent.graphic.f7Bt.addEventListener(MouseEvent.CLICK,_onF7BtClick,false,0,true);
+			_menuComponent.graphic.f8Bt.addEventListener(MouseEvent.CLICK,_onF8BtClick,false,0,true);
+			_menuComponent.graphic.f9Bt.addEventListener(MouseEvent.CLICK,_onF9BtClick,false,0,true);
+		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
-			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
+			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myVSForests",{render:"render"}) as GraphicComponent;
 			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
+			_forests.moveTo(0,20);
 			_list.push(_forests);
 			
-			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
+			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myVSForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
 			var bitmaps:Vector.<Bitmap> = new Vector.<Bitmap>()
 			bitmaps.push(_graphicManager.getGraphic("forestm1.png") as Bitmap);
 			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
 			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
 			_forestm2.graphic = bitmap;
-			_forestm2.moveTo(0,18);
+			_forestm2.moveTo(0,38);
 			_list.push(_forestm2);
 			
-			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
+			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myVSForestm3",{render:"render"}) as GraphicComponent;
 			bitmaps = new Vector.<Bitmap>()
 			bitmaps.push(_graphicManager.getGraphic("forestm3.png") as Bitmap);
 			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
 			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
 			_forestm3.graphic =bitmap;
-			_forestm3.moveTo(0,50);
+			_forestm3.moveTo(0,70);
 			_list.push(_forestm3);
 			
-			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
+			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myVSBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
 			_battleField.graphic = _graphicManager.getGraphic("../assets/btf1.png")as Bitmap;
 			_battleField.moveTo(0,80);
 			_list.push(_battleField);
@@ -215,12 +232,19 @@ package screens{
 		private function onKeyUp($evt:KeyboardEvent):void {
 			if(_finiteStateMachine.currentState!=this)	return;
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
-			if(KeyCode.GetKey($evt.keyCode)=="F1"){
+			if(KeyCode.GetKey($evt.keyCode)=="PAUSE"){
 				MyGame.Pause();
 			}else if($evt.keyCode == KeyCode.ESC){
+				if(MyGame.isPause)	MyGame.Pause();
 				_reset();
 				_menuComponent.gotoAndStop(2);
 				_finiteStateMachine.changeStateByName("GameMenu");
+			}else if(KeyCode.GetKey($evt.keyCode)=="F3"){
+				if(_player1)	_player1.status.unlimitedLife=!_player1.status.unlimitedLife;
+				if(_player2)	_player2.status.unlimitedLife=!_player2.status.unlimitedLife;
+			}else if(KeyCode.GetKey($evt.keyCode)=="F4"){
+				if(_player1)	_player1.status.unlimitedMp=!_player1.status.unlimitedMp;
+				if(_player2)	_player2.status.unlimitedMp=!_player2.status.unlimitedMp;
 			}else if(KeyCode.GetKey($evt.keyCode)=="F5"){
 				if(_player1)	_player1.status.resetLife();
 				if(_player2)	_player2.status.resetLife();
@@ -238,7 +262,7 @@ package screens{
 				_deadPlayer = 0;
 				for each(var player:LFE_ObjectComponent in _players){
 					player.status.reset();
-					player.moveTo(Math.random()*600,300+Math.random()*100);
+					player.moveTo(Math.random()*600,300+Math.random()*100,0);
 				}
 			}else if(_summary && ($evt.keyCode == KeyConfig.Player1.J || $evt.keyCode == KeyConfig.Player2.J)){
 				MyGame.Pause(true);
@@ -246,6 +270,50 @@ package screens{
 				_menuComponent.gotoAndStop(4);
 				_finiteStateMachine.changeStateByName("CharacterSelection");
 			}
+		}
+		//------ On Exit bt Click ------------------------------------
+		private function _onExitBtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.ESC));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onPauseBtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.PAUSE));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF1BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F1));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF2BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F2));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF3BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F3));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF4BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F4));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF5BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F5));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF6BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F6));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF7BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F7));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF8BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F8));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF9BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F9));
 		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
@@ -346,6 +414,7 @@ package screens{
 				initVar();
 			}			
 			initComponent();
+			_initMenuBar();
 		}
 	}
 }

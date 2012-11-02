@@ -39,8 +39,8 @@ package fms{
 	public class Walk extends LFE_State{
 		
 		//Walk State
-		public function Walk($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Walk($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

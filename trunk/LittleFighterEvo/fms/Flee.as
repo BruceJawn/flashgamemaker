@@ -35,8 +35,8 @@ package fms{
 		private var _target:LFE_ObjectComponent = null;
 		private var _runningDistance:Number = 200; 
 		//Flee State
-		public function Flee($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Flee($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

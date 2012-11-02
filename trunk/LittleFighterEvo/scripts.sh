@@ -11,7 +11,7 @@ adt -package -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.
 adt -package -target apk-emulator -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.apk swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data  
 
 #Packaging SWF to APK
-adt -package -target apk -storetype pkcs12 -keystore "certificate.p12" swf/FlashGameMaker.apk swf/application.xml swf/FlashGameMaker.swf swf/FlashGameMaker.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" assets\LittleFighterEvo -C "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2" \classes\script\game\littleFighterEvo\data  
+adt -package -target apk -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.apk swf/application.xml swf/LittleFighterEvo.swf swf/LittleFighterEvo.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" assets\ -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" \data  
 
 #Packaging AIR to APK
 adt -package  -target apk -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.apk swf/LittleFighterEvo.air
