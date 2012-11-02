@@ -34,8 +34,8 @@ package fms{
 	public class Seek extends LFE_AiState{
 		private var _runningDistance:Number = 160; 
 		//Seek State
-		public function Seek($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Seek($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

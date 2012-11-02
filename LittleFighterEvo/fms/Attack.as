@@ -41,8 +41,8 @@ package fms{
 		private var _hit:Boolean = false;
 		
 		//Attack State
-		public function Attack($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Attack($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

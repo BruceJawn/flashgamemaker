@@ -31,6 +31,7 @@ package screens{
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.utils.setTimeout;
 	
@@ -47,6 +48,7 @@ package screens{
 	import utils.keyboard.KeyPad;
 	import utils.loader.SimpleLoader;
 	import utils.math.SimpleMath;
+	import utils.mouse.MousePad;
 	import utils.popforge.WavURLPlayer;
 	import utils.richardlord.*;
 	import utils.ui.LayoutUtil;
@@ -71,17 +73,18 @@ package screens{
 		public function Demo(){
 		}
 		//------ Init Var ------------------------------------
-		private function initVar():void {
+		private function _initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_graphicManager = GraphicManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_list=new Array();
 		}
 		//------ Init Component ------------------------------------
-		private function initComponent():void {
+		private function _initComponent():void {
 			var enterFrameComponent:EnterFrameComponent=_entityManager.addComponentFromName("LittleFighterEvo","EnterFrameComponent","myEnterFrameComponent") as EnterFrameComponent;
-			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myComponent") as Component;
+			var component:Component =_entityManager.addComponentFromName("LittleFighterEvo","Component","myDemoComponent") as Component;
 			component.registerPropertyReference("enterFrame", { onEnterFrame:_onEnterFrame } );
+			_list.push(component);
 			var bitmapAnimComponent:BitmapAnimComponent=_entityManager.addComponentFromName("LittleFighterEvo","BitmapAnimComponent","myBitmapAnimComponent") as BitmapAnimComponent;
 			var keyBoardInput:KeyboardInputComponent=_entityManager.addComponentFromName("LittleFighterEvo","KeyboardInputComponent","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyBoardInput.addEventListener(KeyboardEvent.KEY_UP,onKeyUp,false,0,true);
@@ -96,10 +99,25 @@ package screens{
 			//createStatusBar();
 			_list.push(EntityFactory.CreateSystemInfo("SystemInfo",20,462));
 		}
+		//------ Init Menu Bar ------------------------------------
+		private function _initMenuBar():void {
+			_menuComponent.graphic.exitBt.addEventListener(MouseEvent.CLICK,_onExitBtClick,false,0,true);
+			_menuComponent.graphic.pauseBt.addEventListener(MouseEvent.CLICK,_onPauseBtClick,false,0,true);
+			_menuComponent.graphic.f1Bt.addEventListener(MouseEvent.CLICK,_onF1BtClick,false,0,true);
+			_menuComponent.graphic.f2Bt.addEventListener(MouseEvent.CLICK,_onF2BtClick,false,0,true);
+			_menuComponent.graphic.f3Bt.addEventListener(MouseEvent.CLICK,_onF3BtClick,false,0,true);
+			_menuComponent.graphic.f4Bt.addEventListener(MouseEvent.CLICK,_onF4BtClick,false,0,true);
+			_menuComponent.graphic.f5Bt.addEventListener(MouseEvent.CLICK,_onF5BtClick,false,0,true);
+			_menuComponent.graphic.f6Bt.addEventListener(MouseEvent.CLICK,_onF6BtClick,false,0,true);
+			_menuComponent.graphic.f7Bt.addEventListener(MouseEvent.CLICK,_onF7BtClick,false,0,true);
+			_menuComponent.graphic.f8Bt.addEventListener(MouseEvent.CLICK,_onF8BtClick,false,0,true);
+			_menuComponent.graphic.f9Bt.addEventListener(MouseEvent.CLICK,_onF9BtClick,false,0,true);
+		}
 		//------- Create Battle Field -------------------------------
 		private function createBattleField():void {
 			_forests = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForests",{render:"render"}) as GraphicComponent;
 			_forests.graphic = _graphicManager.getGraphic("forests.png") as Bitmap;
+			_forests.moveTo(0,20);
 			_list.push(_forests);
 			
 			_forestm2=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myForestsm2",{canvas:{"width":800,"height":600}}) as ScrollingBitmapComponent;
@@ -108,7 +126,7 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm2.png") as Bitmap);
 			var bitmap:Bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL")
 			_forestm2.graphic = bitmap;
-			_forestm2.moveTo(0,18);
+			_forestm2.moveTo(0,38);
 			_list.push(_forestm2);
 			
 			_forestm3 = _entityManager.addComponentFromName("LittleFighterEvo","GraphicComponent","myForestm3",{render:"render"}) as GraphicComponent;
@@ -117,7 +135,7 @@ package screens{
 			bitmaps.push(_graphicManager.getGraphic("forestm4.png") as Bitmap);
 			bitmap = BitmapTo.BitmapsToBitmap(bitmaps,"HORIZONTAL",1000)
 			_forestm3.graphic =bitmap;
-			_forestm3.moveTo(0,50);
+			_forestm3.moveTo(0,70);
 			_list.push(_forestm3);
 			
 			_battleField=_entityManager.addComponentFromName("LittleFighterEvo","ScrollingBitmapComponent","myBattleField",{canvas:{"width":800,"height":600, "repeatX":true, "repeatY":false}}) as ScrollingBitmapComponent;
@@ -165,13 +183,75 @@ package screens{
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
-			if(KeyCode.GetKey($evt.keyCode)=="F1"){
+			if(KeyCode.GetKey($evt.keyCode)=="PAUSE"){
 				MyGame.Pause();
 			}else if(KeyCode.GetKey($evt.keyCode)=="Esc"){
+				if(MyGame.isPause)	MyGame.Pause();
 				_reset();
 				_menuComponent.gotoAndStop(1);
 				_finiteStateMachine.changeStateByName("UInterface");
+			}else if(KeyCode.GetKey($evt.keyCode)=="F5"){
+				for each(var player:Component in _list){
+					if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
+					player.status.resetLife();
+				}
+			}else if(KeyCode.GetKey($evt.keyCode)=="F6"){
+				for each(player in _list){
+					if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
+					player.status.resetMp();
+				}
+			}else if(KeyCode.GetKey($evt.keyCode)=="F7"){
+				for each(player in _list){
+					if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
+					player.status.reset()
+					player.moveTo(Math.random()*600,300+Math.random()*100,0);
+					player.finisteStateMachine.changeStateByName("Stand");
+				}
 			}
+		}
+		//------ On Exit bt Click ------------------------------------
+		private function _onExitBtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.ESC));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onPauseBtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.PAUSE));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF1BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F1));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF2BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F2));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF3BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F3));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF4BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F4));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF5BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F5));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF6BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F6));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF7BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F7));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF8BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F8));
+		}
+		//------ On Pause bt Click ------------------------------------
+		private function _onF9BtClick($evt:MouseEvent):void{
+			onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyCode.F9));
 		}
 		//------ Update ------------------------------------
 		public function onPlayerDead($evt:Event):void {
@@ -208,9 +288,11 @@ package screens{
 			var center:int = 0;
 			for each(var player:Component in _list){
 				if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;
-				if (player.x < 200)			left++;
-				else if (player.x > 600)	right++;
-				else 						center++;
+				if(LFE_ObjectComponent(player).status.gotLife){
+					if (player.x < 200 && player)			left++;
+					else if (player.x > 600)	right++;
+					else 						center++;
+				}
 			}
 			if (left > right && left > center) {
 				scroll(-4);
@@ -234,9 +316,10 @@ package screens{
 		//------ Enter ------------------------------------
 		public override function enter($previousState:State):void {
 			if(!_entityManager){
-				initVar();
+				_initVar();
 			}		
-			initComponent();
+			_initComponent();
+			_initMenuBar();
 		}
 	}
 }

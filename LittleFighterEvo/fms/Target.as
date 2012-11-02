@@ -36,8 +36,8 @@ package fms{
 	public class Target extends LFE_AiState{
 		private var _longRangeDist:Number = 220; 
 		//Target State
-		public function Target($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Target($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

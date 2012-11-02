@@ -37,8 +37,8 @@ package fms{
 		private var _dvz:Number=0;
 		
 		//InTheSky State
-		public function InTheSky($fms:FiniteStateMachine=null){
-			super($fms);
+		public function InTheSky($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

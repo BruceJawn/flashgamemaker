@@ -36,8 +36,8 @@ package fms{
 		private var _frameName:String = null;
 		private var _step:int=0;
 		//ShortRange State
-		public function ShortRange($fms:FiniteStateMachine=null){
-			super($fms);
+		public function ShortRange($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

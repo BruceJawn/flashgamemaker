@@ -53,15 +53,16 @@ package customClasses{
 		protected var _debugMode:Boolean = false;
 		protected var _soundManager:ISoundManager;
 		
-		public function LFE_State($fms:FiniteStateMachine=null):void{
-			_initVar($fms)
+		public function LFE_State($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null):void{
+			_initVar($fms,$lfe_objectComponent)
 		}
 		//------ Init Var ------------------------------------
-		private function _initVar($fms:FiniteStateMachine=null):void {
+		private function _initVar($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null):void {
 			if(_debugMode){
 				_initDebugMode();
 			}
 			_finiteStateMachine = $fms;
+			_object = $lfe_objectComponent;
 			_soundManager = SoundManager.getInstance();
 		}
 		//------ Init Var ------------------------------------

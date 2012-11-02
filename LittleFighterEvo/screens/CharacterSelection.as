@@ -116,6 +116,27 @@ package screens{
 			var keyInput:KeyboardInputComponent=_entityManager.getComponent("LittleFighterEvo","myKeyboardInputComponent") as KeyboardInputComponent;
 			keyInput.addEventListener(KeyboardEvent.KEY_DOWN,onKeyFire,false,0,true);
 		}
+		//------ Init Tips ------------------------------------
+		private function _initTips():void {
+			_menuComponent.graphic.tipsTF.text="Player1 use "+KeyCode.GetKey(KeyConfig.Player1.A)+" to select and "+ KeyCode.GetKey(KeyConfig.Player1.J)+" to cancel / Player2 use "+KeyCode.GetKey(KeyConfig.Player2.A)+" to select and "+ KeyCode.GetKey(KeyConfig.Player2.J)+" to cancel";
+		}
+		//------ Init Tips ------------------------------------
+		private function _initMouseBt():void {
+			for (var i:int = 1; i<=8; i++){
+				if(i<3){
+					_menuComponent.graphic["player"+i+"Bt"].mouseEnabled=true;
+					_menuComponent.graphic["player"+i+"Bt"].addEventListener(MouseEvent.CLICK, this["onSlider"+i+"Click"],false,0,true);
+					_menuComponent.graphic["btOkClip"+i].addEventListener(MouseEvent.CLICK, this["onOkBt"+i+"Click"],false,0,true);
+					_menuComponent.graphic["btCancelClip"+i].addEventListener(MouseEvent.CLICK, this["onCancelBt"+i+"Click"],false,0,true);
+				}else{
+					_menuComponent.graphic["player"+i+"Bt"].addEventListener(MouseEvent.CLICK, this["onSliderComputerClick"],false,0,true);
+					_menuComponent.graphic["btOkClip"+i].addEventListener(MouseEvent.CLICK, onOkBt1Click,false,0,true);
+					_menuComponent.graphic["btCancelClip"+i].addEventListener(MouseEvent.CLICK, onCancelBt1Click,false,0,true);
+					_menuComponent.graphic["player"+i+"Bt"].mouseEnabled=false;
+				}
+			
+			}
+		}
 		//------ Init Slider ------------------------------------
 		private function _initSliders():void {
 			var playerTF:TextField = _menuComponent.graphic["player"+i+"TF"];
@@ -158,6 +179,48 @@ package screens{
 			imageSliderComponent.moveTo($x,$y);
 			_sliderList.push(imageSliderComponent);
 		}
+		//------ On Slider 1 Click ------------------------------------
+		private function onSlider1Click($evt:MouseEvent):void {
+			Framework.Focus();
+			if(_stepPlayer1==INIT && _stepComputer ==PLAYER_SELECTION && _nbComputer==0){
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.A));
+			}else{
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.RIGHT));
+			}
+		}
+		//------ On Slider 2 Click ------------------------------------
+		private function onSlider2Click($evt:MouseEvent):void {
+			Framework.Focus();
+			if(_stepPlayer2==INIT && _stepComputer ==PLAYER_SELECTION && _nbComputer==0){
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player2.A));
+			}else{
+				onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player2.RIGHT));
+			}
+		}
+		//------ On Slider Computer Click ------------------------------------
+		private function onSliderComputerClick($evt:MouseEvent):void {
+			onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.RIGHT));
+		}
+		//------ On Ok Bt1 Click ------------------------------------
+		private function onOkBt1Click($evt:MouseEvent):void {
+			Framework.Focus();
+			onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.A));
+		}
+		//------ On Ok Bt2 Click ------------------------------------
+		private function onOkBt2Click($evt:MouseEvent):void {
+			Framework.Focus();
+			onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player2.A));
+		}
+		//------ On Cancel Bt1 Click ------------------------------------
+		private function onCancelBt1Click($evt:MouseEvent):void {
+			Framework.Focus();
+			onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player1.J));
+		}
+		//------ On Cancel Bt2 Click ------------------------------------
+		private function onCancelBt2Click($evt:MouseEvent):void {
+			Framework.Focus();
+			onKeyFire(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,0,KeyConfig.Player2.J));
+		}
 		//------ On Key Fire ------------------------------------
 		private function onKeyFire($evt:KeyboardEvent):void {
 			if(_finiteStateMachine.currentState!=this)	return;
@@ -194,6 +257,8 @@ package screens{
 					}	
 					if(_computerComponent){
 						_computerComponent.visible = false;
+						_computerComponent.graphic.bt0.mouseEnabled=true;
+						_computerComponent.graphic.bt7.mouseEnabled=true;
 						(_computerComponent.graphic.bt0.upState as TextField).textColor = 0xFFFFFF;
 						(_computerComponent.graphic.bt7.upState as TextField).textColor = 0xFFFFFF;
 						if(_stepPlayer1 == NB_COMPUTER_SELECTION){
@@ -205,10 +270,14 @@ package screens{
 					if(imageSliderComponent.position==0){
 						imageSliderComponent.next([0]);
 						selectCharacter(index);
+						_menuComponent.graphic["btOkClip"+(index+1)].nextFrame();
+						_menuComponent.graphic["btCancelClip"+(index+1)].nextFrame();
 						if(target=="_stepComputer") _stepComputer=PLAYER_SELECTION
 						else this[target+(index+1)]=PLAYER_SELECTION;
 					}
 				}else if(step==PLAYER_SELECTION){
+					_menuComponent.graphic["btOkClip"+(index+1)].nextFrame();
+					_menuComponent.graphic["btCancelClip"+(index+1)].nextFrame();
 					if(imageSliderComponent.position==1){
 						imageSliderComponent.random([0,1]);
 						_randomList.uniquePush(index);
@@ -221,6 +290,9 @@ package screens{
 					if(target=="_stepComputer")_stepComputer=TEAM_SELECTION;
 					else this[target+(index+1)]= TEAM_SELECTION;
 				}else if(step==TEAM_SELECTION){
+					_menuComponent.graphic["btOkClip"+(index+1)].gotoAndStop(1);
+					_menuComponent.graphic["btCancelClip"+(index+1)].gotoAndStop(1);
+					_menuComponent.graphic["player"+(index+1)+"Bt"].mouseEnabled=false;
 					if(target=="_stepComputer"){
 						_stepComputer=WAITING_NEW_PLAYER;
 						if(_computerSliderPosition+1-_nbPlayer<_nbComputer){
@@ -233,6 +305,9 @@ package screens{
 							fighterTF = _menuComponent.graphic["fighter"+(_computerSliderPosition+1)+"TF"];
 							fighterTF.textColor=_focusTextColor;
 							_focusTextFieldComputer = fighterTF;
+							_menuComponent.graphic["player"+(_computerSliderPosition+1)+"Bt"].mouseEnabled=true;;
+							_menuComponent.graphic["btOkClip"+(_computerSliderPosition+1)].nextFrame();
+							_menuComponent.graphic["btCancelClip"+(_computerSliderPosition+1)].nextFrame();
 						}else{
 							if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
 							_focusTextField1 = null;
@@ -284,6 +359,9 @@ package screens{
 					_onQuitBt(null);
 				}
 				if(step==PLAYER_SELECTION){
+					_menuComponent.graphic["player"+(_computerSliderPosition+1)+"Bt"].mouseEnabled=false;
+					_menuComponent.graphic["btOkClip"+(index+1)].gotoAndStop(1);
+					_menuComponent.graphic["btCancelClip"+(index+1)].gotoAndStop(1);
 					if(target=="_stepComputer"){
 						_stepComputer=1;
 						if(_computerSliderPosition+1-_nbPlayer==1){
@@ -305,6 +383,9 @@ package screens{
 							fighterTF = _menuComponent.graphic["fighter"+(_computerSliderPosition+1)+"TF"];
 							fighterTF.textColor = _focusTextColor
 							this[focusTextField] = fighterTF;
+							_menuComponent.graphic["player"+(_computerSliderPosition+1)+"Bt"].mouseEnabled=true;
+							_menuComponent.graphic["btOkClip"+(_computerSliderPosition+1)].gotoAndStop(2);
+							_menuComponent.graphic["btCancelClip"+(_computerSliderPosition+1)].gotoAndStop(2);
 						} 
 					}else{
 						imageSliderComponent.goto(0);
@@ -314,7 +395,9 @@ package screens{
 						fighterTF.text="";
 						this[target+(index+1)]=INIT;	
 						}
+					//_menuComponent.graphic["btOkClip"+(index+1)].nextFrame();
 				}else if(step==TEAM_SELECTION){
+					_menuComponent.graphic["btOkClip"+(index+1)].prevFrame();
 					if(target=="_stepComputer"){
 						_stepComputer=PLAYER_SELECTION;
 					}else{
@@ -325,11 +408,17 @@ package screens{
 					fighterTF = _menuComponent.graphic["fighter"+(index+1)+"TF"];
 					fighterTF.textColor = _focusTextColor;
 					this[focusTextField] = fighterTF;
-				}else if(step==WAITING_NEW_PLAYER){
+				}else if(step==WAITING_NEW_PLAYER && !_fightMenu && !_fightMenu.visible){
 					teamTF = _menuComponent.graphic["team"+(index+1)+"TF"];
 					teamTF.textColor = _focusTextColor;
 					this[focusTextField] = teamTF;
 					this[target+(index+1)]=TEAM_SELECTION;
+					_menuComponent.graphic["player"+(index+1)+"Bt"].mouseEnabled=true;
+					_menuComponent.graphic["btOkClip"+(index+1)].gotoAndStop(3);
+					_menuComponent.graphic["btCancelClip"+(index+1)].gotoAndStop(2);
+					if(_chronoList){
+						_cancelCounter();
+					}
 				}
 			}else if($evt.keyCode == KeyConfig.Player1.LEFT || $evt.keyCode == KeyConfig.Player2.LEFT){
 				if(_stepPlayer1==COMPUTER_SELECTION || _stepPlayer2==COMPUTER_SELECTION){
@@ -518,9 +607,11 @@ package screens{
 			}
 			_stopCounter();
 			if(_stepPlayer1!=WAITING_NEW_PLAYER || _stepPlayer2!=WAITING_NEW_PLAYER){
+				_computerComponent.graphic.bt0.mouseEnabled=false;
 				(_computerComponent.graphic.bt0.upState as TextField).textColor = 0x666666;
 				_computerComponent.nextFrame();
 			}else{
+				_computerComponent.graphic.bt7.mouseEnabled=false;
 				(_computerComponent.graphic.bt7.upState as TextField).textColor = 0x666666;
 			}
 			_computerComponent.graphic.nbComputersTF.text = _lang.nbComputersTF;
@@ -554,6 +645,7 @@ package screens{
 			_stepPlayer1 = 0;
 			_stepPlayer2 = 0;
 			_stepComputer = 1;
+			_nbComputer=0;
 			_computerSliderPosition=0;
 			for each(var slider:ImageSliderComponent in _sliderList){
 				slider.visible=false;
@@ -565,6 +657,8 @@ package screens{
 			if(_fightMenu)	_fightMenu.visible=false;
 			if(_computerComponent){ 
 				_computerComponent.visible = false;
+				_computerComponent.graphic.bt0.mouseEnabled=true;
+				_computerComponent.graphic.bt7.mouseEnabled=true;
 				(_computerComponent.graphic.bt0.upState as TextField).textColor = 0xFFFFFF;
 				(_computerComponent.graphic.bt7.upState as TextField).textColor = 0xFFFFFF;
 			}
@@ -583,11 +677,14 @@ package screens{
 			_stepPlayer1 = 0;
 			_stepPlayer2 = 0;
 			_stepComputer = 1;
+			_nbComputer=0;
 			_computerSliderPosition=0;
 			_fightMenu.visible=false;
 			_resetSliders();
 			_resetCounter();
 			_randomList = new ArrayPlus();
+			_computerComponent.graphic.bt0.mouseEnabled=true;
+			_computerComponent.graphic.bt7.mouseEnabled=true;
 			if(_focusTextField1)_focusTextField1.textColor=0xFFFFFF;
 			_focusTextField1 = null;
 			if(_focusTextField2)_focusTextField2.textColor=0xFFFFFF;
@@ -599,6 +696,9 @@ package screens{
 		private function _resetComputers():void {
 			var start:int = _stepPlayer1>=WAITING_NEW_PLAYER && _stepPlayer2>=WAITING_NEW_PLAYER?2:1;
 			_nbComputer = _computerComponent.currentFrame-1;
+			_menuComponent.graphic["player"+(start+1)+"Bt"].mouseEnabled=true;
+			_menuComponent.graphic["btCancelClip"+(start+1)].nextFrame();
+			_menuComponent.graphic["btOkClip"+(start+1)].nextFrame();
 			for (var i:int=start;i<start+_nbComputer;i++){
 				_resetComputer(i);
 			}
@@ -786,6 +886,8 @@ package screens{
 				initVar();
 				initComponent();
 			}
+			_initTips();
+			_initMouseBt();
 			_initSliders();
 			_upateLang();
 		}

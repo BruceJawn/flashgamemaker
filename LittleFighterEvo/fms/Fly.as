@@ -38,8 +38,8 @@ package fms{
 	public class Fly extends LFE_State{
 		private var _max:Number = 2000;//Max flying time 
 		//Fly State
-		public function Fly($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Fly($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

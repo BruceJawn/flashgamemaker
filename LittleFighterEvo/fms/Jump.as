@@ -43,8 +43,8 @@ package fms{
 		private var _throw:Boolean=false;
 		
 		//Jump State
-		public function Jump($fms:FiniteStateMachine=null){
-			super($fms);
+		public function Jump($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------

@@ -36,8 +36,8 @@ package fms{
 		private var _distMax:Number =5;
 		private var _isAttacking:Boolean = false;
 		//LongRange State
-		public function LongRange($fms:FiniteStateMachine=null){
-			super($fms);
+		public function LongRange($fms:FiniteStateMachine=null,$lfe_objectComponent:LFE_ObjectComponent=null){
+			super($fms,$lfe_objectComponent);
 			_initVar();
 		}
 		//------ Init Var ------------------------------------
