@@ -3,6 +3,7 @@
 
 #ADL debug
 adl "C:\Users\NDOYEA\Adobe Flash Builder 4\FGMv2\swf\application.xml"
+adl "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo\swf\application.xml"
 
 #Packaging SWF to AIR
 adt -package -storetype pkcs12 -keystore "certificate.p12" swf/LittleFighterEvo.air swf/application.xml swf/LittleFighterEvo.swf swf/LittleFighterEvo.html swf/swfobject.js -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" assets -C "C:\Users\NDOYEA\Adobe Flash Builder 4\LittleFighterEvo" data

@@ -73,19 +73,19 @@ package fms{
 			}else if(keyPad.fire1.isDown && !keyPad.fire1.getLongClick()){
 				if(frame.hasOwnProperty("hit_Da") && (keyPad.down.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.down))){
 					var powerFrame:Object = _object.lfe_Frame.frames[frame.hit_Da];
-					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+					if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
 						updateAnim(frame.hit_Da);
 						updateState();
 					}
 				}else if(frame.hasOwnProperty("hit_Ua") && (keyPad.up.isDown || keyPad.isPreviousKeydPadInputAtIndex(0,keyPad.up))){
 					powerFrame = _object.lfe_Frame.frames[frame.hit_Ua];
-					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+					if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
 						updateAnim(frame.hit_Ua);
 						updateState();
 					}
 				}else if(frame.hasOwnProperty("hit_Fa")){
 					powerFrame = _object.lfe_Frame.frames[frame.hit_Fa];
-					if(!(powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+					if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
 						updateAnim(frame.hit_Fa);
 						updateState();
 					}

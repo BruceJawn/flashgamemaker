@@ -68,11 +68,11 @@ package screens{
 		private function _initVar():void {
 			_entityManager=EntityManager.getInstance();
 			_soundManager = SoundManager.getInstance();
-			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3"
+			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3";
 		}
 		//------ Start Music ------------------------------------
 		private function _startMusic():void {
-			//_soundManager.play(_mainMusic,0.01,true);
+			_soundManager.play(_mainMusic,0.1,true);
 		}
 		//------ Stop Music ------------------------------------
 		private function _stopMusic():void {
@@ -109,6 +109,7 @@ package screens{
 		//------ On Control Settings Bt Click ------------------------------------
 		private function _onDemoBtClick($evt:MouseEvent):void {
 			Framework.Focus();
+			_stopMusic();
 			_menuComponent.gotoAndStop(5);
 			_finiteStateMachine.changeStateByName("Demo");
 		}
@@ -193,7 +194,6 @@ package screens{
 		}
 		//------ Enter ------------------------------------
 		public override function exit($previousState:State):void {
-			_stopMusic();
 			_removeKeyListener();
 		}
 	}

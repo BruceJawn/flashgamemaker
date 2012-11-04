@@ -87,5 +87,13 @@ package {
 			}	
 			isPause = !isPause
 		}
+		//------ Init Finite StateMachine ------------------------------------
+		public static  function Resume():void {
+			var entityManager:IEntityManager=EntityManager.getInstance();
+			var enterframeComponent:EnterFrameComponent = entityManager.getComponent("LittleFighterEvo","myEnterFrameComponent") as EnterFrameComponent;
+			enterframeComponent.start();
+			isPause=false;
+			if (pause)	pause.visible =false;
+		}
 	}
 }

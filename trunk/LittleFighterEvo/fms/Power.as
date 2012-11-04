@@ -123,14 +123,23 @@ package fms{
 			if(spatialMove.movingDir.z==0){
 				if(!_bool || (_object.bitmapSet.currentAnim.position == _object.bitmapSet.currentAnim.lastPosition && _object.bitmapSet.currentAnim.reverse==0 || _object.bitmapSet.currentAnim.position ==0 && _object.bitmapSet.currentAnim.reverse==-1 || _object.hasOwnProperty("isDisplayed") && !_object.isDisplayed)){
 					if(_hit_a && frame.hasOwnProperty("hit_a")){
-						updateAnim(frame.hit_a);
-						checkMp();
+						var powerFrame:Object = _object.lfe_Frame.frames[frame.hit_a];
+						if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+							updateAnim(frame.hit_a);
+							checkMp();
+						}
 					}else if(_hit_j && frame.hasOwnProperty("hit_j")){
-						updateAnim(frame.hit_j);
-						checkMp();
+						powerFrame = _object.lfe_Frame.frames[frame.hit_j];
+						if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+							updateAnim(frame.hit_j);
+							checkMp();
+						}
 					}else if(_hit_d && frame.hasOwnProperty("hit_d")){
-						updateAnim(frame.hit_d);
-						checkMp();
+						powerFrame = _object.lfe_Frame.frames[frame.hit_d];
+						if(!(powerFrame && powerFrame.hasOwnProperty("mp") && powerFrame.mp>_object.status.mp)){
+							updateAnim(frame.hit_d);
+							checkMp();
+						}
 					}else{
 						updateAnim(frame.next);
 						checkMp();
