@@ -28,6 +28,7 @@ package framework{
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.system.Security;
 	
 	import framework.component.ComponentReference;
 	

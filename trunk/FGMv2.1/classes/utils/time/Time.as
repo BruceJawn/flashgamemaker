@@ -79,15 +79,15 @@ package utils.time{
 		}
 		//------ Extract Hour ------------------------------------
 		public static function extractHours($milliseconds:Number):Number {
-			return $milliseconds / (1000*60*60);
+			return Math.floor($milliseconds / (1000*60*60));
 		}
 		//------ Extract Minutes ------------------------------------
 		public static function extractMinutes($milliseconds:Number):Number {
-			return ($milliseconds % (1000*60*60)) / (1000*60);
+			return Math.floor(($milliseconds % (1000*60*60)) / (1000*60));
 		}
 		//------ Extract Secondes ------------------------------------
 		public static function extractSecondes($milliseconds:Number):Number {
-			return (($milliseconds % (1000*60*60)) % (1000*60)) / 1000;
+			return Math.floor((($milliseconds % (1000*60*60)) % (1000*60)) / 1000);
 		}
 	}
 }

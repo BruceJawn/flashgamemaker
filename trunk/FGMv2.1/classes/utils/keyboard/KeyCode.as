@@ -143,6 +143,7 @@ package utils.keyboard{
 		public static const DELETE:int = 46;
 		public static const HELP:int = 47;
 		public static const NUM_LOCK:int = 144;
+		public static const PAUSE:int = 19;
 		
 		public static function GetKey($charCode:int):String{
 			switch($charCode){
@@ -168,6 +169,7 @@ package utils.keyboard{
 				case F10: 	return "F10";
 				case F11: 	return "F11";
 				case F12: 	return "F12";
+				case PAUSE: return "PAUSE";
 			} 
 			var keyTouch:String = String.fromCharCode($charCode);
 			return keyTouch;

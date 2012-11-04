@@ -81,7 +81,8 @@ package framework.system{
 				}
 			} else {
 				var sound:Sound=_sounds[$path].sound;
-				_sounds[$path].soundChannel = sound.play();
+				var trans:SoundTransform = new SoundTransform($volume); 
+				_sounds[$path].soundChannel = sound.play(0,0,trans);
 				_sounds[$path].volume = $volume;
 				if($loopMusic){
 					sound.addEventListener(Event.SOUND_COMPLETE, _loopMusic);

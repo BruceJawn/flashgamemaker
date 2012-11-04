@@ -55,6 +55,8 @@ package framework.component.core{
 			_bitmap=new Bitmap(_bitmapData);
 			_except = new Array();
 			Framework.AddChild(_bitmap,this);
+			this.mouseEnabled=false;
+			this.mouseChildren=false;
 		}
 		//------ Init Slider ------------------------------------
 		public function init($images:Array):void {
