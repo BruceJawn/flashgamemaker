@@ -38,7 +38,7 @@ package {
 	public class LittleFighterEvo extends Sprite {
 		
 		public static var ROOT:String;
-		private var _useGlobalPath:Boolean=true;
+		private var _useGlobalPath:Boolean=false;
 		private var _globalPath:String = "http://angelstreetv2.free.fr/LittleFighterEvo/";
 		
 		public function LittleFighterEvo() {

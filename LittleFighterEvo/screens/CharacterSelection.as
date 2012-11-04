@@ -46,6 +46,8 @@ package screens{
 	import framework.entity.IEntityManager;
 	import framework.system.GraphicManager;
 	import framework.system.IGraphicManager;
+	import framework.system.ISoundManager;
+	import framework.system.SoundManager;
 	
 	import utils.collection.ArrayPlus;
 	import utils.collection.List;
@@ -92,6 +94,8 @@ package screens{
 		private var _focusTextField2:TextField;
 		private var _focusTextFieldComputer:TextField;
 		private var _focusTextColor:uint =0xACB8DC;
+		private var _soundManager:ISoundManager=null;
+		private var _mainMusic:String;
 		
 		public function CharacterSelection(){
 		}
@@ -110,6 +114,16 @@ package screens{
 			_difficulty = new List(_lang.easy,_lang.normal,_lang.hard);
 			_background = new List("Forest");
 			_music = new List("stage1","stage2");
+			_soundManager = SoundManager.getInstance();
+			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3";
+		}
+		//------ Start Music ------------------------------------
+		private function _startMusic():void {
+			_soundManager.play(_mainMusic,0.1,true);
+		}
+		//------ Stop Music ------------------------------------
+		private function _stopMusic():void {
+			_soundManager.stop(_mainMusic);
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -809,6 +823,7 @@ package screens{
 		//------ On Fight Bt Click ------------------------------------
 		private function _onFightBt($mousePad:MousePad):void {
 			Framework.Focus();
+			_stopMusic();
 			var list:Array = new Array();
 			var imageSliderComponent:ImageSliderComponent;
 			var teamTF:TextField=null;	

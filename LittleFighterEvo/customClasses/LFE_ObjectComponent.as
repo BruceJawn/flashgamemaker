@@ -337,9 +337,16 @@ package customClasses{
 			var objectCurrentFrame:Object = $ennemy.getCurrentFrame();
 			var objectLfeFrame:Object = $ennemy.lfe_Frame;
 			if($itr.injury){
-				_status.attack+=$itr.injury;
 				$ennemy.status.removeLife($itr.injury);
-				if($ennemy.status.life==0)	_status.kill++;
+				if(kind==Data.OBJECT_KIND_CHARACTER){
+					_status.attack+=$itr.injury;
+					if($ennemy.status.life==0)	_status.kill++;
+				}else if(kind==Data.OBJECT_KIND_SPECIAL_MOVE){
+					source.status.attack+=$itr.injury;
+					if($ennemy.status.life==0)	source.status.kill++;
+				}else{
+					//TODO:WEAPONS
+				}
 				updateMiniBar();
 			}
 			if(objectCurrentFrame.state == "Hurt"){

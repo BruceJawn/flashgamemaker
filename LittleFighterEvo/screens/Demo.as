@@ -69,6 +69,8 @@ package screens{
 		private var _statusBar:GraphicComponent = null;
 		private var _deadPlayer:int =0;
 		private var _nbPlayer:int =6;
+		private var _soundManager:ISoundManager=null;
+		private var _mainMusic:String;
 		
 		public function Demo(){
 		}
@@ -78,6 +80,16 @@ package screens{
 			_graphicManager = GraphicManager.getInstance();
 			_menuComponent=_entityManager.getComponent("LittleFighterEvo","myMenu") as GraphicComponent;
 			_list=new Array();
+			_soundManager = SoundManager.getInstance();
+			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3";
+		}
+		//------ Start Music ------------------------------------
+		private function _startMusic():void {
+			_soundManager.play(_mainMusic,0.1,true);
+		}
+		//------ Stop Music ------------------------------------
+		private function _stopMusic():void {
+			_soundManager.stop(_mainMusic);
 		}
 		//------ Init Component ------------------------------------
 		private function _initComponent():void {
@@ -182,6 +194,7 @@ package screens{
 		}
 		//------- On Key Up -------------------------------
 		private function onKeyUp($evt:KeyboardEvent):void {
+			if(_finiteStateMachine.currentState!=this)	return;
 			var keyReleased:String = KeyCode.GetKey($evt.keyCode); 
 			if(KeyCode.GetKey($evt.keyCode)=="PAUSE"){
 				MyGame.Pause();
@@ -189,7 +202,8 @@ package screens{
 				if(MyGame.isPause)	MyGame.Pause();
 				_reset();
 				_menuComponent.gotoAndStop(1);
-				_finiteStateMachine.changeStateByName("UInterface");
+				_startMusic();
+				_finiteStateMachine.changeStateByName("UInterface",null);
 			}else if(KeyCode.GetKey($evt.keyCode)=="F5"){
 				for each(var player:Component in _list){
 					if(!(player is LFE_ObjectComponent) || player is LFE_ObjectComponent && !LFE_ObjectComponent(player).kind==Data.OBJECT_KIND_CHARACTER)	continue;

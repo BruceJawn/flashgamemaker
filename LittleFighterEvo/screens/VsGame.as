@@ -83,6 +83,9 @@ package screens{
 		private var _useMiniBar:Boolean = true;
 		private var _summary:GraphicComponent = null;
 		private var _startTime:Number =0;
+		private var _soundManager:ISoundManager=null;
+		private var _mainMusic:String;
+		
 		public function VsGame(){
 		}
 		//------ Init Var ------------------------------------
@@ -93,6 +96,16 @@ package screens{
 			_list=new Array();
 			_lang= MultiLang.data[Data.LOCAL_LANG];
 			_players = new Array();
+			_soundManager = SoundManager.getInstance();
+			_mainMusic = LittleFighterEvo.ROOT+"assets/main.mp3";
+		}
+		//------ Start Music ------------------------------------
+		private function _startMusic():void {
+			_soundManager.play(_mainMusic,0.1,true);
+		}
+		//------ Stop Music ------------------------------------
+		private function _stopMusic():void {
+			_soundManager.stop(_mainMusic);
 		}
 		//------ Init Component ------------------------------------
 		private function initComponent():void {
@@ -235,9 +248,9 @@ package screens{
 			if(KeyCode.GetKey($evt.keyCode)=="PAUSE"){
 				MyGame.Pause();
 			}else if($evt.keyCode == KeyCode.ESC){
-				if(MyGame.isPause)	MyGame.Pause();
 				_reset();
 				_menuComponent.gotoAndStop(2);
+				_startMusic();
 				_finiteStateMachine.changeStateByName("GameMenu");
 			}else if(KeyCode.GetKey($evt.keyCode)=="F3"){
 				if(_player1)	_player1.status.unlimitedLife=!_player1.status.unlimitedLife;
@@ -268,6 +281,7 @@ package screens{
 				MyGame.Pause(true);
 				_reset();
 				_menuComponent.gotoAndStop(4);
+				_startMusic();
 				_finiteStateMachine.changeStateByName("CharacterSelection");
 			}
 		}
@@ -317,6 +331,7 @@ package screens{
 		}
 		//------ Reset ------------------------------------
 		private  function _reset():void {
+			MyGame.Resume();
 			for each (var component:Component in _list){
 				component.destroy();
 			}
@@ -361,7 +376,7 @@ package screens{
 						clip.x+=10;
 						_summary.graphic["middle"+i].killTF.text=this["_player"+i].status.kill;
 						_summary.graphic["middle"+i].attackTF.text=this["_player"+i].status.attack;
-						_summary.graphic["middle"+i].hpLostTF.text=this["_player"+i].status.mpMax-this["_player"+i].status.mp;
+						_summary.graphic["middle"+i].hpLostTF.text=this["_player"+i].status.lifeMax-this["_player"+i].status.life;
 						//_summary.graphic["middle"+i].mpUsageTF.text=this["_player"+i].status.mpUsage;
 						_summary.graphic["middle"+i].pickingTF.text=0;
 						if(this["_player"+i].status.life<=0){
