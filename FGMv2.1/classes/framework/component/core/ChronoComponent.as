@@ -69,6 +69,8 @@ package framework.component.core{
 			_chronoTF = new TextField();
 			setFormat("Arial",30,0xFF0000);
 			updateText();
+			this.mouseEnabled = false;
+			this.mouseChildren = false;
 		}
 		
 		//------ Create Chrono ------------------------------------

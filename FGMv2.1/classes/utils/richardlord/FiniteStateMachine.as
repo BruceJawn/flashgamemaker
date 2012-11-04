@@ -134,10 +134,6 @@ package utils.richardlord{
 		// Change to another state by name
 		public function changeStateByName( $stateName:String,$previousState:String=null,$nextState:String=null ):State{
 			var state:State = getStateByName($stateName);
-			if(_currentState == state){
-				trace("[WARNING] Same state");
-				return state;
-			}
 			var previous:State = getStateByName($previousState);
 			if(!previous)	previous= _currentState;
 			var nextState:State = getStateByName($nextState);

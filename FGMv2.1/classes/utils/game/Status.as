@@ -88,6 +88,15 @@ package utils.game{
 		public function get energyPercent():Number{
 			return energy/energyMax;
 		}
+		public function get gotLife():Boolean{
+			return life>0?true:false;
+		}
+		public function get gotMp():Boolean{
+			return mp>0?true:false;
+		}
+		public function get gotEnergy():Boolean{
+			return energy>0?true:false;
+		}
 		public function toString():String{
 			var res:String= "life="+life+"/"+lifeMax+", mp="+mp+"/"+mpMax+", energy="+energy+"/"+energyMax;
 			return res;
